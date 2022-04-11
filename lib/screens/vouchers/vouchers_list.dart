@@ -254,7 +254,7 @@ class _VouchersPageState extends State<VouchersPage> {
                                                   .sf_pb_W300_13),
                                         ),
                                         SizedBox(
-                                          width: 70.w,
+                                          width: 80.w,
                                           child: Text(
                                               selector == 0
                                                   ? companyVoucherList
