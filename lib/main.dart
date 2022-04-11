@@ -28,16 +28,31 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+
+  static void restartApp(BuildContext context) {
+    final _MyAppState state =
+    context.findAncestorStateOfType<State<MyApp>>() as _MyAppState;
+    state.restartApp();
+
+  }
   const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
+
 }
 
 class _MyAppState extends State<MyApp> {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
 
   @override
   void initState() {
@@ -77,105 +92,105 @@ class _MyAppState extends State<MyApp> {
       _connectionStatus = result;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    return _connectionStatus == ConnectivityResult.mobile || _connectionStatus == ConnectivityResult.wifi ? ScreenUtilInit(
-      builder: () => MaterialApp(
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: L10n.all,
+    return _connectionStatus == ConnectivityResult.mobile ||
+            _connectionStatus == ConnectivityResult.wifi
+        ? ScreenUtilInit(
+            builder: () => MaterialApp(
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: L10n.all,
 
-        debugShowCheckedModeBanner: false,
-        navigatorKey: Utils.mainKey,
-        // builder: (context,widget)=>ResponsiveWrapper.builder(
-        //     BouncingScrollWrapper.builder(context, widget!),
-        //     maxWidth: 1200,
-        //     minWidth: 480,
-        //     defaultScale: true,
-        //     breakpoints: [
-        //       ResponsiveBreakpoint.resize(480, name: MOBILE),
-        //       ResponsiveBreakpoint.autoScale(800, name: TABLET),
-        //       ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-        //       ResponsiveBreakpoint.autoScale(2460, name: '4K'),
-        //     ],
-        //     background: Container(color: Color(0xFFF5F5F5))),
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        // home: const ,
-        onGenerateRoute: (settings) {
-          Widget page = WelcomePage();
-          switch(settings.name){
-            case '/':
-              page = WelcomePage();
-              break;
-            case '/ResidentPage':
-              page = ResidentPage();
-              break;
-            case '/RegisterPage':
-              page = RegisterPage();
-              break;
-            case '/ScanIDPage':
-              RegisterFirst data = settings.arguments as RegisterFirst;
-              page = ScanIDPage(
-                firstName: data.firstName,
-                lastName: data.lastName,
-                areaCode: data.areaCode,
-                phone: data.phone,
-                email: data.email,
-                nationality: data.nationality,
-                nationalityId: data.nationalityId,
-              );
-              break;
-            case '/PhonePage':
-              RegisterTwo data = settings.arguments as RegisterTwo;
-              page = PhonePage(
-                firstName: data.firstName,
-                lastName: data.lastName,
-                areaCode: data.areaCode,
-                phone: data.phone,
-                email: data.email,
-                nationality: data.nationality,
-                nationalityId: data.nationalityId,
-                eid: data.eid,
-                image: data.image,
-              );
-              break;
-            case '/otp':
-              RegisterDataServer data= settings.arguments as RegisterDataServer;
-              page = OTPPage(
-                firstName: data.firstName,
-                lastName: data.lastName,
-                areaCode: data.areaCode,
-                phone: data.phone,
-                email: data.email,
-                nationality: data.nationality,
-                emiratedpassport: data.emiratedpassport,
-                image: data.image,
-              );
-              break;
-            case '/login':
-              page = LoginPage();
-              break;
-            case '/hostpage':
-              page = HostPage();
-              break;
-
-          }
-          return PageRouteBuilder(
-              settings: settings,
-              pageBuilder: (_, __, ___) => page
-          );
-        },
-      ),
-      designSize: const Size(375,812),
-    ):const MaterialApp(
-      home: Text('')
-    );
+              debugShowCheckedModeBanner: false,
+              navigatorKey: Utils.mainKey,
+              // builder: (context,widget)=>ResponsiveWrapper.builder(
+              //     BouncingScrollWrapper.builder(context, widget!),
+              //     maxWidth: 1200,
+              //     minWidth: 480,
+              //     defaultScale: true,
+              //     breakpoints: [
+              //       ResponsiveBreakpoint.resize(480, name: MOBILE),
+              //       ResponsiveBreakpoint.autoScale(800, name: TABLET),
+              //       ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+              //       ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+              //     ],
+              //     background: Container(color: Color(0xFFF5F5F5))),
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              // home: const ,
+              onGenerateRoute: (settings) {
+                Widget page = WelcomePage();
+                switch (settings.name) {
+                  case '/':
+                    page = WelcomePage();
+                    break;
+                  case '/ResidentPage':
+                    page = ResidentPage();
+                    break;
+                  case '/RegisterPage':
+                    page = RegisterPage();
+                    break;
+                  case '/ScanIDPage':
+                    RegisterFirst data = settings.arguments as RegisterFirst;
+                    page = ScanIDPage(
+                      firstName: data.firstName,
+                      lastName: data.lastName,
+                      areaCode: data.areaCode,
+                      phone: data.phone,
+                      email: data.email,
+                      nationality: data.nationality,
+                      nationalityId: data.nationalityId,
+                    );
+                    break;
+                  case '/PhonePage':
+                    RegisterTwo data = settings.arguments as RegisterTwo;
+                    page = PhonePage(
+                      firstName: data.firstName,
+                      lastName: data.lastName,
+                      areaCode: data.areaCode,
+                      phone: data.phone,
+                      email: data.email,
+                      nationality: data.nationality,
+                      nationalityId: data.nationalityId,
+                      eid: data.eid,
+                      image: data.image,
+                    );
+                    break;
+                  case '/otp':
+                    RegisterDataServer data =
+                        settings.arguments as RegisterDataServer;
+                    page = OTPPage(
+                      firstName: data.firstName,
+                      lastName: data.lastName,
+                      areaCode: data.areaCode,
+                      phone: data.phone,
+                      email: data.email,
+                      nationality: data.nationality,
+                      emiratedpassport: data.emiratedpassport,
+                      image: data.image,
+                    );
+                    break;
+                  case '/login':
+                    page = LoginPage();
+                    break;
+                  case '/hostpage':
+                    page = HostPage();
+                    break;
+                }
+                return PageRouteBuilder(
+                    settings: settings, pageBuilder: (_, __, ___) => page);
+              },
+            ),
+            designSize: const Size(375, 812),
+          )
+        : const MaterialApp(home: Text(''));
   }
 }

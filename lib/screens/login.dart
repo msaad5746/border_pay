@@ -1,16 +1,11 @@
-import 'package:borderpay/Utils/sharedPrefKeys.dart';
-import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/auth/local_auth_api.dart';
-import 'package:borderpay/model/datamodels/login_model.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
-import 'package:borderpay/model/datamodels/register_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -21,7 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   // final UserDataController userDataController = Get.put(UserDataController());
   AuthRepo networkHandler = AuthRepoImpl();
 
-  // NetworkHandlerCashier _networkHandlerCashier = NetworkHandlerCashier();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -241,75 +235,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  // SizedBox(height: 26.08.h),
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: Container(
-                  //         height:1,width: MediaQuery.of(context).size.width,
-                  //         color: CustomizedTheme.primaryLine,
-                  //       ),
-                  //     ),
-                  //     Padding(
-                  //       padding: EdgeInsets.symmetric(horizontal:12.6.w),
-                  //       child: Text("OR",style: CustomizedTheme.roboto_l_W400_14),
-                  //     ),
-                  //     Expanded(
-                  //       child: Container(
-                  //         height:1,width: MediaQuery.of(context).size.width,
-                  //         color: CustomizedTheme.primaryLine,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // SizedBox(height: 24.75.h),
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: Container(
-                  //         height: 61.07.h,
-                  //         decoration: BoxDecoration(
-                  //           border: Border.all(color: CustomizedTheme.colorAccent,width: .5.w),
-                  //           borderRadius: BorderRadius.circular(7),
-                  //         ),
-                  //         child: TextButton(onPressed: () {  },
-                  //             child: Row(
-                  //               crossAxisAlignment: CrossAxisAlignment.center,
-                  //               mainAxisAlignment: MainAxisAlignment.center,
-                  //               children: [
-                  //                 Image.asset('assets/icons/ic_google.png'),
-                  //                 SizedBox(width: 16.25.w,),
-                  //                 Text("Continue with Google",style: CustomizedTheme.b_W400_16),
-                  //               ],
-                  //             )),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // SizedBox(height: 18.58,),
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: Container(
-                  //         height: 61.07,
-                  //         decoration: BoxDecoration(
-                  //           border: Border.all(color: CustomizedTheme.colorAccent,width: .5),
-                  //           borderRadius: BorderRadius.circular(7),
-                  //         ),
-                  //         child: TextButton(onPressed: () {  },
-                  //             child: Row(
-                  //               crossAxisAlignment: CrossAxisAlignment.center,
-                  //               mainAxisAlignment: MainAxisAlignment.center,
-                  //               children: [
-                  //                 Image.asset('assets/icons/ic_facebook.png'),
-                  //                 SizedBox(width: 16.25,),
-                  //                 Text("Continue with Facebook",style: CustomizedTheme.b_W400_16),
-                  //               ],
-                  //             )),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                 ],
               ),
             ),

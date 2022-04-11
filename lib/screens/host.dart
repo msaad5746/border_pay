@@ -1,6 +1,9 @@
 import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/model/arguments/register_datatoserver.dart';
+import 'package:borderpay/model/arguments/register_first.dart';
+import 'package:borderpay/model/arguments/register_two.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
 import 'package:borderpay/model/datamodels/location_model.dart';
 import 'package:borderpay/model/arguments/traveler_details_arguments.dart';
@@ -11,6 +14,10 @@ import 'package:borderpay/screens/pay/payment_refund.dart';
 import 'package:borderpay/screens/pay/payment_successful.dart';
 import 'package:borderpay/screens/payment_summary/payment_summary.dart';
 import 'package:borderpay/screens/payment_web_view.dart';
+import 'package:borderpay/screens/phone.dart';
+import 'package:borderpay/screens/register_page.dart';
+import 'package:borderpay/screens/resident.dart';
+import 'package:borderpay/screens/scan_id.dart';
 import 'package:borderpay/screens/setting/setting.dart';
 import 'package:borderpay/screens/support/support.dart';
 import 'package:borderpay/screens/topup/topup_details.dart';
@@ -28,6 +35,8 @@ import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import '../widget/custom_alert.dart';
 import 'homepage.dart';
+import 'login.dart';
+import 'otp.dart';
 import 'vouchers/detailed_voucher.dart';
 
 class HostPage extends StatefulWidget {
@@ -86,6 +95,55 @@ class _HostPageState extends State<HostPage> {
               // RouteConstant.homePage,
               // RouteConstant.voucherPage,
               // RouteConstant.settingPage,
+              case '/ResidentPage':
+                page = ResidentPage();
+                break;
+              case '/RegisterPage':
+                page = RegisterPage();
+                break;
+              case '/ScanIDPage':
+                RegisterFirst data = settings.arguments as RegisterFirst;
+                page = ScanIDPage(
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  areaCode: data.areaCode,
+                  phone: data.phone,
+                  email: data.email,
+                  nationality: data.nationality,
+                  nationalityId: data.nationalityId,
+                );
+                break;
+              case '/PhonePage':
+                RegisterTwo data = settings.arguments as RegisterTwo;
+                page = PhonePage(
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  areaCode: data.areaCode,
+                  phone: data.phone,
+                  email: data.email,
+                  nationality: data.nationality,
+                  nationalityId: data.nationalityId,
+                  eid: data.eid,
+                  image: data.image,
+                );
+                break;
+              case '/otp':
+                RegisterDataServer data =
+                settings.arguments as RegisterDataServer;
+                page = OTPPage(
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  areaCode: data.areaCode,
+                  phone: data.phone,
+                  email: data.email,
+                  nationality: data.nationality,
+                  emiratedpassport: data.emiratedpassport,
+                  image: data.image,
+                );
+                break;
+              case '/login':
+                page = LoginPage();
+                break;
               case RouteConstant.homePage:
                 page = const HomePage();
                 break;

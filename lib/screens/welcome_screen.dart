@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   bool showButtons = false;
+  MySharedPreferences storage = MySharedPreferences.instance;
   CountriesController countriesController = Get.put(
     CountriesController(),
     permanent: true,
@@ -169,8 +172,14 @@ class _WelcomePageState extends State<WelcomePage> {
 
   Future<void> getCountries() async {
     await countriesController.fetchCountries();
-    setState(() {
-      showButtons = true;
-    });
+    bool? isLogin = await storage.getBoolValue(SharedPrefKeys.isLogin);
+    if (isLogin != null && isLogin) {
+      Navigator.pushNamed(
+          context, '/hostpage',);
+    } else {
+      setState(() {
+        showButtons = true;
+      });
+    }
   }
 }

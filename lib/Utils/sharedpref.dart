@@ -4,11 +4,25 @@ class MySharedPreferences {
   MySharedPreferences._privateConstructor();
 
   static final MySharedPreferences instance =
-  MySharedPreferences._privateConstructor();
+      MySharedPreferences._privateConstructor();
 
   setStringValue(String key, String value) async {
     SharedPreferences myPrefs = await SharedPreferences.getInstance();
     myPrefs.setString(key, value);
+  }
+
+  setBoolValue(String key, bool value) async {
+    SharedPreferences myPrefs = await SharedPreferences.getInstance();
+    myPrefs.setBool(key, value);
+  }
+
+  Future<bool?> getBoolValue(String key) async {
+    SharedPreferences myPrefs = await SharedPreferences.getInstance();
+    if (myPrefs.containsKey(key)) {
+      return myPrefs.getBool(key);
+    } else {
+      return false;
+    }
   }
 
   Future<String> getStringValue(String key) async {
@@ -26,9 +40,8 @@ class MySharedPreferences {
     return myPrefs.remove(key);
   }
 
-  removeAll() async{
+  removeAll() async {
     SharedPreferences myPrefs = await SharedPreferences.getInstance();
     return myPrefs.clear();
   }
-
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/controllers/login_controller.dart';
 import 'package:borderpay/model/arguments/register_datatoserver.dart';
 import 'package:borderpay/services/network/network_endpoints.dart';
@@ -12,6 +13,7 @@ import 'auth_repo.dart';
 class AuthRepoImpl implements AuthRepo {
   NetworkHelper networkHelper = NetworkHelperImpl();
   EndPoints endPoints = EndPoints();
+  MySharedPreferences storage = MySharedPreferences.instance;
   LoginController loginController = Get.put(
     LoginController(),
     permanent: true,
@@ -27,6 +29,7 @@ class AuthRepoImpl implements AuthRepo {
       if (response.statusCode == 200) {
         print(response.body);
         loginController.saveLoginData(json.decode(response.body.toString()));
+        storage.setBoolValue('isLogin', true);
         return json.decode(response.body.toString());
       } else {
         return response.body;
