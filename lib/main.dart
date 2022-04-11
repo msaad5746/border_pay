@@ -5,6 +5,7 @@ import 'package:borderpay/l10n/l10n.dart';
 import 'package:borderpay/model/arguments/register_datatoserver.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
 import 'package:borderpay/model/arguments/register_two.dart';
+import 'package:borderpay/screens/homepage.dart';
 import 'package:borderpay/screens/host.dart';
 import 'package:borderpay/screens/login.dart';
 import 'package:borderpay/screens/otp.dart';
@@ -12,9 +13,44 @@ import 'package:borderpay/screens/phone.dart';
 import 'package:borderpay/screens/register_page.dart';
 import 'package:borderpay/screens/resident.dart';
 import 'package:borderpay/screens/scan_id.dart';
+import 'package:borderpay/screens/vouchers/detailed_voucher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:borderpay/Route_Constants/route_constants.dart';
+import 'package:borderpay/Utils/utils.dart';
+import 'package:borderpay/model/arguments/register_datatoserver.dart';
+import 'package:borderpay/model/arguments/register_first.dart';
+import 'package:borderpay/model/arguments/register_two.dart';
+import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
+import 'package:borderpay/model/datamodels/location_model.dart';
+import 'package:borderpay/model/arguments/traveler_details_arguments.dart';
+import 'package:borderpay/model/datamodels/voucher_model.dart';
+import 'package:borderpay/screens/pay/fee_details.dart';
+import 'package:borderpay/screens/pay/number_people.dart';
+import 'package:borderpay/screens/pay/payment_refund.dart';
+import 'package:borderpay/screens/pay/payment_successful.dart';
+import 'package:borderpay/screens/payment_summary/payment_summary.dart';
+import 'package:borderpay/screens/payment_web_view.dart';
+import 'package:borderpay/screens/phone.dart';
+import 'package:borderpay/screens/register_page.dart';
+import 'package:borderpay/screens/resident.dart';
+import 'package:borderpay/screens/scan_id.dart';
+import 'package:borderpay/screens/setting/setting.dart';
+import 'package:borderpay/screens/support/support.dart';
+import 'package:borderpay/screens/topup/topup_details.dart';
+import 'package:borderpay/screens/topup/topup_select.dart';
+import 'package:borderpay/screens/topup/topup_successful.dart';
+import 'package:borderpay/screens/travelercatagory/traveler_catagory.dart';
+import 'package:borderpay/screens/vouchers/details_of_travelers.dart';
+import 'package:borderpay/screens/vouchers/multi_voucher_successful.dart';
+import 'package:borderpay/screens/vouchers/number_of_voucher.dart';
+import 'package:borderpay/screens/vouchers/single_voucher.dart';
+import 'package:borderpay/screens/vouchers/voucher_successful.dart';
+import 'package:borderpay/screens/vouchers/voucher_type.dart';
+import 'package:borderpay/screens/vouchers/vouchers_list.dart';
+import 'package:flutter/material.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 import 'screens/welcome_screen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -184,9 +220,126 @@ class _MyAppState extends State<MyApp> {
                   case '/hostpage':
                     page = HostPage();
                     break;
+                  case RouteConstant.homePage:
+                    page = const HomePage();
+                    break;
+                  case '/people_selection':
+                    page = NumberPeoplePage();
+                    break;
+                  case '/fee_detail':
+                    page = FeeDetailPage();
+                    break;
+                  case '/payment_successful':
+                    page = PaymentSuccessfulPage();
+                    break;
+                  case '/payment_refund':
+                    page = PaymentRefundPage();
+                    break;
+                  case RouteConstant.voucherPage:
+                    page = const VouchersPage();
+                    break;
+                  case '/support':
+                    page = SupportPage();
+                    break;
+                  case '/topup':
+                    page = TopUpPage();
+                    break;
+                  case '/topup_detail':
+                    page = TopUpDetailPage();
+                    break;
+                  case '/topup_successful':
+                    page = TopUpSuccessfulPage();
+                    break;
+                  case RouteConstant.settingPage:
+                    page = SettingPage();
+                    break;
+
+                //New 2 routing
+                  case '/TravelerCatagory':
+                    DetailsTravelersArg data =
+                    settings.arguments as DetailsTravelersArg;
+                    page = TravelerCatagory(
+                      type: data.type,
+                      locationId: data.locationId,
+                    );
+                    break;
+                  case '/SingleVoucher':
+                    List<Vouchers> voucher = settings.arguments as List<Vouchers>;
+                    page = SingleVoucher(
+                      voucher: voucher,
+                    );
+                    break;
+                  case '/PaymentSummary':
+                    List<Vouchers> arg = settings.arguments as List<Vouchers>;
+                    page = PaymentSummary(
+                      data: arg,
+                    );
+                    break;
+                  case '/VoucherSuccessPage':
+                    Vouchers data = settings.arguments as Vouchers;
+                    page = VoucherSuccessPage(data: data);
+                    break;
+                  case '/VoucherTypePage':
+                    LocationModel data = settings.arguments as LocationModel;
+                    page = VoucherTypePage(
+                      location: data,
+                    );
+                    break;
+                  case '/NumberofVoucherPage':
+                    DetailsTravelersArg data =
+                    settings.arguments as DetailsTravelersArg;
+                    page = NumberofVoucherPage(
+                      type: data.type,
+                      locationId: data.locationId,
+                    );
+                    break;
+                  case '/DetailsTravelersPage':
+                    DetailsTravelersArg data =
+                    settings.arguments as DetailsTravelersArg;
+                    page = DetailsTravelersPage(
+                      travelerCount: data.travelerCount,
+                      type: data.type,
+                      locationId: data.locationId,
+                    );
+                    break;
+                  case '/MultiVoucherSuccessPage':
+                    List<Vouchers> data = settings.arguments as List<Vouchers>;
+                    page = MultiVoucherSuccessPage(
+                      vouchersData: data,
+                    );
+                    break;
+                  case '/DetailedVoucher':
+                    VoucherDataModel data = settings.arguments as VoucherDataModel;
+                    page = DetailedVoucher(
+                      voucherDetails: data,
+                    );
+                    break;
+                  case '/paymentGateway':
+                    {
+                      page = PaymentGateway();
+
+                      // if(isSuccessful as bool){
+                      //   CustomAlertDialog.baseDialog(
+                      //       context: context,
+                      //       title: 'Successfully Purchased',
+                      //       message: 'Voucher successfully purchased',
+                      //       buttonAction: () {
+                      //         Navigator.pushNamed(
+                      //           context,
+                      //           widget.data.length > 1
+                      //               ? '/MultiVoucherSuccessPage'
+                      //               : '/VoucherSuccessPage',
+                      //           arguments: widget.data.length > 1
+                      //               ? widget.data
+                      //               : widget.data[0],
+                      //         );
+                      //       });
+                      // }
+                    }
                 }
                 return PageRouteBuilder(
                     settings: settings, pageBuilder: (_, __, ___) => page);
+
               },
             ),
             designSize: const Size(375, 812),
