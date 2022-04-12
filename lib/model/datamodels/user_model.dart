@@ -13,7 +13,7 @@ class UserModel {
   dynamic tourist;
 
   UserModel({
-    this.userId = -1,
+    this.userId = 1,
     this.firstName = '',
     this.lastName = '',
     this.emirateId = '',

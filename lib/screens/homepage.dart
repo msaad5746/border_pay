@@ -1,14 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
-import 'package:borderpay/controllers/login_controller.dart';
 import 'package:borderpay/model/datamodels/location_model.dart';
+import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/model/datamodels/voucher_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,7 +20,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  LoginController userController = Get.find<LoginController>();
+  UserModel loginData = UserModel();
+  MySharedPreferences storage = MySharedPreferences.instance;
   LocationModel? location;
   VoucherModel voucherList = VoucherModel();
 
@@ -28,6 +31,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     getHomeData(1);
+    if (loginData.firstName.isEmpty) {
+      getUserData();
+    }
     super.initState();
   }
 
@@ -106,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: EdgeInsets.only(
                                           top: 19.5.h, left: 20.w),
                                       child: Text(
-                                        "Hello ${userController.loginData.firstName},",
+                                        "Hello ${loginData.firstName},",
                                         style: CustomizedTheme.sf_w_W500_23,
                                       ),
                                     ),
@@ -425,5 +431,13 @@ class _HomePageState extends State<HomePage> {
             fontSize: 16,
           )),
     );
+  }
+
+  Future<void> getUserData() async {
+    bool isUserExist = await storage.containsKey(SharedPrefKeys.user);
+    if (isUserExist) {
+      String user = await storage.getStringValue(SharedPrefKeys.user);
+      loginData = UserModel.fromJson(json.decode(user)['data']);
+    }
   }
 }

@@ -1,6 +1,11 @@
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
+import 'package:borderpay/controllers/login_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
+import 'package:borderpay/model/datamodels/create_bulk_voucher_model.dart';
+import 'package:borderpay/model/datamodels/voucher_transaction_model.dart';
+import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
+import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/widget/blue_backbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,40 +62,11 @@ class _SingleVoucherState extends State<SingleVoucher> {
                       style: CustomizedTheme.roboto_w_W400_14,
                     ),
                     Text(
-                      widget.voucher[0].id.toString(),
+                      'L${widget.voucher[0].id.toString()}',
                       style: CustomizedTheme.roboto_w_W700_14,
                     ),
                   ],
                 ),
-                // Stack(
-                //   children: [
-                //     Positioned(
-                //       top : 40,
-                //       right: 160,
-                //       child: Text('Voucher 1',style: CustomizedTheme.sf_b_W500_26,)
-                //     ),
-                //     Positioned(
-                //       top : 130,
-                //       right: 160,
-                //       child: Row(
-                //         children: [
-                //           Text('Voucher Number : ',style: CustomizedTheme.roboto_w_W400_14,),
-                //           Text('L103545672',style: CustomizedTheme.roboto_w_W700_14,),
-                //         ],
-                //       ),
-                //     ),
-                //     Positioned(
-                //       top : 110,
-                //       right: 60,
-                //       child: Container(
-                //           height: 50,
-                //           width: 50,
-                //           color: CustomizedTheme.white,
-                //           child: Image.asset('assets/icons/ic_qr_small.png')
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -238,11 +214,6 @@ class _SingleVoucherState extends State<SingleVoucher> {
     int index = countriesController.countries
         .indexWhere((element) => element.id == nationalityId);
     return countriesController.countries[index].name;
-  }
-
-  double getAmount() {
-    String amount = widget.voucher[0].amount;
-    return double.parse(amount);
   }
 
   String getName() {

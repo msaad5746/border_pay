@@ -52,7 +52,7 @@ class VoucherDataModel {
   int id;
   String status;
   String type;
-  String amount;
+  int amount;
   LocationModel location;
   UserModel user;
   dynamic transaction;
@@ -61,7 +61,7 @@ class VoucherDataModel {
     this.id = -1,
     this.status = '',
     this.type = '',
-    this.amount = '0.0',
+    this.amount = 0,
     required this.location,
     required this.user,
     this.transaction,

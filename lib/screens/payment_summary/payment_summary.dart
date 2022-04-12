@@ -1,5 +1,15 @@
+import 'dart:convert';
+import 'dart:math';
+
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/model/arguments/payment_arguments.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
+import 'package:borderpay/model/datamodels/user_model.dart';
+import 'package:borderpay/model/datamodels/voucher_transaction_model.dart';
+import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
+import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/screens/payment_web_view.dart';
 import 'package:borderpay/widget/blue_backbutton.dart';
 import 'package:borderpay/widget/custom_alert.dart';
@@ -16,6 +26,21 @@ class PaymentSummary extends StatefulWidget {
 }
 
 class _PaymentSummaryState extends State<PaymentSummary> {
+  UserModel loginData = UserModel();
+  MySharedPreferences storage = MySharedPreferences.instance;
+  VoucherRepo networkHandler = VoucherRepoImpl();
+  int orderId = Random().nextInt(9999);
+  bool isLoading = false;
+  List<dynamic> failedTransactions = List.empty(growable: true);
+
+  @override
+  void initState() {
+    if (loginData.firstName.isEmpty) {
+      getUserData();
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +75,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                           Spacer(),
                           Container(
                             width: 150.w,
-                            child: Text(widget.data[index].voucherNo,
+                            child: Text('L${widget.data[index].id.toString()}',
                                 overflow: TextOverflow.clip,
                                 maxLines: 1,
                                 style: CustomizedTheme.sf_b_W700_17),
@@ -97,7 +122,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     buildText("Total Amount", CustomizedTheme.sf_b_W700_17),
-                    buildText("AED " + getTotalAmount(),
+                    buildText("AED " + getTotalAmount().toString(),
                         CustomizedTheme.sf_b_W500_17),
                   ],
                 ),
@@ -122,29 +147,95 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                   borderRadius: BorderRadius.circular(10)),
                             ),
                             onPressed: () async {
-                              Navigator.pushNamed(context, PaymentGateway.route);
+                              setState(() {
+                                isLoading = true;
+                              });
+                              var res =
+                                  await networkHandler.createVoucherTransaction(
+                                getVoucherIds(),
+                                loginData.userId,
+                              );
+                              if (res != null) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                final response = await Navigator.pushNamed(
+                                  context,
+                                  PaymentGateway.route,
+                                  arguments: PaymentArgument(
+                                    payment: getTotalAmount(),
+                                    orderId: res.orderId,
+                                  ),
+                                );
 
-                              // if(isSuccessful as bool){
-                              //   CustomAlertDialog.baseDialog(
-                              //       context: context,
-                              //       title: 'Successfully Purchased',
-                              //       message: 'Voucher successfully purchased',
-                              //       buttonAction: () {
-                              //         Navigator.pushNamed(
-                              //           context,
-                              //           widget.data.length > 1
-                              //               ? '/MultiVoucherSuccessPage'
-                              //               : '/VoucherSuccessPage',
-                              //           arguments: widget.data.length > 1
-                              //               ? widget.data
-                              //               : widget.data[0],
-                              //         );
-                              //       });
-                              // }
+                                print('CBDR=>  $response.');
 
+                                if (response != null) {
+                                  var res = await networkHandler
+                                      .payVoucherTransaction(response);
+                                  if (res != null) {
+                                    CustomAlertDialog.baseDialog(
+                                        context: context,
+                                        title: 'Successfully Purchased',
+                                        message:
+                                            'Voucher successfully purchased',
+                                        buttonAction: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            widget.data.length > 1
+                                                ? '/MultiVoucherSuccessPage'
+                                                : '/VoucherSuccessPage',
+                                            arguments: widget.data.length > 1
+                                                ? widget.data
+                                                : widget.data[0],
+                                          );
+                                        });
+                                  } else {
+                                    failedTransactions.add(response);
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: const Text(
+                                          "Unable to complete your request!"),
+                                      behavior: SnackBarBehavior.floating,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(24),
+                                      ),
+                                      backgroundColor:
+                                          CustomizedTheme.voucherUnpaid,
+                                    ));
+                                  }
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: const Text(
+                                        "Unable to complete your request!"),
+                                    behavior: SnackBarBehavior.floating,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    backgroundColor:
+                                        CustomizedTheme.voucherUnpaid,
+                                  ));
+                                }
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: const Text("Something went wrong"),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  backgroundColor:
+                                      CustomizedTheme.voucherUnpaid,
+                                ));
+                              }
                             },
-                            child: Text("Pay",
-                                style: CustomizedTheme.sf_w_W500_19)),
+                            child: isLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : Text("Pay",
+                                    style: CustomizedTheme.sf_w_W500_19)),
                       ),
                     ),
                   ],
@@ -160,12 +251,28 @@ class _PaymentSummaryState extends State<PaymentSummary> {
   Text buildText(String title, TextStyle textStyle) =>
       Text(title, style: textStyle);
 
-  String getTotalAmount() {
-    double totalAmount = 0.0;
+  int getTotalAmount() {
+    int totalAmount = 0;
 
     widget.data.forEach((element) {
-      totalAmount += double.parse(element.amount);
+      totalAmount += element.amount;
     });
-    return totalAmount.toString();
+    return totalAmount;
+  }
+
+  VoucherTransactionRequest getVoucherIds() {
+    List<int> ids = List.empty(growable: true);
+    widget.data.forEach((element) {
+      ids.add(element.id);
+    });
+    return VoucherTransactionRequest(ids);
+  }
+
+  Future<void> getUserData() async {
+    bool isUserExist = await storage.containsKey(SharedPrefKeys.user);
+    if (isUserExist) {
+      String user = await storage.getStringValue(SharedPrefKeys.user);
+      loginData = UserModel.fromJson(json.decode(user)['data']);
+    }
   }
 }

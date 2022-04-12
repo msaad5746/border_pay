@@ -150,7 +150,6 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                   ),
-
                   SizedBox(height: 100.16.h),
                   Center(
                     child: Padding(
@@ -199,8 +198,8 @@ class _LoginPageState extends State<LoginPage> {
                                     LoginUserModel loginModel =
                                         LoginUserModel.fromJson(res);
                                     if (loginModel.status) {
-                                      emailController.clear();
-                                      passwordController.clear();
+                                    emailController.clear();
+                                    passwordController.clear();
                                     }
                                     setState(() {
                                       isLoading = false;
@@ -228,7 +227,9 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                               },
                               child: isLoading
-                                  ? const CircularProgressIndicator()
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
                                   : Text("Sign in",
                                       style: CustomizedTheme.w_W500_19)),
                         ),

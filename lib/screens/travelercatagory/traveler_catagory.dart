@@ -1,15 +1,18 @@
+import 'dart:convert';
+
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
-import 'package:borderpay/controllers/login_controller.dart';
 import 'package:borderpay/model/arguments/traveler_details_arguments.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
 import 'package:borderpay/model/datamodels/create_bulk_voucher_model.dart';
+import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/widget/blue_backbutton.dart';
 import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class TravelerCatagory extends StatefulWidget {
   final String type;
@@ -26,10 +29,19 @@ class TravelerCatagory extends StatefulWidget {
 }
 
 class _TravelerCatagoryState extends State<TravelerCatagory> {
-  LoginController userController = Get.find<LoginController>();
   VoucherRepo networkHandler = VoucherRepoImpl();
+  UserModel loginData = UserModel();
+  MySharedPreferences storage = MySharedPreferences.instance;
   bool isLoading = false;
   int selection = 0;
+
+  @override
+  void initState() {
+    if (loginData.firstName.isEmpty) {
+      getUserData();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,12 +193,12 @@ class _TravelerCatagoryState extends State<TravelerCatagory> {
     });
     List<BulkTraveler> travelersData = [
       BulkTraveler(
-        firstName: userController.loginData.firstName,
-        lastName: userController.loginData.lastName,
-        email: userController.loginData.email,
-        emirateId: userController.loginData.emirateId,
-        mobileNumber: userController.loginData.phoneNumber,
-        nationalityId: userController.loginData.nationality?.id ?? 1,
+        firstName: loginData.firstName,
+        lastName: loginData.lastName,
+        email: loginData.email,
+        emirateId: loginData.emirateId,
+        mobileNumber: loginData.phoneNumber,
+        nationalityId: loginData.nationality?.id ?? 1,
       ),
     ];
 
@@ -196,8 +208,7 @@ class _TravelerCatagoryState extends State<TravelerCatagory> {
       travelersData,
     );
 
-    var res = await networkHandler.createBulkVoucher(
-        body, userController.loginData.userId);
+    var res = await networkHandler.createBulkVoucher(body, loginData.userId);
     if (res != null) {
       setState(() {
         isLoading = false;
@@ -226,23 +237,30 @@ class _TravelerCatagoryState extends State<TravelerCatagory> {
     setState(() {
       isLoading = false;
     });
-    // }
   }
 
   getCurrentUserDetails() {
     Vouchers(
         locationId: widget.locationId,
         type: widget.type,
-        amount: '14.57',
+        amount: 0,
         voucherNo: '',
         user: BulkVoucherUser(
-          id: userController.loginData.userId,
-          firstName: userController.loginData.firstName,
-          lastName: userController.loginData.lastName,
-          email: userController.loginData.email,
-          emirateId: userController.loginData.emirateId,
-          mobileNumber: userController.loginData.phoneNumber,
-          nationalityId: userController.loginData.nationality?.id ?? -1,
+          id: loginData.userId,
+          firstName: loginData.firstName,
+          lastName: loginData.lastName,
+          email: loginData.email,
+          emirateId: loginData.emirateId,
+          mobileNumber: loginData.phoneNumber,
+          nationalityId: loginData.nationality?.id ?? -1,
         ));
+  }
+
+  Future<void> getUserData() async {
+    bool isUserExist = await storage.containsKey(SharedPrefKeys.user);
+    if (isUserExist) {
+      String user = await storage.getStringValue(SharedPrefKeys.user);
+      loginData = UserModel.fromJson(json.decode(user)['data']);
+    }
   }
 }

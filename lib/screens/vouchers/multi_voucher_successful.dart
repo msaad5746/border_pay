@@ -117,7 +117,7 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                               Container(
                                 width: 150.w,
                                 child: Text(
-                                  widget.vouchersData[0].voucherNo,
+                                  'L${widget.vouchersData[0].id.toString()}',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: CustomizedTheme.roboto_w_W700_20,
