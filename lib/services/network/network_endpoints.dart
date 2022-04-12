@@ -8,7 +8,10 @@ class EndPoints {
   final String _vouchers = '/vouchers';
   final String _voucher = '/voucher';
   final String _createVouchers = '/voucher/create';
+  final String _payVouchers = '/voucher/pay';
+  final String _payTransaction = '/process-transaction';
   final String _createBulkVouchers = '/voucher/create-bulk';
+  final String _createVouchersTransaction = '/voucher/create-transaction';
   final String _countries = '/database/country';
 
   String registerUser() {
@@ -35,8 +38,20 @@ class EndPoints {
     return _baseURL + _tourist + '/$id' + _createVouchers;
   }
 
+  String payVoucher(int id) {
+    return _baseURL + _tourist + '/$id' + _payVouchers;
+  }
+
+ String payTransaction() {
+    return _baseURL + _payTransaction;
+  }
+
   String createBulkVoucher(int id) {
     return _baseURL + _tourist + '/$id' + _createBulkVouchers;
+  }
+
+ String createVoucherTransaction(int id) {
+    return _baseURL + _tourist + '/$id' + _createVouchersTransaction;
   }
 
   String getCountries() {
