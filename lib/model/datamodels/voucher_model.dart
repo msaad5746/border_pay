@@ -70,8 +70,8 @@ class VoucherDataModel {
   factory VoucherDataModel.fromJson(dynamic json) {
     return VoucherDataModel(
       id: json['id'],
-      status: json['status'],
-      type: json['type'],
+      status: json['status']??'',
+      type: json['type']??'',
       amount: json['amount'],
       location: json['location'] != null
           ? LocationModel.fromJson(json['location'])

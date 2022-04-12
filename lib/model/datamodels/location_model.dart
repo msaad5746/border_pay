@@ -7,7 +7,7 @@ class LocationModel {
   factory LocationModel.fromJson(dynamic json) {
     return LocationModel(
       id: json['id'],
-      title: json['title'],
+      title: json['title']??'',
     );
   }
 
