@@ -7,6 +7,7 @@ class RegisterDataServer {
   String areaCode;
   String email;
   String nationality;
+  String password;
   int nationalityId;
   String emiratedpassport;
   File image;
@@ -18,6 +19,7 @@ class RegisterDataServer {
       required this.areaCode,
       required this.email,
       required this.nationality,
+      required this.password,
       required this.nationalityId,
       required this.emiratedpassport,
       required this.image});
@@ -33,6 +35,6 @@ class RegisterDataServer {
         "emirate_id": emiratedpassport,
         "passport": emiratedpassport,
         "image": image.path,
-        "password": "12345qwert",
+        "password": password,
       };
 }

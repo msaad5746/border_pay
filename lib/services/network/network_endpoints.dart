@@ -2,7 +2,9 @@ class EndPoints {
   final String _baseURL = 'https://v2-border-pay.vercel.app/api';
   final String _tourist = '/tourist';
   final String _registerUser = '/register';
+  final String _verifyUser = '/verify-account';
   final String _loginUser = '/login';
+  final String _password = '/password';
   final String _voucherList = '/voucher/list';
   final String _company = '/tourist-company';
   final String _vouchers = '/vouchers';
@@ -18,8 +20,16 @@ class EndPoints {
     return _baseURL + _tourist + _registerUser;
   }
 
+  String verifyUser() {
+    return _baseURL + _tourist + _verifyUser;
+  }
+
   String logInUser() {
     return _baseURL + _tourist + _loginUser;
+  }
+
+  String changePassword(int id) {
+    return _baseURL + _tourist + '/$id' + _password;
   }
 
   String voucherDetails(int userId, int voucherId) {
@@ -42,7 +52,7 @@ class EndPoints {
     return _baseURL + _tourist + '/$id' + _payVouchers;
   }
 
- String payTransaction() {
+  String payTransaction() {
     return _baseURL + _payTransaction;
   }
 
@@ -50,7 +60,7 @@ class EndPoints {
     return _baseURL + _tourist + '/$id' + _createBulkVouchers;
   }
 
- String createVoucherTransaction(int id) {
+  String createVoucherTransaction(int id) {
     return _baseURL + _tourist + '/$id' + _createVouchersTransaction;
   }
 

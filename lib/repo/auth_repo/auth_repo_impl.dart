@@ -4,6 +4,7 @@ import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/controllers/login_controller.dart';
 import 'package:borderpay/model/arguments/register_datatoserver.dart';
+import 'package:borderpay/model/datamodels/verify_user_model.dart';
 import 'package:borderpay/services/network/network_endpoints.dart';
 import 'package:borderpay/services/network/network_helper.dart';
 import 'package:borderpay/services/network/network_helper_impl.dart';
@@ -33,10 +34,11 @@ class AuthRepoImpl implements AuthRepo {
         storage.setBoolValue(SharedPrefKeys.isLogin, true);
         return json.decode(response.body.toString());
       } else {
-        return response.body;
+        return null;
       }
     } catch (e) {
       print(e);
+      return null;
     }
   }
 
@@ -56,6 +58,44 @@ class AuthRepoImpl implements AuthRepo {
       }
     } catch (e) {
       print(e.toString());
+      return null;
+    }
+  }
+
+  @override
+  Future verifyUser(VerifyUserModel verifyUserModel) async {
+    try {
+      var response = await networkHelper.put(
+        endPoints.verifyUser(),
+        body: verifyUserModel.toJson(),
+      );
+      if (response.statusCode == 200) {
+        print(response.body);
+        return json.decode(response.body.toString());
+      } else {
+        print(response.body);
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  @override
+  Future changePassword(body, int userId) async {
+    try {
+      var response = await networkHelper.put(
+        endPoints.changePassword(userId),
+        body: body,
+      );
+      if (response.statusCode == 201) {
+        return json.decode(response.body.toString());
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
       return null;
     }
   }

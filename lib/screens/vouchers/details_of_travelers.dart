@@ -559,7 +559,9 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                               // }
                             },
                             child: isLoading
-                                ? const CircularProgressIndicator()
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
                                 : Text("Next",
                                     style: CustomizedTheme.sf_w_W500_19)),
                       ),

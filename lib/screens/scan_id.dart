@@ -11,6 +11,7 @@ class ScanIDPage extends StatefulWidget {
   String firstName;
   String lastName;
   String phone;
+  String password;
   String areaCode;
   String email;
   String nationality;
@@ -21,6 +22,7 @@ class ScanIDPage extends StatefulWidget {
     required this.firstName,
     required this.lastName,
     required this.phone,
+    required this.password,
     required this.areaCode,
     required this.email,
     required this.nationality,
@@ -50,16 +52,18 @@ class _ScanIDPageState extends State<ScanIDPage> {
     });
   }
 
-  _imgFromGallery() async {
-    final XFile? galleryImage =
-        await _picker.pickImage(source: ImageSource.gallery);
-    // File image = await  ImagePicker.pickImage(
-    //     source: ImageSource.gallery, imageQuality: 50
-    // );
-    setState(() {
-      _image = XFile(galleryImage!.path);
-      whichImage = "gallery";
-    });
+  _getFromGallery() async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        _image = XFile(pickedFile.path);
+        whichImage = "gallery";
+      });
+    }
   }
 
   @override
@@ -312,27 +316,30 @@ class _ScanIDPageState extends State<ScanIDPage> {
                                                                     .sf_bo_W400_1592,
                                                               ))
                                                             : Text(
-                                                                'Upload Photo',
+                                                                _image?.name ??
+                                                                    'Upload Photo',
                                                                 style: CustomizedTheme
                                                                     .sf_bo_W400_1592,
                                                               ),
                                                       ),
                                                       ElevatedButton(
-                                                          onPressed: () {
-                                                            _imgFromGallery();
-                                                          },
-                                                          child: Container(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          10.w,
-                                                                      vertical:
-                                                                          18.h),
-                                                              child: Text(
-                                                                'Select File',
-                                                                style: CustomizedTheme
-                                                                    .roboto_w_W400_14,
-                                                              )))
+                                                        onPressed: () {
+                                                          _getFromGallery();
+                                                        },
+                                                        child: Container(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      10.w,
+                                                                  vertical:
+                                                                      18.h),
+                                                          child: Text(
+                                                            'Select File',
+                                                            style: CustomizedTheme
+                                                                .roboto_w_W400_14,
+                                                          ),
+                                                        ),
+                                                      )
                                                     ],
                                                   ),
                                                   Padding(
@@ -341,7 +348,7 @@ class _ScanIDPageState extends State<ScanIDPage> {
                                                             vertical: 30.h),
                                                     child: ElevatedButton(
                                                         onPressed: () {
-                                                          // Navigator.pop(_);
+                                                          Navigator.pop(_);
                                                           // buttonAction.call();
                                                         },
                                                         style: ElevatedButton
@@ -449,6 +456,7 @@ class _ScanIDPageState extends State<ScanIDPage> {
                                         nationality: widget.nationality,
                                         nationalityId: widget.nationalityId,
                                         phone: widget.phone,
+                                        password: widget.password,
                                         areaCode: widget.areaCode,
                                         email: widget.email,
                                         eid: emirateController.text,

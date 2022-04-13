@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class MultiVoucherSuccessPage extends StatefulWidget {
   final List<Vouchers> vouchersData;
@@ -18,6 +20,7 @@ class MultiVoucherSuccessPage extends StatefulWidget {
 }
 
 class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
+  CountriesController countriesController = Get.find<CountriesController>();
   bool _expanded = false;
 
   @override
@@ -43,7 +46,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                       // Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              '/host/homePage', (route) => false);
                         },
                         child: Padding(
                           padding: EdgeInsets.only(
@@ -254,7 +258,10 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                         buildText('Nationality',
                                             CustomizedTheme.sf_bo_W300_1503),
                                         buildText(
-                                            '${widget.vouchersData[index].user.nationalityId}',
+                                            getNationality(widget
+                                                .vouchersData[index]
+                                                .user
+                                                .nationalityId),
                                             CustomizedTheme.sf_bo_W500_1503),
                                       ],
                                     ),
@@ -389,4 +396,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
 
   Text buildText(String title, TextStyle textStyle) =>
       Text(title, style: textStyle);
-}
+
+  String getNationality(int nationalityId) {
+    int index = countriesController.countries
+        .indexWhere((element) => element.id == nationalityId);
+    return countriesController.countries[index].name;
+  }}

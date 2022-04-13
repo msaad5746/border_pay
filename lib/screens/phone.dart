@@ -15,6 +15,7 @@ class PhonePage extends StatefulWidget {
   String firstName;
   String lastName;
   String phone;
+  String password;
   String areaCode;
   String email;
   String nationality;
@@ -29,6 +30,7 @@ class PhonePage extends StatefulWidget {
       required this.phone,
       required this.areaCode,
       required this.email,
+      required this.password,
       required this.nationality,
       required this.nationalityId,
       required this.eid,
@@ -48,7 +50,7 @@ class _PhonePageState extends State<PhonePage> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      phoneController.text = widget.phone;
+      phoneController.text = widget.areaCode + widget.phone;
     });
     return Scaffold(
       appBar: AppBar(
@@ -87,6 +89,7 @@ class _PhonePageState extends State<PhonePage> {
               height: 48.h,
             ),
             TextFormField(
+              readOnly: true,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(
@@ -140,6 +143,7 @@ class _PhonePageState extends State<PhonePage> {
                                 nationality: widget.nationality,
                                 nationalityId: widget.nationalityId,
                                 phone: phoneController.text,
+                                password: widget.password,
                                 areaCode: widget.areaCode,
                                 email: widget.email,
                                 emiratedpassport: widget.eid,
@@ -170,6 +174,7 @@ class _PhonePageState extends State<PhonePage> {
                                     nationality: widget.nationality,
                                     nationalityId: widget.nationalityId,
                                     phone: widget.phone,
+                                    password: widget.password,
                                     areaCode: widget.areaCode,
                                     email: widget.email,
                                     emiratedpassport: widget.eid,
@@ -194,7 +199,9 @@ class _PhonePageState extends State<PhonePage> {
                         },
                         child: isLoading == false
                             ? Text("Next", style: CustomizedTheme.w_W500_19)
-                            : const CircularProgressIndicator()),
+                            : const CircularProgressIndicator(
+                                color: Colors.white,
+                              )),
                   ),
                 ),
               ],

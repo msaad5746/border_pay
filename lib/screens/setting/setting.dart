@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/screens/host.dart';
 import 'package:borderpay/screens/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +19,13 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   MySharedPreferences storage = MySharedPreferences.instance;
+  UserModel loginData = UserModel();
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +80,10 @@ class _SettingPageState extends State<SettingPage> {
                     height: 59.h,
                     width: 1.sw,
                     child: OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/updateProfile',
+                            arguments: loginData);
+                      },
                       style: ElevatedButton.styleFrom(
                           side: BorderSide(color: CustomizedTheme.primaryColor),
                           primary: CustomizedTheme.white,
@@ -146,7 +159,10 @@ class _SettingPageState extends State<SettingPage> {
                     height: 59.h,
                     width: 1.sw,
                     child: OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/changePassword',
+                            arguments: loginData);
+                      },
                       style: ElevatedButton.styleFrom(
                           side: BorderSide(color: CustomizedTheme.primaryColor),
                           primary: CustomizedTheme.white,
@@ -306,5 +322,13 @@ class _SettingPageState extends State<SettingPage> {
         ),
       ),
     );
+  }
+
+  getUserData() async {
+    bool isUserExist = await storage.containsKey(SharedPrefKeys.user);
+    if (isUserExist) {
+      String user = await storage.getStringValue(SharedPrefKeys.user);
+      loginData = UserModel.fromJson(json.decode(user)['data']);
+    }
   }
 }

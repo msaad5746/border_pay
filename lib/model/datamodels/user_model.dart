@@ -20,7 +20,7 @@ class UserModel {
     this.email = '',
     this.phoneNumber = '',
     this.nationality,
-    this.passport='',
+    this.passport = '',
     this.gender,
     this.tourist,
   });
@@ -28,11 +28,11 @@ class UserModel {
   factory UserModel.fromJson(dynamic json) {
     return UserModel(
       userId: json['id'],
-      firstName: json['firstName']??'',
-      lastName: json['lastName']??'',
-      emirateId: json['emirateId']??'',
-      passport: json['passport']??'',
-      gender: json['gender']??'',
+      firstName: json['firstName'] ?? '',
+      lastName: json['lastName'] ?? '',
+      emirateId: json['emirateId'] ?? '',
+      passport: json['passport'] ?? '',
+      gender: json['gender'] ?? '',
       nationality: json['nationality'] != null
           ? NationalityModel.fromJson(json['nationality'])
           : NationalityModel(),

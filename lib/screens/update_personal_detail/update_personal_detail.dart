@@ -3,43 +3,46 @@ import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
 import 'package:borderpay/model/datamodels/countries_data_model.dart';
+import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class UpdateProfilePage extends StatefulWidget {
+  final UserModel userData;
+
+  const UpdateProfilePage({Key? key, required this.userData}) : super(key: key);
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _UpdateProfilePageState createState() => _UpdateProfilePageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _UpdateProfilePageState extends State<UpdateProfilePage> {
   CountriesController countriesController = Get.find<CountriesController>();
-  TextEditingController fnameController = TextEditingController();
-  TextEditingController lnameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController currentNationality = TextEditingController();
+  late TextEditingController fnameController;
+  late TextEditingController lnameController;
+  late TextEditingController phoneController;
+  late TextEditingController emailController;
+  late TextEditingController currentNationality;
+
   String countryISO = '';
   List<String> localCountries = List.empty(growable: true);
-  String currentAreaCode = '971';
-
-  // var currentNationality;
-  bool allCompleted = false;
+  var currentAreaCode;
+  bool isLoading = false;
 
   @override
   void initState() {
-    // countriesController.fetchCountries();
     getCountries(countriesController.countries);
-    super.initState();
-  }
 
-  Future fetchCountry() async {
-    // await countriesController.fetchCountries();
+    fnameController = TextEditingController(text: widget.userData.firstName);
+    lnameController = TextEditingController(text: widget.userData.lastName);
+    phoneController = TextEditingController();
+    emailController = TextEditingController(text: widget.userData.email);
+    currentNationality = TextEditingController(
+        text: getNationalityName(widget.userData.nationality?.id));
+    super.initState();
   }
 
   @override
@@ -63,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
             ),
           ),
-          title: Text("Register", style: CustomizedTheme.title_p_W500_21),
+          title: Text("Update Profile", style: CustomizedTheme.title_p_W500_21),
           centerTitle: false,
         ),
         body: SingleChildScrollView(
@@ -149,7 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       // buildPhoneDD(),
                       IntlPhoneField(
-                        initialCountryCode: 'AE',
+                        // initialCountryCode: ,
                         controller: phoneController,
                         decoration: InputDecoration(
                           hintText: 'Phone Number',
@@ -174,6 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 25.53.h,
                       ),
                       TextFormField(
+                        readOnly: true,
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -271,40 +275,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
 
                       SizedBox(
-                        height: 35.53.h,
+                        height: 85.53.h,
                       ),
-
-                      TextFormField(
-                        controller: passwordController,
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
-                          labelText: "Password",
-                          labelStyle: CustomizedTheme.b_W400_12,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide: const BorderSide(color: Colors.black),
-                          ),
-                        ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.trim().isEmpty) {
-                            return '';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 50.75.h),
                     ],
                   ),
                 ),
@@ -320,27 +292,16 @@ class _RegisterPageState extends State<RegisterPage> {
                             onPressed: () {
                               if (Utils.registerFormKey.currentState!
                                   .validate()) {
-                                // setState(() {
-                                //   allCompleted = true;
-                                // });
-                                Navigator.pushNamed(context, '/ScanIDPage',
-                                    arguments: RegisterFirst(
-                                      firstName: fnameController.text,
-                                      lastName: lnameController.text,
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                      areaCode: currentAreaCode,
-                                      phone: phoneController.text,
-                                      nationality: currentNationality.text,
-                                      nationalityId:
-                                          getNationalityId(countryISO),
-                                    ));
                               } else {
                                 print("Invalid");
                               }
                             },
-                            child:
-                                Text("Next", style: CustomizedTheme.w_W500_19)),
+                            child: isLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : Text("Update",
+                                    style: CustomizedTheme.w_W500_19)),
                       ),
                     ),
                   ],
@@ -367,88 +328,12 @@ class _RegisterPageState extends State<RegisterPage> {
     return 1;
   }
 
-// Widget buildPhoneDD() {
-//   return Row(
-//                   children: [
-//                     Expanded(
-//                       child: FormField(
-//                         builder: (FormFieldState state) {
-//                           return InputDecorator(
-//                             decoration: InputDecoration(
-//                                 contentPadding: EdgeInsets.only(left: 10.w, bottom: 12.3.h,top: 15.03.h),
-//                                 // label: Text('Nationality',style: TextStyle(color: Colors.black),),
-//                                 // labelStyle: CustomizedTheme.sf_b_W400_17,
-//                                 // hintStyle: CustomizedTheme.sf_b_W400_17,
-//                                 // hintText: 'Nationality',
-//                                 filled: true,
-//                                 fillColor: CustomizedTheme.primaryBold,
-//                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0.r))),
-//                             // isEmpty: _currentSelectedValue == '' ? false:true,
-//                             child: DropdownButtonHideUnderline(
-//                               child: DropdownButton(
-//                                 dropdownColor:CustomizedTheme.primaryBold,
-//                                 iconEnabledColor: CustomizedTheme.white,
-//                                 style: CustomizedTheme.w_W300_12,
-//                                 isExpanded: true,
-//                                 borderRadius: BorderRadius.circular(10.r),
-//                                 menuMaxHeight: 200.h,
-//                                 value: currentAreaCode,
-//                                 isDense: true,
-//                                 onChanged: (newValue) {
-//                                   setState(() {
-//                                     currentAreaCode = newValue;
-//                                   });
-//                                 },
-//                                 items: countriesController.countriesDataList.value.response!.detail.purchasedCoins.map((value) {
-//                                   return DropdownMenuItem(
-//                                     value: value.phonecode,
-//                                     child: FittedBox(
-//                                       child: Row(
-//                                         children: [
-//                                           Image.network(value.flag,height: 19.h,width: 29.w,),
-//                                           SizedBox(width: 5.w,),
-//                                           Text(value.iso,overflow: TextOverflow.ellipsis),
-//                                         ],
-//                                       ),
-//                                     ),
-//                                   );
-//                                 }).toList(),
-//                               ),
-//                             ),
-//                           );
-//                         },
-//                       ),
-//                     ),
-//                     SizedBox(width: 5.w,),
-//                     Expanded(
-//                       flex: 3,
-//                       child: TextFormField(
-//                         controller: phoneController,
-//                         keyboardType: TextInputType.phone,
-//                         decoration: InputDecoration(
-//                           contentPadding: EdgeInsets.only(left: 24.44.w,right: 34.47.w, bottom: 12.3.h,top: 15.03.h),
-//                           border: OutlineInputBorder(
-//                               borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-//                               borderSide: BorderSide(color: Colors.black,width: 1.0.w)),
-//                           labelText: "Phone Number",
-//                           labelStyle: CustomizedTheme.b_W400_12,
-//                           focusedBorder:  OutlineInputBorder(
-//                             borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-//                             borderSide: BorderSide(color: Colors.black),
-//                           ),
-//                         ),
-//                         // controller: passwordController,
-//                         autovalidateMode: AutovalidateMode.onUserInteraction,
-//                         validator: (value) {
-//                           if (value!.trim().isEmpty) {
-//                             return '';
-//                           }
-//                           return null;
-//                         },
-//                       ),
-//                     ),
-//                   ],
-//                 );
-// }
-
+  String getNationalityName(int? id) {
+    if (id != null) {
+      int index = countriesController.countries
+          .indexWhere((element) => element.id == id);
+      return countriesController.countries[index].name;
+    }
+    return '';
+  }
 }
