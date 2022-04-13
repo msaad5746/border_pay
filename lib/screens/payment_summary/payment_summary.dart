@@ -29,7 +29,6 @@ class _PaymentSummaryState extends State<PaymentSummary> {
   UserModel loginData = UserModel();
   MySharedPreferences storage = MySharedPreferences.instance;
   VoucherRepo networkHandler = VoucherRepoImpl();
-  int orderId = Random().nextInt(9999);
   bool isLoading = false;
   List<dynamic> failedTransactions = List.empty(growable: true);
 

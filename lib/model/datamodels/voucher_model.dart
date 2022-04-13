@@ -76,7 +76,8 @@ class VoucherDataModel {
       location: json['location'] != null
           ? LocationModel.fromJson(json['location'])
           : LocationModel(),
-      user: json['user'] != null ? UserModel.fromJson(json['user']) : UserModel(),
+      user:
+          json['user'] != null ? UserModel.fromJson(json['user']) : UserModel(),
       transaction: json['transaction'],
     );
   }
