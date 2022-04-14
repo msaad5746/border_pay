@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
 import 'package:borderpay/model/datamodels/verify_user_model.dart';
@@ -39,6 +41,7 @@ class OTPPage extends StatefulWidget {
 }
 
 class _OTPPageState extends State<OTPPage> {
+  MySharedPreferences storage = MySharedPreferences.instance;
   AuthRepo networkHandler = AuthRepoImpl();
   int _firstDigit = 010;
   int _secondDigit = 010;
@@ -269,6 +272,12 @@ class _OTPPageState extends State<OTPPage> {
                                   if (res != null) {
                                     LoginUserModel loginModel =
                                         LoginUserModel.fromJson(res);
+                                    storage.setStringValue(
+                                        SharedPrefKeys.userEmail,
+                                        widget.email);
+                                    storage.setStringValue(
+                                        SharedPrefKeys.userPassword,
+                                        widget.password);
                                     setState(() {
                                       isLoading = false;
                                     });

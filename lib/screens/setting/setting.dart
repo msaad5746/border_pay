@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/auth/local_auth_api.dart';
 import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/screens/host.dart';
 import 'package:borderpay/screens/welcome_screen.dart';
@@ -20,10 +21,12 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   MySharedPreferences storage = MySharedPreferences.instance;
   UserModel loginData = UserModel();
+  bool isAuthenticated = false;
 
   @override
   void initState() {
     getUserData();
+    isBioMatricEnable();
     super.initState();
   }
 
@@ -179,28 +182,41 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                   ),
                   SizedBox(height: 19.h),
-                  Container(
-                    height: 59.h,
-                    width: 1.sw,
-                    padding: EdgeInsets.symmetric(horizontal: 18.01.w),
-                    decoration: BoxDecoration(
-                        color: CustomizedTheme.white,
-                        borderRadius: BorderRadius.circular(7),
-                        border:
-                            Border.all(color: CustomizedTheme.primaryColor)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 31.7.w),
-                          child: Image.asset('assets/icons/ic_biometric.png'),
-                        ),
-                        Text("Biometric Authentication",
-                            style: CustomizedTheme.sf_bo_W400_1592),
-                        const Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 14.58),
-                          child: Container(
+                  GestureDetector(
+                    onTap: () async {
+                      if (!isAuthenticated) {
+                        isAuthenticated =
+                            await LocalAuthApi.authenticateWithBiometrics();
+                      } else {
+                        isAuthenticated = !isAuthenticated;
+                      }
+                      storage.setBoolValue(
+                          SharedPrefKeys.isBioMatric, isAuthenticated);
+
+                      setState(() {});
+                    },
+                    child: Container(
+                      height: 59.h,
+                      width: 1.sw,
+                      padding: EdgeInsets.symmetric(horizontal: 18.01.w),
+                      decoration: BoxDecoration(
+                          color: CustomizedTheme.white,
+                          borderRadius: BorderRadius.circular(7),
+                          border:
+                              Border.all(color: CustomizedTheme.primaryColor)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 31.7.w),
+                            child: Image.asset('assets/icons/ic_biometric.png'),
+                          ),
+                          Text("Biometric Authentication",
+                              style: CustomizedTheme.sf_bo_W400_1592),
+                          const Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 14.58),
+                            child: Container(
                               height: 17.15,
                               decoration: BoxDecoration(
                                 border: Border.all(
@@ -209,14 +225,30 @@ class _SettingPageState extends State<SettingPage> {
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: FittedBox(
-                                  child: CupertinoSwitch(
-                                      thumbColor: CustomizedTheme.white,
-                                      activeColor: CustomizedTheme.primaryColor,
-                                      trackColor: CustomizedTheme.primaryBright,
-                                      value: true,
-                                      onChanged: (value) {}))),
-                        )
-                      ],
+                                child: CupertinoSwitch(
+                                  thumbColor: CustomizedTheme.white,
+                                  activeColor: CustomizedTheme.primaryColor,
+                                  trackColor: CustomizedTheme.primaryBright,
+                                  value: isAuthenticated,
+                                  onChanged: (value) async {
+                                    if (value) {
+                                      isAuthenticated = await LocalAuthApi
+                                          .authenticateWithBiometrics();
+                                    } else {
+                                      isAuthenticated = value;
+                                    }
+                                    storage.setBoolValue(
+                                        SharedPrefKeys.isBioMatric,
+                                        isAuthenticated);
+
+                                    setState(() {});
+                                  },
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -257,7 +289,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   SizedBox(height: 19.h),
                   GestureDetector(
-                    onTap: () async {
+                    onTap: () {
                       storage.setBoolValue(SharedPrefKeys.isLogin, false);
                       storage.removeValue(SharedPrefKeys.user);
 
@@ -324,11 +356,15 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  getUserData() async {
-    bool isUserExist = await storage.containsKey(SharedPrefKeys.user);
+  getUserData() {
+    bool isUserExist = storage.containsKey(SharedPrefKeys.user);
     if (isUserExist) {
-      String user = await storage.getStringValue(SharedPrefKeys.user);
+      String user = storage.getStringValue(SharedPrefKeys.user);
       loginData = UserModel.fromJson(json.decode(user)['data']);
     }
+  }
+
+  isBioMatricEnable() {
+    isAuthenticated = storage.getBoolValue(SharedPrefKeys.isBioMatric);
   }
 }

@@ -1,3 +1,5 @@
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/auth/local_auth_api.dart';
@@ -15,18 +17,26 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   // final UserDataController userDataController = Get.put(UserDataController());
   AuthRepo networkHandler = AuthRepoImpl();
+  MySharedPreferences storage = MySharedPreferences.instance;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   bool _obscureText = true;
   bool isLoading = false;
+  bool isBioMatric = false;
 
   // Toggles the password show status
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  @override
+  void initState() {
+    isBioMatricEnable();
+    super.initState();
   }
 
   @override
@@ -151,28 +161,64 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   SizedBox(height: 100.16.h),
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 28.52.h),
-                      child: GestureDetector(
-                          onTap: () async {
-                            LocalAuthApi.authenticateWithBiometrics();
-                            print("asdasdas");
-                          },
-                          child: Image.asset('assets/icons/ic_touchid.png')),
-                    ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 40.87.h),
-                      child: GestureDetector(
-                          onTap: () async {
-                            LocalAuthApi.authenticateWithBiometrics();
-                            print("asdasdas");
-                          },
-                          child: Image.asset('assets/icons/ic_faceid.png')),
-                    ),
-                  ),
+                  isBioMatric
+                      ? Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 28.52.h),
+                            child: GestureDetector(
+                                onTap: () async {
+                                  if (!isLoading) {
+                                    bool isAuthenticated = await LocalAuthApi
+                                        .authenticateWithBiometrics();
+                                    if (isAuthenticated) {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      String email = storage.getStringValue(
+                                          SharedPrefKeys.userEmail);
+                                      String password = storage.getStringValue(
+                                          SharedPrefKeys.userPassword);
+                                      await userLogin(
+                                        email,
+                                        password,
+                                      );
+                                    }
+                                  }
+                                },
+                                child:
+                                    Image.asset('assets/icons/ic_touchid.png')),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  isBioMatric
+                      ? Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 40.87.h),
+                            child: GestureDetector(
+                                onTap: () async {
+                                  if (!isLoading) {
+                                    bool isAuthenticated = await LocalAuthApi
+                                        .authenticateWithBiometrics();
+                                    if (isAuthenticated) {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      String email = storage.getStringValue(
+                                          SharedPrefKeys.userEmail);
+                                      String password = storage.getStringValue(
+                                          SharedPrefKeys.userPassword);
+                                      await userLogin(
+                                        email,
+                                        password,
+                                      );
+                                    }
+                                  }
+                                },
+                                child:
+                                    Image.asset('assets/icons/ic_faceid.png')),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                   Row(
                     children: [
                       Expanded(
@@ -183,46 +229,16 @@ class _LoginPageState extends State<LoginPage> {
                               color: CustomizedTheme.colorAccent),
                           child: TextButton(
                               onPressed: () async {
-                                if (emailController.text.isNotEmpty &&
-                                    passwordController.text.isNotEmpty) {
-                                  setState(() {
-                                    isLoading = true;
-                                  });
-                                  Map<String, String> loginData = {
-                                    "email": emailController.text,
-                                    "password": passwordController.text,
-                                  };
-                                  var res =
-                                      await networkHandler.loginUser(loginData);
-                                  if (res != null) {
-                                    LoginUserModel loginModel =
-                                        LoginUserModel.fromJson(res);
-                                    if (loginModel.status) {
-                                    emailController.clear();
-                                    passwordController.clear();
-                                    }
+                                if (!isLoading) {
+                                  if (emailController.text.isNotEmpty &&
+                                      passwordController.text.isNotEmpty) {
                                     setState(() {
-                                      isLoading = false;
+                                      isLoading = true;
                                     });
-
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        '/hostpage',
-                                        (Route<dynamic> route) => false);
-                                  } else {
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: const Text("Login Failed"),
-                                      behavior: SnackBarBehavior.floating,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      backgroundColor:
-                                          CustomizedTheme.voucherUnpaid,
-                                    ));
+                                    await userLogin(
+                                      emailController.text,
+                                      passwordController.text,
+                                    );
                                   }
                                 }
                               },
@@ -243,5 +259,43 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  isBioMatricEnable() {
+    isBioMatric = storage.getBoolValue(SharedPrefKeys.isBioMatric);
+  }
+
+  Future<void> userLogin(String email, String password) async {
+    Map<String, String> loginData = {
+      "email": email,
+      "password": password,
+    };
+    var res = await networkHandler.loginUser(loginData);
+    if (res != null) {
+      LoginUserModel loginModel = LoginUserModel.fromJson(res);
+      if (loginModel.status) {
+        emailController.clear();
+        passwordController.clear();
+      }
+      setState(() {
+        isLoading = false;
+      });
+      storage.setStringValue(SharedPrefKeys.userEmail, email);
+      storage.setStringValue(SharedPrefKeys.userPassword, password);
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/hostpage', (Route<dynamic> route) => false);
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text("Login Failed"),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        backgroundColor: CustomizedTheme.voucherUnpaid,
+      ));
+    }
   }
 }

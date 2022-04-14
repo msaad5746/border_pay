@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
@@ -46,8 +47,10 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                       // Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              '/host/homePage', (route) => false);
+                          Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              RouteConstant.hostPage,
+                              ModalRoute.withName(RouteConstant.hostPage));
                         },
                         child: Padding(
                           padding: EdgeInsets.only(
@@ -378,8 +381,11 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                     borderRadius: BorderRadius.circular(10)),
                               ),
                               onPressed: () {
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    '/host/homePage', (route) => false);
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    RouteConstant.hostPage,
+                                    ModalRoute.withName(
+                                        RouteConstant.hostPage));
                               },
                               child: Text("Download / Print Summary",
                                   style: CustomizedTheme.sf_w_W500_19)),
@@ -401,4 +407,5 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
     int index = countriesController.countries
         .indexWhere((element) => element.id == nationalityId);
     return countriesController.countries[index].name;
-  }}
+  }
+}

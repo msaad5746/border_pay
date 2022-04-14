@@ -433,10 +433,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> getUserData() async {
-    bool isUserExist = await storage.containsKey(SharedPrefKeys.user);
+  void getUserData() {
+    bool isUserExist = storage.containsKey(SharedPrefKeys.user);
     if (isUserExist) {
-      String user = await storage.getStringValue(SharedPrefKeys.user);
+      String user = storage.getStringValue(SharedPrefKeys.user);
       loginData = UserModel.fromJson(json.decode(user)['data']);
     }
   }

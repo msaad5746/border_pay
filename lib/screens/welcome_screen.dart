@@ -172,10 +172,9 @@ class _WelcomePageState extends State<WelcomePage> {
 
   Future<void> getCountries() async {
     await countriesController.fetchCountries();
-    bool? isLogin = await storage.getBoolValue(SharedPrefKeys.isLogin);
-    if (isLogin != null && isLogin) {
-      Navigator.pushNamed(
-          context, '/hostpage',);
+    bool isLogin = storage.getBoolValue(SharedPrefKeys.isLogin);
+    if (isLogin) {
+      Navigator.pushNamed(context, '/hostpage');
     } else {
       setState(() {
         showButtons = true;
