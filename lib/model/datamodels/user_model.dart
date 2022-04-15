@@ -26,6 +26,22 @@ class UserModel {
   });
 
   factory UserModel.fromJson(dynamic json) {
+    if (json['userInfo'] != null) {
+      return UserModel(
+        userId: json['id'],
+        firstName: json['userInfo']['firstName'] ?? '',
+        lastName: json['userInfo']['lastName'] ?? '',
+        emirateId: json['userInfo']['emirateId'] ?? '',
+        passport: json['userInfo']['passport'] ?? '',
+        gender: json['userInfo']['gender'] ?? '',
+        nationality: json['userInfo']['nationality'] != null
+            ? NationalityModel.fromJson(json['nationality'])
+            : NationalityModel(),
+        tourist: json['tourist'],
+        email: json['userInfo']['email'],
+        phoneNumber: json['userInfo']['mobileNumber'],
+      );
+    }
     return UserModel(
       userId: json['id'],
       firstName: json['firstName'] ?? '',
