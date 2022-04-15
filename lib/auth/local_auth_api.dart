@@ -28,21 +28,21 @@ class LocalAuthApi {
       }
     }
     if (Platform.isAndroid) {
-      if (biometricTypes.contains(BiometricType.face)) {
-        // Face ID.
-        isAuthenticated = await localAuthentication.authenticate(
-            localizedReason: 'Scan Face to Proceed',
-            biometricOnly: true,
-            // stickyAuth: true,
-            useErrorDialogs: true);
-      } else if (biometricTypes.contains(BiometricType.fingerprint)) {
-        // Touch ID.
-        isAuthenticated = await localAuthentication.authenticate(
-            localizedReason: 'Scan Fingerprint to Proceed',
-            biometricOnly: true,
-            // stickyAuth: true,
-            useErrorDialogs: true);
-      }
+      // if (biometricTypes.contains(BiometricType.face)) {
+      //   // Face ID.
+      //   isAuthenticated = await localAuthentication.authenticate(
+      //       localizedReason: 'Scan Face to Proceed',
+      //       biometricOnly: true,
+      //       // stickyAuth: true,
+      //       useErrorDialogs: true);
+      // } else if (biometricTypes.contains(BiometricType.fingerprint)) {
+      // Touch ID.
+      isAuthenticated = await localAuthentication.authenticate(
+          localizedReason: 'Scan Fingerprint to Proceed',
+          biometricOnly: true,
+          // stickyAuth: true,
+          useErrorDialogs: true);
+      // }
     }
 
     if (isBiometricSupported && canCheckBiometrics) {

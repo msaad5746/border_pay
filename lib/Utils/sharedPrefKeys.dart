@@ -8,4 +8,5 @@ class SharedPrefKeys{
   static const String userEmail = "userEmail";
   static const String userPassword = "loginCredential";
   static const String isBioMatric = "isBioMatric";
+  static const String isNotificationEnable = "isNotificationEnable";
 }

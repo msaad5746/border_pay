@@ -56,7 +56,10 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.popAndPushNamed(
+                  context,
+                  RouteConstant.settingPage,
+                );
               },
               child: Container(
                   height: 33.73.h,
@@ -367,7 +370,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       Navigator.popAndPushNamed(
         context,
         RouteConstant.settingPage,
-        arguments: loginData,
       );
     } else {
       setState(() {

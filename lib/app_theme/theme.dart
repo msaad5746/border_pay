@@ -86,6 +86,7 @@ class CustomizedTheme{
   static TextStyle roboto_p_W400_14 =TextStyle(color: primaryBold,fontWeight: FontWeight.w400,fontSize: 14.sp, fontFamily: 'roboto');
 
   static TextStyle roboto_w_W500_16 =TextStyle(color: primaryBold,fontWeight: FontWeight.w500,fontSize: 16.sp, fontFamily: 'roboto');
+  static TextStyle roboto_w_W500_17 =TextStyle(color: colorAccentBlack,fontWeight: FontWeight.w500,fontSize: 17.sp, fontFamily: 'roboto');
 
 
 

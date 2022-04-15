@@ -26,12 +26,14 @@ class _SettingPageState extends State<SettingPage> {
   AuthRepo networkHandler = AuthRepoImpl();
   UserModel loginData = UserModel();
   bool isAuthenticated = false;
+  bool isNotificationEnable = false;
   bool isLoading = false;
 
   @override
   void initState() {
     getUserData();
     isBioMetricEnable();
+    isPushNotificationEnable();
     super.initState();
   }
 
@@ -113,28 +115,36 @@ class _SettingPageState extends State<SettingPage> {
                         ),
                       ),
                       SizedBox(height: 19.h),
-                      Container(
-                        height: 59.h,
-                        width: 1.sw,
-                        padding: EdgeInsets.symmetric(horizontal: 18.01.w),
-                        decoration: BoxDecoration(
-                            color: CustomizedTheme.white,
-                            borderRadius: BorderRadius.circular(7),
-                            border: Border.all(
-                                color: CustomizedTheme.primaryColor)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(right: 31.7.w),
-                              child: Image.asset('assets/icons/ic_bell.png'),
-                            ),
-                            Text("Push Notifications",
-                                style: CustomizedTheme.sf_bo_W400_1592),
-                            const Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 14.58),
-                              child: Container(
+                      GestureDetector(
+                        onTap: () {
+                          isNotificationEnable = !isNotificationEnable;
+                          storage.setBoolValue(
+                              SharedPrefKeys.isNotificationEnable,
+                              isNotificationEnable);
+                          setState(() {});
+                        },
+                        child: Container(
+                          height: 59.h,
+                          width: 1.sw,
+                          padding: EdgeInsets.symmetric(horizontal: 18.01.w),
+                          decoration: BoxDecoration(
+                              color: CustomizedTheme.white,
+                              borderRadius: BorderRadius.circular(7),
+                              border: Border.all(
+                                  color: CustomizedTheme.primaryColor)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(right: 31.7.w),
+                                child: Image.asset('assets/icons/ic_bell.png'),
+                              ),
+                              Text("Push Notifications",
+                                  style: CustomizedTheme.sf_bo_W400_1592),
+                              const Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 14.58),
+                                child: Container(
                                   height: 17.15,
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -143,16 +153,25 @@ class _SettingPageState extends State<SettingPage> {
                                     borderRadius: BorderRadius.circular(50),
                                   ),
                                   child: FittedBox(
-                                      child: CupertinoSwitch(
-                                          thumbColor: CustomizedTheme.white,
-                                          activeColor:
-                                              CustomizedTheme.primaryColor,
-                                          trackColor:
-                                              CustomizedTheme.primaryBright,
-                                          value: false,
-                                          onChanged: (value) {}))),
-                            )
-                          ],
+                                    child: CupertinoSwitch(
+                                      thumbColor: CustomizedTheme.white,
+                                      activeColor: CustomizedTheme.primaryColor,
+                                      trackColor: CustomizedTheme.primaryBright,
+                                      value: isNotificationEnable,
+                                      onChanged: (value) {
+                                        storage.setBoolValue(
+                                            SharedPrefKeys.isNotificationEnable,
+                                            value);
+                                        setState(() {
+                                          isNotificationEnable = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -315,7 +334,9 @@ class _SettingPageState extends State<SettingPage> {
                       ),
                       SizedBox(height: 19.h),
                       GestureDetector(
-                        onTap: () => logOutUser,
+                        onTap: () {
+                          logOutUser();
+                        },
                         child: Container(
                           height: 59.h,
                           width: 1.sw,
@@ -395,6 +416,11 @@ class _SettingPageState extends State<SettingPage> {
 
   isBioMetricEnable() {
     isAuthenticated = storage.getBoolValue(SharedPrefKeys.isBioMatric);
+  }
+
+  isPushNotificationEnable() {
+    isNotificationEnable =
+        storage.getBoolValue(SharedPrefKeys.isNotificationEnable);
   }
 
   deleteUser() async {

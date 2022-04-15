@@ -9,6 +9,7 @@ import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -67,106 +68,110 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.36.w),
-            child: Form(
-              key: Utils.loginPageFormKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 68.54.h,
-                  ),
-                  TextFormField(
-                    controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(
-                          left: 24.44.w,
-                          right: 34.47.w,
-                          bottom: 12.3.h,
-                          top: 15.03.h),
-                      border: OutlineInputBorder(
+          child: Container(
+            height: 1.sh,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.36.w),
+              child: Form(
+                key: Utils.loginPageFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 68.54.h,
+                    ),
+                    TextFormField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                            left: 24.44.w,
+                            right: 34.47.w,
+                            bottom: 12.3.h,
+                            top: 15.03.h),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0.r)),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0.w)),
+                        labelText: "Email",
+                        labelStyle: CustomizedTheme.b_W400_12,
+                        focusedBorder: OutlineInputBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(10.0.r)),
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.0.w)),
-                      labelText: "Email",
-                      labelStyle: CustomizedTheme.b_W400_12,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                    ),
-                    // controller: passwordController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.trim().isEmpty) {
-                        return 'Please enter email.';
-                      }
-                      // Check if the entered email has the right format
-                      // if (value.trim().length < 6) {
-                      //   return 'Enter correct number';
-                      // }
-                      // Return null if the entered email is valid
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 35.53.h,
-                  ),
-                  TextFormField(
-                    controller: passwordController,
-                    obscureText: _obscureText,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(
-                          left: 24.44.w,
-                          right: 34.47.w,
-                          bottom: 12.3.h,
-                          top: 15.03.h),
-                      suffixIcon: IconButton(
-                        icon: Image.asset(
-                          'assets/icons/obscure.png',
-                          color: _obscureText
-                              ? Colors.black
-                              : Colors.black.withOpacity(.3),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
-                        onPressed: () {
-                          _toggle();
-                        },
                       ),
-                      border: OutlineInputBorder(
+                      // controller: passwordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return 'Please enter email.';
+                        }
+                        // Check if the entered email has the right format
+                        // if (value.trim().length < 6) {
+                        //   return 'Enter correct number';
+                        // }
+                        // Return null if the entered email is valid
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 35.53.h,
+                    ),
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: _obscureText,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                            left: 24.44.w,
+                            right: 34.47.w,
+                            bottom: 12.3.h,
+                            top: 15.03.h),
+                        suffixIcon: IconButton(
+                          icon: Image.asset(
+                            'assets/icons/obscure.png',
+                            color: _obscureText
+                                ? Colors.black
+                                : Colors.black.withOpacity(.3),
+                          ),
+                          onPressed: () {
+                            _toggle();
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0.r)),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0.w)),
+                        labelText: "Password",
+                        labelStyle: CustomizedTheme.b_W400_12,
+                        focusedBorder: OutlineInputBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(10.0.r)),
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.0.w)),
-                      labelText: "Password",
-                      labelStyle: CustomizedTheme.b_W400_12,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                        borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
                       ),
+                      // controller: passwordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return 'Please enter password';
+                        }
+                        // Check if the entered email has the right format
+                        if (value.trim().length < 6) {
+                          return 'Enter correct password';
+                        }
+                        // Return null if the entered email is valid
+                        return null;
+                      },
                     ),
-                    // controller: passwordController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.trim().isEmpty) {
-                        return 'Please enter password';
-                      }
-                      // Check if the entered email has the right format
-                      if (value.trim().length < 6) {
-                        return 'Enter correct password';
-                      }
-                      // Return null if the entered email is valid
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 100.16.h),
-                  isBioMatric
-                      ? Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 28.52.h),
-                            child: GestureDetector(
+                    SizedBox(height: 100.16.h),
+                    isBioMatric
+                        ? Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 28.52.h),
+                              child: GestureDetector(
                                 onTap: () async {
                                   if (!isLoading) {
                                     bool isAuthenticated = await LocalAuthApi
@@ -186,74 +191,134 @@ class _LoginPageState extends State<LoginPage> {
                                     }
                                   }
                                 },
-                                child:
-                                    Image.asset('assets/icons/ic_touchid.png')),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                  isBioMatric
-                      ? Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 40.87.h),
-                            child: GestureDetector(
-                                onTap: () async {
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: 46.h,
+                                      width: 46.h,
+                                      decoration: BoxDecoration(
+                                        color: CustomizedTheme.colorAccent,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(6.0),
+                                        child: SvgPicture.asset(
+                                          'assets/icons/ic_touchid.svg',
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 12.w,
+                                    ),
+                                    SizedBox(
+                                      width: 150.w,
+                                      child: Text(
+                                        'Login with Touch ID',
+                                        style: CustomizedTheme.roboto_w_W500_17,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                    // isBioMatric
+                    //     ? Center(
+                    //         child: Padding(
+                    //           padding: EdgeInsets.only(bottom: 40.87.h),
+                    //           child: GestureDetector(
+                    //             onTap: () async {
+                    //               if (!isLoading) {
+                    //                 bool isAuthenticated = await LocalAuthApi
+                    //                     .authenticateWithBiometrics();
+                    //                 if (isAuthenticated) {
+                    //                   setState(() {
+                    //                     isLoading = true;
+                    //                   });
+                    //                   String email = storage.getStringValue(
+                    //                       SharedPrefKeys.userEmail);
+                    //                   String password = storage.getStringValue(
+                    //                       SharedPrefKeys.userPassword);
+                    //                   await userLogin(
+                    //                     email,
+                    //                     password,
+                    //                   );
+                    //                 }
+                    //               }
+                    //             },
+                    //             child: Row(
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               crossAxisAlignment: CrossAxisAlignment.center,
+                    //               children: [
+                    //                 Container(
+                    //                   height: 46.h,
+                    //                   width: 46.h,
+                    //                   decoration: BoxDecoration(
+                    //                     color: CustomizedTheme.colorAccent,
+                    //                     borderRadius: BorderRadius.circular(10),
+                    //                   ),
+                    //                   child: Padding(
+                    //                     padding: const EdgeInsets.all(6.0),
+                    //                     child: SvgPicture.asset(
+                    //                       'assets/icons/ic_faceid.svg',
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //                 SizedBox(
+                    //                   width: 12.w,
+                    //                 ),
+                    //                 SizedBox(
+                    //                   width: 150.w,
+                    //                   child: Text(
+                    //                     'Login with Face ID',
+                    //                     style: CustomizedTheme.roboto_w_W500_17,
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       )
+                    //     : const SizedBox.shrink(),
+                    SizedBox(height: 50.16.h),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 61.07.h,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7.r),
+                                color: CustomizedTheme.colorAccent),
+                            child: TextButton(
+                                onPressed: () async {
                                   if (!isLoading) {
-                                    bool isAuthenticated = await LocalAuthApi
-                                        .authenticateWithBiometrics();
-                                    if (isAuthenticated) {
+                                    if (emailController.text.isNotEmpty &&
+                                        passwordController.text.isNotEmpty) {
                                       setState(() {
                                         isLoading = true;
                                       });
-                                      String email = storage.getStringValue(
-                                          SharedPrefKeys.userEmail);
-                                      String password = storage.getStringValue(
-                                          SharedPrefKeys.userPassword);
                                       await userLogin(
-                                        email,
-                                        password,
+                                        emailController.text,
+                                        passwordController.text,
                                       );
                                     }
                                   }
                                 },
-                                child:
-                                    Image.asset('assets/icons/ic_faceid.png')),
+                                child: isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      )
+                                    : Text("Sign in",
+                                        style: CustomizedTheme.w_W500_19)),
                           ),
-                        )
-                      : const SizedBox.shrink(),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 61.07.h,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.r),
-                              color: CustomizedTheme.colorAccent),
-                          child: TextButton(
-                              onPressed: () async {
-                                if (!isLoading) {
-                                  if (emailController.text.isNotEmpty &&
-                                      passwordController.text.isNotEmpty) {
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    await userLogin(
-                                      emailController.text,
-                                      passwordController.text,
-                                    );
-                                  }
-                                }
-                              },
-                              child: isLoading
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    )
-                                  : Text("Sign in",
-                                      style: CustomizedTheme.w_W500_19)),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

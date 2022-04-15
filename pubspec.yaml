@@ -48,6 +48,7 @@ dependencies:
   path_provider: ^2.0.9
   url_launcher: ^6.0.20
   open_mail_app: ^0.4.5
+  flutter_svg: ^0.21.0
 
 dev_dependencies:
   flutter_test:
