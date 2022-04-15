@@ -20,16 +20,20 @@ class NationalityModel {
   });
 
   factory NationalityModel.fromJson(dynamic json) {
-    return NationalityModel(
-      id: json['id'],
-      flag: json['flag'],
-      iso: json['iso'],
-      name: json['name'],
-      nicename: json['nicename'],
-      iso3: json['iso3'],
-      numcode: json['numcode'],
-      phonecode: json['phonecode'],
-    );
+    if (json != null) {
+      return NationalityModel(
+        id: json['id'] ?? 1,
+        flag: json['flag'] ?? '',
+        iso: json['iso'] ?? '',
+        name: json['name'] ?? '',
+        nicename: json['nicename'] ?? '',
+        iso3: json['iso3'] ?? '',
+        numcode: json['numcode'] ?? '',
+        phonecode: json['phonecode'] ?? '',
+      );
+    } else {
+      return NationalityModel();
+    }
   }
 
   Map<String, dynamic> toJson() {
