@@ -10,5 +10,11 @@ mixin AuthRepo {
 
   Future changePassword(body, int userId);
 
+  Future updateUserDetails(int userId, body);
+
+  Future getUserDetails(int userId);
+
+  Future deleteUserAccount(int userId);
+
   Future getCountries();
 }

@@ -1,9 +1,12 @@
+import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
 import 'package:borderpay/model/datamodels/countries_data_model.dart';
 import 'package:borderpay/model/datamodels/user_model.dart';
+import 'package:borderpay/repo/auth_repo/auth_repo.dart';
+import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -21,15 +24,14 @@ class UpdateProfilePage extends StatefulWidget {
 
 class _UpdateProfilePageState extends State<UpdateProfilePage> {
   CountriesController countriesController = Get.find<CountriesController>();
+  AuthRepo networkHandler = AuthRepoImpl();
   late TextEditingController fnameController;
   late TextEditingController lnameController;
-  late TextEditingController phoneController;
-  late TextEditingController emailController;
+  late TextEditingController emirateController;
   late TextEditingController currentNationality;
 
   String countryISO = '';
   List<String> localCountries = List.empty(growable: true);
-  var currentAreaCode;
   bool isLoading = false;
 
   @override
@@ -38,8 +40,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
 
     fnameController = TextEditingController(text: widget.userData.firstName);
     lnameController = TextEditingController(text: widget.userData.lastName);
-    phoneController = TextEditingController();
-    emailController = TextEditingController(text: widget.userData.email);
+    emirateController = TextEditingController(text: widget.userData.emirateId);
     currentNationality = TextEditingController(
         text: getNationalityName(widget.userData.nationality?.id));
     super.initState();
@@ -76,7 +77,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Form(
-                  key: Utils.registerFormKey,
+                  key: Utils.updateFormKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -151,35 +152,31 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                         height: 35.53.h,
                       ),
                       // buildPhoneDD(),
-                      IntlPhoneField(
-                        // initialCountryCode: ,
-                        controller: phoneController,
-                        decoration: InputDecoration(
-                          hintText: 'Phone Number',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0.r)),
-                        ),
-                        onChanged: (phone) {
-                          print(phone.completeNumber);
-                        },
-                        onCountryChanged: (country) {
-                          print('Country changed to: ' + country.name);
-                          print('dialCode changed to: ' + country.dialCode);
-                          setState(() {
-                            currentAreaCode = country.dialCode;
-                          });
-                        },
-                      ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      SizedBox(
-                        height: 25.53.h,
-                      ),
+                      // IntlPhoneField(
+                      //   // initialCountryCode: ,
+                      //   controller: phoneController,
+                      //   decoration: InputDecoration(
+                      //     hintText: 'Phone Number',
+                      //     border: OutlineInputBorder(
+                      //         borderRadius: BorderRadius.circular(10.0.r)),
+                      //   ),
+                      //   onChanged: (phone) {
+                      //     print(phone.completeNumber);
+                      //   },
+                      //   onCountryChanged: (country) {
+                      //     print('Country changed to: ' + country.name);
+                      //     print('dialCode changed to: ' + country.dialCode);
+                      //     setState(() {
+                      //       currentAreaCode = country.dialCode;
+                      //     });
+                      //   },
+                      // ),
+                      // SizedBox(
+                      //   height: 25.53.h,
+                      // ),
                       TextFormField(
-                        readOnly: true,
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
+                        controller: emirateController,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(
                               left: 24.44.w,
@@ -191,7 +188,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                   BorderRadius.all(Radius.circular(10.0.r)),
                               borderSide: BorderSide(
                                   color: Colors.black, width: 1.0.w)),
-                          labelText: "Email ID",
+                          labelText: "Emirate Id",
                           labelStyle: CustomizedTheme.b_W400_12,
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
@@ -202,10 +199,10 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                         // controller: passwordController,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
-                          if (!GetUtils.isEmail(value!)) {
-                            return '';
+                          if (value != null && value.isEmpty) {
+                            return 'Enter Emirate Id';
                           }
-                          // Return null if the entered email is valid
+                          // Return null if the id is valid
                           return null;
                         },
                       ),
@@ -273,9 +270,8 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                           );
                         },
                       ),
-
                       SizedBox(
-                        height: 85.53.h,
+                        height: 45.53.h,
                       ),
                     ],
                   ),
@@ -290,8 +286,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             color: CustomizedTheme.colorAccent),
                         child: TextButton(
                             onPressed: () {
-                              if (Utils.registerFormKey.currentState!
+                              if (Utils.updateFormKey.currentState!
                                   .validate()) {
+                                updateUSer();
                               } else {
                                 print("Invalid");
                               }
@@ -320,12 +317,12 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     }
   }
 
-  getNationalityId(String iso) {
+  getNationalityId() {
     if (countryISO.isNotEmpty) {
-      int index = localCountries.indexWhere((element) => element == iso);
+      int index = localCountries.indexWhere((element) => element == countryISO);
       return countriesController.countries[index].id;
     }
-    return 1;
+    return widget.userData.nationality?.id;
   }
 
   String getNationalityName(int? id) {
@@ -335,5 +332,57 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       return countriesController.countries[index].name;
     }
     return '';
+  }
+
+  updateUSer() async {
+    setState(() {
+      isLoading = true;
+    });
+    Map<String, dynamic> loginData = {
+      "firstName": fnameController.text,
+      "lastName": lnameController.text,
+      "nationalityId": getNationalityId(),
+      "mobileNumber": widget.userData.phoneNumber,
+      "emirateId": emirateController.text,
+    };
+    var res = await networkHandler.updateUserDetails(
+      widget.userData.userId,
+      loginData,
+    );
+    if (res != null) {
+      await networkHandler.getUserDetails(widget.userData.userId);
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Successfully updated!"),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          backgroundColor: CustomizedTheme.voucherPaid,
+        ),
+      );
+      Navigator.popAndPushNamed(
+        context,
+        RouteConstant.settingPage,
+        arguments: loginData,
+      );
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Something went wrong"),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          backgroundColor: CustomizedTheme.voucherUnpaid,
+        ),
+      );
+    }
   }
 }

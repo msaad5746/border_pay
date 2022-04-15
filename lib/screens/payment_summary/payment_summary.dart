@@ -6,6 +6,7 @@ import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/model/arguments/payment_arguments.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
+import 'package:borderpay/model/datamodels/paid_voucher_model.dart';
 import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/model/datamodels/voucher_transaction_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
@@ -171,6 +172,8 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                     var res = await networkHandler
                                         .payVoucherTransaction(response);
                                     if (res != null) {
+                                      PaidVoucherModel data =
+                                          PaidVoucherModel.fromJson(res);
                                       setState(() {
                                         isLoading = false;
                                       });
@@ -179,6 +182,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                           title: 'Successfully Purchased',
                                           message:
                                               'Voucher successfully purchased',
+                                          showCrossIcon: false,
                                           buttonAction: () {
                                             Navigator.pushNamed(
                                               context,
@@ -186,8 +190,8 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                                   ? '/MultiVoucherSuccessPage'
                                                   : '/VoucherSuccessPage',
                                               arguments: widget.data.length > 1
-                                                  ? widget.data
-                                                  : widget.data[0],
+                                                  ? data.data.vouchers
+                                                  : data.data.vouchers[0],
                                             );
                                           });
                                     } else {

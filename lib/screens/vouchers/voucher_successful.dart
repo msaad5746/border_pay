@@ -242,7 +242,7 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                             children: [
                               buildText('Payment Date',
                                   CustomizedTheme.sf_bo_W300_1503),
-                              buildText('21 October, 2021',
+                              buildText(getPaymentDate(widget.data.createdAt),
                                   CustomizedTheme.sf_bo_W500_1503),
                             ],
                           ),
@@ -255,8 +255,8 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                             children: [
                               buildText('Payment Time',
                                   CustomizedTheme.sf_bo_W300_1503),
-                              buildText(
-                                  '09:30 PM', CustomizedTheme.sf_bo_W500_1503),
+                              buildText(getPaymentTime(widget.data.createdAt),
+                                  CustomizedTheme.sf_bo_W500_1503),
                             ],
                           ),
                         ),
@@ -307,10 +307,10 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                                   isLoading = false;
                                 });
                                 Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    RouteConstant.hostPage,
-                                    ModalRoute.withName(
-                                        RouteConstant.hostPage));
+                                  context,
+                                  RouteConstant.hostPage,
+                                  ModalRoute.withName(RouteConstant.hostPage),
+                                );
                               },
                               child: isLoading
                                   ? const CircularProgressIndicator(
@@ -336,5 +336,19 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
     int index = countriesController.countries
         .indexWhere((element) => element.id == nationalityId);
     return countriesController.countries[index].name;
+  }
+
+  String getPaymentTime(String dateTime) {
+    if (dateTime.isNotEmpty) {
+      return dateTime.substring(12, 19);
+    }
+    return '';
+  }
+
+  String getPaymentDate(String dateTime) {
+    if (dateTime.isNotEmpty) {
+      return dateTime.substring(0, 10);
+    }
+    return '';
   }
 }

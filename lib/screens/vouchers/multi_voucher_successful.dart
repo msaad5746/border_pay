@@ -315,7 +315,7 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                       children: [
                                         buildText('Payment Date',
                                             CustomizedTheme.sf_bo_W300_1503),
-                                        buildText('21 October, 2021',
+                                        buildText(getPaymentDate(widget.vouchersData[index].createdAt),
                                             CustomizedTheme.sf_bo_W500_1503),
                                       ],
                                     ),
@@ -331,7 +331,7 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                       children: [
                                         buildText('Payment Time',
                                             CustomizedTheme.sf_bo_W300_1503),
-                                        buildText('09:30 PM',
+                                        buildText(getPaymentTime(widget.vouchersData[index].createdAt),
                                             CustomizedTheme.sf_bo_W500_1503),
                                       ],
                                     ),
@@ -407,5 +407,14 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
     int index = countriesController.countries
         .indexWhere((element) => element.id == nationalityId);
     return countriesController.countries[index].name;
+  }
+
+  String getPaymentTime(String dateTime) {
+    return '09:30 PM';
+  }
+
+  String getPaymentDate(String dateTime) {
+
+    return '21 October, 2021';
   }
 }

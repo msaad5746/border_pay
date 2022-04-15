@@ -1,3 +1,4 @@
+import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/Utils/utils.dart';
@@ -283,7 +284,7 @@ class _LoginPageState extends State<LoginPage> {
       storage.setStringValue(SharedPrefKeys.userEmail, email);
       storage.setStringValue(SharedPrefKeys.userPassword, password);
       Navigator.pushNamedAndRemoveUntil(
-          context, '/hostpage', (Route<dynamic> route) => false);
+          context, RouteConstant.hostPage, (Route<dynamic> route) => false);
     } else {
       setState(() {
         isLoading = false;

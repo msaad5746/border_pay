@@ -117,4 +117,59 @@ class AuthRepoImpl implements AuthRepo {
       return null;
     }
   }
+
+  @override
+  Future deleteUserAccount(int userId) async {
+    try {
+      var response = await networkHelper.get(
+        endPoints.getCountries(),
+      );
+      if (response.statusCode == 200) {
+        print(response.body);
+        return json.decode(response.body);
+      } else {
+        print(response.body);
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future updateUserDetails(int userId, body) async {
+    try {
+      var response = await networkHelper.put(
+        endPoints.updateUserDetails(userId),
+        body: body,
+      );
+      if (response.statusCode == 201) {
+        return json.decode(response.body.toString());
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  @override
+  Future getUserDetails(int userId) async {
+    try {
+      var response = await networkHelper.get(
+        endPoints.updateUserDetails(userId),
+      );
+      if (response.statusCode == 201) {
+        loginController.saveLoginData(json.decode(response.body.toString()));
+        storage.setStringValue(SharedPrefKeys.user, response.body.toString());
+        return json.decode(response.body.toString());
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
 }

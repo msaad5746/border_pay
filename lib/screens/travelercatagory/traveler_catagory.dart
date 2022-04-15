@@ -14,21 +14,21 @@ import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class TravelerCatagory extends StatefulWidget {
+class TravelerCategory extends StatefulWidget {
   final String type;
   final int locationId;
 
-  const TravelerCatagory({
+  const TravelerCategory({
     Key? key,
     required this.type,
     required this.locationId,
   }) : super(key: key);
 
   @override
-  _TravelerCatagoryState createState() => _TravelerCatagoryState();
+  _TravelerCategoryState createState() => _TravelerCategoryState();
 }
 
-class _TravelerCatagoryState extends State<TravelerCatagory> {
+class _TravelerCategoryState extends State<TravelerCategory> {
   VoucherRepo networkHandler = VoucherRepoImpl();
   UserModel loginData = UserModel();
   MySharedPreferences storage = MySharedPreferences.instance;
@@ -241,19 +241,21 @@ class _TravelerCatagoryState extends State<TravelerCatagory> {
 
   getCurrentUserDetails() {
     Vouchers(
-        locationId: widget.locationId,
-        type: widget.type,
-        amount: 0,
-        voucherNo: '',
-        user: BulkVoucherUser(
-          id: loginData.userId,
-          firstName: loginData.firstName,
-          lastName: loginData.lastName,
-          email: loginData.email,
-          emirateId: loginData.emirateId,
-          mobileNumber: loginData.phoneNumber,
-          nationalityId: loginData.nationality?.id ?? -1,
-        ));
+      locationId: widget.locationId,
+      type: widget.type,
+      amount: 0,
+      voucherNo: '',
+      user: BulkVoucherUser(
+        id: loginData.userId,
+        firstName: loginData.firstName,
+        lastName: loginData.lastName,
+        email: loginData.email,
+        emirateId: loginData.emirateId,
+        mobileNumber: loginData.phoneNumber,
+        nationalityId: loginData.nationality?.id ?? -1,
+      ),
+      location: Location(),
+    );
   }
 
   void getUserData() {

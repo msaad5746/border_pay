@@ -5,6 +5,8 @@ class EndPoints {
   final String _verifyUser = '/verify-account';
   final String _loginUser = '/login';
   final String _password = '/password';
+  final String _userInfo = '/user-info';
+  final String _deactivate = '/deactivate';
   final String _voucherList = '/voucher/list';
   final String _company = '/tourist-company';
   final String _vouchers = '/vouchers';
@@ -28,8 +30,16 @@ class EndPoints {
     return _baseURL + _tourist + _loginUser;
   }
 
+  String deleteUser(int id) {
+    return _baseURL + _tourist + '/$id' + _deactivate;
+  }
+
   String changePassword(int id) {
     return _baseURL + _tourist + '/$id' + _password;
+  }
+
+ String updateUserDetails(int id) {
+    return _baseURL + _tourist + '/$id' + _userInfo;
   }
 
   String voucherDetails(int userId, int voucherId) {

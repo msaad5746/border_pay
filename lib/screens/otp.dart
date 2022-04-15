@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
@@ -273,8 +274,7 @@ class _OTPPageState extends State<OTPPage> {
                                     LoginUserModel loginModel =
                                         LoginUserModel.fromJson(res);
                                     storage.setStringValue(
-                                        SharedPrefKeys.userEmail,
-                                        widget.email);
+                                        SharedPrefKeys.userEmail, widget.email);
                                     storage.setStringValue(
                                         SharedPrefKeys.userPassword,
                                         widget.password);
@@ -289,7 +289,7 @@ class _OTPPageState extends State<OTPPage> {
                                         buttonAction: () {
                                           Navigator.pushNamedAndRemoveUntil(
                                               context,
-                                              '/hostpage',
+                                              RouteConstant.hostPage,
                                               (Route<dynamic> route) => false);
                                         });
                                   } else {
