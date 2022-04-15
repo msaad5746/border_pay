@@ -52,7 +52,7 @@ class VoucherDataModel {
   int id;
   String status;
   String type;
-  String amount;
+  int amount;
   LocationModel location;
   UserModel user;
   dynamic transaction;
@@ -61,7 +61,7 @@ class VoucherDataModel {
     this.id = -1,
     this.status = '',
     this.type = '',
-    this.amount = '0.0',
+    this.amount = 0,
     required this.location,
     required this.user,
     this.transaction,
@@ -70,13 +70,14 @@ class VoucherDataModel {
   factory VoucherDataModel.fromJson(dynamic json) {
     return VoucherDataModel(
       id: json['id'],
-      status: json['status'],
-      type: json['type'],
+      status: json['status']??'',
+      type: json['type']??'',
       amount: json['amount'],
       location: json['location'] != null
           ? LocationModel.fromJson(json['location'])
           : LocationModel(),
-      user: json['user'] != null ? UserModel.fromJson(json['user']) : UserModel(),
+      user:
+          json['user'] != null ? UserModel.fromJson(json['user']) : UserModel(),
       transaction: json['transaction'],
     );
   }

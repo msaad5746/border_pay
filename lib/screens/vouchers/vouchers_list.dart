@@ -16,10 +16,15 @@ class _VouchersPageState extends State<VouchersPage> {
   VoucherModel companyVoucherList = VoucherModel();
   VoucherModel individualVoucherList = VoucherModel();
   VoucherRepo repo = VoucherRepoImpl();
+  List<VoucherDataModel> searchCompanyResult = List.empty(growable: true);
+  List<VoucherDataModel> searchIndividualResult = List.empty(growable: true);
+
+  TextEditingController searchController = TextEditingController();
 
   bool isLoading = true;
   bool isError = false;
   int selector = 0;
+  String searchText = '';
 
   @override
   void initState() {
@@ -36,17 +41,6 @@ class _VouchersPageState extends State<VouchersPage> {
         toolbarHeight: 100.h,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        // leadingWidth: 33.73,
-        // leading: Center(
-        //   child: Container(
-        //       height: 33.73,
-        //       width: 33.73,
-        //       // margin: EdgeInsets.symmetric(horizontal: 10),
-        //       decoration: BoxDecoration(
-        //           borderRadius: BorderRadius.circular(9.16),
-        //           color: CustomizedTheme.colorAccent),
-        //       child: BackButton()),
-        // ),
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Text("My Vouchers", style: CustomizedTheme.title_sf_W500_21),
@@ -102,18 +96,17 @@ class _VouchersPageState extends State<VouchersPage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 20.w, vertical: 16.h),
                         child: TextFormField(
-                          // controller: searchController,
-                          onTap: () {
-                            // onSearchTextChanged('');
+                          controller: searchController,
+                          onChanged: (value) => {
+                            setState(() {
+                              onSearchTextChanged(value);
+                            }),
                           },
-                          // onChanged: onSearchTextChanged,
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(13),
                             filled: true,
                             fillColor: Colors.white,
-                            // enabledBorder: ,
-                            prefix: const Icon(Icons.search),
-                            // hintText: searchStudent,
+                            prefixIcon: const Icon(Icons.search),
                             label: const Text("Search"),
                             hintStyle: TextStyle(
                               color: Colors.black,
@@ -194,8 +187,12 @@ class _VouchersPageState extends State<VouchersPage> {
                       ),
                       ...List.generate(
                           selector == 0
-                              ? companyVoucherList.data.length
-                              : individualVoucherList.data.length,
+                              ? searchText.isEmpty
+                                  ? companyVoucherList.data.length
+                                  : searchCompanyResult.length
+                              : searchText.isEmpty
+                                  ? individualVoucherList.data.length
+                                  : searchIndividualResult.length,
                           (index) => Padding(
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 22.0.w),
@@ -205,8 +202,13 @@ class _VouchersPageState extends State<VouchersPage> {
                                       context,
                                       '/DetailedVoucher',
                                       arguments: selector == 0
-                                          ? companyVoucherList.data[index]
-                                          : individualVoucherList.data[index],
+                                          ? searchText.isEmpty
+                                              ? companyVoucherList.data[index]
+                                              : searchCompanyResult[index]
+                                          : searchText.isEmpty
+                                              ? individualVoucherList
+                                                  .data[index]
+                                              : searchIndividualResult[index],
                                     );
                                   },
                                   child: Container(
@@ -229,12 +231,22 @@ class _VouchersPageState extends State<VouchersPage> {
                                           width: 80.w,
                                           child: Text(
                                               selector == 0
-                                                  ? companyVoucherList
-                                                      .data[index].id
-                                                      .toString()
-                                                  : individualVoucherList
-                                                      .data[index].id
-                                                      .toString(),
+                                                  ? searchText.isEmpty
+                                                      ? companyVoucherList
+                                                          .data[index].id
+                                                          .toString()
+                                                      : searchCompanyResult[
+                                                              index]
+                                                          .id
+                                                          .toString()
+                                                  : searchText.isEmpty
+                                                      ? individualVoucherList
+                                                          .data[index].id
+                                                          .toString()
+                                                      : searchIndividualResult[
+                                                              index]
+                                                          .id
+                                                          .toString(),
                                               style: CustomizedTheme
                                                   .sf_pb_W700_13),
                                         ),
@@ -242,14 +254,24 @@ class _VouchersPageState extends State<VouchersPage> {
                                           width: 80.w,
                                           child: Text(
                                               selector == 0
-                                                  ? companyVoucherList
-                                                      .data[index]
-                                                      .location
-                                                      .title
-                                                  : individualVoucherList
-                                                      .data[index]
-                                                      .location
-                                                      .title,
+                                                  ? searchText.isEmpty
+                                                      ? companyVoucherList
+                                                          .data[index]
+                                                          .location
+                                                          .title
+                                                      : searchCompanyResult[
+                                                              index]
+                                                          .location
+                                                          .title
+                                                  : searchText.isEmpty
+                                                      ? individualVoucherList
+                                                          .data[index]
+                                                          .location
+                                                          .title
+                                                      : searchIndividualResult[
+                                                              index]
+                                                          .location
+                                                          .title,
                                               style: CustomizedTheme
                                                   .sf_pb_W300_13),
                                         ),
@@ -257,10 +279,18 @@ class _VouchersPageState extends State<VouchersPage> {
                                           width: 80.w,
                                           child: Text(
                                               selector == 0
-                                                  ? companyVoucherList
-                                                      .data[index].status
-                                                  : individualVoucherList
-                                                      .data[index].status,
+                                                  ? searchText.isEmpty
+                                                      ? companyVoucherList
+                                                          .data[index].status
+                                                      : searchCompanyResult[
+                                                              index]
+                                                          .status
+                                                  : searchText.isEmpty
+                                                      ? individualVoucherList
+                                                          .data[index].status
+                                                      : searchIndividualResult[
+                                                              index]
+                                                          .status,
                                               textAlign: TextAlign.end,
                                               style: CustomizedTheme
                                                   .sf_b_W300_13Paid),
@@ -320,5 +350,40 @@ class _VouchersPageState extends State<VouchersPage> {
             fontSize: 16,
           )),
     );
+  }
+
+  onSearchTextChanged(String value) {
+    searchText = value;
+    searchCompanyResult.clear();
+    searchIndividualResult.clear();
+    if (value.isNotEmpty) {
+      companyVoucherList.data.forEach((element) {
+        if (element.location.title
+                .toUpperCase()
+                .contains(value.toUpperCase()) ||
+            element.status.toUpperCase().contains(value.toUpperCase()) ||
+            element.id == int.parse(value)) {
+          searchCompanyResult.add(element);
+        }
+      });
+      individualVoucherList.data.forEach((element) {
+        if (element.location.title
+                .toUpperCase()
+                .contains(value.toUpperCase()) ||
+            element.status.toUpperCase().contains(value.toUpperCase()) ||
+            element.id == checkInteger(value)) {
+          searchIndividualResult.add(element);
+        }
+      });
+    }
+    setState(() {});
+  }
+
+  int checkInteger(String value) {
+    try {
+      return int.parse(value);
+    } catch (e) {
+      return -1;
+    }
   }
 }

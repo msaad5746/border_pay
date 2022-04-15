@@ -112,7 +112,7 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                         Container(
                           width: 100.w,
                           child: Text(
-                            widget.data.voucherNo,
+                            'L${widget.data.id.toString()}',
                             maxLines: 1,
                             overflow: TextOverflow.clip,
                             style: CustomizedTheme.roboto_w_W700_14,
@@ -223,7 +223,7 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                             children: [
                               buildText('Total Amount',
                                   CustomizedTheme.sf_bo_W300_1503),
-                              buildText(widget.data.amount,
+                              buildText(widget.data.amount.toString(),
                                   CustomizedTheme.sf_bo_W500_1503),
                             ],
                           ),

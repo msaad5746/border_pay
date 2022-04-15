@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/l10n/l10n.dart';
+import 'package:borderpay/model/arguments/payment_arguments.dart';
 import 'package:borderpay/model/arguments/register_datatoserver.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
 import 'package:borderpay/model/arguments/register_two.dart';
@@ -64,18 +65,16 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-
   static void restartApp(BuildContext context) {
     final _MyAppState state =
-    context.findAncestorStateOfType<State<MyApp>>() as _MyAppState;
+        context.findAncestorStateOfType<State<MyApp>>() as _MyAppState;
     state.restartApp();
-
   }
+
   const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
-
 }
 
 class _MyAppState extends State<MyApp> {
@@ -254,17 +253,18 @@ class _MyAppState extends State<MyApp> {
                     page = SettingPage();
                     break;
 
-                //New 2 routing
+                  //New 2 routing
                   case '/TravelerCatagory':
                     DetailsTravelersArg data =
-                    settings.arguments as DetailsTravelersArg;
+                        settings.arguments as DetailsTravelersArg;
                     page = TravelerCatagory(
                       type: data.type,
                       locationId: data.locationId,
                     );
                     break;
                   case '/SingleVoucher':
-                    List<Vouchers> voucher = settings.arguments as List<Vouchers>;
+                    List<Vouchers> voucher =
+                        settings.arguments as List<Vouchers>;
                     page = SingleVoucher(
                       voucher: voucher,
                     );
@@ -287,7 +287,7 @@ class _MyAppState extends State<MyApp> {
                     break;
                   case '/NumberofVoucherPage':
                     DetailsTravelersArg data =
-                    settings.arguments as DetailsTravelersArg;
+                        settings.arguments as DetailsTravelersArg;
                     page = NumberofVoucherPage(
                       type: data.type,
                       locationId: data.locationId,
@@ -295,7 +295,7 @@ class _MyAppState extends State<MyApp> {
                     break;
                   case '/DetailsTravelersPage':
                     DetailsTravelersArg data =
-                    settings.arguments as DetailsTravelersArg;
+                        settings.arguments as DetailsTravelersArg;
                     page = DetailsTravelersPage(
                       travelerCount: data.travelerCount,
                       type: data.type,
@@ -309,14 +309,19 @@ class _MyAppState extends State<MyApp> {
                     );
                     break;
                   case '/DetailedVoucher':
-                    VoucherDataModel data = settings.arguments as VoucherDataModel;
+                    VoucherDataModel data =
+                        settings.arguments as VoucherDataModel;
                     page = DetailedVoucher(
                       voucherDetails: data,
                     );
                     break;
                   case '/paymentGateway':
                     {
-                      page = PaymentGateway();
+                      PaymentArgument arg =
+                          settings.arguments as PaymentArgument;
+                      page = PaymentGateway(
+                        argument: arg,
+                      );
 
                       // if(isSuccessful as bool){
                       //   CustomAlertDialog.baseDialog(
@@ -339,7 +344,6 @@ class _MyAppState extends State<MyApp> {
                 }
                 return PageRouteBuilder(
                     settings: settings, pageBuilder: (_, __, ___) => page);
-
               },
             ),
             designSize: const Size(375, 812),

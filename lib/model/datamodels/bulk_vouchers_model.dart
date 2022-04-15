@@ -67,7 +67,7 @@ class Vouchers {
   final String voucherNo;
   final String status;
   final String type;
-  final String amount;
+  final int amount;
   final String createdByType;
   final int createdById;
   final dynamic createdByAdminId;
@@ -83,7 +83,7 @@ class Vouchers {
     this.voucherNo = '',
     this.status = '',
     this.type = '',
-    this.amount = '',
+    this.amount = 0,
     this.createdByType = '',
     this.createdById = -1,
     this.createdByAdminId,

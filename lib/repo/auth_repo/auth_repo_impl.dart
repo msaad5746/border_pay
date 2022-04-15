@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/controllers/login_controller.dart';
 import 'package:borderpay/model/arguments/register_datatoserver.dart';
@@ -27,9 +28,9 @@ class AuthRepoImpl implements AuthRepo {
         body: body,
       );
       if (response.statusCode == 200) {
-        print(response.body);
         loginController.saveLoginData(json.decode(response.body.toString()));
-        storage.setBoolValue('isLogin', true);
+        storage.setStringValue(SharedPrefKeys.user, response.body.toString());
+        storage.setBoolValue(SharedPrefKeys.isLogin, true);
         return json.decode(response.body.toString());
       } else {
         return response.body;

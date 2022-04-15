@@ -1,3 +1,4 @@
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/screens/host.dart';
@@ -241,9 +242,8 @@ class _SettingPageState extends State<SettingPage> {
                   SizedBox(height: 19.h),
                   GestureDetector(
                     onTap: () async {
-                      bool? isLogin = await storage.getBoolValue('isLogin');
-                      print('isUserLogin=> $isLogin');
-                      storage.setBoolValue('isLogin', false);
+                      storage.setBoolValue(SharedPrefKeys.isLogin, false);
+                      storage.removeValue(SharedPrefKeys.user);
 
                       currentIndex = 0;
 
