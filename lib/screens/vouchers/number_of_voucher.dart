@@ -46,7 +46,6 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
                 child: Text("Select the Number of Travellers",
                     style: CustomizedTheme.sf_b_W500_17),
               ),
-
               Padding(
                 padding: EdgeInsets.only(bottom: 30.h),
                 child: TextFormField(
