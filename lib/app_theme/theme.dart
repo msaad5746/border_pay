@@ -34,11 +34,13 @@ class CustomizedTheme{
   static TextStyle w_W500_2622 =TextStyle(color: white,fontWeight: FontWeight.w500,fontSize: 26.22.sp, fontFamily: 'roboto');
   static TextStyle w_W300_12 =TextStyle(color: white,fontWeight: FontWeight.w300,fontSize: 12.sp, fontFamily: 'roboto');
   static TextStyle w_W500_15 =TextStyle(color: white,fontWeight: FontWeight.w500,fontSize: 15.sp, fontFamily: 'roboto');
+  static TextStyle w_W500_17 =TextStyle(color: white,fontWeight: FontWeight.w500,fontSize: 17.sp, fontFamily: 'roboto');
   static TextStyle w_W500_2617 =TextStyle(color: white,fontWeight: FontWeight.w500,fontSize: 26.17.sp, fontFamily: 'roboto');
   static TextStyle p_W500_19 =TextStyle(color: primaryButton,fontWeight: FontWeight.w500,fontSize: 19.sp, fontFamily: 'roboto');
   static TextStyle poppins_dark_W500_19 =TextStyle(color: primaryButton,fontWeight: FontWeight.w500,fontSize: 19.sp, fontFamily: 'roboto');
   static TextStyle w_W500_19 =TextStyle(color: whiteButton,fontWeight: FontWeight.w500,fontSize: 19.sp, fontFamily: 'roboto');
   static TextStyle sf_b_W400_1237 =TextStyle(color: colorAccentBlack,fontWeight: FontWeight.w400,fontSize: 12.37.sp, fontFamily: 'roboto');
+  static TextStyle sf_b_W400_1137 =TextStyle(color: colorAccent,fontWeight: FontWeight.w700,fontSize: 12.37.sp, fontFamily: 'roboto');
   static TextStyle b_W400_16 =TextStyle(color: colorAccentBlack,fontWeight: FontWeight.w400,fontSize: 16.sp, fontFamily: 'roboto');
   static TextStyle sf_b_W400_15 =TextStyle(color: colorAccentBlack,fontWeight: FontWeight.w400,fontSize: 15.sp, fontFamily: 'roboto');
   static TextStyle sf_w_W500_23 =TextStyle(color: white,fontWeight: FontWeight.w500,fontSize: 23.sp, fontFamily: 'roboto');

@@ -7,6 +7,7 @@ import 'package:borderpay/auth/local_auth_api.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
+import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,28 +45,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100.h,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        // leadingWidth: 33.73,
-        leading: Center(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-                height: 33.73.h,
-                width: 33.73.w,
-                // margin: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.16.r),
-                    color: CustomizedTheme.colorAccent),
-                child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
-          ),
-        ),
-        title: Text("Sign in", style: CustomizedTheme.title_p_W500_21),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -77,6 +56,36 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    verticalSpacer(30),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            height: 37.26.h,
+                            width: 37.26.w,
+                            // margin: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  10.11.r,
+                                ),
+                                color: CustomizedTheme.colorAccent),
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: CustomizedTheme.white,
+                            ),
+                          ),
+                        ),
+                        horizontalSpacer(16),
+                        Text(
+                          "Sign in",
+                          style: CustomizedTheme.title_p_W500_21,
+                        ),
+                      ],
+                    ),
+                    verticalSpacer(16),
                     SizedBox(
                       height: 68.54.h,
                     ),
@@ -90,16 +99,27 @@ class _LoginPageState extends State<LoginPage> {
                             bottom: 12.3.h,
                             top: 15.03.h),
                         border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 1.0.w)),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1.0.w,
+                          ),
+                        ),
                         labelText: "Email",
                         labelStyle: CustomizedTheme.b_W400_12,
                         focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0.r)),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       // controller: passwordController,
@@ -108,11 +128,6 @@ class _LoginPageState extends State<LoginPage> {
                         if (value!.trim().isEmpty) {
                           return 'Please enter email.';
                         }
-                        // Check if the entered email has the right format
-                        // if (value.trim().length < 6) {
-                        //   return 'Enter correct number';
-                        // }
-                        // Return null if the entered email is valid
                         return null;
                       },
                     ),
@@ -124,10 +139,11 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: _obscureText,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(
-                            left: 24.44.w,
-                            right: 34.47.w,
-                            bottom: 12.3.h,
-                            top: 15.03.h),
+                          left: 24.44.w,
+                          right: 34.47.w,
+                          bottom: 12.3.h,
+                          top: 15.03.h,
+                        ),
                         suffixIcon: IconButton(
                           icon: Image.asset(
                             'assets/icons/obscure.png',
@@ -149,7 +165,9 @@ class _LoginPageState extends State<LoginPage> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(10.0.r)),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       // controller: passwordController,
@@ -165,6 +183,16 @@ class _LoginPageState extends State<LoginPage> {
                         // Return null if the entered email is valid
                         return null;
                       },
+                    ),
+                    verticalSpacer(12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        'Forgot password?',
+                        style: CustomizedTheme.sf_b_W400_1137.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                     SizedBox(height: 100.16.h),
                     isBioMatric
