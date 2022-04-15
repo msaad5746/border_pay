@@ -9,6 +9,7 @@ import 'package:borderpay/model/datamodels/voucher_transaction_model.dart';
 import 'package:borderpay/services/network/network_endpoints.dart';
 import 'package:borderpay/services/network/network_helper.dart';
 import 'package:borderpay/services/network/network_helper_impl.dart';
+import 'package:flutter/foundation.dart';
 
 import 'voucher_repo.dart';
 
@@ -35,14 +36,31 @@ class VoucherRepoImpl implements VoucherRepo {
   }
 
   @override
-  Future getVoucherList(id) async {
+  Future getVoucherList({int page = 1, int limit = 15, id}) async {
     try {
+      String url = endPoints.voucherList(1) +
+          "?page=" +
+          page.toString() +
+          "&limit=" +
+          limit.toString();
       var response = await networkHelper.get(
-        endPoints.voucherList(id),
+        url,
       );
       if (response.statusCode == 200) {
-        print(response.body);
-        return VoucherModel.fromJson(json.decode(response.body.toString()));
+        VoucherModel model = VoucherModel.fromJson(
+          json: json.decode(
+            response.body.toString(),
+          ),
+        );
+
+        if (model.data.length > model.limit) {
+          model.lastPage = false;
+          model.page += 1;
+          return model;
+        } else {
+          model.lastPage = true;
+          return model;
+        }
       } else {
         return null;
       }
@@ -58,13 +76,18 @@ class VoucherRepoImpl implements VoucherRepo {
         endPoints.companyVoucherList(id),
       );
       if (response.statusCode == 200) {
-        print(response.body);
-        return VoucherModel.fromJson(json.decode(response.body.toString()));
+        return VoucherModel.fromJson(
+          json: json.decode(
+            response.body.toString(),
+          ),
+        );
       } else {
         return null;
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 

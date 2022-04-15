@@ -138,16 +138,19 @@ class _PhonePageState extends State<PhonePage> {
                               isLoading = true;
                             });
                             RegisterDataServer register = RegisterDataServer(
-                                firstName: widget.firstName,
-                                lastName: widget.lastName,
-                                nationality: widget.nationality,
-                                nationalityId: widget.nationalityId,
-                                phone: phoneController.text,
-                                password: widget.password,
-                                areaCode: widget.areaCode,
-                                email: widget.email,
-                                emiratedpassport: widget.eid,
-                                image: File(widget.image.path));
+                              firstName: widget.firstName,
+                              lastName: widget.lastName,
+                              nationality: widget.nationality,
+                              nationalityId: widget.nationalityId,
+                              phone: "+"+phoneController.text,
+                              password: widget.password,
+                              areaCode: widget.areaCode,
+                              email: widget.email,
+                              emiratedpassport: widget.eid,
+                              image: File(
+                                widget.image.path,
+                              ),
+                            );
                             print(register.phone);
 
                             var res =

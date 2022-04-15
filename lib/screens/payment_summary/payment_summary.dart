@@ -11,6 +11,7 @@ import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/model/datamodels/voucher_transaction_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
+import 'package:borderpay/res/res.dart';
 import 'package:borderpay/screens/payment_web_view.dart';
 import 'package:borderpay/widget/blue_backbutton.dart';
 import 'package:borderpay/widget/custom_alert.dart';
@@ -90,7 +91,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                         children: [
                           Text(
                             "Voucher Number: ",
-                            style: CustomizedTheme.w_W500_17,
+                            style: CustomizedTheme.w_W500_17.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                           SizedBox(
                             width: 150.w,
@@ -103,36 +106,49 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                           ),
                         ],
                       ),
-                      verticalSpacer(28),
+                      verticalSpacer(16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildText(
                             "Traveller Name",
-                            CustomizedTheme.w_W500_17,
+                            CustomizedTheme.w_W500_17.copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: sizes.fontRatio!*17,
+                            ),
                           ),
                           buildText(
                             widget.data[index].user.firstName +
                                 ' ' +
                                 widget.data[index].user.lastName,
-                            CustomizedTheme.w_W500_17,
+                            CustomizedTheme.w_W500_17.copyWith(
+                              fontWeight: FontWeight.w500,
+                              fontSize: sizes.fontRatio!*17,
+                            ),
                           ),
                         ],
                       ),
-                      verticalSpacer(20),
+                      verticalSpacer(16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildText(
                             "Voucher Amount",
-                            CustomizedTheme.w_W500_17,
+                            CustomizedTheme.w_W500_17.copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: sizes.fontRatio!*17,
+                            ),
                           ),
                           buildText(
                             "AED " + widget.data[index].amount.toString(),
-                            CustomizedTheme.w_W500_17,
+                            CustomizedTheme.w_W500_17.copyWith(
+                              fontWeight: FontWeight.w500,
+                              fontSize: sizes.fontRatio!*17,
+                            ),
                           ),
                         ],
                       ),
+                      verticalSpacer(44),
                     ],
                   ),
                 ),
@@ -152,7 +168,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                     ),
                     buildText(
                       "AED " + getTotalAmount().toString(),
-                      CustomizedTheme.w_W500_17,
+                      CustomizedTheme.w_W500_17.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
@@ -164,7 +182,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
             children: [
               Expanded(
                 child: Container(
-                  // width: 154.94,
+                  margin: EdgeInsets.symmetric(
+                    horizontal: horizontalValue(16),
+                  ),
                   height: 56.8.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(11.72.r),
@@ -197,8 +217,6 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                               orderId: res.orderId,
                             ),
                           );
-
-                          print('CBDR=>  $response.');
 
                           if (response != null) {
                             var res = await networkHandler

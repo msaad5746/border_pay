@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
@@ -145,8 +147,8 @@ class _LoginPageState extends State<LoginPage> {
                           top: 15.03.h,
                         ),
                         suffixIcon: IconButton(
-                          icon: Image.asset(
-                            'assets/icons/obscure.png',
+                          icon: SvgPicture.asset(
+                            'assets/svg/eye.svg',
                             color: _obscureText
                                 ? Colors.black
                                 : Colors.black.withOpacity(.3),
@@ -318,29 +320,33 @@ class _LoginPageState extends State<LoginPage> {
                           child: Container(
                             height: 61.07.h,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7.r),
-                                color: CustomizedTheme.colorAccent),
+                              borderRadius: BorderRadius.circular(7.r),
+                              color: CustomizedTheme.colorAccent,
+                            ),
                             child: TextButton(
-                                onPressed: () async {
-                                  if (!isLoading) {
-                                    if (emailController.text.isNotEmpty &&
-                                        passwordController.text.isNotEmpty) {
-                                      setState(() {
-                                        isLoading = true;
-                                      });
-                                      await userLogin(
-                                        emailController.text,
-                                        passwordController.text,
-                                      );
-                                    }
+                              onPressed: () async {
+                                if (!isLoading) {
+                                  if (emailController.text.isNotEmpty &&
+                                      passwordController.text.isNotEmpty) {
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+                                    await userLogin(
+                                      emailController.text,
+                                      passwordController.text,
+                                    );
                                   }
-                                },
-                                child: isLoading
-                                    ? const CircularProgressIndicator(
-                                        color: Colors.white,
-                                      )
-                                    : Text("Sign in",
-                                        style: CustomizedTheme.w_W500_19)),
+                                }
+                              },
+                              child: isLoading
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : Text(
+                                      "Sign in",
+                                      style: CustomizedTheme.w_W500_19,
+                                    ),
+                            ),
                           ),
                         ),
                       ],
@@ -377,7 +383,10 @@ class _LoginPageState extends State<LoginPage> {
       storage.setStringValue(SharedPrefKeys.userEmail, email);
       storage.setStringValue(SharedPrefKeys.userPassword, password);
       Navigator.pushNamedAndRemoveUntil(
-          context, RouteConstant.hostPage, (Route<dynamic> route) => false);
+        context,
+        RouteConstant.hostPage,
+        (Route<dynamic> route) => false,
+      );
     } else {
       setState(() {
         isLoading = false;
