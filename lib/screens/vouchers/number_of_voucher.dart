@@ -46,7 +46,6 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
                 child: Text("Select the Number of Travellers",
                     style: CustomizedTheme.sf_b_W500_17),
               ),
-
               Padding(
                 padding: EdgeInsets.only(bottom: 30.h),
                 child: TextFormField(
@@ -63,7 +62,7 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
                         borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
                         borderSide: BorderSide(
                             color: CustomizedTheme.colorAccent, width: .01)),
-                    labelText: "Number of Voucher",
+                    labelText: "Number of Travellers",
                     labelStyle: TextStyle(color: CustomizedTheme.colorAccent),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0.r)),

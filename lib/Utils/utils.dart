@@ -8,6 +8,7 @@ class Utils{
   static GlobalKey<FormState> loginPageFormKey = GlobalKey<FormState>();
 
   static GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
+  static GlobalKey<FormState> updateFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> passportKey = GlobalKey<FormState>();
   static GlobalKey<FormState> travelerDetailsKey = GlobalKey<FormState>(debugLabel: 'travelerDetailsKey');
 

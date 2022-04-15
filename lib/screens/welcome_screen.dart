@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
@@ -172,10 +173,9 @@ class _WelcomePageState extends State<WelcomePage> {
 
   Future<void> getCountries() async {
     await countriesController.fetchCountries();
-    bool? isLogin = await storage.getBoolValue(SharedPrefKeys.isLogin);
-    if (isLogin != null && isLogin) {
-      Navigator.pushNamed(
-          context, '/hostpage',);
+    bool isLogin = storage.getBoolValue(SharedPrefKeys.isLogin);
+    if (isLogin) {
+      Navigator.popAndPushNamed(context, RouteConstant.hostPage);
     } else {
       setState(() {
         showButtons = true;

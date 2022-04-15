@@ -1,45 +1,49 @@
+import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
 import 'package:borderpay/model/datamodels/countries_data_model.dart';
+import 'package:borderpay/model/datamodels/user_model.dart';
+import 'package:borderpay/repo/auth_repo/auth_repo.dart';
+import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class UpdateProfilePage extends StatefulWidget {
+  final UserModel userData;
+
+  const UpdateProfilePage({Key? key, required this.userData}) : super(key: key);
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _UpdateProfilePageState createState() => _UpdateProfilePageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _UpdateProfilePageState extends State<UpdateProfilePage> {
   CountriesController countriesController = Get.find<CountriesController>();
-  TextEditingController fnameController = TextEditingController();
-  TextEditingController lnameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController currentNationality = TextEditingController();
+  AuthRepo networkHandler = AuthRepoImpl();
+  late TextEditingController fnameController;
+  late TextEditingController lnameController;
+  late TextEditingController emirateController;
+  late TextEditingController currentNationality;
+
   String countryISO = '';
   List<String> localCountries = List.empty(growable: true);
-  String currentAreaCode = '971';
-
-  // var currentNationality;
-  bool allCompleted = false;
+  bool isLoading = false;
 
   @override
   void initState() {
-    // countriesController.fetchCountries();
     getCountries(countriesController.countries);
-    super.initState();
-  }
 
-  Future fetchCountry() async {
-    // await countriesController.fetchCountries();
+    fnameController = TextEditingController(text: widget.userData.firstName);
+    lnameController = TextEditingController(text: widget.userData.lastName);
+    emirateController = TextEditingController(text: widget.userData.emirateId);
+    currentNationality = TextEditingController(
+        text: getNationalityName(widget.userData.nationality?.id));
+    super.initState();
   }
 
   @override
@@ -52,7 +56,10 @@ class _RegisterPageState extends State<RegisterPage> {
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.popAndPushNamed(
+                  context,
+                  RouteConstant.settingPage,
+                );
               },
               child: Container(
                   height: 33.73.h,
@@ -63,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
             ),
           ),
-          title: Text("Register", style: CustomizedTheme.title_p_W500_21),
+          title: Text("Update Profile", style: CustomizedTheme.title_p_W500_21),
           centerTitle: false,
         ),
         body: SingleChildScrollView(
@@ -73,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Form(
-                  key: Utils.registerFormKey,
+                  key: Utils.updateFormKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -148,34 +155,31 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 35.53.h,
                       ),
                       // buildPhoneDD(),
-                      IntlPhoneField(
-                        initialCountryCode: 'AE',
-                        controller: phoneController,
-                        decoration: InputDecoration(
-                          hintText: 'Phone Number',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0.r)),
-                        ),
-                        onChanged: (phone) {
-                          print(phone.completeNumber);
-                        },
-                        onCountryChanged: (country) {
-                          print('Country changed to: ' + country.name);
-                          print('dialCode changed to: ' + country.dialCode);
-                          setState(() {
-                            currentAreaCode = country.dialCode;
-                          });
-                        },
-                      ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      SizedBox(
-                        height: 25.53.h,
-                      ),
+                      // IntlPhoneField(
+                      //   // initialCountryCode: ,
+                      //   controller: phoneController,
+                      //   decoration: InputDecoration(
+                      //     hintText: 'Phone Number',
+                      //     border: OutlineInputBorder(
+                      //         borderRadius: BorderRadius.circular(10.0.r)),
+                      //   ),
+                      //   onChanged: (phone) {
+                      //     print(phone.completeNumber);
+                      //   },
+                      //   onCountryChanged: (country) {
+                      //     print('Country changed to: ' + country.name);
+                      //     print('dialCode changed to: ' + country.dialCode);
+                      //     setState(() {
+                      //       currentAreaCode = country.dialCode;
+                      //     });
+                      //   },
+                      // ),
+                      // SizedBox(
+                      //   height: 25.53.h,
+                      // ),
                       TextFormField(
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
+                        controller: emirateController,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(
                               left: 24.44.w,
@@ -187,7 +191,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   BorderRadius.all(Radius.circular(10.0.r)),
                               borderSide: BorderSide(
                                   color: Colors.black, width: 1.0.w)),
-                          labelText: "Email ID",
+                          labelText: "Emirate Id",
                           labelStyle: CustomizedTheme.b_W400_12,
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
@@ -198,10 +202,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         // controller: passwordController,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
-                          if (!GetUtils.isEmail(value!)) {
-                            return '';
+                          if (value != null && value.isEmpty) {
+                            return 'Enter Emirate Id';
                           }
-                          // Return null if the entered email is valid
+                          // Return null if the id is valid
                           return null;
                         },
                       ),
@@ -269,42 +273,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                         },
                       ),
-
                       SizedBox(
-                        height: 35.53.h,
+                        height: 45.53.h,
                       ),
-
-                      TextFormField(
-                        controller: passwordController,
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
-                          labelText: "Password",
-                          labelStyle: CustomizedTheme.b_W400_12,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide: const BorderSide(color: Colors.black),
-                          ),
-                        ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.trim().isEmpty) {
-                            return '';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 50.75.h),
                     ],
                   ),
                 ),
@@ -318,29 +289,19 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: CustomizedTheme.colorAccent),
                         child: TextButton(
                             onPressed: () {
-                              if (Utils.registerFormKey.currentState!
+                              if (Utils.updateFormKey.currentState!
                                   .validate()) {
-                                // setState(() {
-                                //   allCompleted = true;
-                                // });
-                                Navigator.pushNamed(context, '/ScanIDPage',
-                                    arguments: RegisterFirst(
-                                      firstName: fnameController.text,
-                                      lastName: lnameController.text,
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                      areaCode: currentAreaCode,
-                                      phone: phoneController.text,
-                                      nationality: currentNationality.text,
-                                      nationalityId:
-                                          getNationalityId(countryISO),
-                                    ));
+                                updateUSer();
                               } else {
                                 print("Invalid");
                               }
                             },
-                            child:
-                                Text("Next", style: CustomizedTheme.w_W500_19)),
+                            child: isLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : Text("Update",
+                                    style: CustomizedTheme.w_W500_19)),
                       ),
                     ),
                   ],
@@ -359,96 +320,71 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  getNationalityId(String iso) {
+  getNationalityId() {
     if (countryISO.isNotEmpty) {
-      int index = localCountries.indexWhere((element) => element == iso);
+      int index = localCountries.indexWhere((element) => element == countryISO);
       return countriesController.countries[index].id;
     }
-    return 1;
+    return widget.userData.nationality?.id;
   }
 
-// Widget buildPhoneDD() {
-//   return Row(
-//                   children: [
-//                     Expanded(
-//                       child: FormField(
-//                         builder: (FormFieldState state) {
-//                           return InputDecorator(
-//                             decoration: InputDecoration(
-//                                 contentPadding: EdgeInsets.only(left: 10.w, bottom: 12.3.h,top: 15.03.h),
-//                                 // label: Text('Nationality',style: TextStyle(color: Colors.black),),
-//                                 // labelStyle: CustomizedTheme.sf_b_W400_17,
-//                                 // hintStyle: CustomizedTheme.sf_b_W400_17,
-//                                 // hintText: 'Nationality',
-//                                 filled: true,
-//                                 fillColor: CustomizedTheme.primaryBold,
-//                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0.r))),
-//                             // isEmpty: _currentSelectedValue == '' ? false:true,
-//                             child: DropdownButtonHideUnderline(
-//                               child: DropdownButton(
-//                                 dropdownColor:CustomizedTheme.primaryBold,
-//                                 iconEnabledColor: CustomizedTheme.white,
-//                                 style: CustomizedTheme.w_W300_12,
-//                                 isExpanded: true,
-//                                 borderRadius: BorderRadius.circular(10.r),
-//                                 menuMaxHeight: 200.h,
-//                                 value: currentAreaCode,
-//                                 isDense: true,
-//                                 onChanged: (newValue) {
-//                                   setState(() {
-//                                     currentAreaCode = newValue;
-//                                   });
-//                                 },
-//                                 items: countriesController.countriesDataList.value.response!.detail.purchasedCoins.map((value) {
-//                                   return DropdownMenuItem(
-//                                     value: value.phonecode,
-//                                     child: FittedBox(
-//                                       child: Row(
-//                                         children: [
-//                                           Image.network(value.flag,height: 19.h,width: 29.w,),
-//                                           SizedBox(width: 5.w,),
-//                                           Text(value.iso,overflow: TextOverflow.ellipsis),
-//                                         ],
-//                                       ),
-//                                     ),
-//                                   );
-//                                 }).toList(),
-//                               ),
-//                             ),
-//                           );
-//                         },
-//                       ),
-//                     ),
-//                     SizedBox(width: 5.w,),
-//                     Expanded(
-//                       flex: 3,
-//                       child: TextFormField(
-//                         controller: phoneController,
-//                         keyboardType: TextInputType.phone,
-//                         decoration: InputDecoration(
-//                           contentPadding: EdgeInsets.only(left: 24.44.w,right: 34.47.w, bottom: 12.3.h,top: 15.03.h),
-//                           border: OutlineInputBorder(
-//                               borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-//                               borderSide: BorderSide(color: Colors.black,width: 1.0.w)),
-//                           labelText: "Phone Number",
-//                           labelStyle: CustomizedTheme.b_W400_12,
-//                           focusedBorder:  OutlineInputBorder(
-//                             borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-//                             borderSide: BorderSide(color: Colors.black),
-//                           ),
-//                         ),
-//                         // controller: passwordController,
-//                         autovalidateMode: AutovalidateMode.onUserInteraction,
-//                         validator: (value) {
-//                           if (value!.trim().isEmpty) {
-//                             return '';
-//                           }
-//                           return null;
-//                         },
-//                       ),
-//                     ),
-//                   ],
-//                 );
-// }
+  String getNationalityName(int? id) {
+    if (id != null) {
+      int index = countriesController.countries
+          .indexWhere((element) => element.id == id);
+      return countriesController.countries[index].name;
+    }
+    return '';
+  }
 
+  updateUSer() async {
+    setState(() {
+      isLoading = true;
+    });
+    Map<String, dynamic> loginData = {
+      "firstName": fnameController.text,
+      "lastName": lnameController.text,
+      "nationalityId": getNationalityId(),
+      "mobileNumber": widget.userData.phoneNumber,
+      "emirateId": emirateController.text,
+    };
+    var res = await networkHandler.updateUserDetails(
+      widget.userData.userId,
+      loginData,
+    );
+    if (res != null) {
+      await networkHandler.getUserDetails(widget.userData.userId);
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Successfully updated!"),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          backgroundColor: CustomizedTheme.voucherPaid,
+        ),
+      );
+      Navigator.popAndPushNamed(
+        context,
+        RouteConstant.settingPage,
+      );
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Something went wrong"),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          backgroundColor: CustomizedTheme.voucherUnpaid,
+        ),
+      );
+    }
+  }
 }

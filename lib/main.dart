@@ -6,6 +6,7 @@ import 'package:borderpay/model/arguments/payment_arguments.dart';
 import 'package:borderpay/model/arguments/register_datatoserver.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
 import 'package:borderpay/model/arguments/register_two.dart';
+import 'package:borderpay/screens/change_password/change_password.dart';
 import 'package:borderpay/screens/homepage.dart';
 import 'package:borderpay/screens/host.dart';
 import 'package:borderpay/screens/login.dart';
@@ -14,15 +15,12 @@ import 'package:borderpay/screens/phone.dart';
 import 'package:borderpay/screens/register_page.dart';
 import 'package:borderpay/screens/resident.dart';
 import 'package:borderpay/screens/scan_id.dart';
+import 'package:borderpay/screens/update_profile/update_profile.dart';
 import 'package:borderpay/screens/vouchers/detailed_voucher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:borderpay/Route_Constants/route_constants.dart';
-import 'package:borderpay/Utils/utils.dart';
-import 'package:borderpay/model/arguments/register_datatoserver.dart';
-import 'package:borderpay/model/arguments/register_first.dart';
-import 'package:borderpay/model/arguments/register_two.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
 import 'package:borderpay/model/datamodels/location_model.dart';
 import 'package:borderpay/model/arguments/traveler_details_arguments.dart';
@@ -33,10 +31,6 @@ import 'package:borderpay/screens/pay/payment_refund.dart';
 import 'package:borderpay/screens/pay/payment_successful.dart';
 import 'package:borderpay/screens/payment_summary/payment_summary.dart';
 import 'package:borderpay/screens/payment_web_view.dart';
-import 'package:borderpay/screens/phone.dart';
-import 'package:borderpay/screens/register_page.dart';
-import 'package:borderpay/screens/resident.dart';
-import 'package:borderpay/screens/scan_id.dart';
 import 'package:borderpay/screens/setting/setting.dart';
 import 'package:borderpay/screens/support/support.dart';
 import 'package:borderpay/screens/topup/topup_details.dart';
@@ -50,9 +44,8 @@ import 'package:borderpay/screens/vouchers/single_voucher.dart';
 import 'package:borderpay/screens/vouchers/voucher_successful.dart';
 import 'package:borderpay/screens/vouchers/voucher_type.dart';
 import 'package:borderpay/screens/vouchers/vouchers_list.dart';
-import 'package:flutter/material.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
+import 'model/datamodels/user_model.dart';
 import 'screens/welcome_screen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -156,7 +149,7 @@ class _MyAppState extends State<MyApp> {
               //       ResponsiveBreakpoint.autoScale(2460, name: '4K'),
               //     ],
               //     background: Container(color: Color(0xFFF5F5F5))),
-              title: 'Flutter Demo',
+              title: 'BorderPay',
               theme: ThemeData(
                 primarySwatch: Colors.blue,
               ),
@@ -173,6 +166,13 @@ class _MyAppState extends State<MyApp> {
                   case '/RegisterPage':
                     page = RegisterPage();
                     break;
+
+                  case '/updateProfile':
+                    UserModel data = settings.arguments as UserModel;
+                    page = UpdateProfilePage(
+                      userData: data,
+                    );
+                    break;
                   case '/ScanIDPage':
                     RegisterFirst data = settings.arguments as RegisterFirst;
                     page = ScanIDPage(
@@ -180,6 +180,7 @@ class _MyAppState extends State<MyApp> {
                       lastName: data.lastName,
                       areaCode: data.areaCode,
                       phone: data.phone,
+                      password: data.password,
                       email: data.email,
                       nationality: data.nationality,
                       nationalityId: data.nationalityId,
@@ -194,6 +195,7 @@ class _MyAppState extends State<MyApp> {
                       phone: data.phone,
                       email: data.email,
                       nationality: data.nationality,
+                      password: data.password,
                       nationalityId: data.nationalityId,
                       eid: data.eid,
                       image: data.image,
@@ -207,16 +209,23 @@ class _MyAppState extends State<MyApp> {
                       lastName: data.lastName,
                       areaCode: data.areaCode,
                       phone: data.phone,
+                      password: data.password,
                       email: data.email,
                       nationality: data.nationality,
                       emiratedpassport: data.emiratedpassport,
                       image: data.image,
                     );
                     break;
+                  case '/changePassword':
+                    UserModel data = settings.arguments as UserModel;
+                    page = ChangePasswordPage(
+                      userData: data,
+                    );
+                    break;
                   case '/login':
                     page = LoginPage();
                     break;
-                  case '/hostpage':
+                  case RouteConstant.hostPage:
                     page = HostPage();
                     break;
                   case RouteConstant.homePage:
@@ -257,7 +266,7 @@ class _MyAppState extends State<MyApp> {
                   case '/TravelerCatagory':
                     DetailsTravelersArg data =
                         settings.arguments as DetailsTravelersArg;
-                    page = TravelerCatagory(
+                    page = TravelerCategory(
                       type: data.type,
                       locationId: data.locationId,
                     );

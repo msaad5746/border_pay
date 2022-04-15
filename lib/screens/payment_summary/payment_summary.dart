@@ -6,6 +6,7 @@ import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/model/arguments/payment_arguments.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
+import 'package:borderpay/model/datamodels/paid_voucher_model.dart';
 import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/model/datamodels/voucher_transaction_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
@@ -146,51 +147,75 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                   borderRadius: BorderRadius.circular(10)),
                             ),
                             onPressed: () async {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              var res =
-                                  await networkHandler.createVoucherTransaction(
-                                getVoucherIds(),
-                                loginData.userId,
-                              );
-                              if (res != null) {
+                              if (!isLoading) {
                                 setState(() {
-                                  isLoading = false;
+                                  isLoading = true;
                                 });
-                                final response = await Navigator.pushNamed(
-                                  context,
-                                  PaymentGateway.route,
-                                  arguments: PaymentArgument(
-                                    payment: getTotalAmount(),
-                                    orderId: res.orderId,
-                                  ),
+                                var res = await networkHandler
+                                    .createVoucherTransaction(
+                                  getVoucherIds(),
+                                  loginData.userId,
                                 );
+                                if (res != null) {
+                                  final response = await Navigator.pushNamed(
+                                    context,
+                                    PaymentGateway.route,
+                                    arguments: PaymentArgument(
+                                      payment: getTotalAmount(),
+                                      orderId: res.orderId,
+                                    ),
+                                  );
 
-                                print('CBDR=>  $response.');
+                                  print('CBDR=>  $response.');
 
-                                if (response != null) {
-                                  var res = await networkHandler
-                                      .payVoucherTransaction(response);
-                                  if (res != null) {
-                                    CustomAlertDialog.baseDialog(
-                                        context: context,
-                                        title: 'Successfully Purchased',
-                                        message:
-                                            'Voucher successfully purchased',
-                                        buttonAction: () {
-                                          Navigator.pushNamed(
-                                            context,
-                                            widget.data.length > 1
-                                                ? '/MultiVoucherSuccessPage'
-                                                : '/VoucherSuccessPage',
-                                            arguments: widget.data.length > 1
-                                                ? widget.data
-                                                : widget.data[0],
-                                          );
-                                        });
+                                  if (response != null) {
+                                    var res = await networkHandler
+                                        .payVoucherTransaction(response);
+                                    if (res != null) {
+                                      PaidVoucherModel data =
+                                          PaidVoucherModel.fromJson(res);
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                      CustomAlertDialog.baseDialog(
+                                          context: context,
+                                          title: 'Successfully Purchased',
+                                          message:
+                                              'Voucher successfully purchased',
+                                          showCrossIcon: false,
+                                          buttonAction: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              widget.data.length > 1
+                                                  ? '/MultiVoucherSuccessPage'
+                                                  : '/VoucherSuccessPage',
+                                              arguments: widget.data.length > 1
+                                                  ? data.data.vouchers
+                                                  : data.data.vouchers[0],
+                                            );
+                                          });
+                                    } else {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                      failedTransactions.add(response);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: const Text(
+                                            "Unable to complete your request!"),
+                                        behavior: SnackBarBehavior.floating,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                        ),
+                                        backgroundColor:
+                                            CustomizedTheme.voucherUnpaid,
+                                      ));
+                                    }
                                   } else {
-                                    failedTransactions.add(response);
+                                    setState(() {
+                                      isLoading = false;
+                                    });
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
                                       content: const Text(
@@ -204,10 +229,12 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                     ));
                                   }
                                 } else {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content: const Text(
-                                        "Unable to complete your request!"),
+                                    content: const Text("Something went wrong"),
                                     behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),
@@ -216,17 +243,6 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                         CustomizedTheme.voucherUnpaid,
                                   ));
                                 }
-                              } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: const Text("Something went wrong"),
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  backgroundColor:
-                                      CustomizedTheme.voucherUnpaid,
-                                ));
                               }
                             },
                             child: isLoading
@@ -267,10 +283,10 @@ class _PaymentSummaryState extends State<PaymentSummary> {
     return VoucherTransactionRequest(ids);
   }
 
-  Future<void> getUserData() async {
-    bool isUserExist = await storage.containsKey(SharedPrefKeys.user);
+  void getUserData() {
+    bool isUserExist = storage.containsKey(SharedPrefKeys.user);
     if (isUserExist) {
-      String user = await storage.getStringValue(SharedPrefKeys.user);
+      String user = storage.getStringValue(SharedPrefKeys.user);
       loginData = UserModel.fromJson(json.decode(user)['data']);
     }
   }

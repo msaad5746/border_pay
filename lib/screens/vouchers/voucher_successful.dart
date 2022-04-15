@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
+import 'package:borderpay/screens/download_pdf/download_pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +21,7 @@ class VoucherSuccessPage extends StatefulWidget {
 
 class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
   CountriesController countriesController = Get.find<CountriesController>();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,10 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                       // Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              RouteConstant.hostPage,
+                              ModalRoute.withName(RouteConstant.hostPage));
                         },
                         child: Padding(
                           padding: EdgeInsets.only(
@@ -236,7 +242,7 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                             children: [
                               buildText('Payment Date',
                                   CustomizedTheme.sf_bo_W300_1503),
-                              buildText('21 October, 2021',
+                              buildText(getPaymentDate(widget.data.createdAt),
                                   CustomizedTheme.sf_bo_W500_1503),
                             ],
                           ),
@@ -249,8 +255,8 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                             children: [
                               buildText('Payment Time',
                                   CustomizedTheme.sf_bo_W300_1503),
-                              buildText(
-                                  '09:30 PM', CustomizedTheme.sf_bo_W500_1503),
+                              buildText(getPaymentTime(widget.data.createdAt),
+                                  CustomizedTheme.sf_bo_W500_1503),
                             ],
                           ),
                         ),
@@ -270,7 +276,6 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                     ),
                   ),
                 ),
-                //Button continuew to home
                 Padding(
                   padding:
                       EdgeInsets.symmetric(vertical: 50.h, horizontal: 20.w),
@@ -291,12 +296,28 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)),
                               ),
-                              onPressed: () {
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    '/host/homePage', (route) => false);
+                              onPressed: () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                final pdfFile =
+                                    await PdfApi.generateCenteredText(
+                                        widget.data);
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  RouteConstant.hostPage,
+                                  ModalRoute.withName(RouteConstant.hostPage),
+                                );
                               },
-                              child: Text("Download / Print Summary",
-                                  style: CustomizedTheme.sf_w_W500_19)),
+                              child: isLoading
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : Text("Download / Print Summary",
+                                      style: CustomizedTheme.sf_w_W500_19)),
                         ),
                       ),
                     ],
@@ -315,5 +336,19 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
     int index = countriesController.countries
         .indexWhere((element) => element.id == nationalityId);
     return countriesController.countries[index].name;
+  }
+
+  String getPaymentTime(String dateTime) {
+    if (dateTime.isNotEmpty) {
+      return dateTime.substring(12, 19);
+    }
+    return '';
+  }
+
+  String getPaymentDate(String dateTime) {
+    if (dateTime.isNotEmpty) {
+      return dateTime.substring(0, 10);
+    }
+    return '';
   }
 }

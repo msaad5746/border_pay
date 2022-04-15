@@ -65,9 +65,10 @@ class _VouchersPageState extends State<VouchersPage> {
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      primary: selector == 0
-                                          ? CustomizedTheme.primaryColor
-                                          : CustomizedTheme.colorAccent),
+                                    primary: selector == 0
+                                        ? CustomizedTheme.colorAccent
+                                        : CustomizedTheme.primaryColor,
+                                  ),
                                   child: Text('Company Voucher',
                                       style: CustomizedTheme.w_W300_12)),
                             ),
@@ -78,8 +79,8 @@ class _VouchersPageState extends State<VouchersPage> {
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     primary: selector == 1
-                                        ? CustomizedTheme.primaryColor
-                                        : CustomizedTheme.colorAccent,
+                                        ? CustomizedTheme.colorAccent
+                                        : CustomizedTheme.primaryColor,
                                   ),
                                   onPressed: () {
                                     setState(() {

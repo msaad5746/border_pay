@@ -77,6 +77,7 @@ class Vouchers {
   final String createdAt;
   final String updatedAt;
   final BulkVoucherUser user;
+  final Location location;
 
   Vouchers({
     this.id = -1,
@@ -93,6 +94,7 @@ class Vouchers {
     this.createdAt = '',
     this.updatedAt = '',
     required this.user,
+    required this.location,
   });
 
   factory Vouchers.fromJson(dynamic json) {
@@ -113,11 +115,14 @@ class Vouchers {
       user: json['user'] != null
           ? BulkVoucherUser.fromJson(json['user'])
           : BulkVoucherUser(),
+      location: json['location'] != null
+          ? Location.fromJson(json['location'])
+          : Location(),
     );
   }
 }
 
-/// id : 45
+/// id : 45  Location(id: -1, title: '', image: '', active: true),
 /// email : "traveler1@example.com"
 /// mobileNumber : "12312312213"
 /// firstName : "Traveler"
@@ -173,6 +178,34 @@ class BulkVoucherUser {
       nationalityId: json['nationalityId'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
+    );
+  }
+}
+
+/// id : 1
+/// title : "Port Rashid 1"
+/// image : "/images/locations/port-rashid.png"
+/// active : true
+
+class Location {
+  final int id;
+  final String title;
+  final String image;
+  final bool active;
+
+  Location({
+    this.id = -1,
+    this.title = '',
+    this.image = '',
+    this.active = false,
+  });
+
+  factory Location.fromJson(dynamic json) {
+    return Location(
+      id: json['id'],
+      title: json['title'],
+      image: json['image'],
+      active: json['active'],
     );
   }
 }

@@ -387,6 +387,7 @@ class CustomAlertDialog {
     required String title,
     required String message,
     required Function buttonAction,
+    bool showCrossIcon = true,
   }) {
     showDialog(
         barrierDismissible: false,
@@ -409,21 +410,27 @@ class CustomAlertDialog {
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(_);
-                        buttonAction.call();
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
                             top: 18.h, right: 18.w, bottom: 10.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Icon(
-                              Icons.clear,
-                              color: CustomizedTheme.white,
-                              size: 18.sp,
-                            ),
-                          ],
-                        ),
+                        child: showCrossIcon
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(_);
+                                    },
+                                    child: Icon(
+                                      Icons.clear,
+                                      color: CustomizedTheme.white,
+                                      size: 18.sp,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
                       ),
                     ),
                     SizedBox(

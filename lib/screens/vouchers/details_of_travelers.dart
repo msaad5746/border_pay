@@ -1,9 +1,14 @@
+import 'dart:convert';
+
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
 import 'package:borderpay/model/datamodels/countries_data_model.dart';
 import 'package:borderpay/model/datamodels/create_bulk_voucher_model.dart';
+import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/widget/blue_backbutton.dart';
@@ -32,6 +37,7 @@ class DetailsTravelersPage extends StatefulWidget {
 class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
   VoucherRepo networkHandler = VoucherRepoImpl();
   CountriesController countriesController = Get.find<CountriesController>();
+  MySharedPreferences storage = MySharedPreferences.instance;
   List<String> localCountries = List.empty(growable: true);
 
   List<TextEditingController> firstNameCtrl = List.empty(growable: true);
@@ -42,8 +48,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
   List<TextEditingController> emiratesIdCtrl = List.empty(growable: true);
   List<int> nationalityId = List.empty(growable: true);
   var currentAreaCode;
+  UserModel loginData = UserModel();
+
   bool isLoading = false;
-  final _formKey = GlobalKey<FormState>(debugLabel: 'travelerKey');
+  bool useMyDetail = false;
 
   @override
   void initState() {
@@ -54,10 +62,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
       emailCtrl.add(TextEditingController());
       nationalityCtrl.add(TextEditingController());
       emiratesIdCtrl.add(TextEditingController());
-      nationalityId.add(-1);
+      nationalityId.add(0);
     }
     getCountries(countriesController.countries);
-
+    getUserData();
     super.initState();
   }
 
@@ -127,8 +135,17 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                               ListTileControlAffinity.leading,
                                           contentPadding: EdgeInsets.symmetric(
                                               vertical: 0.h, horizontal: 0.w),
-                                          value: true,
-                                          onChanged: (asd) {},
+                                          value: useMyDetail,
+                                          onChanged: (value) {
+                                            useMyDetail = !useMyDetail;
+                                            if (value != null && value) {
+                                              filledUserDetails();
+                                              setState(() {});
+                                            } else {
+                                              unfilledUserDetails();
+                                              setState(() {});
+                                            }
+                                          },
                                           title: Text(
                                             'Your existing details will be utilised',
                                             style: CustomizedTheme
@@ -559,7 +576,9 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                               // }
                             },
                             child: isLoading
-                                ? const CircularProgressIndicator()
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
                                 : Text("Next",
                                     style: CustomizedTheme.sf_w_W500_19)),
                       ),
@@ -586,5 +605,42 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
     int index = (countriesController.countries
         .indexWhere((element) => element.iso == countryCode));
     return countriesController.countries[index].id;
+  }
+
+  String getNationalityName(int? id) {
+    if (id != null) {
+      int index = countriesController.countries
+          .indexWhere((element) => element.id == id);
+      return countriesController.countries[index].name;
+    }
+    return '';
+  }
+
+  getUserData() {
+    bool isUserExist = storage.containsKey(SharedPrefKeys.user);
+    if (isUserExist) {
+      String user = storage.getStringValue(SharedPrefKeys.user);
+      loginData = UserModel.fromJson(json.decode(user)['data']);
+    }
+  }
+
+  void filledUserDetails() {
+    firstNameCtrl[0].text = loginData.firstName;
+    lastNameCtrl[0].text = loginData.lastName;
+    phoneCtrl[0].text = loginData.phoneNumber;
+    emailCtrl[0].text = loginData.email;
+    nationalityCtrl[0].text = getNationalityName(loginData.nationality?.id);
+    emiratesIdCtrl[0].text = loginData.emirateId;
+    nationalityId[0] = loginData.nationality?.id ?? 0;
+  }
+
+  void unfilledUserDetails() {
+    firstNameCtrl[0].text = '';
+    lastNameCtrl[0].text = '';
+    phoneCtrl[0].text = '';
+    emailCtrl[0].text = '';
+    nationalityCtrl[0].text = '';
+    emiratesIdCtrl[0].text = '';
+    nationalityId[0] = 0;
   }
 }
