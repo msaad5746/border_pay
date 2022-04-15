@@ -79,17 +79,18 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                               });
                             },
                             child: SizedBox(
-                                height: 150.h,
-                                // width: 150.w,
-                                child: selection == 1
-                                    ? Image.asset(
-                                        'assets/icons/ic_single_active.png',
-                                        fit: BoxFit.fill,
-                                      )
-                                    : Image.asset(
-                                        'assets/icons/ic_single.png',
-                                        fit: BoxFit.fill,
-                                      )),
+                              height: 150.h,
+                              // width: 150.w,
+                              child: selection == 1
+                                  ? Image.asset(
+                                      'assets/icons/ic_single_active.png',
+                                      fit: BoxFit.fill,
+                                    )
+                                  : Image.asset(
+                                      'assets/icons/ic_single.png',
+                                      fit: BoxFit.fill,
+                                    ),
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -134,44 +135,46 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                                         // border: Border.all(color: CustomizedTheme.primaryColor,width: .5),
                                         color: CustomizedTheme.colorAccent),
                                     child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary: CustomizedTheme.colorAccent,
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r)),
-                                        ),
-                                        onPressed: () {
-                                          if (selection == 2) {
-                                            Navigator.pushNamed(
-                                                context, '/NumberofVoucherPage',
+                                      style: ElevatedButton.styleFrom(
+                                        primary: CustomizedTheme.colorAccent,
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.r)),
+                                      ),
+                                      onPressed: () {
+                                        if (selection == 2) {
+                                          Navigator.pushNamed(
+                                              context, '/NumberofVoucherPage',
+                                              arguments: DetailsTravelersArg(
+                                                type: widget.type,
+                                                locationId: widget.locationId,
+                                              ));
+                                        } else if (selection == 1) {
+                                          CustomAlertDialog.twoActionDialog(
+                                            context: context,
+                                            buttonAction1: () {
+                                              createVoucher();
+                                            },
+                                            buttonAction2: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                '/DetailsTravelersPage',
                                                 arguments: DetailsTravelersArg(
+                                                  travelerCount: 1,
                                                   type: widget.type,
                                                   locationId: widget.locationId,
-                                                ));
-                                          } else if (selection == 1) {
-                                            CustomAlertDialog.twoActionDialog(
-                                              context: context,
-                                              buttonAction1: () {
-                                                createVoucher();
-                                              },
-                                              buttonAction2: () {
-                                                Navigator.pushNamed(context,
-                                                    '/DetailsTravelersPage',
-                                                    arguments:
-                                                        DetailsTravelersArg(
-                                                      travelerCount: 1,
-                                                      type: widget.type,
-                                                      locationId:
-                                                          widget.locationId,
-                                                    ));
-                                              },
-                                            );
-                                          }
-                                        },
-                                        child: Text("Next",
-                                            style:
-                                                CustomizedTheme.sf_w_W500_19)),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        }
+                                      },
+                                      child: Text(
+                                        "Next",
+                                        style: CustomizedTheme.sf_w_W500_19,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],

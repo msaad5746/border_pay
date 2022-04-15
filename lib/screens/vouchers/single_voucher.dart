@@ -1,12 +1,8 @@
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
-import 'package:borderpay/controllers/login_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
-import 'package:borderpay/model/datamodels/create_bulk_voucher_model.dart';
-import 'package:borderpay/model/datamodels/voucher_transaction_model.dart';
-import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
-import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/widget/blue_backbutton.dart';
+import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -156,16 +152,7 @@ class _SingleVoucherState extends State<SingleVoucher> {
                         ],
                       ),
                     ),
-                    Container(
-                        height: 117.h,
-                        width: 117.w,
-                        color: CustomizedTheme.white,
-                        padding: const EdgeInsets.all(15),
-                        child: Image.asset('assets/icons/ic_QR.png',
-                            fit: BoxFit.fill)),
-                    SizedBox(
-                      height: 24.h,
-                    ),
+                    verticalSpacer(100),
                   ],
                 ),
               ),
@@ -183,18 +170,21 @@ class _SingleVoucherState extends State<SingleVoucher> {
                             // border: Border.all(color: CustomizedTheme.primaryColor,width: .5),
                             color: CustomizedTheme.colorAccent),
                         child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: CustomizedTheme.colorAccent,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.r)),
-                            ),
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/PaymentSummary',
-                                  arguments: widget.voucher);
-                            },
-                            child: Text("Continue",
-                                style: CustomizedTheme.sf_w_W500_19)),
+                          style: ElevatedButton.styleFrom(
+                            primary: CustomizedTheme.colorAccent,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.r)),
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/PaymentSummary',
+                                arguments: widget.voucher);
+                          },
+                          child: Text(
+                            "Continue",
+                            style: CustomizedTheme.sf_w_W500_19,
+                          ),
+                        ),
                       ),
                     ),
                   ],

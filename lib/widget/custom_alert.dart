@@ -532,8 +532,7 @@ class CustomAlertDialog {
                       ),
                     ),
                     SizedBox(
-                      // height: 68.sp,
-                      width: 68.w,
+                      width: 100.w,
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 23.42.h),
                         child: Image.asset('assets/icons/ic_tick.png',
@@ -568,7 +567,10 @@ class CustomAlertDialog {
                             ),
                           ),
                           child: Text("Use Existing Details",
-                              style: CustomizedTheme.roboto_w_W400_14)),
+                              style: CustomizedTheme.roboto_w_W400_14,),),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       OutlinedButton(
                           onPressed: () {
                             Navigator.pop(_);
