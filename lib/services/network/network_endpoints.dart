@@ -4,7 +4,7 @@ class EndPoints {
   final String _registerUser = '/register';
   final String _verifyUser = '/verify-account';
   final String _loginUser = '/login-phone';
-  final String _password = '/password';
+  final String _password = '/change-password';
   final String _userInfo = '/user-info';
   final String _deactivate = '/deactivate';
   final String _voucherList = '/voucher/list';
@@ -35,10 +35,10 @@ class EndPoints {
   }
 
   String changePassword(int id) {
-    return _baseURL + _tourist + '/$id' + _password;
+    return _baseURL + _tourist + _password;
   }
 
- String updateUserDetails(int id) {
+  String updateUserDetails(int id) {
     return _baseURL + _tourist + '/$id' + _userInfo;
   }
 
