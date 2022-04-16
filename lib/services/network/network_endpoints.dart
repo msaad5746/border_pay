@@ -3,7 +3,7 @@ class EndPoints {
   final String _tourist = '/tourist';
   final String _registerUser = '/register';
   final String _verifyUser = '/verify-account';
-  final String _loginUser = '/login';
+  final String _loginUser = '/login-phone';
   final String _password = '/password';
   final String _userInfo = '/user-info';
   final String _deactivate = '/deactivate';

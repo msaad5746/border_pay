@@ -276,7 +276,7 @@ class _OTPPageState extends State<OTPPage> {
                                     LoginUserModel loginModel =
                                         LoginUserModel.fromJson(res);
                                     storage.setStringValue(
-                                        SharedPrefKeys.userEmail, widget.email);
+                                        SharedPrefKeys.userPhone, widget.phone);
                                     storage.setStringValue(
                                         SharedPrefKeys.userPassword,
                                         widget.password);
@@ -313,7 +313,7 @@ class _OTPPageState extends State<OTPPage> {
                                 } else {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content: Text("Invalid OTP!"),
+                                    content: const Text("Invalid OTP!"),
                                     behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),
