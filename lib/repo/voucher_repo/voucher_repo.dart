@@ -19,4 +19,6 @@ mixin VoucherRepo {
   Future payVoucher(PayVoucherModel voucher, int id);
 
   Future payVoucherTransaction(dynamic transaction);
+
+  Future getQrCodeImage({required String voucherNumber});
 }

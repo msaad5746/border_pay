@@ -197,7 +197,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
                                     content: const Text(
-                                        "Password successfully updated!"),
+                                      "Password successfully updated!",
+                                    ),
                                     behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),

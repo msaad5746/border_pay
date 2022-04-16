@@ -17,6 +17,7 @@ class EndPoints {
   final String _createBulkVouchers = '/voucher/create-bulk';
   final String _createVouchersTransaction = '/voucher/create-transaction';
   final String _countries = '/database/country';
+  final String _qrCode = '/generate-qrcode?voucherNo={voucher-no}';
 
   String registerUser() {
     return _baseURL + _tourist + _registerUser;
@@ -76,5 +77,9 @@ class EndPoints {
 
   String getCountries() {
     return _baseURL + _countries;
+  }
+
+  String getQrCode() {
+    return _baseURL + _qrCode;
   }
 }

@@ -1,8 +1,12 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/model/datamodels/voucher_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/widget/blue_backbutton.dart';
+import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,6 +25,7 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
 
   bool isLoading = true;
   bool isError = false;
+  Uint8List? image;
 
   @override
   void initState() {
@@ -36,10 +41,14 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Center(
-            child: BlueBackButton(
-          context: context,
-        )),
-        title: Text("Vouchers", style: CustomizedTheme.sf_b_W500_19),
+          child: BlueBackButton(
+            context: context,
+          ),
+        ),
+        title: Text(
+          "Vouchers",
+          style: CustomizedTheme.sf_b_W500_19,
+        ),
       ),
       body: isLoading
           ? getLoadingScreen()
@@ -110,40 +119,53 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                              color: CustomizedTheme.primaryBright,
-                              borderRadius: const BorderRadius.vertical(
-                                  bottom: Radius.circular(10))),
+                            color: CustomizedTheme.primaryBright,
+                            borderRadius: const BorderRadius.vertical(
+                              bottom: Radius.circular(
+                                10,
+                              ),
+                            ),
+                          ),
                           child: Column(
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: 15.w,
-                                    right: 15.w,
-                                    top: 32.h,
-                                    bottom: 26.45.h),
+                                  left: 15.w,
+                                  right: 15.w,
+                                  top: 32.h,
+                                  bottom: 26.45.h,
+                                ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    buildText('Traveller Name',
-                                        CustomizedTheme.sf_bo_W300_1503),
                                     buildText(
-                                        voucher.user.firstName +
-                                            '\t' +
-                                            voucher.user.lastName,
-                                        CustomizedTheme.sf_bo_W500_1503),
+                                      'Traveller Name',
+                                      CustomizedTheme.sf_bo_W300_1503,
+                                    ),
+                                    buildText(
+                                      voucher.user.firstName +
+                                          '\t' +
+                                          voucher.user.lastName,
+                                      CustomizedTheme.sf_bo_W500_1503,
+                                    ),
                                   ],
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: 15.w, right: 15.w, bottom: 26.45.h),
+                                  left: 15.w,
+                                  right: 15.w,
+                                  bottom: 26.45.h,
+                                ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    buildText('Email ID',
-                                        CustomizedTheme.sf_bo_W300_1503),
+                                    buildText(
+                                      'Email ID',
+                                      CustomizedTheme.sf_bo_W300_1503,
+                                    ),
                                     buildText(
                                       voucher.user.email,
                                       CustomizedTheme.sf_bo_W500_1503,
@@ -153,13 +175,18 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: 15.w, right: 15.w, bottom: 26.45.h),
+                                  left: 15.w,
+                                  right: 15.w,
+                                  bottom: 26.45.h,
+                                ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    buildText('Phone Number',
-                                        CustomizedTheme.sf_bo_W300_1503),
+                                    buildText(
+                                      'Phone Number',
+                                      CustomizedTheme.sf_bo_W300_1503,
+                                    ),
                                     buildText(
                                       voucher.user.phoneNumber,
                                       CustomizedTheme.sf_bo_W500_1503,
@@ -169,58 +196,76 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: 15.w, right: 15.w, bottom: 26.45.h),
+                                  left: 15.w,
+                                  right: 15.w,
+                                  bottom: 26.45.h,
+                                ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    buildText('Nationality',
-                                        CustomizedTheme.sf_bo_W300_1503),
                                     buildText(
-                                        voucher.user.nationality
-                                                ?.name ??
-                                            'missing',
-                                        CustomizedTheme.sf_bo_W500_1503),
+                                      'Nationality',
+                                      CustomizedTheme.sf_bo_W300_1503,
+                                    ),
+                                    buildText(
+                                      voucher.user.nationality?.name ??
+                                          'missing',
+                                      CustomizedTheme.sf_bo_W500_1503,
+                                    ),
                                   ],
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: 15.w, right: 15.w, bottom: 26.45.h),
+                                  left: 15.w,
+                                  right: 15.w,
+                                  bottom: 26.45.h,
+                                ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    buildText('Emirates ID',
-                                        CustomizedTheme.sf_bo_W300_1503),
                                     buildText(
-                                        voucher.user.emirateId,
-                                        CustomizedTheme.sf_bo_W500_1503),
+                                      'Emirates ID',
+                                      CustomizedTheme.sf_bo_W300_1503,
+                                    ),
+                                    buildText(
+                                      voucher.user.emirateId,
+                                      CustomizedTheme.sf_bo_W500_1503,
+                                    ),
                                   ],
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: 15.w, right: 15.w, bottom: 11.45.h),
+                                  left: 15.w,
+                                  right: 15.w,
+                                  bottom: 11.45.h,
+                                ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    buildText('Total Amount',
-                                        CustomizedTheme.sf_bo_W300_1503),
                                     buildText(
-                                        'AED ' + voucher.amount.toString(),
-                                        CustomizedTheme.sf_bo_W500_1503),
+                                      'Total Amount',
+                                      CustomizedTheme.sf_bo_W300_1503,
+                                    ),
+                                    buildText(
+                                      'AED ' + voucher.amount.toString(),
+                                      CustomizedTheme.sf_bo_W500_1503,
+                                    ),
                                   ],
                                 ),
                               ),
-                              Container(
-                                  height: 117.h,
-                                  width: 117.w,
-                                  color: CustomizedTheme.white,
-                                  padding: const EdgeInsets.all(15),
-                                  child: Image.asset('assets/icons/ic_QR.png',
-                                      fit: BoxFit.fill)),
+                              verticalSpacer(16),
+                              image != null
+                                  ? Image.memory(
+                                      image!,
+                                    )
+                                  : const Icon(
+                                      Icons.image,
+                                    ),
                               SizedBox(
                                 height: 24.h,
                               ),
@@ -268,14 +313,27 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
     var response = await repo.getVoucherDetails(userId, voucherId);
     if (response != null) {
       voucher = response;
-      setState(() {
-        isLoading = false;
-      });
+      final res = await repo.getQrCodeImage(
+        voucherNumber: widget.voucherDetails.voucherNumber,
+      );
+      if (res != null) {
+        List<String> images = res.toString().split(',');
+        image = base64.decode(images[1]);
+
+        setState(() {
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+      }
     } else {
-      setState(() {
-        isLoading = false;
-        isError = true;
-      });
+      setState(
+        () {
+          isError = true;
+        },
+      );
     }
   }
 
@@ -287,11 +345,13 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
 
   Widget getErrorScreen() {
     return const Center(
-      child: Text('No data found',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          )),
+      child: Text(
+        'No data found',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
     );
   }
 

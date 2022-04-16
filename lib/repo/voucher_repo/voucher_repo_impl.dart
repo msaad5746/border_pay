@@ -186,4 +186,22 @@ class VoucherRepoImpl implements VoucherRepo {
       return null;
     }
   }
+
+  @override
+  Future getQrCodeImage({required String voucherNumber}) async {
+    try {
+      String url = endPoints.getQrCode().replaceAll(
+            "{voucher-no}",
+            voucherNumber,
+          );
+      var response = await networkHelper.get(
+        url,
+      );
+      return response.body.toString();
+      // return response.body.toString();
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
 }
