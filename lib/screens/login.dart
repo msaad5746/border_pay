@@ -13,6 +13,7 @@ import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -24,12 +25,13 @@ class _LoginPageState extends State<LoginPage> {
   AuthRepo networkHandler = AuthRepoImpl();
   MySharedPreferences storage = MySharedPreferences.instance;
 
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   bool _obscureText = true;
   bool isLoading = false;
   bool isBioMatric = false;
+  String cuntryCode = '+1';
 
   // Toggles the password show status
   void _toggle() {
@@ -91,50 +93,72 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 68.54.h,
                     ),
-                    TextFormField(
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                            left: 24.44.w,
-                            right: 34.47.w,
-                            bottom: 12.3.h,
-                            top: 15.03.h),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                              10.0.r,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: IntlPhoneField(
+                            initialCountryCode: 'US',
+                            controller: phoneController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                left: 30.45.w,
+                                right: 10.45.w,
+                                top: 23.66.h,
+                                bottom: 23.66.h,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    10.0.r,
+                                  ),
+                                ),
+                                borderSide: BorderSide(
+                                  color: CustomizedTheme.colorAccent,
+                                  width: .01.w,
+                                ),
+                              ),
+                              label: const Text("Phone Number"),
+                              labelStyle: TextStyle(
+                                color: CustomizedTheme.colorAccent,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    10.0.r,
+                                  ),
+                                ),
+                                borderSide: BorderSide(
+                                  color: Colors.lightBlue,
+                                  width: 1.w,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    10.0.r,
+                                  ),
+                                ),
+                                borderSide: BorderSide(
+                                  color: Colors.lightBlue,
+                                  width: 1.w,
+                                ),
+                              ),
                             ),
-                          ),
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 1.0.w,
+                            onChanged: (phone) {},
+                            onCountryChanged: (country) {
+                              setState(
+                                () {
+                                  cuntryCode = "+" + country.dialCode;
+                                },
+                              );
+                            },
                           ),
                         ),
-                        labelText: "Email",
-                        labelStyle: CustomizedTheme.b_W400_12,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                              10.0.r,
-                            ),
-                          ),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      // controller: passwordController,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        if (value!.trim().isEmpty) {
-                          return 'Please enter email.';
-                        }
-                        return null;
-                      },
+                      ],
                     ),
+
                     SizedBox(
-                      height: 35.53.h,
+                      height: 15.53.h,
                     ),
                     TextFormField(
                       controller: passwordController,
@@ -210,12 +234,12 @@ class _LoginPageState extends State<LoginPage> {
                                       setState(() {
                                         isLoading = true;
                                       });
-                                      String email = storage.getStringValue(
-                                          SharedPrefKeys.userEmail);
+                                      String phone = storage.getStringValue(
+                                          SharedPrefKeys.userPhone);
                                       String password = storage.getStringValue(
                                           SharedPrefKeys.userPassword);
                                       await userLogin(
-                                        email,
+                                        phone,
                                         password,
                                       );
                                     }
@@ -235,7 +259,7 @@ class _LoginPageState extends State<LoginPage> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(6.0),
                                         child: SvgPicture.asset(
-                                          'assets/icons/ic_touchid.svg',
+                                          'assets/svg/ic_touchid.svg',
                                         ),
                                       ),
                                     ),
@@ -293,7 +317,7 @@ class _LoginPageState extends State<LoginPage> {
                     //                   child: Padding(
                     //                     padding: const EdgeInsets.all(6.0),
                     //                     child: SvgPicture.asset(
-                    //                       'assets/icons/ic_faceid.svg',
+                    //                      'assets/svg/ic_faceid.svg',
                     //                     ),
                     //                   ),
                     //                 ),
@@ -326,13 +350,13 @@ class _LoginPageState extends State<LoginPage> {
                             child: TextButton(
                               onPressed: () async {
                                 if (!isLoading) {
-                                  if (emailController.text.isNotEmpty &&
+                                  if (phoneController.text.isNotEmpty &&
                                       passwordController.text.isNotEmpty) {
                                     setState(() {
                                       isLoading = true;
                                     });
                                     await userLogin(
-                                      emailController.text,
+                                      phoneController.text,
                                       passwordController.text,
                                     );
                                   }
@@ -365,22 +389,22 @@ class _LoginPageState extends State<LoginPage> {
     isBioMatric = storage.getBoolValue(SharedPrefKeys.isBioMatric);
   }
 
-  Future<void> userLogin(String email, String password) async {
+  Future<void> userLogin(String phone, String password) async {
     Map<String, String> loginData = {
-      "email": email,
+      "mobileNumber": cuntryCode+phone,
       "password": password,
     };
     var res = await networkHandler.loginUser(loginData);
     if (res != null) {
       LoginUserModel loginModel = LoginUserModel.fromJson(res);
       if (loginModel.status) {
-        emailController.clear();
+        phoneController.clear();
         passwordController.clear();
       }
       setState(() {
         isLoading = false;
       });
-      storage.setStringValue(SharedPrefKeys.userEmail, email);
+      storage.setStringValue(SharedPrefKeys.userPhone, phone);
       storage.setStringValue(SharedPrefKeys.userPassword, password);
       Navigator.pushNamedAndRemoveUntil(
         context,
