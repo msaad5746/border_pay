@@ -37,10 +37,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    getHomeData(1);
     if (loginData.firstName.isEmpty) {
       getUserData();
     }
+    getHomeData();
     super.initState();
   }
 
@@ -314,10 +314,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> getHomeData(int id) async {
+  Future<void> getHomeData() async {
     VoucherRepo repo = VoucherRepoImpl();
     var response = await repo.getVoucherList(
-      id: id,
+      id: loginData.userId,
       page: pageNumber,
     );
     if (response != null) {
@@ -336,7 +336,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> loadMoreData(int id) async {
     VoucherRepo repo = VoucherRepoImpl();
     var response = await repo.getVoucherList(
-      id: id,
+      id: loginData.userId,
       page: voucherList.page,
     );
     if (response != null) {

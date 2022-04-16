@@ -17,6 +17,7 @@ class VoucherRepoImpl implements VoucherRepo {
   NetworkHelper networkHelper = NetworkHelperImpl();
   EndPoints endPoints = EndPoints();
 
+
   @override
   Future getVoucherDetails(int userId, int voucherId) async {
     try {
@@ -38,7 +39,7 @@ class VoucherRepoImpl implements VoucherRepo {
   @override
   Future getVoucherList({int page = 1, int limit = 15, id}) async {
     try {
-      String url = endPoints.voucherList(1) +
+      String url = endPoints.voucherList(id) +
           "?page=" +
           page.toString() +
           "&limit=" +

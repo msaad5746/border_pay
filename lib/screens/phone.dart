@@ -49,7 +49,7 @@ class _PhonePageState extends State<PhonePage> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      phoneController.text = widget.areaCode + widget.phone;
+      phoneController.text = "+"+widget.areaCode + widget.phone;
     });
     return Scaffold(
       appBar: AppBar(

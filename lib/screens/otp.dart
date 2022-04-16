@@ -177,7 +177,7 @@ class _OTPPageState extends State<OTPPage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
             child: Text(
-              "A 4 digit code has been sent to your mobile number ${widget.areaCode + widget.phone}",
+              "A 6 digit code has been sent to your mobile number ${"+"+widget.areaCode + widget.phone}",
               style: CustomizedTheme.sf_b_W400_15,
             ),
           ),
@@ -291,7 +291,7 @@ class _OTPPageState extends State<OTPPage> {
                                 var res1 = await networkHandler
                                     .verifyUser(VerifyUserModel(
                                   mobileNumber:
-                                      '${widget.areaCode}${widget.phone}',
+                                      '+${widget.areaCode}${widget.phone}',
                                   newPassword: widget.password,
                                   code: OtpCode,
                                 ));

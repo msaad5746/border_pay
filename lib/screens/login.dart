@@ -432,6 +432,7 @@ class _LoginPageState extends State<LoginPage> {
       });
       storage.setStringValue(SharedPrefKeys.userPhone, phone);
       storage.setStringValue(SharedPrefKeys.userPassword, password);
+      storage.setStringValue(SharedPrefKeys.userId, loginModel.data.userId.toString());
       Navigator.pushNamedAndRemoveUntil(
         context,
         RouteConstant.hostPage,
