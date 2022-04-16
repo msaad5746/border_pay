@@ -13,7 +13,7 @@ import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'custom_intl_phone_field.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -100,75 +100,66 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 68.54.h,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: IntlPhoneField(
-                            initialCountryCode: 'US',
-                            controller: phoneController,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                left: 30.45.w,
-                                right: 10.45.w,
-                                top: 23.66.h,
-                                bottom: 23.66.h,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: CustomizedTheme.colorAccentBlack,
-                                  width: .01.w,
-                                ),
-                              ),
-                              label: Text(
-                                "Phone Number",
-                                style: CustomizedTheme.b_W400_12.copyWith(
-                                  fontWeight: FontWeight.w300,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                              labelStyle: TextStyle(
-                                color: CustomizedTheme.colorAccent,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: CustomizedTheme.colorAccentBlack,
-                                  width: 1.w,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: CustomizedTheme.colorAccentBlack,
-                                  width: 1.w,
-                                ),
-                              ),
+                    CustomIntlPhoneField(
+                      flagDecoration: BoxDecoration(
+                        color: CustomizedTheme.primaryBold,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      initialCountryCode: 'US',
+                      controller: phoneController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
                             ),
-                            onChanged: (phone) {},
-                            onCountryChanged: (country) {
-                              isPhoneNumberFilled = true;
-                              setState(
-                                () {
-                                  cuntryCode = "+" + country.dialCode;
-                                },
-                              );
-                            },
+                          ),
+                          borderSide: BorderSide(
+                            color: CustomizedTheme.colorAccent,
+                            width: .01.w,
                           ),
                         ),
-                      ],
+                        label: const Text("Phone Number"),
+                        labelStyle: TextStyle(
+                          color: CustomizedTheme.colorAccent,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.lightBlue,
+                            width: 1.w,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.lightBlue,
+                            width: 1.w,
+                          ),
+                        ),
+                      ),
+                      onChanged: (phone) {},
+                      onCountryChanged: (country) {
+                        setState(
+                          () {
+                            cuntryCode = "+" + country.dialCode;
+                          },
+                        );
+                      },
+                      dropdownIconPosition: IconPosition.trailing,
+                      flagsButtonPadding: const EdgeInsets.symmetric(vertical: 8),
+                    ),
+
+                    SizedBox(
+                      height: 15.53.h,
                     ),
                     isPhoneNumberFilled
                         ? const SizedBox.shrink()
