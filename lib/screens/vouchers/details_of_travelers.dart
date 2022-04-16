@@ -70,6 +70,9 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
       emiratesIdCtrl.add(TextEditingController());
       nationalityId.add(0);
     }
+    emiratesIdCtrl[0].addListener(() {
+      print("Inside listener");
+    });
     getCountries(countriesController.countries);
     getUserData();
     initialKeys();

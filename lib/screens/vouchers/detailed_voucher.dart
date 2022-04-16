@@ -308,6 +308,7 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
     );
   }
 
+
   Future<void> getVoucherDetails(int userId, int voucherId) async {
     VoucherRepo repo = VoucherRepoImpl();
     var response = await repo.getVoucherDetails(userId, voucherId);
