@@ -7,6 +7,7 @@ import 'package:borderpay/model/arguments/register_datatoserver.dart';
 import 'package:borderpay/model/datamodels/login_model.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
 import 'package:borderpay/model/datamodels/verify_user_model.dart';
+import 'package:borderpay/response/register_response.dart';
 import 'package:borderpay/services/network/network_endpoints.dart';
 import 'package:borderpay/services/network/network_helper.dart';
 import 'package:borderpay/services/network/network_helper_impl.dart';
@@ -44,19 +45,24 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future registerUser(RegisterDataServer registerDataServer) async {
+  Future<RegisterResponse> registerUser(
+      RegisterDataServer registerDataServer) async {
+    RegisterResponse registerResponse = RegisterResponse.emptyObj();
     try {
       var response = await networkHelper.post(
         endPoints.registerUser(),
         body: registerDataServer.toJson(),
       );
-      if (response.statusCode == 201) {
-        return json.decode(response.body.toString());
-      } else {
-        return null;
-      }
+      registerResponse = RegisterResponse.fromJson(
+        jsonDecode(
+          response.body.toString(),
+        ),
+        response.statusCode,
+      );
+      return registerResponse;
     } catch (e) {
-      return null;
+      registerResponse.statusMsg = e.toString();
+      return registerResponse;
     }
   }
 

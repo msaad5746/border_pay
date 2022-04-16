@@ -3,6 +3,7 @@ import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
 import 'package:borderpay/model/datamodels/countries_data_model.dart';
+import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
   List<String> localCountries = List.empty(growable: true);
   String currentAreaCode = '+971';
   bool allCompleted = false;
+  bool termsAndCondition = false;
 
   @override
   void initState() {
@@ -48,18 +50,25 @@ class _RegisterPageState extends State<RegisterPage> {
               Navigator.pop(context);
             },
             child: Container(
-                height: 33.73.h,
-                width: 33.73.w,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.16.r),
-                    color: CustomizedTheme.colorAccent),
-                child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
+              height: 33.73.h,
+              width: 33.73.w,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    9.16.r,
+                  ),
+                  color: CustomizedTheme.colorAccent),
+              child: Icon(
+                Icons.arrow_back,
+                color: CustomizedTheme.white,
+              ),
+            ),
           ),
         ),
         title: Text("Register", style: CustomizedTheme.title_p_W500_21),
         centerTitle: false,
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 20.36.w,
@@ -109,13 +118,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value!.trim().isEmpty) {
-                          return '';
+                          return 'First name is empty';
                         }
-                        // Check if the entered email has the right format
-                        // if (value.trim().length < 6) {
-                        //   return 'Enter correct password';
-                        // }
-                        // Return null if the entered email is valid
                         return null;
                       },
                     ),
@@ -159,7 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value!.trim().isEmpty) {
-                          return '';
+                          return 'Last name is empty';
                         }
                         return null;
                       },
@@ -225,7 +229,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (!GetUtils.isEmail(value!)) {
-                          return '';
+                          return 'Email is empty';
                         }
                         // Return null if the entered email is valid
                         return null;
@@ -237,6 +241,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       readOnly: true,
                       controller: currentNationality,
+                      validator: (value) {
+                        if (currentNationality.text.isEmpty) {
+                          return 'Nationality is empty';
+                        }
+                        // Return null if the entered email is valid
+                        return null;
+                      },
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(
                           left: 24.44.w,
@@ -275,10 +286,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           showPhoneCode: false,
                           showWorldWide: false,
                           onSelect: (Country country) {
-                            setState(() {
-                              currentNationality.text = country.name;
-                              countryISO = country.countryCode;
-                            });
+                            setState(
+                              () {
+                                currentNationality.text = country.name;
+                                countryISO = country.countryCode;
+                              },
+                            );
                           },
                           countryListTheme: CountryListThemeData(
                             borderRadius: const BorderRadius.only(
@@ -301,7 +314,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         );
                       },
                     ),
-
                     SizedBox(
                       height: 35.53.h,
                     ),
@@ -343,12 +355,48 @@ class _RegisterPageState extends State<RegisterPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value!.trim().isEmpty) {
-                          return '';
+                          return 'Password is empty';
                         }
                         return null;
                       },
                     ),
-                    SizedBox(height: 50.75.h),
+                    verticalSpacer(10),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: termsAndCondition,
+                          onChanged: (value) {
+                            termsAndCondition = value!;
+                            setState(() {});
+                          },
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'I accept',
+                                style: CustomizedTheme.b_W400_12.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const TextSpan(
+                                text: '  ',
+                              ),
+                              TextSpan(
+                                text: 'Terms & Conditions',
+                                style: CustomizedTheme.b_W400_12.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: CustomizedTheme.colorAccent,
+                                  decoration: TextDecoration.underline,
+                                  decorationThickness: 2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    verticalSpacer(30),
                   ],
                 ),
               ),
@@ -365,22 +413,40 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       child: TextButton(
                         onPressed: () {
-                          if (Utils.registerFormKey.currentState!.validate()) {
-                            // setState(() {
-                            //   allCompleted = true;
-                            // });
-                            Navigator.pushNamed(context, '/ScanIDPage',
-                                arguments: RegisterFirst(
-                                  firstName: fnameController.text,
-                                  lastName: lnameController.text,
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  areaCode: '+$currentAreaCode',
-                                  phone: phoneController.text,
-                                  nationality: currentNationality.text,
-                                  nationalityId: getNationalityId(countryISO),
-                                ));
-                          } else {}
+                          if (Utils.registerFormKey.currentState!.validate() &&
+                              termsAndCondition) {
+                            Navigator.pushNamed(
+                              context,
+                              '/ScanIDPage',
+                              arguments: RegisterFirst(
+                                firstName: fnameController.text,
+                                lastName: lnameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                                areaCode: '+$currentAreaCode',
+                                phone: phoneController.text,
+                                nationality: currentNationality.text,
+                                nationalityId: getNationalityId(countryISO),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    'You have to accept term and conditions',
+                                    textAlign: TextAlign.center,
+                                    style: CustomizedTheme.w_W500_15.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      color: CustomizedTheme.white,
+                                    )),
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                backgroundColor: CustomizedTheme.voucherUnpaid,
+                              ),
+                            );
+                          }
                         },
                         child: Text(
                           "Next",
@@ -400,9 +466,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void getCountries(List<CountryDetails> countries) {
     if (countries.isNotEmpty) {
-      countries.forEach((element) {
+      for (var element in countries) {
         localCountries.add(element.iso);
-      });
+      }
     }
   }
 
@@ -413,89 +479,4 @@ class _RegisterPageState extends State<RegisterPage> {
     }
     return 1;
   }
-
-// Widget buildPhoneDD() {
-//   return Row(
-//                   children: [
-//                     Expanded(
-//                       child: FormField(
-//                         builder: (FormFieldState state) {
-//                           return InputDecorator(
-//                             decoration: InputDecoration(
-//                                 contentPadding: EdgeInsets.only(left: 10.w, bottom: 12.3.h,top: 15.03.h),
-//                                 // label: Text('Nationality',style: TextStyle(color: Colors.black),),
-//                                 // labelStyle: CustomizedTheme.sf_b_W400_17,
-//                                 // hintStyle: CustomizedTheme.sf_b_W400_17,
-//                                 // hintText: 'Nationality',
-//                                 filled: true,
-//                                 fillColor: CustomizedTheme.primaryBold,
-//                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0.r))),
-//                             // isEmpty: _currentSelectedValue == '' ? false:true,
-//                             child: DropdownButtonHideUnderline(
-//                               child: DropdownButton(
-//                                 dropdownColor:CustomizedTheme.primaryBold,
-//                                 iconEnabledColor: CustomizedTheme.white,
-//                                 style: CustomizedTheme.w_W300_12,
-//                                 isExpanded: true,
-//                                 borderRadius: BorderRadius.circular(10.r),
-//                                 menuMaxHeight: 200.h,
-//                                 value: currentAreaCode,
-//                                 isDense: true,
-//                                 onChanged: (newValue) {
-//                                   setState(() {
-//                                     currentAreaCode = newValue;
-//                                   });
-//                                 },
-//                                 items: countriesController.countriesDataList.value.response!.detail.purchasedCoins.map((value) {
-//                                   return DropdownMenuItem(
-//                                     value: value.phonecode,
-//                                     child: FittedBox(
-//                                       child: Row(
-//                                         children: [
-//                                           Image.network(value.flag,height: 19.h,width: 29.w,),
-//                                           SizedBox(width: 5.w,),
-//                                           Text(value.iso,overflow: TextOverflow.ellipsis),
-//                                         ],
-//                                       ),
-//                                     ),
-//                                   );
-//                                 }).toList(),
-//                               ),
-//                             ),
-//                           );
-//                         },
-//                       ),
-//                     ),
-//                     SizedBox(width: 5.w,),
-//                     Expanded(
-//                       flex: 3,
-//                       child: TextFormField(
-//                         controller: phoneController,
-//                         keyboardType: TextInputType.phone,
-//                         decoration: InputDecoration(
-//                           contentPadding: EdgeInsets.only(left: 24.44.w,right: 34.47.w, bottom: 12.3.h,top: 15.03.h),
-//                           border: OutlineInputBorder(
-//                               borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-//                               borderSide: BorderSide(color: Colors.black,width: 1.0.w)),
-//                           labelText: "Phone Number",
-//                           labelStyle: CustomizedTheme.b_W400_12,
-//                           focusedBorder:  OutlineInputBorder(
-//                             borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-//                             borderSide: BorderSide(color: Colors.black),
-//                           ),
-//                         ),
-//                         // controller: passwordController,
-//                         autovalidateMode: AutovalidateMode.onUserInteraction,
-//                         validator: (value) {
-//                           if (value!.trim().isEmpty) {
-//                             return '';
-//                           }
-//                           return null;
-//                         },
-//                       ),
-//                     ),
-//                   ],
-//                 );
-// }
-
 }

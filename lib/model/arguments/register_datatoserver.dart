@@ -27,12 +27,12 @@ class RegisterDataServer {
   Map<String, dynamic> toJson() => {
         'firstName': firstName,
         'lastName': lastName,
+        'email': email,
         'mobileNumber': phone,
         'country_code': areaCode,
-        'email': email,
         'country': nationality,
         'nationalityId': nationalityId,
-        "emirate_id": emiratedpassport,
+        "emirateId": emiratedpassport,
         "password": password,
       };
 }

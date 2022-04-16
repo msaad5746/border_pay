@@ -7,6 +7,7 @@ import 'package:borderpay/model/datamodels/login_user_model.dart';
 import 'package:borderpay/model/datamodels/register_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
+import 'package:borderpay/response/register_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -161,10 +162,11 @@ class _PhonePageState extends State<PhonePage> {
                             email: widget.email,
                             emiratedpassport: widget.eid,
                           );
-                          var res = await networkHandler.registerUser(
+                          RegisterResponse response =
+                              await networkHandler.registerUser(
                             register,
                           );
-                          if (res != null) {
+                          if (response.statusCode == 201) {
                             setState(
                               () {
                                 isLoading = false;
@@ -211,7 +213,14 @@ class _PhonePageState extends State<PhonePage> {
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: const Text("Cannot Register"),
+                                content: Text(
+                                  response.statusMsg!,
+                                  textAlign: TextAlign.center,
+                                  style: CustomizedTheme.w_W500_15.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomizedTheme.white,
+                                  )
+                                ),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24),

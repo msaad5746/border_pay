@@ -2,7 +2,6 @@ import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
-import 'package:borderpay/model/arguments/register_first.dart';
 import 'package:borderpay/model/datamodels/countries_data_model.dart';
 import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 
 class UpdateProfilePage extends StatefulWidget {
   final UserModel userData;
@@ -62,15 +60,25 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 );
               },
               child: Container(
-                  height: 33.73.h,
-                  width: 33.73.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.16.r),
-                      color: CustomizedTheme.colorAccent),
-                  child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
+                height: 33.73.h,
+                width: 33.73.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    9.16.r,
+                  ),
+                  color: CustomizedTheme.colorAccent,
+                ),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: CustomizedTheme.white,
+                ),
+              ),
             ),
           ),
-          title: Text("Update Profile", style: CustomizedTheme.title_p_W500_21),
+          title: Text(
+            "Update Profile",
+            style: CustomizedTheme.title_p_W500_21,
+          ),
           centerTitle: false,
         ),
         body: SingleChildScrollView(
@@ -88,33 +96,40 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                         controller: fnameController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
+                            left: 24.44.w,
+                            right: 34.47.w,
+                            bottom: 12.3.h,
+                            top: 15.03.h,
+                          ),
                           border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                10.0.r,
+                              ),
+                            ),
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 1.0.w,
+                            ),
+                          ),
                           labelText: "First Name",
                           labelStyle: CustomizedTheme.b_W400_12,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                10.0.r,
+                              ),
+                            ),
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value!.trim().isEmpty) {
-                            return '';
+                            return 'First name is empty';
                           }
-                          // Check if the entered email has the right format
-                          // if (value.trim().length < 6) {
-                          //   return 'Enter correct password';
-                          // }
-                          // Return null if the entered email is valid
                           return null;
                         },
                       ),
@@ -126,15 +141,22 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
+                            left: 24.44.w,
+                            right: 34.47.w,
+                            bottom: 12.3.h,
+                            top: 15.03.h,
+                          ),
                           border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                10.0.r,
+                              ),
+                            ),
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 1.0.w,
+                            ),
+                          ),
                           labelText: "Last Name",
                           labelStyle: CustomizedTheme.b_W400_12,
                           focusedBorder: OutlineInputBorder(
@@ -146,7 +168,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value!.trim().isEmpty) {
-                            return '';
+                            return 'Last name is empty';
                           }
                           return null;
                         },
@@ -154,43 +176,27 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                       SizedBox(
                         height: 35.53.h,
                       ),
-                      // buildPhoneDD(),
-                      // IntlPhoneField(
-                      //   // initialCountryCode: ,
-                      //   controller: phoneController,
-                      //   decoration: InputDecoration(
-                      //     hintText: 'Phone Number',
-                      //     border: OutlineInputBorder(
-                      //         borderRadius: BorderRadius.circular(10.0.r)),
-                      //   ),
-                      //   onChanged: (phone) {
-                      //     print(phone.completeNumber);
-                      //   },
-                      //   onCountryChanged: (country) {
-                      //     print('Country changed to: ' + country.name);
-                      //     print('dialCode changed to: ' + country.dialCode);
-                      //     setState(() {
-                      //       currentAreaCode = country.dialCode;
-                      //     });
-                      //   },
-                      // ),
-                      // SizedBox(
-                      //   height: 25.53.h,
-                      // ),
                       TextFormField(
                         controller: emirateController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
+                            left: 24.44.w,
+                            right: 34.47.w,
+                            bottom: 12.3.h,
+                            top: 15.03.h,
+                          ),
                           border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                10.0.r,
+                              ),
+                            ),
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 1.0.w,
+                            ),
+                          ),
                           labelText: "Emirate Id",
                           labelStyle: CustomizedTheme.b_W400_12,
                           focusedBorder: OutlineInputBorder(
@@ -215,53 +221,73 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                       TextFormField(
                         readOnly: true,
                         controller: currentNationality,
+                        validator: (value) {
+                          if (value != null && value.isEmpty) {
+                            return 'Nationality is empty';
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
+                            left: 24.44.w,
+                            right: 34.47.w,
+                            bottom: 12.3.h,
+                            top: 15.03.h,
+                          ),
                           border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                10.0.r,
+                              ),
+                            ),
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 1.0.w,
+                            ),
+                          ),
                           labelText: "Nationality",
                           labelStyle: CustomizedTheme.b_W400_12,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                10.0.r,
+                              ),
+                            ),
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                         onTap: () {
                           showCountryPicker(
                             context: context,
-                            //Optional.  Can be used to exclude(remove) one ore more country from the countries list (optional).
-                            // exclude: <String>['KN', 'MF'],
-                            //Optional. Shows phone code before the country name.
                             countryFilter: localCountries,
                             showPhoneCode: false,
                             showWorldWide: false,
                             onSelect: (Country country) {
-                              print('Select country: ${country.displayName}');
-                              setState(() {
-                                currentNationality.text = country.name;
-                                countryISO = country.countryCode;
-                              });
+                              setState(
+                                () {
+                                  currentNationality.text = country.name;
+                                  countryISO = country.countryCode;
+                                },
+                              );
                             },
-                            // Optional. Sets the theme for the country list picker.
                             countryListTheme: CountryListThemeData(
-                              // Optional. Sets the border radius for the bottomsheet.
                               borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(40.0),
-                                topRight: Radius.circular(40.0),
+                                topLeft: Radius.circular(
+                                  40.0,
+                                ),
+                                topRight: Radius.circular(
+                                  40.0,
+                                ),
                               ),
                               // Optional. Styles the search field.
                               inputDecoration: InputDecoration(
                                 labelText: 'Search',
                                 hintText: 'Start typing to search',
-                                prefixIcon: const Icon(Icons.search),
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                ),
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: const Color(0xFF8C98A8)
@@ -285,23 +311,26 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                       child: Container(
                         height: 61.07.h,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7.r),
-                            color: CustomizedTheme.colorAccent),
+                          borderRadius: BorderRadius.circular(
+                            7.r,
+                          ),
+                          color: CustomizedTheme.colorAccent,
+                        ),
                         child: TextButton(
-                            onPressed: () {
-                              if (Utils.updateFormKey.currentState!
-                                  .validate()) {
-                                updateUSer();
-                              } else {
-                                print("Invalid");
-                              }
-                            },
-                            child: isLoading
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                : Text("Update",
-                                    style: CustomizedTheme.w_W500_19)),
+                          onPressed: () {
+                            if (Utils.updateFormKey.currentState!.validate()) {
+                              updateUser();
+                            }
+                          },
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  "Update",
+                                  style: CustomizedTheme.w_W500_19,
+                                ),
+                        ),
                       ),
                     ),
                   ],
@@ -337,7 +366,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     return '';
   }
 
-  updateUSer() async {
+  updateUser() async {
     setState(() {
       isLoading = true;
     });

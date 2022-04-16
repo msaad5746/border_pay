@@ -48,6 +48,8 @@ class _OTPPageState extends State<OTPPage> {
   int _secondDigit = 010;
   int _thirdDigit = 010;
   int _fourthDigit = 010;
+  int _fifthDigit = 010;
+  int _sixthDigit = 010;
   int checker = 010;
 
   var OtpCode = "no";
@@ -66,17 +68,20 @@ class _OTPPageState extends State<OTPPage> {
             _thirdDigit = buttonText;
           } else if (_fourthDigit == checker) {
             _fourthDigit = buttonText;
+          } else if (_fifthDigit == checker) {
+            _fifthDigit = buttonText;
+          } else if (_sixthDigit == checker) {
+            _sixthDigit = buttonText;
 
             var otp = _firstDigit.toString() +
                 _secondDigit.toString() +
                 _thirdDigit.toString() +
-                _fourthDigit.toString();
-            print(otp);
+                _fourthDigit.toString() +
+                _fifthDigit.toString() +
+                _sixthDigit.toString();
             setState(() {
               OtpCode = otp;
             });
-
-            // Verify your otp by here. API call
           }
         });
       },
@@ -124,11 +129,13 @@ class _OTPPageState extends State<OTPPage> {
             ),
       decoration: BoxDecoration(
 //            color: Colors.grey.withOpacity(0.4),
-          border: Border(
-              bottom: BorderSide(
-        width: 2.0.w,
-        color: CustomizedTheme.primaryColor,
-      ))),
+        border: Border(
+          bottom: BorderSide(
+            width: 2.0.w,
+            color: CustomizedTheme.primaryColor,
+          ),
+        ),
+      ),
     );
   }
 
@@ -182,6 +189,8 @@ class _OTPPageState extends State<OTPPage> {
               _otpTextField(_secondDigit),
               _otpTextField(_thirdDigit),
               _otpTextField(_fourthDigit),
+              _otpTextField(_fifthDigit),
+              _otpTextField(_sixthDigit),
             ],
           ),
           const Spacer(),
@@ -189,12 +198,18 @@ class _OTPPageState extends State<OTPPage> {
             height: 351.87.h,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                color: CustomizedTheme.primaryBold,
-                borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(50.0.r))),
+              color: CustomizedTheme.primaryBold,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(
+                  50.0.r,
+                ),
+              ),
+            ),
             child: Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: 19.36.w, vertical: 76.57.h),
+              padding: EdgeInsets.symmetric(
+                horizontal: 19.36.w,
+                vertical: 76.57.h,
+              ),
               child: Table(
                 // defaultColumnWidth: IntrinsicColumnWidth(),
                 columnWidths: {
@@ -221,22 +236,30 @@ class _OTPPageState extends State<OTPPage> {
                   TableRow(children: [
                     GestureDetector(
                       onTap: () {
-                        setState(() {
-                          if (_fourthDigit != checker) {
-                            _fourthDigit = checker;
-                          } else if (_thirdDigit != checker) {
-                            _thirdDigit = checker;
-                          } else if (_secondDigit != checker) {
-                            _secondDigit = checker;
-                          } else if (_firstDigit != checker) {
-                            _firstDigit = checker;
-                          }
-                          OtpCode = "no";
-                        });
+                        setState(
+                          () {
+                            if (_fourthDigit != checker) {
+                              _fourthDigit = checker;
+                            } else if (_thirdDigit != checker) {
+                              _thirdDigit = checker;
+                            } else if (_secondDigit != checker) {
+                              _secondDigit = checker;
+                            } else if (_firstDigit != checker) {
+                              _firstDigit = checker;
+                            } else if (_fifthDigit != checker) {
+                              _fifthDigit = checker;
+                            } else if (_sixthDigit != checker) {
+                              _sixthDigit = checker;
+                            }
+                            OtpCode = "no";
+                          },
+                        );
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 15.0.w, vertical: 5.h),
+                          horizontal: 15.0.w,
+                          vertical: 5.h,
+                        ),
                         child: Container(
                           height: 44.86.h,
                           // width: 92.96,
@@ -245,7 +268,9 @@ class _OTPPageState extends State<OTPPage> {
                             borderRadius: BorderRadius.circular(6.93.r),
                             border: Border.all(color: CustomizedTheme.white),
                           ),
-                          child: Image.asset('assets/icons/ic_backspace.png'),
+                          child: Image.asset(
+                            'assets/icons/ic_backspace.png',
+                          ),
                         ),
                       ),
                     ),
@@ -268,8 +293,10 @@ class _OTPPageState extends State<OTPPage> {
                                   mobileNumber:
                                       '${widget.areaCode}${widget.phone}',
                                   newPassword: widget.password,
+                                  code: OtpCode,
                                 ));
-                                if (res1 != null && res1['data']['acknowledged']) {
+                                if (res1 != null &&
+                                    res1['data']['acknowledged']) {
                                   var res =
                                       await networkHandler.loginUser(loginData);
                                   if (res != null) {

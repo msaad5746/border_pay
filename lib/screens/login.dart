@@ -32,6 +32,8 @@ class _LoginPageState extends State<LoginPage> {
   bool isLoading = false;
   bool isBioMatric = false;
   String cuntryCode = '+1';
+  bool isPhoneNumberFilled = true;
+  bool isPasswordFilled = true;
 
   // Toggles the password show status
   void _toggle() {
@@ -42,6 +44,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    isPasswordFilled = true;
+    isPhoneNumberFilled = true;
     isBioMatricEnable();
     super.initState();
   }
@@ -51,10 +55,12 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: 1.sh,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.36.w),
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.36.w,
+              ),
               child: Form(
                 key: Utils.loginPageFormKey,
                 child: Column(
@@ -72,10 +78,11 @@ class _LoginPageState extends State<LoginPage> {
                             width: 37.26.w,
                             // margin: EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  10.11.r,
-                                ),
-                                color: CustomizedTheme.colorAccent),
+                              borderRadius: BorderRadius.circular(
+                                10.11.r,
+                              ),
+                              color: CustomizedTheme.colorAccent,
+                            ),
                             child: Icon(
                               Icons.arrow_back,
                               color: CustomizedTheme.white,
@@ -113,11 +120,17 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                                 borderSide: BorderSide(
-                                  color: CustomizedTheme.colorAccent,
+                                  color: CustomizedTheme.colorAccentBlack,
                                   width: .01.w,
                                 ),
                               ),
-                              label: const Text("Phone Number"),
+                              label: Text(
+                                "Phone Number",
+                                style: CustomizedTheme.b_W400_12.copyWith(
+                                  fontWeight: FontWeight.w300,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
                               labelStyle: TextStyle(
                                 color: CustomizedTheme.colorAccent,
                               ),
@@ -128,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                                 borderSide: BorderSide(
-                                  color: Colors.lightBlue,
+                                  color: CustomizedTheme.colorAccentBlack,
                                   width: 1.w,
                                 ),
                               ),
@@ -139,13 +152,14 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                                 borderSide: BorderSide(
-                                  color: Colors.lightBlue,
+                                  color: CustomizedTheme.colorAccentBlack,
                                   width: 1.w,
                                 ),
                               ),
                             ),
                             onChanged: (phone) {},
                             onCountryChanged: (country) {
+                              isPhoneNumberFilled = true;
                               setState(
                                 () {
                                   cuntryCode = "+" + country.dialCode;
@@ -156,60 +170,73 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-
-                    SizedBox(
-                      height: 15.53.h,
-                    ),
-                    TextFormField(
-                      controller: passwordController,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                          left: 24.44.w,
-                          right: 34.47.w,
-                          bottom: 12.3.h,
-                          top: 15.03.h,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: SvgPicture.asset(
-                            'assets/svg/eye.svg',
-                            color: _obscureText
-                                ? Colors.black
-                                : Colors.black.withOpacity(.3),
+                    isPhoneNumberFilled
+                        ? const SizedBox.shrink()
+                        : Text(
+                            'Phone number field is empty',
+                            style: CustomizedTheme.b_W400_12.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: CustomizedTheme.voucherUnpaid,
+                            ),
                           ),
-                          onPressed: () {
-                            _toggle();
-                          },
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 1.0.w)),
-                        labelText: "Password",
-                        labelStyle: CustomizedTheme.b_W400_12,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0.r)),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
+                    verticalSpacer(16),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: CustomizedTheme.colorAccentBlack,
                         ),
                       ),
-                      // controller: passwordController,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        if (value!.trim().isEmpty) {
-                          return 'Please enter password';
-                        }
-                        // Check if the entered email has the right format
-                        if (value.trim().length < 6) {
-                          return 'Enter correct password';
-                        }
-                        // Return null if the entered email is valid
-                        return null;
-                      },
+                      child: TextFormField(
+                        controller: passwordController,
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(
+                            left: 24.44.w,
+                            right: 34.47.w,
+                            bottom: 12.3.h,
+                            top: 15.03.h,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: SvgPicture.asset(
+                              'assets/svg/eye.svg',
+                              color: _obscureText
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(
+                                      .3,
+                                    ),
+                            ),
+                            onPressed: () {
+                              _toggle();
+                            },
+                          ),
+                          labelText: "Password",
+                          labelStyle: CustomizedTheme.b_W400_12.copyWith(
+                            fontWeight: FontWeight.w300,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        // controller: passwordController,
+                        onEditingComplete: () {
+                          isPasswordFilled = true;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          return null;
+                        },
+                      ),
                     ),
+                    verticalSpacer(12),
+                    isPasswordFilled
+                        ? const SizedBox.shrink()
+                        : Text(
+                            'Password field is empty',
+                            style: CustomizedTheme.b_W400_12.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: CustomizedTheme.voucherUnpaid,
+                            ),
+                          ),
                     verticalSpacer(12),
                     SizedBox(
                       width: double.infinity,
@@ -350,17 +377,26 @@ class _LoginPageState extends State<LoginPage> {
                             child: TextButton(
                               onPressed: () async {
                                 if (!isLoading) {
-                                  if (phoneController.text.isNotEmpty &&
-                                      passwordController.text.isNotEmpty) {
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    await userLogin(
-                                      phoneController.text,
-                                      passwordController.text,
-                                    );
+                                  if (phoneController.text.isNotEmpty) {
+                                    if (passwordController.text.isNotEmpty) {
+                                      isPhoneNumberFilled = true;
+                                      isPasswordFilled = true;
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      await userLogin(
+                                        phoneController.text,
+                                        passwordController.text,
+                                      );
+                                    } else {
+                                      isPhoneNumberFilled = true;
+                                      isPasswordFilled = false;
+                                    }
+                                  } else {
+                                    isPhoneNumberFilled = false;
                                   }
                                 }
+                                setState(() {});
                               },
                               child: isLoading
                                   ? const CircularProgressIndicator(
@@ -391,7 +427,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> userLogin(String phone, String password) async {
     Map<String, String> loginData = {
-      "mobileNumber": cuntryCode+phone,
+      "mobileNumber": cuntryCode + phone,
       "password": password,
     };
     var res = await networkHandler.loginUser(loginData);

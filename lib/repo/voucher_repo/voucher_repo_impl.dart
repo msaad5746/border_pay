@@ -64,9 +64,7 @@ class VoucherRepoImpl implements VoucherRepo {
       } else {
         return null;
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   @override
