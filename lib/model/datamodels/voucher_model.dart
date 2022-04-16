@@ -12,10 +12,28 @@ class VoucherModel {
 
   List<VoucherDataModel> data;
 
-  VoucherModel(
-      {this.status = false, this.statusMsg = '', this.data = const []});
+  int page;
+  int limit;
+  bool lastPage;
 
-  factory VoucherModel.fromJson(dynamic json) {
+  VoucherModel({
+    this.status = false,
+    this.statusMsg = '',
+    this.data = const [],
+    this.page = 1,
+    this.lastPage = true,
+    this.limit = 14,
+  });
+
+  factory VoucherModel.fromJson({
+    dynamic json,
+    int page = 1,
+    bool lastPage = true,
+    int limit = 14,
+  }) {
+    page = page;
+    lastPage = lastPage;
+    limit = 14;
     List<VoucherDataModel> dataList = [];
     if (json['data'] != null) {
       json['data'].forEach((v) {
@@ -33,6 +51,9 @@ class VoucherModel {
     final map = <String, dynamic>{};
     map['status'] = status;
     map['statusMsg'] = statusMsg;
+    map['page'] = page;
+    map['lastPage'] = lastPage;
+    map['limit'] = limit;
     if (data != null) {
       map['data'] = data.map((v) => v.toJson()).toList();
     }
@@ -70,8 +91,8 @@ class VoucherDataModel {
   factory VoucherDataModel.fromJson(dynamic json) {
     return VoucherDataModel(
       id: json['id'],
-      status: json['status']??'',
-      type: json['type']??'',
+      status: json['status'] ?? '',
+      type: json['type'] ?? '',
       amount: json['amount'],
       location: json['location'] != null
           ? LocationModel.fromJson(json['location'])

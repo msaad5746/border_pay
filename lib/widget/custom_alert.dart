@@ -547,48 +547,51 @@ class CustomAlertDialog {
                 width: 0.8.sw,
                 height: 200.58.h,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 50.0),
+                  padding: const EdgeInsets.only(top: 50.0),
                   child: Column(
                     children: [
                       OutlinedButton(
-                          onPressed: () {
-                            Navigator.pop(_);
-                            buttonAction1.call();
-                          },
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: CustomizedTheme.primaryColor,
-                            minimumSize: Size(0.5.sw, 40.h),
-                            side: BorderSide(
-                                width: 1.0.w,
-                                color: CustomizedTheme.primaryColor),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5.r)),
-                            ),
+                        onPressed: () {
+                          Navigator.pop(_);
+                          buttonAction1.call();
+                        },
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: CustomizedTheme.primaryColor,
+                          minimumSize: Size(0.5.sw, 40.h),
+                          side: BorderSide(
+                              width: 1.0.w,
+                              color: CustomizedTheme.primaryColor),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.r)),
                           ),
-                          child: Text("Use Existing Details",
-                              style: CustomizedTheme.roboto_w_W400_14,),),
-                      const SizedBox(
-                        height: 20,
+                        ),
+                        child: Text(
+                          "Use Existing Details",
+                          style: CustomizedTheme.roboto_w_W400_14,
+                        ),
                       ),
                       OutlinedButton(
-                          onPressed: () {
-                            Navigator.pop(_);
-                            buttonAction2.call();
-                          },
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: Size(0.5.sw, 40.h),
-                            backgroundColor: CustomizedTheme.primaryColor,
-                            side: BorderSide(
-                                width: 1.0.w,
-                                color: CustomizedTheme.primaryColor),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5.r)),
-                            ),
+                        onPressed: () {
+                          Navigator.pop(_);
+                          buttonAction2.call();
+                        },
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: Size(0.5.sw, 40.h),
+                          backgroundColor: CustomizedTheme.primaryColor,
+                          side: BorderSide(
+                              width: 1.0.w,
+                              color: CustomizedTheme.primaryColor),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.r)),
                           ),
-                          child: Text("Buy for Different Traveller",
-                              style: CustomizedTheme.roboto_w_W400_14)),
+                        ),
+                        child: Text(
+                          "Buy for Different Traveller",
+                          style: CustomizedTheme.roboto_w_W400_14,
+                        ),
+                      ),
                       // SizedBox(height:20.75.h),
                     ],
                   ),

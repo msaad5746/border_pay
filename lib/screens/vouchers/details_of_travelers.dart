@@ -50,7 +50,8 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
   List<TextEditingController> emiratesIdCtrl = List.empty(growable: true);
   List<int> nationalityId = List.empty(growable: true);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  var currentAreaCode;
+  late List<GlobalKey<FormState>> keys;
+  late String currentAreaCode;
   UserModel loginData = UserModel();
 
   bool isLoading = false;
@@ -58,6 +59,8 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
 
   @override
   void initState() {
+    keys = [];
+    currentAreaCode = '+1';
     for (int i = 0; i <= widget.travelerCount; i++) {
       firstNameCtrl.add(TextEditingController());
       lastNameCtrl.add(TextEditingController());
@@ -69,7 +72,16 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
     }
     getCountries(countriesController.countries);
     getUserData();
+    initialKeys();
     super.initState();
+  }
+
+  void initialKeys() {
+    for (int i = 0; i < widget.travelerCount; i++) {
+      keys.add(
+        GlobalKey<FormState>(),
+      );
+    }
   }
 
   @override
@@ -119,7 +131,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                 itemCount: widget.travelerCount,
                 itemBuilder: (context, index) {
                   return Form(
-                    key: _formKey,
+                    key: keys[index],
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -207,9 +219,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                   width: .01.w,
                                 ),
                               ),
-                              labelText: "First Name",
-                              labelStyle:
-                                  TextStyle(color: CustomizedTheme.colorAccent),
+                              labelText: "First Name \*",
+                              labelStyle: TextStyle(
+                                color: CustomizedTheme.colorAccent,
+                              ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(
@@ -269,7 +282,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                   width: .01.w,
                                 ),
                               ),
-                              labelText: "Last Name",
+                              labelText: "Last Name \*",
                               labelStyle: TextStyle(
                                 color: CustomizedTheme.colorAccent,
                               ),
@@ -313,6 +326,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                           children: [
                             Expanded(
                               child: IntlPhoneField(
+                                initialCountryCode: 'US',
                                 controller: phoneCtrl[index],
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.only(
@@ -332,7 +346,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                       width: .01.w,
                                     ),
                                   ),
-                                  hintText: "Phone Number",
+                                  hintText: "Phone Number \*",
                                   hintStyle: TextStyle(
                                     color: CustomizedTheme.colorAccent,
                                   ),
@@ -363,7 +377,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                 onCountryChanged: (country) {
                                   setState(
                                     () {
-                                      currentAreaCode = country.dialCode;
+                                      currentAreaCode = "+"+country.dialCode;
                                     },
                                   );
                                 },
@@ -381,30 +395,41 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                             showCursor: true,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
-                                  left: 30.45.w,
-                                  right: 44.45.w,
-                                  top: 23.66.h,
-                                  bottom: 23.66.h),
+                                left: 30.45.w,
+                                right: 44.45.w,
+                                top: 23.66.h,
+                                bottom: 23.66.h,
+                              ),
                               border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0.r)),
-                                  borderSide: BorderSide(
-                                      color: CustomizedTheme.colorAccent,
-                                      width: .01.w)),
-                              labelText: "Email",
-                              labelStyle:
-                                  TextStyle(color: CustomizedTheme.colorAccent),
-                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0.r)),
                                 borderSide: BorderSide(
-                                    color: Colors.lightBlue, width: 1.w),
+                                  color: CustomizedTheme.colorAccent,
+                                  width: .01.w,
+                                ),
+                              ),
+                              labelText: "Email \*",
+                              labelStyle: TextStyle(
+                                color: CustomizedTheme.colorAccent,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    10.0.r,
+                                  ),
+                                ),
+                                borderSide: BorderSide(
+                                  color: Colors.lightBlue,
+                                  width: 1.w,
+                                ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0.r)),
                                 borderSide: BorderSide(
-                                    color: Colors.lightBlue, width: 1.w),
+                                  color: Colors.lightBlue,
+                                  width: 1.w,
+                                ),
                               ),
                             ),
                             // controller: personController,
@@ -434,46 +459,59 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                             },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
-                                  left: 30.45.w,
-                                  right: 44.45.w,
-                                  top: 23.66.h,
-                                  bottom: 23.66.h),
+                                left: 30.45.w,
+                                right: 44.45.w,
+                                top: 23.66.h,
+                                bottom: 23.66.h,
+                              ),
                               border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0.r)),
-                                  borderSide: BorderSide(
-                                      color: CustomizedTheme.colorAccent,
-                                      width: .01.w)),
-                              labelText: "Nationality",
-                              labelStyle:
-                                  TextStyle(color: CustomizedTheme.colorAccent),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0.r)),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    10.0.r,
+                                  ),
+                                ),
                                 borderSide: BorderSide(
-                                    color: Colors.lightBlue, width: 1.w),
+                                  color: CustomizedTheme.colorAccent,
+                                  width: .01.w,
+                                ),
+                              ),
+                              labelText: "Nationality \*",
+                              labelStyle: TextStyle(
+                                color: CustomizedTheme.colorAccent,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    10.0.r,
+                                  ),
+                                ),
+                                borderSide: BorderSide(
+                                  color: Colors.lightBlue,
+                                  width: 1.w,
+                                ),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0.r)),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    10.0.r,
+                                  ),
+                                ),
                                 borderSide: BorderSide(
-                                    color: Colors.lightBlue, width: 1.w),
+                                  color: Colors.lightBlue,
+                                  width: 1.w,
+                                ),
                               ),
                             ),
                             onTap: () {
                               showCountryPicker(
                                 context: context,
-                                //Optional.  Can be used to exclude(remove) one ore more country from the countries list (optional).
-                                // exclude: <String>['KN', 'MF'],
-                                //Optional. Shows phone code before the country name.
                                 countryFilter: localCountries,
                                 showPhoneCode: false,
                                 showWorldWide: false,
                                 onSelect: (Country country) {
-                                  nationalityId[index] =
-                                      getNationalityId(country.countryCode);
-                                  print(
-                                      'Select country: ${country.displayName}');
+                                  nationalityId[index] = getNationalityId(
+                                    country.countryCode,
+                                  );
                                   setState(() {
                                     nationalityCtrl[index].text = country.name;
                                   });
@@ -531,7 +569,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                   width: .01.w,
                                 ),
                               ),
-                              labelText: "Emirates ID/Passport Number",
+                              labelText: "Emirates ID/Passport Number \*",
                               labelStyle: TextStyle(
                                 color: CustomizedTheme.colorAccent,
                               ),
@@ -597,7 +635,15 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                               borderRadius: BorderRadius.circular(10.r)),
                         ),
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
+                          int counter = 0;
+                          for (int i = 0; i < keys.length; i++) {
+                            if (keys[i].currentState!.validate()) {
+                              counter++;
+                            } else {
+                              counter--;
+                            }
+                          }
+                          if (counter == widget.travelerCount) {
                             setState(
                               () {
                                 isLoading = true;

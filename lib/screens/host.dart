@@ -5,7 +5,7 @@ import 'package:borderpay/screens/setting/setting.dart';
 import 'package:borderpay/screens/vouchers/vouchers_list.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'homepage.dart';
+import 'home_page/homepage.dart';
 
 int currentIndex = 0;
 

@@ -6,7 +6,7 @@ import 'package:borderpay/model/datamodels/voucher_transaction_model.dart';
 mixin VoucherRepo {
   Future<dynamic> getVoucherDetails(int userId, int voucherId);
 
-  Future<dynamic> getVoucherList(id);
+  Future<dynamic> getVoucherList({int page=1, int limit=15, id});
 
   Future<dynamic> getCompanyVoucherList(id);
 

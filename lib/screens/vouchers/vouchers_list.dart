@@ -23,7 +23,7 @@ class _VouchersPageState extends State<VouchersPage> {
 
   bool isLoading = true;
   bool isError = false;
-  int selector = 0;
+  int selector = 1;
   String searchText = '';
 
   @override
@@ -59,36 +59,44 @@ class _VouchersPageState extends State<VouchersPage> {
                           children: [
                             Expanded(
                               child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      selector = 0;
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: selector == 0
-                                        ? CustomizedTheme.colorAccent
-                                        : CustomizedTheme.primaryColor,
-                                  ),
-                                  child: Text('Company Voucher',
-                                      style: CustomizedTheme.w_W300_12)),
+                                onPressed: () {
+                                  setState(() {
+                                    selector = 0;
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: selector == 0
+                                      ? CustomizedTheme.colorAccent
+                                      : CustomizedTheme.primaryColor,
+                                ),
+                                child: Text(
+                                  'Company Voucher',
+                                  style: CustomizedTheme.w_W300_12,
+                                ),
+                              ),
                             ),
                             SizedBox(
                               width: 16.w,
                             ),
                             Expanded(
                               child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: selector == 1
-                                        ? CustomizedTheme.colorAccent
-                                        : CustomizedTheme.primaryColor,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
+                                style: ElevatedButton.styleFrom(
+                                  primary: selector == 1
+                                      ? CustomizedTheme.colorAccent
+                                      : CustomizedTheme.primaryColor,
+                                ),
+                                onPressed: () {
+                                  setState(
+                                    () {
                                       selector = 1;
-                                    });
-                                  },
-                                  child: Text('Individual Voucher',
-                                      style: CustomizedTheme.w_W300_12)),
+                                    },
+                                  );
+                                },
+                                child: Text(
+                                  'Individual Voucher',
+                                  style: CustomizedTheme.w_W300_12,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -187,120 +195,106 @@ class _VouchersPageState extends State<VouchersPage> {
                                   ),
                       ),
                       ...List.generate(
-                          selector == 0
-                              ? searchText.isEmpty
-                                  ? companyVoucherList.data.length
-                                  : searchCompanyResult.length
-                              : searchText.isEmpty
-                                  ? individualVoucherList.data.length
-                                  : searchIndividualResult.length,
-                          (index) => Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 22.0.w),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/DetailedVoucher',
-                                      arguments: selector == 0
+                        selector == 0
+                            ? searchText.isEmpty
+                                ? companyVoucherList.data.length
+                                : searchCompanyResult.length
+                            : searchText.isEmpty
+                                ? individualVoucherList.data.length
+                                : searchIndividualResult.length,
+                        (index) => Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/DetailedVoucher',
+                                arguments: selector == 0
+                                    ? searchText.isEmpty
+                                        ? companyVoucherList.data[index]
+                                        : searchCompanyResult[index]
+                                    : searchText.isEmpty
+                                        ? individualVoucherList.data[index]
+                                        : searchIndividualResult[index],
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom: 10.h,
+                                  top: 15.h,
+                                  left: 10.w,
+                                  right: 10.w),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: CustomizedTheme.colorAccent,
+                                          width: 1.w))),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: 80.w,
+                                    child: Text(
+                                        selector == 0
+                                            ? searchText.isEmpty
+                                                ? companyVoucherList
+                                                    .data[index].id
+                                                    .toString()
+                                                : searchCompanyResult[index]
+                                                    .id
+                                                    .toString()
+                                            : searchText.isEmpty
+                                                ? individualVoucherList
+                                                    .data[index].id
+                                                    .toString()
+                                                : searchIndividualResult[index]
+                                                    .id
+                                                    .toString(),
+                                        style: CustomizedTheme.sf_pb_W700_13),
+                                  ),
+                                  SizedBox(
+                                    width: 80.w,
+                                    child: Text(
+                                        selector == 0
+                                            ? searchText.isEmpty
+                                                ? companyVoucherList
+                                                    .data[index].location.title
+                                                : searchCompanyResult[index]
+                                                    .location
+                                                    .title
+                                            : searchText.isEmpty
+                                                ? individualVoucherList
+                                                    .data[index].location.title
+                                                : searchIndividualResult[index]
+                                                    .location
+                                                    .title,
+                                        style: CustomizedTheme.sf_pb_W300_13),
+                                  ),
+                                  SizedBox(
+                                    width: 80.w,
+                                    child: Text(
+                                      selector == 0
                                           ? searchText.isEmpty
-                                              ? companyVoucherList.data[index]
+                                              ? companyVoucherList
+                                                  .data[index].status
                                               : searchCompanyResult[index]
+                                                  .status
                                           : searchText.isEmpty
                                               ? individualVoucherList
-                                                  .data[index]
-                                              : searchIndividualResult[index],
-                                    );
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.only(
-                                        bottom: 10.h,
-                                        top: 15.h,
-                                        left: 10.w,
-                                        right: 10.w),
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color:
-                                                    CustomizedTheme.colorAccent,
-                                                width: 1.w))),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          width: 80.w,
-                                          child: Text(
-                                              selector == 0
-                                                  ? searchText.isEmpty
-                                                      ? companyVoucherList
-                                                          .data[index].id
-                                                          .toString()
-                                                      : searchCompanyResult[
-                                                              index]
-                                                          .id
-                                                          .toString()
-                                                  : searchText.isEmpty
-                                                      ? individualVoucherList
-                                                          .data[index].id
-                                                          .toString()
-                                                      : searchIndividualResult[
-                                                              index]
-                                                          .id
-                                                          .toString(),
-                                              style: CustomizedTheme
-                                                  .sf_pb_W700_13),
-                                        ),
-                                        SizedBox(
-                                          width: 80.w,
-                                          child: Text(
-                                              selector == 0
-                                                  ? searchText.isEmpty
-                                                      ? companyVoucherList
-                                                          .data[index]
-                                                          .location
-                                                          .title
-                                                      : searchCompanyResult[
-                                                              index]
-                                                          .location
-                                                          .title
-                                                  : searchText.isEmpty
-                                                      ? individualVoucherList
-                                                          .data[index]
-                                                          .location
-                                                          .title
-                                                      : searchIndividualResult[
-                                                              index]
-                                                          .location
-                                                          .title,
-                                              style: CustomizedTheme
-                                                  .sf_pb_W300_13),
-                                        ),
-                                        SizedBox(
-                                          width: 80.w,
-                                          child: Text(
-                                              selector == 0
-                                                  ? searchText.isEmpty
-                                                      ? companyVoucherList
-                                                          .data[index].status
-                                                      : searchCompanyResult[
-                                                              index]
-                                                          .status
-                                                  : searchText.isEmpty
-                                                      ? individualVoucherList
-                                                          .data[index].status
-                                                      : searchIndividualResult[
-                                                              index]
-                                                          .status,
-                                              textAlign: TextAlign.end,
-                                              style: CustomizedTheme
-                                                  .sf_b_W300_13Paid),
-                                        ),
-                                      ],
+                                                  .data[index].status
+                                              : searchIndividualResult[index]
+                                                  .status,
+                                      textAlign: TextAlign.end,
+                                      style: CustomizedTheme.sf_b_W300_13Paid,
                                     ),
                                   ),
-                                ),
-                              )),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -323,7 +317,9 @@ class _VouchersPageState extends State<VouchersPage> {
   }
 
   Future<void> getIndividualVoucherData(int id) async {
-    var response = await repo.getVoucherList(id);
+    var response = await repo.getVoucherList(
+      id: id,
+    );
     if (response != null) {
       individualVoucherList = response;
       setState(() {

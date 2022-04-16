@@ -49,6 +49,7 @@ dependencies:
   url_launcher: ^6.0.20
   open_mail_app: ^0.4.5
   flutter_svg: ^0.21.0
+  pull_to_refresh:
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,7 @@ flutter:
     - assets/icons/
     - assets/payments/
     - assets/fonts/
+    - assets/svg/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

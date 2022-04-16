@@ -7,7 +7,7 @@ import 'package:borderpay/model/arguments/register_datatoserver.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
 import 'package:borderpay/model/arguments/register_two.dart';
 import 'package:borderpay/screens/change_password/change_password.dart';
-import 'package:borderpay/screens/homepage.dart';
+import 'package:borderpay/screens/home_page/homepage.dart';
 import 'package:borderpay/screens/host.dart';
 import 'package:borderpay/screens/login.dart';
 import 'package:borderpay/screens/otp.dart';
@@ -357,6 +357,9 @@ class _MyAppState extends State<MyApp> {
             ),
             designSize: const Size(375, 812),
           )
-        : const MaterialApp(home: Text(''));
+        : const MaterialApp(
+            home: Text(''),
+            debugShowCheckedModeBanner: false,
+          );
   }
 }
