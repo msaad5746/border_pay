@@ -13,7 +13,7 @@ import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'custom_intl_phone_field.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -93,16 +93,14 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 68.54.h,
                     ),
-                    IntlPhoneField(
+                    CustomIntlPhoneField(
+                      flagDecoration: BoxDecoration(
+                        color: CustomizedTheme.primaryBold,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       initialCountryCode: 'US',
-                      // controller: phoneController,
+                      controller: phoneController,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                          left: 30.45.w,
-                          right: 10.45.w,
-                          top: 23.66.h,
-                          bottom: 23.66.h,
-                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(
@@ -150,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                       dropdownIconPosition: IconPosition.trailing,
-                      flagsButtonMargin: EdgeInsets.symmetric(horizontal: 10),
+                      flagsButtonPadding: const EdgeInsets.symmetric(vertical: 8),
                     ),
 
                     SizedBox(
@@ -387,7 +385,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> userLogin(String phone, String password) async {
     Map<String, String> loginData = {
-      "mobileNumber": cuntryCode+phone,
+      "mobileNumber": cuntryCode + phone,
       "password": password,
     };
     var res = await networkHandler.loginUser(loginData);
