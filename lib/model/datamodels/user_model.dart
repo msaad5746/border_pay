@@ -35,7 +35,7 @@ class UserModel {
         passport: json['userInfo']['passport'] ?? '',
         gender: json['userInfo']['gender'] ?? '',
         nationality: json['userInfo']['nationality'] != null
-            ? NationalityModel.fromJson(json['nationality'])
+            ? NationalityModel.fromJson(json['userInfo']['nationality'])
             : NationalityModel(),
         tourist: json['tourist'],
         email: json['userInfo']['email'],

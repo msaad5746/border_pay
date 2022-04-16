@@ -13,6 +13,7 @@ import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -93,9 +94,13 @@ class _SettingPageState extends State<SettingPage> {
                         height: 59.h,
                         width: 1.sw,
                         child: OutlinedButton.icon(
-                          onPressed: () {
-                            Navigator.popAndPushNamed(context, '/updateProfile',
+                          onPressed: () async {
+                            var isDataUpdate = await Navigator.pushNamed(
+                                context, '/updateProfile',
                                 arguments: loginData);
+                            if (isDataUpdate as bool) {
+                              getUserData();
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                               side: BorderSide(
@@ -106,7 +111,9 @@ class _SettingPageState extends State<SettingPage> {
                               alignment: Alignment.centerLeft,
                               padding:
                                   EdgeInsets.symmetric(horizontal: 18.01.w)),
-                          icon: Image.asset('assets/icons/ic_person.png'),
+                          icon: SvgPicture.asset(
+                            'assets/svg/ic_person.svg',
+                          ),
                           label: Padding(
                             padding: EdgeInsets.only(left: 31.7.w),
                             child: Text("Change Profile Information",
@@ -137,7 +144,9 @@ class _SettingPageState extends State<SettingPage> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(right: 31.7.w),
-                                child: Image.asset('assets/icons/ic_bell.png'),
+                                child: SvgPicture.asset(
+                                  'assets/svg/ic_bell.svg',
+                                ),
                               ),
                               Text("Push Notifications",
                                   style: CustomizedTheme.sf_bo_W400_1592),
@@ -207,7 +216,9 @@ class _SettingPageState extends State<SettingPage> {
                               alignment: Alignment.centerLeft,
                               padding:
                                   EdgeInsets.symmetric(horizontal: 18.01.w)),
-                          icon: Image.asset('assets/icons/ic_lock.png'),
+                          icon: SvgPicture.asset(
+                            'assets/svg/ic_lock.svg',
+                          ),
                           label: Padding(
                             padding: EdgeInsets.only(left: 31.7.w),
                             child: Text("Change Password",
@@ -243,8 +254,9 @@ class _SettingPageState extends State<SettingPage> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(right: 31.7.w),
-                                child: Image.asset(
-                                    'assets/icons/ic_biometric.png'),
+                                child: SvgPicture.asset(
+                                  'assets/svg/ic_biometric.svg',
+                                ),
                               ),
                               Text("Biometric Authentication",
                                   style: CustomizedTheme.sf_bo_W400_1592),
@@ -324,7 +336,9 @@ class _SettingPageState extends State<SettingPage> {
                               alignment: Alignment.centerLeft,
                               padding:
                                   EdgeInsets.symmetric(horizontal: 18.01.w)),
-                          icon: Image.asset('assets/icons/ic_trash.png'),
+                          icon: SvgPicture.asset(
+                            'assets/svg/ic_trash.svg',
+                          ),
                           label: Padding(
                             padding: EdgeInsets.only(left: 31.7.w),
                             child: Text("Delete Account",
@@ -351,8 +365,9 @@ class _SettingPageState extends State<SettingPage> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(right: 31.7.w),
-                                child:
-                                    Image.asset('assets/icons/ic_logout.png'),
+                                child: SvgPicture.asset(
+                                  'assets/svg/ic_logout.svg',
+                                ),
                               ),
                               Text("Logout",
                                   style: CustomizedTheme.sf_bo_W400_1592),
