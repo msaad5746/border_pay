@@ -329,7 +329,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       lastName: lnameController.text,
                                       email: emailController.text,
                                       password: passwordController.text,
-                                      areaCode: currentAreaCode,
+                                      areaCode: '+$currentAreaCode',
                                       phone: phoneController.text,
                                       nationality: currentNationality.text,
                                       nationalityId:

@@ -254,20 +254,22 @@ class _OTPPageState extends State<OTPPage> {
                         ? Container()
                         : GestureDetector(
                             onTap: () async {
-                              if (widget.email.isNotEmpty) {
+                              if (widget.phone.isNotEmpty) {
                                 setState(() {
                                   isLoading = true;
                                 });
                                 Map<String, String> loginData = {
-                                  "email": widget.email,
+                                  "mobileNumber":
+                                      '${widget.areaCode}${widget.phone}',
                                   "password": widget.password,
                                 };
                                 var res1 = await networkHandler
                                     .verifyUser(VerifyUserModel(
-                                  email: widget.email,
+                                  mobileNumber:
+                                      '${widget.areaCode}${widget.phone}',
                                   newPassword: widget.password,
                                 ));
-                                if (res1 != null) {
+                                if (res1 != null && res1['data']['acknowledged']) {
                                   var res =
                                       await networkHandler.loginUser(loginData);
                                   if (res != null) {
