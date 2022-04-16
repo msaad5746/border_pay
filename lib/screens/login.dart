@@ -204,7 +204,6 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "Password",
                           labelStyle: CustomizedTheme.b_W400_12.copyWith(
                             fontWeight: FontWeight.w300,
-                            fontStyle: FontStyle.italic,
                           ),
                           border: InputBorder.none,
                         ),

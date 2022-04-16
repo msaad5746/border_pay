@@ -12,7 +12,6 @@ class PdfApi {
       Get.find<CountriesController>();
 
   static Future<File> generateCenteredText(Vouchers data) async {
-    // making a pdf document to store a text and it is provided by pdf pakage
     final pdfD = pw.Document();
     var data = await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf");
     var myFont = pw.Font.ttf(data);
@@ -224,7 +223,7 @@ class PdfApi {
 
     // here a beautiful pakage  path provider helps us and take dircotory and name of the file  and made a proper file in internal storage
     final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/$name');
+    final file = File('/storage/emulated/0/Download/$name');
 
     await file.writeAsBytes(bytes).then((value) {
       print('value=> $value');
