@@ -56,10 +56,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                Navigator.popAndPushNamed(
-                  context,
-                  RouteConstant.settingPage,
-                );
+                Navigator.pop(context, false);
               },
               child: Container(
                   height: 33.73.h,
@@ -345,7 +342,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       "firstName": fnameController.text,
       "lastName": lnameController.text,
       "nationalityId": getNationalityId(),
-      "mobileNumber": widget.userData.phoneNumber,
+      "email": widget.userData.email,
       "emirateId": emirateController.text,
     };
     var res = await networkHandler.updateUserDetails(
@@ -367,10 +364,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
           backgroundColor: CustomizedTheme.voucherPaid,
         ),
       );
-      Navigator.popAndPushNamed(
-        context,
-        RouteConstant.settingPage,
-      );
+      Navigator.pop(context, true);
     } else {
       setState(() {
         isLoading = false;

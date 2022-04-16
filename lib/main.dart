@@ -124,9 +124,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    return _connectionStatus == ConnectivityResult.mobile ||
-            _connectionStatus == ConnectivityResult.wifi
-        ? ScreenUtilInit(
+    return
+      // _connectionStatus == ConnectivityResult.mobile ||
+      //       _connectionStatus == ConnectivityResult.wifi
+      //   ?
+    ScreenUtilInit(
             builder: () => MaterialApp(
               localizationsDelegates: const [
                 GlobalMaterialLocalizations.delegate,
@@ -354,12 +356,14 @@ class _MyAppState extends State<MyApp> {
                 return PageRouteBuilder(
                     settings: settings, pageBuilder: (_, __, ___) => page);
               },
+
             ),
+
             designSize: const Size(375, 812),
-          )
-        : const MaterialApp(
-            home: Text(''),
-            debugShowCheckedModeBanner: false,
           );
+        // : const MaterialApp(
+        //     home: Text(''),
+        //     debugShowCheckedModeBanner: false,
+        //   );
   }
 }

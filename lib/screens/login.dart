@@ -93,68 +93,64 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 68.54.h,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: IntlPhoneField(
-                            initialCountryCode: 'US',
-                            controller: phoneController,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                left: 30.45.w,
-                                right: 10.45.w,
-                                top: 23.66.h,
-                                bottom: 23.66.h,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: CustomizedTheme.colorAccent,
-                                  width: .01.w,
-                                ),
-                              ),
-                              label: const Text("Phone Number"),
-                              labelStyle: TextStyle(
-                                color: CustomizedTheme.colorAccent,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
-                              ),
+                    IntlPhoneField(
+                      initialCountryCode: 'US',
+                      // controller: phoneController,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                          left: 30.45.w,
+                          right: 10.45.w,
+                          top: 23.66.h,
+                          bottom: 23.66.h,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
                             ),
-                            onChanged: (phone) {},
-                            onCountryChanged: (country) {
-                              setState(
-                                () {
-                                  cuntryCode = "+" + country.dialCode;
-                                },
-                              );
-                            },
+                          ),
+                          borderSide: BorderSide(
+                            color: CustomizedTheme.colorAccent,
+                            width: .01.w,
                           ),
                         ),
-                      ],
+                        label: const Text("Phone Number"),
+                        labelStyle: TextStyle(
+                          color: CustomizedTheme.colorAccent,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.lightBlue,
+                            width: 1.w,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.lightBlue,
+                            width: 1.w,
+                          ),
+                        ),
+                      ),
+                      onChanged: (phone) {},
+                      onCountryChanged: (country) {
+                        setState(
+                          () {
+                            cuntryCode = "+" + country.dialCode;
+                          },
+                        );
+                      },
+                      dropdownIconPosition: IconPosition.trailing,
+                      flagsButtonMargin: EdgeInsets.symmetric(horizontal: 10),
                     ),
 
                     SizedBox(
