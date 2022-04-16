@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="344937fe-a81c-4221-b7b0-e46cc5b255d7" name="Default Changelist" comment="">
+    <list default="true" id="0b535877-ee4d-4766-97db-a29f6284ca37" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/vouchers/detailed_voucher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/vouchers/detailed_voucher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/vouchers/details_of_travelers.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/vouchers/details_of_travelers.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/screens/vouchers/voucher_successful.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/vouchers/voucher_successful.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,20 +20,29 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/Untitled" />
+    <option name="KEY_ALIAS" value="key0" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="27tCSZAertKA8zMkUDfOrBAjJzF" />
+  <component name="ProjectId" id="27tAyf8OgIo9xZq0QyyRlJ7ZVMC" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ApkExportedModule" value="android.app" />
+    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/app" />
+    <property name="ExportApk.BuildVariants" value="release" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="memory.settings.postsync.last.time.stamp" value="1650130008521" />
+    <property name="memory.settings.postsync.last.time.stamp" value="1650129314643" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RunManager">
@@ -102,11 +108,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="344937fe-a81c-4221-b7b0-e46cc5b255d7" name="Default Changelist" comment="" />
-      <created>1650129995687</created>
+      <changelist id="0b535877-ee4d-4766-97db-a29f6284ca37" name="Default Changelist" comment="" />
+      <created>1650129264872</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1650129995687</updated>
+      <updated>1650129264872</updated>
     </task>
     <servers />
   </component>

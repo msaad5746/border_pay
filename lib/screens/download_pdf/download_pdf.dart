@@ -14,14 +14,14 @@ class PdfApi {
   static Future<File> generateCenteredText(Vouchers data) async {
     // making a pdf document to store a text and it is provided by pdf pakage
     final pdfD = pw.Document();
-    var data = await rootBundle.load("assets/fonts/OpenSans/OpenSans-Regular.ttf");
+    var data = await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf");
     var myFont = pw.Font.ttf(data);
     var myTheme = pw.ThemeData.withFont(
-      base: pw.Font.ttf(await rootBundle.load("assets/fonts/OpenSans/OpenSans-Regular.ttf")),
-      bold: pw.Font.ttf(await rootBundle.load("assets/fonts/OpenSans/OpenSans-Bold.ttf")),
-      italic: pw.Font.ttf(await rootBundle.load("assets/fonts/OpenSans/OpenSans-Italic.ttf")),
+      base: pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf")),
+      bold: pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto/Roboto-Bold.ttf")),
+      italic: pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto/Roboto-Italic.ttf")),
       boldItalic:
-          pw.Font.ttf(await rootBundle.load("assets/fonts/OpenSans/OpenSans-BoldItalic.ttf")),
+          pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto/Roboto-BoldItalic.ttf")),
     );
 
     // final font = await pdfGoogleFonts.nunitoExtraLight();

@@ -42,13 +42,7 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
       List<String> images = res.toString().split(',');
       image = base64.decode(images[1]);
 
-      setState(() {
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        isLoading = false;
-      });
+      setState(() {});
     }
   }
 
