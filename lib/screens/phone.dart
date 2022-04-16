@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/register_controller.dart';
 import 'package:borderpay/model/arguments/register_datatoserver.dart';
-import 'package:borderpay/model/datamodels/login_user_model.dart';
-import 'package:borderpay/model/datamodels/register_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:borderpay/response/register_response.dart';

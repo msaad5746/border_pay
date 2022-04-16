@@ -26,7 +26,7 @@ class RegisterResponse {
   ) {
     status = json['status'];
     statusMsg = json['statusMsg'];
-    statusCode = statusCode;
+    this.statusCode = statusCode;
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
