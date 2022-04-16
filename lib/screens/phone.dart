@@ -142,7 +142,7 @@ class _PhonePageState extends State<PhonePage> {
                               lastName: widget.lastName,
                               nationality: widget.nationality,
                               nationalityId: widget.nationalityId,
-                              phone: "+"+phoneController.text,
+                              phone: phoneController.text,
                               password: widget.password,
                               areaCode: widget.areaCode,
                               email: widget.email,
