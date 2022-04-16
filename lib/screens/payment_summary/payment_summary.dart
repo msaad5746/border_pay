@@ -56,200 +56,216 @@ class _PaymentSummaryState extends State<PaymentSummary> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: horizontalValue(16),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: horizontalValue(16),
+              ),
+              alignment: Alignment.topLeft,
+              child: Text(
+                'Payment Summary',
+                style: CustomizedTheme.sf_b_W500_26,
+              ),
             ),
-            alignment: Alignment.topLeft,
-            child: Text(
-              'Payment Summary',
-              style: CustomizedTheme.sf_b_W500_26,
-            ),
-          ),
-          verticalSpacer(60),
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: horizontalValue(16),
-            ),
-            decoration: BoxDecoration(
-              color: CustomizedTheme.primaryColor,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            padding: EdgeInsets.symmetric(
-              vertical: verticalValue(16),
-              horizontal: horizontalValue(16),
-            ),
-            child: Column(
-              children: [
-                ...List.generate(
-                  widget.data.length,
-                  (index) => Column(
+            // verticalSpacer(60),
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: horizontalValue(16),
+                vertical: verticalValue(50),
+              ),
+              decoration: BoxDecoration(
+                color: CustomizedTheme.primaryColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              padding: EdgeInsets.symmetric(
+                vertical: verticalValue(16),
+                horizontal: horizontalValue(16),
+              ),
+              child: Column(
+                children: [
+                  ...List.generate(
+                    widget.data.length,
+                    (index) => Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Voucher Number: ",
+                              style: CustomizedTheme.w_W500_17.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 150.w,
+                              child: Text(
+                                'L${widget.data[index].id.toString()}',
+                                overflow: TextOverflow.clip,
+                                maxLines: 1,
+                                style: CustomizedTheme.w_W500_17,
+                              ),
+                            ),
+                          ],
+                        ),
+                        verticalSpacer(16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            buildText(
+                              "Traveller Name",
+                              CustomizedTheme.w_W500_17.copyWith(
+                                fontWeight: FontWeight.w400,
+                                fontSize: sizes.fontRatio!*17,
+                              ),
+                            ),
+                            buildText(
+                              widget.data[index].user.firstName +
+                                  ' ' +
+                                  widget.data[index].user.lastName,
+                              CustomizedTheme.w_W500_17.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: sizes.fontRatio!*17,
+                              ),
+                            ),
+                          ],
+                        ),
+                        verticalSpacer(16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            buildText(
+                              "Voucher Amount",
+                              CustomizedTheme.w_W500_17.copyWith(
+                                fontWeight: FontWeight.w400,
+                                fontSize: sizes.fontRatio!*17,
+                              ),
+                            ),
+                            buildText(
+                              "AED " + widget.data[index].amount.toString(),
+                              CustomizedTheme.w_W500_17.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: sizes.fontRatio!*17,
+                              ),
+                            ),
+                          ],
+                        ),
+                        verticalSpacer(44),
+                      ],
+                    ),
+                  ),
+                  verticalSpacer(20),
+                  Container(
+                    height: 1.h,
+                    width: 1.sw,
+                    color: CustomizedTheme.white,
+                  ),
+                  verticalSpacer(16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Voucher Number: ",
-                            style: CustomizedTheme.w_W500_17.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 150.w,
-                            child: Text(
-                              'L${widget.data[index].id.toString()}',
-                              overflow: TextOverflow.clip,
-                              maxLines: 1,
-                              style: CustomizedTheme.w_W500_17,
-                            ),
-                          ),
-                        ],
+                      buildText(
+                        "Total Amount",
+                        CustomizedTheme.w_W500_17,
                       ),
-                      verticalSpacer(16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildText(
-                            "Traveller Name",
-                            CustomizedTheme.w_W500_17.copyWith(
-                              fontWeight: FontWeight.w400,
-                              fontSize: sizes.fontRatio!*17,
-                            ),
-                          ),
-                          buildText(
-                            widget.data[index].user.firstName +
-                                ' ' +
-                                widget.data[index].user.lastName,
-                            CustomizedTheme.w_W500_17.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: sizes.fontRatio!*17,
-                            ),
-                          ),
-                        ],
+                      buildText(
+                        "AED " + getTotalAmount().toString(),
+                        CustomizedTheme.w_W500_17.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                      verticalSpacer(16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildText(
-                            "Voucher Amount",
-                            CustomizedTheme.w_W500_17.copyWith(
-                              fontWeight: FontWeight.w400,
-                              fontSize: sizes.fontRatio!*17,
-                            ),
-                          ),
-                          buildText(
-                            "AED " + widget.data[index].amount.toString(),
-                            CustomizedTheme.w_W500_17.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: sizes.fontRatio!*17,
-                            ),
-                          ),
-                        ],
-                      ),
-                      verticalSpacer(44),
                     ],
                   ),
-                ),
-                verticalSpacer(20),
-                Container(
-                  height: 1.h,
-                  width: 1.sw,
-                  color: CustomizedTheme.white,
-                ),
-                verticalSpacer(16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildText(
-                      "Total Amount",
-                      CustomizedTheme.w_W500_17,
-                    ),
-                    buildText(
-                      "AED " + getTotalAmount().toString(),
-                      CustomizedTheme.w_W500_17.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const Spacer(),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: horizontalValue(16),
-                  ),
-                  height: 56.8.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(11.72.r),
-                    // border: Border.all(color: CustomizedTheme.primaryColor,width: .5),
-                    color: CustomizedTheme.colorAccent,
-                  ),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: CustomizedTheme.colorAccent,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+            // const Spacer(),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: horizontalValue(16),
                     ),
-                    onPressed: () async {
-                      if (!isLoading) {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        var res = await networkHandler.createVoucherTransaction(
-                          getVoucherIds(),
-                          loginData.userId,
-                        );
-                        if (res != null) {
-                          final response = await Navigator.pushNamed(
-                            context,
-                            PaymentGateway.route,
-                            arguments: PaymentArgument(
-                              payment: getTotalAmount(),
-                              orderId: res.orderId,
-                            ),
+                    height: 56.8.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(11.72.r),
+                      // border: Border.all(color: CustomizedTheme.primaryColor,width: .5),
+                      color: CustomizedTheme.colorAccent,
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: CustomizedTheme.colorAccent,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () async {
+                        if (!isLoading) {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          var res = await networkHandler.createVoucherTransaction(
+                            getVoucherIds(),
+                            loginData.userId,
                           );
+                          if (res != null) {
+                            final response = await Navigator.pushNamed(
+                              context,
+                              PaymentGateway.route,
+                              arguments: PaymentArgument(
+                                payment: getTotalAmount(),
+                                orderId: res.orderId,
+                              ),
+                            );
 
-                          if (response != null) {
-                            var res = await networkHandler
-                                .payVoucherTransaction(response);
-                            if (res != null) {
-                              PaidVoucherModel data =
-                                  PaidVoucherModel.fromJson(res);
-                              setState(() {
-                                isLoading = false;
-                              });
-                              CustomAlertDialog.baseDialog(
-                                  context: context,
-                                  title: 'Successfully Purchased',
-                                  message: 'Voucher successfully purchased',
-                                  showCrossIcon: false,
-                                  buttonAction: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      widget.data.length > 1
-                                          ? '/MultiVoucherSuccessPage'
-                                          : '/VoucherSuccessPage',
-                                      arguments: widget.data.length > 1
-                                          ? data.data.vouchers
-                                          : data.data.vouchers[0],
-                                    );
-                                  });
+                            if (response != null) {
+                              var res = await networkHandler
+                                  .payVoucherTransaction(response);
+                              if (res != null) {
+                                PaidVoucherModel data =
+                                    PaidVoucherModel.fromJson(res);
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                CustomAlertDialog.baseDialog(
+                                    context: context,
+                                    title: 'Successfully Purchased',
+                                    message: 'Voucher successfully purchased',
+                                    showCrossIcon: false,
+                                    buttonAction: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        widget.data.length > 1
+                                            ? '/MultiVoucherSuccessPage'
+                                            : '/VoucherSuccessPage',
+                                        arguments: widget.data.length > 1
+                                            ? data.data.vouchers
+                                            : data.data.vouchers[0],
+                                      );
+                                    });
+                              } else {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                failedTransactions.add(response);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: const Text(
+                                      "Unable to complete your request!"),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  backgroundColor: CustomizedTheme.voucherUnpaid,
+                                ));
+                              }
                             } else {
                               setState(() {
                                 isLoading = false;
                               });
-                              failedTransactions.add(response);
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: const Text(
                                     "Unable to complete your request!"),
                                 behavior: SnackBarBehavior.floating,
@@ -260,12 +276,13 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                               ));
                             }
                           } else {
-                            setState(() {
-                              isLoading = false;
-                            });
+                            setState(
+                              () {
+                                isLoading = false;
+                              },
+                            );
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: const Text(
-                                  "Unable to complete your request!"),
+                              content: const Text("Something went wrong"),
                               behavior: SnackBarBehavior.floating,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24),
@@ -273,38 +290,24 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                               backgroundColor: CustomizedTheme.voucherUnpaid,
                             ));
                           }
-                        } else {
-                          setState(
-                            () {
-                              isLoading = false;
-                            },
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: const Text("Something went wrong"),
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            backgroundColor: CustomizedTheme.voucherUnpaid,
-                          ));
                         }
-                      }
-                    },
-                    child: isLoading
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                        : Text(
-                            "Pay",
-                            style: CustomizedTheme.sf_w_W500_19,
-                          ),
+                      },
+                      child: isLoading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              "Pay",
+                              style: CustomizedTheme.sf_w_W500_19,
+                            ),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          verticalSpacer(60),
-        ],
+              ],
+            ),
+            verticalSpacer(60),
+          ],
+        ),
       ),
     );
   }
