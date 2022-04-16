@@ -39,7 +39,6 @@ class AuthRepoImpl implements AuthRepo {
         return null;
       }
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -52,14 +51,11 @@ class AuthRepoImpl implements AuthRepo {
         body: registerDataServer.toJson(),
       );
       if (response.statusCode == 201) {
-        print(response.body);
         return json.decode(response.body.toString());
       } else {
-        print(response.body);
         return null;
       }
     } catch (e) {
-      print(e.toString());
       return null;
     }
   }
@@ -72,14 +68,11 @@ class AuthRepoImpl implements AuthRepo {
         body: verifyUserModel.toJson(),
       );
       if (response.statusCode == 200) {
-        print(response.body);
         return json.decode(response.body.toString());
       } else {
-        print(response.body);
         return null;
       }
     } catch (e) {
-      print(e.toString());
       return null;
     }
   }
@@ -166,7 +159,7 @@ class AuthRepoImpl implements AuthRepo {
         loginController.saveLoginData(json.decode(response.body.toString()));
         LoginUserModel loginModel =
             LoginUserModel.fromJson(json.decode(response.body.toString()));
-         storage.setStringValue(SharedPrefKeys.user, response.body.toString());
+        storage.setStringValue(SharedPrefKeys.user, response.body.toString());
         return json.decode(response.body.toString());
       } else {
         return null;

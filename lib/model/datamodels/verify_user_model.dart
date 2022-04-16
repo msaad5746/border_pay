@@ -7,10 +7,11 @@ class VerifyUserModel {
   final String code;
   final String newPassword;
 
-  VerifyUserModel(
-      {required this.mobileNumber,
-      this.code = "verification-code",
-      required this.newPassword});
+  VerifyUserModel({
+    required this.mobileNumber,
+    required this.code,
+    required this.newPassword,
+  });
 
   factory VerifyUserModel.fromJson(dynamic json) {
     return VerifyUserModel(
@@ -23,7 +24,7 @@ class VerifyUserModel {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['mobileNumber'] = mobileNumber;
-    map['code'] = "verification-code";
+    map['code'] = code;
     map['newPassword'] = newPassword;
     return map;
   }

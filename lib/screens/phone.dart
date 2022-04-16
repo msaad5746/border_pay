@@ -93,18 +93,33 @@ class _PhonePageState extends State<PhonePage> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(
-                    left: 24.44.w,
-                    right: 34.47.w,
-                    bottom: 12.3.h,
-                    top: 15.03.h),
+                  left: 24.44.w,
+                  right: 34.47.w,
+                  bottom: 12.3.h,
+                  top: 15.03.h,
+                ),
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                    borderSide: BorderSide(color: Colors.black, width: 1.0.w)),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(
+                      10.0.r,
+                    ),
+                  ),
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                    width: 1.0.w,
+                  ),
+                ),
                 labelText: "Phone Number",
                 labelStyle: CustomizedTheme.b_W400_12,
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                  borderSide: const BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(
+                      10.0.r,
+                    ),
+                  ),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                  ),
                 ),
               ),
               controller: phoneController,
@@ -124,87 +139,98 @@ class _PhonePageState extends State<PhonePage> {
                   child: Container(
                     height: 61.07.h,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7.r),
-                        color: CustomizedTheme.colorAccent),
+                      borderRadius: BorderRadius.circular(
+                        7.r,
+                      ),
+                      color: CustomizedTheme.colorAccent,
+                    ),
                     child: TextButton(
-                        onPressed: () async {
-                          if (phoneController.text.isNotEmpty) {
-                            // registerController.isLoading.update((val) {
-                            //   setState(() {
-                            //     val = true;
-                            //   });
-                            // });
-                            setState(() {
-                              isLoading = true;
-                            });
-                            RegisterDataServer register = RegisterDataServer(
-                              firstName: widget.firstName,
-                              lastName: widget.lastName,
-                              nationality: widget.nationality,
-                              nationalityId: widget.nationalityId,
-                              phone: phoneController.text,
-                              password: widget.password,
-                              areaCode: widget.areaCode,
-                              email: widget.email,
-                              emiratedpassport: widget.eid,
-                              image: File(
-                                widget.image.path,
-                              ),
-                            );
-                            print(register.phone);
-
-                            var res =
-                                await networkHandler.registerUser(register);
-                            if (res != null) {
-                              setState(() {
+                      onPressed: () async {
+                        if (phoneController.text.isNotEmpty) {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          RegisterDataServer register = RegisterDataServer(
+                            firstName: widget.firstName,
+                            lastName: widget.lastName,
+                            nationality: widget.nationality,
+                            nationalityId: widget.nationalityId,
+                            phone: phoneController.text,
+                            password: widget.password,
+                            areaCode: widget.areaCode,
+                            email: widget.email,
+                            emiratedpassport: widget.eid,
+                            image: File(
+                              widget.image.path,
+                            ),
+                          );
+                          var res = await networkHandler.registerUser(
+                            register,
+                          );
+                          if (res != null) {
+                            setState(
+                              () {
                                 isLoading = false;
-                              });
+                              },
+                            );
 
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: const Text("OTP Sended"),
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: const Text(
+                                  "OTP Sended",
+                                ),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24),
                                 ),
                                 backgroundColor: CustomizedTheme.voucherPaid,
-                              ));
+                              ),
+                            );
 
-                              Navigator.pushNamed(context, '/otp',
-                                  arguments: RegisterDataServer(
-                                    firstName: widget.firstName,
-                                    lastName: widget.lastName,
-                                    nationality: widget.nationality,
-                                    nationalityId: widget.nationalityId,
-                                    phone: widget.phone,
-                                    password: widget.password,
-                                    areaCode: widget.areaCode,
-                                    email: widget.email,
-                                    emiratedpassport: widget.eid,
-                                    image: File(widget.image.path),
-                                  ));
-                            } else {
-                              setState(() {
+                            Navigator.pushNamed(context, '/otp',
+                                arguments: RegisterDataServer(
+                                  firstName: widget.firstName,
+                                  lastName: widget.lastName,
+                                  nationality: widget.nationality,
+                                  nationalityId: widget.nationalityId,
+                                  phone: widget.phone,
+                                  password: widget.password,
+                                  areaCode: widget.areaCode,
+                                  email: widget.email,
+                                  emiratedpassport: widget.eid,
+                                  image: File(
+                                    widget.image.path,
+                                  ),
+                                ));
+                          } else {
+                            setState(
+                              () {
                                 isLoading = false;
-                              });
+                              },
+                            );
 
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
                                 content: const Text("Cannot Register"),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24),
                                 ),
                                 backgroundColor: CustomizedTheme.voucherUnpaid,
-                              ));
-                            }
+                              ),
+                            );
                           }
-                        },
-                        child: isLoading == false
-                            ? Text("Next", style: CustomizedTheme.w_W500_19)
-                            : const CircularProgressIndicator(
-                                color: Colors.white,
-                              )),
+                        }
+                      },
+                      child: isLoading == false
+                          ? Text(
+                              "Next",
+                              style: CustomizedTheme.w_W500_19,
+                            )
+                          : const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                    ),
                   ),
                 ),
               ],
