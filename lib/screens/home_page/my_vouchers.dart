@@ -1,6 +1,5 @@
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/model/datamodels/voucher_model.dart';
-import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
