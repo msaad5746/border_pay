@@ -11,7 +11,6 @@ import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/screens/home_page/my_vouchers.dart';
 import 'package:borderpay/widget/spacer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -308,6 +307,7 @@ class _HomePageState extends State<HomePage> {
                           lastPage: voucherList.lastPage,
                         ),
                       ),
+                      verticalSpacer(32),
                     ],
                   ),
       ),

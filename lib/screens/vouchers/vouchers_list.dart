@@ -50,254 +50,249 @@ class _VouchersPageState extends State<VouchersPage> {
           ? getLoadingScreen()
           : isError
               ? getErrorScreen()
-              : SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.w),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    selector = 0;
-                                  });
+              : Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                selector = 0;
+                              });
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: selector == 0
+                                  ? CustomizedTheme.colorAccent
+                                  : CustomizedTheme.primaryColor,
+                            ),
+                            child: Text(
+                              'Company Voucher',
+                              style: CustomizedTheme.w_W300_12,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: selector == 1
+                                  ? CustomizedTheme.colorAccent
+                                  : CustomizedTheme.primaryColor,
+                            ),
+                            onPressed: () {
+                              setState(
+                                () {
+                                  selector = 1;
                                 },
-                                style: ElevatedButton.styleFrom(
-                                  primary: selector == 0
-                                      ? CustomizedTheme.colorAccent
-                                      : CustomizedTheme.primaryColor,
-                                ),
-                                child: Text(
-                                  'Company Voucher',
-                                  style: CustomizedTheme.w_W300_12,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 16.w,
-                            ),
-                            Expanded(
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: selector == 1
-                                      ? CustomizedTheme.colorAccent
-                                      : CustomizedTheme.primaryColor,
-                                ),
-                                onPressed: () {
-                                  setState(
-                                    () {
-                                      selector = 1;
-                                    },
-                                  );
-                                },
-                                child: Text(
-                                  'Individual Voucher',
-                                  style: CustomizedTheme.w_W300_12,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 16.h),
-                        child: TextFormField(
-                          controller: searchController,
-                          onChanged: (value) => {
-                            setState(() {
-                              onSearchTextChanged(value);
-                            }),
-                          },
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(13),
-                            filled: true,
-                            fillColor: Colors.white,
-                            prefixIcon: const Icon(Icons.search),
-                            label: const Text("Search"),
-                            hintStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.sp,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                          ),
-                          style: const TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 17.35.h, left: 20.w, right: 20.w),
-                        child: Container(
-                          height: 41.h,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10.w, vertical: 12.h),
-                          decoration: BoxDecoration(
-                              color: CustomizedTheme.colorAccent,
-                              borderRadius: BorderRadius.circular(6.r)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 80.w,
-                                child: Text(
-                                  'Voucher No',
-                                  style: CustomizedTheme.roboto_w_W500_14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 100.w,
-                                child: Text('Location',
-                                    style: CustomizedTheme.roboto_w_W500_14),
-                              ),
-                              Text('Status',
-                                  style: CustomizedTheme.roboto_w_W500_14),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 28.71.h, horizontal: 26.53.w),
-                        child: selector == 0 &&
-                                companyVoucherList.data.isNotEmpty
-                            ? const SizedBox.shrink()
-                            : selector == 1 &&
-                                    individualVoucherList.data.isNotEmpty
-                                ? const SizedBox.shrink()
-                                : Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          height: .5.h,
-                                          color: CustomizedTheme.colorAccent,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 5.56.w),
-                                        child: Text('No transaction yet',
-                                            style:
-                                                CustomizedTheme.sf_b_W300_14),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          height: .5.h,
-                                          color: CustomizedTheme.colorAccent,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                      ),
-                      ...List.generate(
-                        selector == 0
-                            ? searchText.isEmpty
-                                ? companyVoucherList.data.length
-                                : searchCompanyResult.length
-                            : searchText.isEmpty
-                                ? individualVoucherList.data.length
-                                : searchIndividualResult.length,
-                        (index) => Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                '/DetailedVoucher',
-                                arguments: selector == 0
-                                    ? searchText.isEmpty
-                                        ? companyVoucherList.data[index]
-                                        : searchCompanyResult[index]
-                                    : searchText.isEmpty
-                                        ? individualVoucherList.data[index]
-                                        : searchIndividualResult[index],
                               );
                             },
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  bottom: 10.h,
-                                  top: 15.h,
-                                  left: 10.w,
-                                  right: 10.w),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: CustomizedTheme.colorAccent,
-                                          width: 1.w))),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                            child: Text(
+                              'Individual Voucher',
+                              style: CustomizedTheme.w_W300_12,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 20.w, vertical: 16.h),
+                    child: TextFormField(
+                      controller: searchController,
+                      onChanged: (value) => {
+                        setState(() {
+                          onSearchTextChanged(value);
+                        }),
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(13),
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefixIcon: const Icon(Icons.search),
+                        label: const Text("Search"),
+                        hintStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.sp,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 17.35.h, left: 20.w, right: 20.w),
+                    child: Container(
+                      height: 41.h,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 12.h),
+                      decoration: BoxDecoration(
+                          color: CustomizedTheme.colorAccent,
+                          borderRadius: BorderRadius.circular(6.r)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 80.w,
+                            child: Text(
+                              'Voucher No',
+                              style: CustomizedTheme.roboto_w_W500_14,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 100.w,
+                            child: Text('Location',
+                                style: CustomizedTheme.roboto_w_W500_14),
+                          ),
+                          Text('Status',
+                              style: CustomizedTheme.roboto_w_W500_14),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 28.71.h, horizontal: 26.53.w),
+                    child: selector == 0 &&
+                            companyVoucherList.data.isNotEmpty
+                        ? const SizedBox.shrink()
+                        : selector == 1 &&
+                                individualVoucherList.data.isNotEmpty
+                            ? const SizedBox.shrink()
+                            : Row(
                                 children: [
-                                  SizedBox(
-                                    width: 80.w,
-                                    child: Text(
-                                        selector == 0
-                                            ? searchText.isEmpty
-                                                ? companyVoucherList
-                                                    .data[index].id
-                                                    .toString()
-                                                : searchCompanyResult[index]
-                                                    .id
-                                                    .toString()
-                                            : searchText.isEmpty
-                                                ? individualVoucherList
-                                                    .data[index].id
-                                                    .toString()
-                                                : searchIndividualResult[index]
-                                                    .id
-                                                    .toString(),
-                                        style: CustomizedTheme.sf_pb_W700_13),
+                                  Expanded(
+                                    child: Container(
+                                      height: .5.h,
+                                      color: CustomizedTheme.colorAccent,
+                                    ),
                                   ),
-                                  SizedBox(
-                                    width: 80.w,
-                                    child: Text(
-                                        selector == 0
-                                            ? searchText.isEmpty
-                                                ? companyVoucherList
-                                                    .data[index].location.title
-                                                : searchCompanyResult[index]
-                                                    .location
-                                                    .title
-                                            : searchText.isEmpty
-                                                ? individualVoucherList
-                                                    .data[index].location.title
-                                                : searchIndividualResult[index]
-                                                    .location
-                                                    .title,
-                                        style: CustomizedTheme.sf_pb_W300_13),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 5.56.w),
+                                    child: Text('No transaction yet',
+                                        style:
+                                            CustomizedTheme.sf_b_W300_14),
                                   ),
-                                  SizedBox(
-                                    width: 80.w,
-                                    child: Text(
-                                      selector == 0
-                                          ? searchText.isEmpty
-                                              ? companyVoucherList
-                                                  .data[index].status
-                                              : searchCompanyResult[index]
-                                                  .status
-                                          : searchText.isEmpty
-                                              ? individualVoucherList
-                                                  .data[index].status
-                                              : searchIndividualResult[index]
-                                                  .status,
-                                      textAlign: TextAlign.end,
-                                      style: CustomizedTheme.sf_b_W300_13Paid,
+                                  Expanded(
+                                    child: Container(
+                                      height: .5.h,
+                                      color: CustomizedTheme.colorAccent,
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
+                  ),
+                  ...List.generate(
+                    selector == 0
+                        ? searchText.isEmpty
+                            ? companyVoucherList.data.length
+                            : searchCompanyResult.length
+                        : searchText.isEmpty
+                            ? individualVoucherList.data.length
+                            : searchIndividualResult.length,
+                    (index) => Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/DetailedVoucher',
+                            arguments: selector == 0
+                                ? searchText.isEmpty
+                                    ? companyVoucherList.data[index]
+                                    : searchCompanyResult[index]
+                                : searchText.isEmpty
+                                    ? individualVoucherList.data[index]
+                                    : searchIndividualResult[index],
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              bottom: 10.h,
+                              top: 15.h,
+                              left: 10.w,
+                              right: 10.w),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: CustomizedTheme.colorAccent,
+                                      width: 1.w))),
+                          child: Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 80.w,
+                                child: Text(
+                                    selector == 0
+                                        ? searchText.isEmpty
+                                            ? companyVoucherList
+                                                .data[index].id
+                                                .toString()
+                                            : searchCompanyResult[index]
+                                                .id
+                                                .toString()
+                                        : searchText.isEmpty
+                                            ? individualVoucherList
+                                                .data[index].id
+                                                .toString()
+                                            : searchIndividualResult[index]
+                                                .id
+                                                .toString(),
+                                    style: CustomizedTheme.sf_pb_W700_13),
+                              ),
+                              SizedBox(
+                                width: 80.w,
+                                child: Text(
+                                    selector == 0
+                                        ? searchText.isEmpty
+                                            ? companyVoucherList
+                                                .data[index].location.title
+                                            : searchCompanyResult[index]
+                                                .location
+                                                .title
+                                        : searchText.isEmpty
+                                            ? individualVoucherList
+                                                .data[index].location.title
+                                            : searchIndividualResult[index]
+                                                .location
+                                                .title,
+                                    style: CustomizedTheme.sf_pb_W300_13),
+                              ),
+                              SizedBox(
+                                width: 80.w,
+                                child: Text(
+                                  selector == 0
+                                      ? searchText.isEmpty
+                                          ? companyVoucherList
+                                              .data[index].status
+                                          : searchCompanyResult[index]
+                                              .status
+                                      : searchText.isEmpty
+                                          ? individualVoucherList
+                                              .data[index].status
+                                          : searchIndividualResult[index]
+                                              .status,
+                                  textAlign: TextAlign.end,
+                                  style: CustomizedTheme.sf_b_W300_13Paid,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
+              ),
     );
   }
 
