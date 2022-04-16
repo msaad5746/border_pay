@@ -160,9 +160,6 @@ class _PhonePageState extends State<PhonePage> {
                             areaCode: widget.areaCode,
                             email: widget.email,
                             emiratedpassport: widget.eid,
-                            image: File(
-                              widget.image.path,
-                            ),
                           );
                           var res = await networkHandler.registerUser(
                             register,
@@ -187,8 +184,10 @@ class _PhonePageState extends State<PhonePage> {
                               ),
                             );
 
-                            Navigator.pushNamed(context, '/otp',
-                                arguments: RegisterDataServer(
+                            Navigator.pushNamed(
+                              context,
+                              '/otp',
+                              arguments: RegisterDataServer(
                                   firstName: widget.firstName,
                                   lastName: widget.lastName,
                                   nationality: widget.nationality,
@@ -197,11 +196,12 @@ class _PhonePageState extends State<PhonePage> {
                                   password: widget.password,
                                   areaCode: widget.areaCode,
                                   email: widget.email,
-                                  emiratedpassport: widget.eid,
-                                  image: File(
-                                    widget.image.path,
+                                  emiratedpassport: widget.eid
+                                  // image: File(
+                                  //   widget.image.path,
+                                  // ),
                                   ),
-                                ));
+                            );
                           } else {
                             setState(
                               () {
