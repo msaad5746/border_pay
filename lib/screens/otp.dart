@@ -177,7 +177,7 @@ class _OTPPageState extends State<OTPPage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
             child: Text(
-              "A 6 digit code has been sent to your mobile number ${"+"+widget.areaCode + widget.phone}",
+              "A 6 digit code has been sent to your mobile number ${"+" + widget.areaCode + widget.phone}",
               style: CustomizedTheme.sf_b_W400_15,
             ),
           ),
@@ -266,7 +266,9 @@ class _OTPPageState extends State<OTPPage> {
                           decoration: BoxDecoration(
                             color: CustomizedTheme.white,
                             borderRadius: BorderRadius.circular(6.93.r),
-                            border: Border.all(color: CustomizedTheme.white),
+                            border: Border.all(
+                              color: CustomizedTheme.white,
+                            ),
                           ),
                           child: Image.asset(
                             'assets/icons/ic_backspace.png',
@@ -285,7 +287,7 @@ class _OTPPageState extends State<OTPPage> {
                                 });
                                 Map<String, String> loginData = {
                                   "mobileNumber":
-                                      '${widget.areaCode}${widget.phone}',
+                                      '+${widget.areaCode}${widget.phone}',
                                   "password": widget.password,
                                 };
                                 var res1 = await networkHandler

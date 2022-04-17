@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
-import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
@@ -11,14 +10,14 @@ import 'package:borderpay/model/datamodels/create_bulk_voucher_model.dart';
 import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
-import 'package:borderpay/widget/blue_backbutton.dart';
 import 'package:borderpay/widget/custom_check_box.dart';
 import 'package:borderpay/widget/spacer.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+
+import '../custom_intl_phone_field.dart';
 
 class DetailsTravelersPage extends StatefulWidget {
   final int travelerCount;
@@ -53,6 +52,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
   late List<GlobalKey<FormState>> keys;
   late String currentAreaCode;
   UserModel loginData = UserModel();
+  TextEditingController phoneController = TextEditingController();
 
   bool isLoading = false;
   bool useMyDetail = false;
@@ -108,10 +108,11 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                   width: 37.26.w,
                   // margin: EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        10.11.r,
-                      ),
-                      color: CustomizedTheme.colorAccent),
+                    borderRadius: BorderRadius.circular(
+                      10.11.r,
+                    ),
+                    color: CustomizedTheme.colorAccent,
+                  ),
                   child: Icon(
                     Icons.arrow_back,
                     color: CustomizedTheme.white,
@@ -200,422 +201,387 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                   )
                                 : const SizedBox.shrink(),
                         verticalSpacer(16),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 20.h,
-                          ),
-                          child: TextFormField(
-                            controller: firstNameCtrl[index],
-                            showCursor: true,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                left: 30.45.w,
-                                right: 44.45.w,
-                                top: 23.66.h,
-                                bottom: 23.66.h,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0.r)),
-                                borderSide: BorderSide(
-                                  color: CustomizedTheme.colorAccent,
-                                  width: .01.w,
+                        TextFormField(
+                          controller: firstNameCtrl[index],
+                          showCursor: true,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: horizontalValue(16),
+                              vertical: verticalValue(16),
+                            ),
+                            labelText: "First Name \*",
+                            labelStyle: CustomizedTheme.b_W400_12,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
                                 ),
                               ),
-                              labelText: "First Name \*",
-                              labelStyle: TextStyle(
-                                color: CustomizedTheme.colorAccent,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
                               ),
                             ),
-                            // controller: personController,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            // Return null if the entered email is valid
-                            validator: (value) {
-                              if (value!.trim().isEmpty) {
-                                return 'Please enter a first name';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 20.h),
-                          child: TextFormField(
-                            controller: lastNameCtrl[index],
-                            showCursor: true,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                left: 30.45.w,
-                                right: 44.45.w,
-                                top: 23.66.h,
-                                bottom: 23.66.h,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: CustomizedTheme.colorAccent,
-                                  width: .01.w,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
                                 ),
                               ),
-                              labelText: "Last Name \*",
-                              labelStyle: TextStyle(
-                                color: CustomizedTheme.colorAccent,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
                               ),
                             ),
-                            // controller: personController,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            // Return null if the entered email is valid
-                            validator: (value) {
-                              if (value!.trim().isEmpty) {
-                                return 'Please enter last name';
-                              }
-                              return null;
-                            },
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
                           ),
+                          // controller: personController,
+                          autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                          // Return null if the entered email is valid
+                          validator: (value) {
+                            if (value!.trim().isEmpty) {
+                              return 'Please enter a first name';
+                            }
+                            return null;
+                          },
                         ),
-
-                        Row(
-                          children: [
-                            Expanded(
-                              child: IntlPhoneField(
-                                initialCountryCode: 'US',
-                                controller: phoneCtrl[index],
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.only(
-                                    left: 30.45.w,
-                                    right: 10.45.w,
-                                    top: 23.66.h,
-                                    bottom: 23.66.h,
+                        verticalSpacer(16),
+                        TextFormField(
+                          controller: lastNameCtrl[index],
+                          showCursor: true,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: horizontalValue(16),
+                              vertical: verticalValue(16),
+                            ),
+                            labelText: "Last Name \*",
+                            labelStyle: CustomizedTheme.b_W400_12,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                          ),
+                          // controller: personController,
+                          autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                          // Return null if the entered email is valid
+                          validator: (value) {
+                            if (value!.trim().isEmpty) {
+                              return 'Please enter last name';
+                            }
+                            return null;
+                          },
+                        ),
+                        verticalSpacer(16),
+                        CustomIntlPhoneField(
+                          flagDecoration: BoxDecoration(
+                            color: CustomizedTheme.primaryBold,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          initialCountryCode: 'US',
+                          controller: phoneController,
+                          decoration: InputDecoration(
+                            label: const Text("Phone Number \*"),
+                            labelStyle: CustomizedTheme.b_W400_12,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                          ),
+                          onChanged: (phone) {},
+                          onCountryChanged: (country) {
+                            setState(
+                              () {
+                                currentAreaCode = "+" + country.dialCode;
+                              },
+                            );
+                          },
+                          dropdownIconPosition: IconPosition.trailing,
+                          flagsButtonPadding:
+                              const EdgeInsets.symmetric(vertical: 8),
+                        ),
+                        verticalSpacer(16),
+                        TextFormField(
+                          controller: emailCtrl[index],
+                          showCursor: true,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: horizontalValue(16),
+                              vertical: verticalValue(16),
+                            ),
+                            labelText: "Email \*",
+                            labelStyle: CustomizedTheme.b_W400_12,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                          ),
+                          // controller: personController,
+                          autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                          // Return null if the entered email is valid
+                          validator: (value) {
+                            if (!GetUtils.isEmail(value!)) {
+                              return 'Invalid Email';
+                            }
+                            return null;
+                          },
+                        ),
+                        verticalSpacer(16),
+                        TextFormField(
+                          readOnly: true,
+                          controller: nationalityCtrl[index],
+                          autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (nationalityCtrl[index].text.isEmpty) {
+                              return 'invalid Nationality';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: horizontalValue(16),
+                              vertical: verticalValue(16),
+                            ),
+                            labelText: "Nationality \*",
+                            labelStyle: CustomizedTheme.b_W400_12,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
+                            showCountryPicker(
+                              context: context,
+                              countryFilter: localCountries,
+                              showPhoneCode: false,
+                              showWorldWide: false,
+                              onSelect: (Country country) {
+                                nationalityId[index] = getNationalityId(
+                                  country.countryCode,
+                                );
+                                setState(() {
+                                  nationalityCtrl[index].text = country.name;
+                                });
+                              },
+                              // Optional. Sets the theme for the country list picker.
+                              countryListTheme: CountryListThemeData(
+                                // Optional. Sets the border radius for the bottomsheet.
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(40.0),
+                                  topRight: Radius.circular(40.0),
+                                ),
+                                // Optional. Styles the search field.
+                                inputDecoration: InputDecoration(
+                                  labelText: 'Search',
+                                  hintText: 'Start typing to search',
+                                  prefixIcon: const Icon(
+                                    Icons.search,
                                   ),
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                        10.0.r,
-                                      ),
-                                    ),
                                     borderSide: BorderSide(
-                                      color: CustomizedTheme.colorAccent,
-                                      width: .01.w,
-                                    ),
-                                  ),
-                                  hintText: "Phone Number \*",
-                                  hintStyle: TextStyle(
-                                    color: CustomizedTheme.colorAccent,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                        10.0.r,
-                                      ),
-                                    ),
-                                    borderSide: BorderSide(
-                                      color: Colors.lightBlue,
-                                      width: 1.w,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                        10.0.r,
-                                      ),
-                                    ),
-                                    borderSide: BorderSide(
-                                      color: Colors.lightBlue,
-                                      width: 1.w,
-                                    ),
-                                  ),
-                                ),
-                                onChanged: (phone) {},
-                                onCountryChanged: (country) {
-                                  setState(
-                                    () {
-                                      currentAreaCode = "+"+country.dialCode;
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 20.h,
-                            bottom: 20.h,
-                          ),
-                          child: TextFormField(
-                            controller: emailCtrl[index],
-                            showCursor: true,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                left: 30.45.w,
-                                right: 44.45.w,
-                                top: 23.66.h,
-                                bottom: 23.66.h,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0.r)),
-                                borderSide: BorderSide(
-                                  color: CustomizedTheme.colorAccent,
-                                  width: .01.w,
-                                ),
-                              ),
-                              labelText: "Email \*",
-                              labelStyle: TextStyle(
-                                color: CustomizedTheme.colorAccent,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0.r)),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
-                              ),
-                            ),
-                            // controller: personController,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            // Return null if the entered email is valid
-                            validator: (value) {
-                              if (!GetUtils.isEmail(value!)) {
-                                return 'Invalid Email';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 20.h),
-                          child: TextFormField(
-                            readOnly: true,
-                            controller: nationalityCtrl[index],
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (nationalityCtrl[index].text.isEmpty) {
-                                return 'invalid Nationality';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                left: 30.45.w,
-                                right: 44.45.w,
-                                top: 23.66.h,
-                                bottom: 23.66.h,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: CustomizedTheme.colorAccent,
-                                  width: .01.w,
-                                ),
-                              ),
-                              labelText: "Nationality \*",
-                              labelStyle: TextStyle(
-                                color: CustomizedTheme.colorAccent,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              showCountryPicker(
-                                context: context,
-                                countryFilter: localCountries,
-                                showPhoneCode: false,
-                                showWorldWide: false,
-                                onSelect: (Country country) {
-                                  nationalityId[index] = getNationalityId(
-                                    country.countryCode,
-                                  );
-                                  setState(() {
-                                    nationalityCtrl[index].text = country.name;
-                                  });
-                                },
-                                // Optional. Sets the theme for the country list picker.
-                                countryListTheme: CountryListThemeData(
-                                  // Optional. Sets the border radius for the bottomsheet.
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(40.0),
-                                    topRight: Radius.circular(40.0),
-                                  ),
-                                  // Optional. Styles the search field.
-                                  inputDecoration: InputDecoration(
-                                    labelText: 'Search',
-                                    hintText: 'Start typing to search',
-                                    prefixIcon: const Icon(
-                                      Icons.search,
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: const Color(
-                                          0xFF8C98A8,
-                                        ).withOpacity(
-                                          0.2,
-                                        ),
+                                      color: const Color(
+                                        0xFF8C98A8,
+                                      ).withOpacity(
+                                        0.2,
                                       ),
                                     ),
                                   ),
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         ),
-
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 20.h),
-                          child: TextFormField(
-                            controller: emiratesIdCtrl[index],
-                            showCursor: true,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                left: 30.45.w,
-                                right: 44.45.w,
-                                top: 23.66.h,
-                                bottom: 23.66.h,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: CustomizedTheme.colorAccent,
-                                  width: .01.w,
+                        verticalSpacer(16),
+                        TextFormField(
+                          controller: emiratesIdCtrl[index],
+                          showCursor: true,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: horizontalValue(16),
+                              vertical: verticalValue(16),
+                            ),
+                            labelText: "Emirates ID/Passport Number \*",
+                            labelStyle: CustomizedTheme.b_W400_12,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
                                 ),
                               ),
-                              labelText: "Emirates ID/Passport Number \*",
-                              labelStyle: TextStyle(
-                                color: CustomizedTheme.colorAccent,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10.0.r,
-                                  ),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue,
-                                  width: 1.w,
-                                ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
                               ),
                             ),
-                            // controller: personController,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            // Return null if the entered email is valid
-                            validator: (value) {
-                              if (value!.trim().isEmpty) {
-                                return 'Please enter a Emirates ID/Passport Number';
-                              }
-                              return null;
-                            },
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  10.0.r,
+                                ),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0.w,
+                              ),
+                            ),
                           ),
+                          // controller: personController,
+                          autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                          // Return null if the entered email is valid
+                          validator: (value) {
+                            if (value!.trim().isEmpty) {
+                              return 'Please enter a Emirates ID/Passport Number';
+                            }
+                            return null;
+                          },
                         ),
                       ],
                     ),
                   );
                 },
               ),
+              verticalSpacer(32),
               Row(
                 children: [
                   Expanded(

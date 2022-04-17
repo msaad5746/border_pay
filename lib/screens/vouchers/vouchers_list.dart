@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/model/datamodels/voucher_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
@@ -21,6 +26,8 @@ class _VouchersPageState extends State<VouchersPage> {
   List<VoucherDataModel> searchIndividualResult = List.empty(growable: true);
 
   TextEditingController searchController = TextEditingController();
+  UserModel loginData = UserModel();
+  MySharedPreferences storage = MySharedPreferences.instance;
 
   bool isLoading = true;
   bool isError = false;
@@ -29,9 +36,24 @@ class _VouchersPageState extends State<VouchersPage> {
 
   @override
   void initState() {
-    getCompanyVoucherData(1);
-    getIndividualVoucherData(1);
+    if (loginData.firstName.isEmpty) {
+      getUserData();
+    }
+    getCompanyVoucherData(
+      loginData.userId,
+    );
+    getIndividualVoucherData(
+      loginData.userId,
+    );
     super.initState();
+  }
+
+  void getUserData() {
+    bool isUserExist = storage.containsKey(SharedPrefKeys.user);
+    if (isUserExist) {
+      String user = storage.getStringValue(SharedPrefKeys.user);
+      loginData = UserModel.fromJson(json.decode(user)['data']);
+    }
   }
 
   @override

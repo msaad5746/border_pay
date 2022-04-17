@@ -156,62 +156,38 @@ class _HomePageState extends State<HomePage> {
                                           );
                                         });
                                       },
-                                      child: SizedBox(
-                                        height: 182.h,
-                                        // decoration: BoxDecoration(
-                                        //   borderRadius: BorderRadius.circular(10.r),
-                                        //   border: selection == 'hatta' ? Border.all(width: 4.w,color: CustomizedTheme.colorAccent):null,
-                                        //   // image: const DecorationImage(
-                                        //   //     image: AssetImage('assets/welcome/hatta-bg.png'),
-                                        //   //     fit: BoxFit.fill
-                                        //   // ),
-                                        // ),
-                                        child: Image.asset(
-                                          'assets/welcome/hatta-bg.png',
-                                          fit: BoxFit.fill,
-                                        ),
+                                      child: Image.asset(
+                                        'assets/welcome/hatta-bg.png',
+                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 11.w,
-                                  ),
+                                  horizontalSpacer(16),
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
-                                        setState(() {
-                                          location = LocationModel(
-                                            id: 1,
-                                            title: 'Port Rashid 1',
-                                          );
-                                          Navigator.pushNamed(
-                                            context,
-                                            '/VoucherTypePage',
-                                            arguments: location,
-                                          );
-                                        });
+                                        setState(
+                                          () {
+                                            location = LocationModel(
+                                              id: 1,
+                                              title: 'Port Rashid 1',
+                                            );
+                                            Navigator.pushNamed(
+                                              context,
+                                              '/VoucherTypePage',
+                                              arguments: location,
+                                            );
+                                          },
+                                        );
                                       },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(0),
-                                        // width: MediaQuery.of(context).size.width*5,
-                                        height: 182.h,
-                                        // decoration: BoxDecoration(
-                                        //     // borderRadius: BorderRadius.circular(10.r),
-                                        //     border: selection == 'port' ? Border.all(width: 4.w,color: CustomizedTheme.colorAccent):null,
-                                        //     // image: const DecorationImage(
-                                        //     //     image: AssetImage('assets/welcome/portrashid-bg.png'),
-                                        //     //     fit: BoxFit.fill
-                                        //     // )
-                                        // ),
-                                        child: Image.asset(
-                                            'assets/welcome/portrashid-bg.png',
-                                            fit: BoxFit.fill),
+                                      child: Image.asset(
+                                        'assets/welcome/portrashid-bg.png',
+                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                              // Image.asset('assets/icons/ic_card.png',fit: BoxFit.fill,height: 220,)
                             ),
                           ],
                         ),
@@ -300,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                           voucherList: voucherList,
                           loadMoreData: () {
                             if (voucherList.lastPage) {
-                            }else{
+                            } else {
                               loadMoreData(1);
                             }
                           },

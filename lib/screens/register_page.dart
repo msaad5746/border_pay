@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+
+import 'custom_intl_phone_field.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -172,23 +173,63 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 35.53.h,
                     ),
                     // buildPhoneDD(),
-                    IntlPhoneField(
-                      initialCountryCode: 'AE',
+                    CustomIntlPhoneField(
+                      flagDecoration: BoxDecoration(
+                        color: CustomizedTheme.primaryBold,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      initialCountryCode: 'US',
                       controller: phoneController,
                       decoration: InputDecoration(
-                        hintText: 'Phone Number',
+                        label: const Text("Phone Number"),
+                        labelStyle: TextStyle(
+                          color: CustomizedTheme.colorAccent,
+                        ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            10.0.r,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: CustomizedTheme.colorAccent,
+                            width: .01.w,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.lightBlue,
+                            width: 1.w,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.lightBlue,
+                            width: 1.w,
                           ),
                         ),
                       ),
                       onChanged: (phone) {},
                       onCountryChanged: (country) {
-                        setState(() {
-                          currentAreaCode = country.dialCode;
-                        });
+                        setState(
+                          () {
+                            currentAreaCode = "+" + country.dialCode;
+                          },
+                        );
                       },
+                      dropdownIconPosition: IconPosition.trailing,
+                      flagsButtonPadding:
+                          const EdgeInsets.symmetric(vertical: 8),
                     ),
                     SizedBox(
                       width: 5.w,
@@ -354,8 +395,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if (value!.trim().isEmpty) {
-                          return 'Password is empty';
+                        if (value!.trim().isEmpty &&
+                            value.trim().length <= 10) {
+                          return 'Password should contain 10 characters';
                         }
                         return null;
                       },

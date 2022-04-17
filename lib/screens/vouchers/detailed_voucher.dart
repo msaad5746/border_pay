@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/model/datamodels/voucher_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
@@ -22,14 +25,21 @@ class DetailedVoucher extends StatefulWidget {
 
 class _DetailedVoucherState extends State<DetailedVoucher> {
   late VoucherDataModel voucher;
-
+  UserModel loginData = UserModel();
+  MySharedPreferences storage = MySharedPreferences.instance;
   bool isLoading = true;
   bool isError = false;
   Uint8List? image;
 
   @override
   void initState() {
-    getVoucherDetails(1, widget.voucherDetails.id);
+    if (loginData.firstName.isEmpty) {
+      getUserData();
+    }
+    getVoucherDetails(
+      loginData.userId,
+      widget.voucherDetails.id,
+    );
     super.initState();
   }
 
@@ -308,7 +318,6 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
     );
   }
 
-
   Future<void> getVoucherDetails(int userId, int voucherId) async {
     VoucherRepo repo = VoucherRepoImpl();
     var response = await repo.getVoucherDetails(userId, voucherId);
@@ -358,4 +367,12 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
 
   Text buildText(String title, TextStyle textStyle) =>
       Text(title, style: textStyle);
+
+  void getUserData() {
+    bool isUserExist = storage.containsKey(SharedPrefKeys.user);
+    if (isUserExist) {
+      String user = storage.getStringValue(SharedPrefKeys.user);
+      loginData = UserModel.fromJson(json.decode(user)['data']);
+    }
+  }
 }

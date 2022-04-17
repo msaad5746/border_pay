@@ -155,7 +155,8 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                       dropdownIconPosition: IconPosition.trailing,
-                      flagsButtonPadding: const EdgeInsets.symmetric(vertical: 8),
+                      flagsButtonPadding:
+                          const EdgeInsets.symmetric(vertical: 8),
                     ),
 
                     SizedBox(
@@ -171,51 +172,73 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                     verticalSpacer(16),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: CustomizedTheme.colorAccentBlack,
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: _obscureText,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                          left: 24.44.w,
+                          right: 34.47.w,
+                          bottom: 12.3.h,
+                          top: 15.03.h,
                         ),
-                      ),
-                      child: TextFormField(
-                        controller: passwordController,
-                        obscureText: _obscureText,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                            left: 24.44.w,
-                            right: 34.47.w,
-                            bottom: 12.3.h,
-                            top: 15.03.h,
-                          ),
-                          suffixIcon: IconButton(
-                            icon: SvgPicture.asset(
-                              'assets/svg/eye.svg',
-                              color: _obscureText
-                                  ? Colors.black
-                                  : Colors.black.withOpacity(
-                                      .3,
-                                    ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
                             ),
-                            onPressed: () {
-                              _toggle();
-                            },
                           ),
-                          labelText: "Password",
-                          labelStyle: CustomizedTheme.b_W400_12.copyWith(
-                            fontWeight: FontWeight.w300,
+                          borderSide: BorderSide(
+                            color: CustomizedTheme.colorAccent,
+                            width: .01.w,
                           ),
-                          border: InputBorder.none,
                         ),
-                        // controller: passwordController,
-                        onEditingComplete: () {
-                          isPasswordFilled = true;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          return null;
-                        },
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 1.w,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 1.w,
+                          ),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: SvgPicture.asset(
+                            'assets/svg/eye.svg',
+                            color: _obscureText
+                                ? Colors.black
+                                : Colors.black.withOpacity(
+                                    .3,
+                                  ),
+                          ),
+                          onPressed: () {
+                            _toggle();
+                          },
+                        ),
+                        labelText: "Password",
+                        labelStyle: CustomizedTheme.b_W400_12,
                       ),
+                      // controller: passwordController,
+                      onEditingComplete: () {
+                        isPasswordFilled = true;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        return null;
+                      },
                     ),
                     verticalSpacer(12),
                     isPasswordFilled
@@ -432,7 +455,10 @@ class _LoginPageState extends State<LoginPage> {
       });
       storage.setStringValue(SharedPrefKeys.userPhone, phone);
       storage.setStringValue(SharedPrefKeys.userPassword, password);
-      storage.setStringValue(SharedPrefKeys.userId, loginModel.data.userId.toString());
+      storage.setStringValue(
+        SharedPrefKeys.userId,
+        loginModel.data.userId.toString(),
+      );
       Navigator.pushNamedAndRemoveUntil(
         context,
         RouteConstant.hostPage,
