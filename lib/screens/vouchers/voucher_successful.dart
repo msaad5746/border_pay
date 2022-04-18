@@ -8,7 +8,6 @@ import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
-import 'package:borderpay/screens/download_pdf/download_pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -150,190 +149,7 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                 ),
 
                 //Center
-                Padding(
-                  padding:
-                      EdgeInsets.only(top: 75.39.h, left: 20.w, right: 20.w),
-                  child: Container(
-                    width: 1.sw,
-                    height: 60.sp,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage(
-                        'assets/payments/voucher-bg2.png',
-                      ),
-                    )),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Voucher Number : ',
-                          style: CustomizedTheme.roboto_w_W400_14,
-                        ),
-                        SizedBox(
-                          width: 100.w,
-                          child: Text(
-                            'L${widget.data.id.toString()}',
-                            maxLines: 1,
-                            overflow: TextOverflow.clip,
-                            style: CustomizedTheme.roboto_w_W700_14,
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: CustomizedTheme.primaryBright,
-                        borderRadius: const BorderRadius.vertical(
-                            bottom: Radius.circular(10))),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.w,
-                              right: 15.w,
-                              top: 32.h,
-                              bottom: 26.45.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildText('Traveller Name',
-                                  CustomizedTheme.sf_bo_W300_1503),
-                              buildText(
-                                  widget.data.user.firstName +
-                                      ' ' +
-                                      widget.data.user.lastName,
-                                  CustomizedTheme.sf_bo_W500_1503),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.w, right: 15.w, bottom: 26.45.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildText(
-                                  'Email ID', CustomizedTheme.sf_bo_W300_1503),
-                              buildText(widget.data.user.email,
-                                  CustomizedTheme.sf_bo_W500_1503),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.w, right: 15.w, bottom: 26.45.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildText('Phone Number',
-                                  CustomizedTheme.sf_bo_W300_1503),
-                              buildText(widget.data.user.mobileNumber,
-                                  CustomizedTheme.sf_bo_W500_1503),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.w, right: 15.w, bottom: 26.45.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildText('Nationality',
-                                  CustomizedTheme.sf_bo_W300_1503),
-                              buildText(
-                                  getNationality(
-                                      widget.data.user.nationalityId),
-                                  CustomizedTheme.sf_bo_W500_1503),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.w, right: 15.w, bottom: 26.45.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildText('Emirates ID',
-                                  CustomizedTheme.sf_bo_W300_1503),
-                              buildText(widget.data.user.emirateId,
-                                  CustomizedTheme.sf_bo_W500_1503),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.w, right: 15.w, bottom: 26.45.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildText('Total Amount',
-                                  CustomizedTheme.sf_bo_W300_1503),
-                              buildText(widget.data.amount.toString(),
-                                  CustomizedTheme.sf_bo_W500_1503),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.w, right: 15.w, bottom: 26.45.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildText(
-                                'Payment Date',
-                                CustomizedTheme.sf_bo_W300_1503,
-                              ),
-                              buildText(
-                                getPaymentDate(
-                                  widget.data.createdAt,
-                                ),
-                                CustomizedTheme.sf_bo_W500_1503,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: 15.w,
-                            right: 15.w,
-                            bottom: 24.01.h,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildText(
-                                'Payment Time',
-                                CustomizedTheme.sf_bo_W300_1503,
-                              ),
-                              buildText(
-                                getPaymentTime(
-                                  widget.data.createdAt,
-                                ),
-                                CustomizedTheme.sf_bo_W500_1503,
-                              ),
-                            ],
-                          ),
-                        ),
-                        image != null
-                            ? Image.memory(
-                                image!,
-                              )
-                            : const Icon(
-                                Icons.image,
-                              ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                getVoucher(),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: 50.h,
@@ -362,8 +178,11 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                               ),
                             ),
                             onPressed: () async {
-                              generateScreenshotImages('L${widget.data.id.toString()}');
-
+                              setState(() {
+                                isLoading = true;
+                              });
+                              generateScreenshotImages(
+                                  'L${widget.data.id.toString()}');
                             },
                             child: isLoading
                                 ? const CircularProgressIndicator(
@@ -386,28 +205,36 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
   }
 
   Future generateScreenshotImages(String fileName) async {
-    screenshotController.capture(delay: const Duration(milliseconds: 10)).then((image) async {
-      if (image != null) {
-        final directory = await getApplicationDocumentsDirectory();
-        final imagePath = await File('${directory.path}/image.png').create();
-        await imagePath.writeAsBytes(image);
-        if(await Permission.manageExternalStorage.request().isGranted){
-          await ImageGallerySaver.saveImage(
-              image,
-              quality: 100,
-              name: fileName
-          );
-        }
-      }
+    var image = await screenshotController.captureFromWidget(getVoucher());
+    if (image != null) {
+      final directory = await getApplicationDocumentsDirectory();
+      final imagePath = await File('${directory.path}/image.png').create();
+      await imagePath.writeAsBytes(image);
+      var permissionStatus = await Permission.storage.request();
 
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        RouteConstant.hostPage,
-        ModalRoute.withName(
-          RouteConstant.hostPage,
-        ),
-      );
+      bool isGranted = permissionStatus.isGranted;
+      if (isGranted) {
+        var response = await ImageGallerySaver.saveImage(image, quality: 100, name: fileName);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Successfully saved in gallery!'),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          backgroundColor: CustomizedTheme.voucherPaid,
+        ));
+      }
+    }
+    setState(() {
+      isLoading = false;
     });
+    // Navigator.pushNamedAndRemoveUntil(
+    //   context,
+    //   RouteConstant.hostPage,
+    //   ModalRoute.withName(
+    //     RouteConstant.hostPage,
+    //   ),
+    // );
   }
 
   Text buildText(String title, TextStyle textStyle) =>
@@ -431,5 +258,187 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
       return dateTime.substring(0, 10);
     }
     return '';
+  }
+
+  Widget getVoucher() {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: 75.39.h, left: 20.w, right: 20.w),
+          child: Container(
+            width: 1.sw,
+            height: 60.sp,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+              fit: BoxFit.fill,
+              image: AssetImage(
+                'assets/payments/voucher-bg2.png',
+              ),
+            )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Voucher Number : ',
+                  style: CustomizedTheme.roboto_w_W400_14,
+                ),
+                SizedBox(
+                  width: 100.w,
+                  child: Text(
+                    'L${widget.data.id.toString()}',
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
+                    style: CustomizedTheme.roboto_w_W700_14,
+                  ),
+                ),
+                const SizedBox(width: 20),
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Container(
+            decoration: BoxDecoration(
+                color: CustomizedTheme.primaryBright,
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(10))),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: 15.w, right: 15.w, top: 32.h, bottom: 26.45.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText(
+                          'Traveller Name', CustomizedTheme.sf_bo_W300_1503),
+                      buildText(
+                          widget.data.user.firstName +
+                              ' ' +
+                              widget.data.user.lastName,
+                          CustomizedTheme.sf_bo_W500_1503),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 15.w, right: 15.w, bottom: 26.45.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText('Email ID', CustomizedTheme.sf_bo_W300_1503),
+                      buildText(widget.data.user.email,
+                          CustomizedTheme.sf_bo_W500_1503),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 15.w, right: 15.w, bottom: 26.45.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText(
+                          'Phone Number', CustomizedTheme.sf_bo_W300_1503),
+                      buildText(widget.data.user.mobileNumber,
+                          CustomizedTheme.sf_bo_W500_1503),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 15.w, right: 15.w, bottom: 26.45.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText('Nationality', CustomizedTheme.sf_bo_W300_1503),
+                      buildText(getNationality(widget.data.user.nationalityId),
+                          CustomizedTheme.sf_bo_W500_1503),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 15.w, right: 15.w, bottom: 26.45.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText('Emirates ID', CustomizedTheme.sf_bo_W300_1503),
+                      buildText(widget.data.user.emirateId,
+                          CustomizedTheme.sf_bo_W500_1503),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 15.w, right: 15.w, bottom: 26.45.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText(
+                          'Total Amount', CustomizedTheme.sf_bo_W300_1503),
+                      buildText(widget.data.amount.toString(),
+                          CustomizedTheme.sf_bo_W500_1503),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 15.w, right: 15.w, bottom: 26.45.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText(
+                        'Payment Date',
+                        CustomizedTheme.sf_bo_W300_1503,
+                      ),
+                      buildText(
+                        getPaymentDate(
+                          widget.data.createdAt,
+                        ),
+                        CustomizedTheme.sf_bo_W500_1503,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 15.w,
+                    right: 15.w,
+                    bottom: 24.01.h,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText(
+                        'Payment Time',
+                        CustomizedTheme.sf_bo_W300_1503,
+                      ),
+                      buildText(
+                        getPaymentTime(
+                          widget.data.createdAt,
+                        ),
+                        CustomizedTheme.sf_bo_W500_1503,
+                      ),
+                    ],
+                  ),
+                ),
+                image != null
+                    ? Image.memory(
+                        image!,
+                      )
+                    : const Icon(
+                        Icons.image,
+                      ),
+                SizedBox(
+                  height: 24.h,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
@@ -116,7 +115,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                               "Traveller Name",
                               CustomizedTheme.w_W500_17.copyWith(
                                 fontWeight: FontWeight.w400,
-                                fontSize: sizes.fontRatio!*17,
+                                fontSize: sizes.fontRatio! * 17,
                               ),
                             ),
                             buildText(
@@ -125,7 +124,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                   widget.data[index].user.lastName,
                               CustomizedTheme.w_W500_17.copyWith(
                                 fontWeight: FontWeight.w500,
-                                fontSize: sizes.fontRatio!*17,
+                                fontSize: sizes.fontRatio! * 17,
                               ),
                             ),
                           ],
@@ -138,14 +137,14 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                               "Voucher Amount",
                               CustomizedTheme.w_W500_17.copyWith(
                                 fontWeight: FontWeight.w400,
-                                fontSize: sizes.fontRatio!*17,
+                                fontSize: sizes.fontRatio! * 17,
                               ),
                             ),
                             buildText(
                               "AED " + widget.data[index].amount.toString(),
                               CustomizedTheme.w_W500_17.copyWith(
                                 fontWeight: FontWeight.w500,
-                                fontSize: sizes.fontRatio!*17,
+                                fontSize: sizes.fontRatio! * 17,
                               ),
                             ),
                           ],
