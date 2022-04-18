@@ -440,6 +440,14 @@ class _ScanIDPageState extends State<ScanIDPage> {
               Form(
                 key: Utils.passportKey,
                 child: TextFormField(
+                  inputFormatters: <TextInputFormatter>[
+                    groupValue == 0
+                        ? EmiratesIdFormatter(
+                            mask: 'xxx-xxxx-xxxxxxx-x',
+                            separator: '-',
+                          )
+                        : UpperCaseTextFormatter(),
+                  ],
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(
                       left: 24.44.w,
@@ -544,20 +552,45 @@ class _ScanIDPageState extends State<ScanIDPage> {
 }
 
 class EmiratesIdFormatter extends TextInputFormatter {
+  final String mask;
+  final String separator;
+
+  EmiratesIdFormatter({
+    required this.mask,
+    required this.separator,
+  }) {
+    assert(mask != null);
+    assert(separator != null);
+  }
+
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-
-
-
-    if (newValue.text.length == 3) {
-      return newValue.copyWith(text: "${newValue.text}-");
-    } else if(newValue.text.length == 8){
-      return newValue.copyWith(text: "${newValue.text}-");
-    } else if(newValue.text.length == 16){
-      return newValue.copyWith(text: "${newValue.text}-");
+    if (newValue.text.length > 0) {
+      if (newValue.text.length > oldValue.text.length) {
+        if (newValue.text.length > mask.length) return oldValue;
+        if (newValue.text.length < mask.length &&
+            mask[newValue.text.length - 1] == separator) {
+          return TextEditingValue(
+            text:
+                '${oldValue.text}$separator${newValue.text.substring(newValue.text.length - 1)}',
+            selection: TextSelection.collapsed(
+              offset: newValue.selection.end + 1,
+            ),
+          );
+        }
+      }
     }
-
     return newValue;
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
+    );
   }
 }

@@ -8,6 +8,7 @@ import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
+import 'package:borderpay/screens/download_pdf/download_pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -408,13 +409,25 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
     //     }
     //   },
     // );
-
+    setState(() {
+      isLoading = true;
+    });
     final pdfFile = await PdfApi.generatePdfFile(
       widget.data,
       image!,
     );
 
     PdfApi.openFile(file: File(pdfFile.path));
+    setState(() {
+      isLoading = false;
+    });
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      RouteConstant.hostPage,
+      ModalRoute.withName(
+        RouteConstant.hostPage,
+      ),
+    );
   }
 
   Text buildText(String title, TextStyle textStyle) =>
