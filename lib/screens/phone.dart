@@ -49,7 +49,7 @@ class _PhonePageState extends State<PhonePage> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      phoneController.text = "+"+widget.areaCode + widget.phone;
+      phoneController.text = widget.areaCode + widget.phone;
     });
     return Scaffold(
       appBar: AppBar(
@@ -145,6 +145,9 @@ class _PhonePageState extends State<PhonePage> {
                     ),
                     child: TextButton(
                       onPressed: () async {
+
+
+
                         if (phoneController.text.isNotEmpty) {
                           setState(() {
                             isLoading = true;
@@ -174,7 +177,7 @@ class _PhonePageState extends State<PhonePage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: const Text(
-                                  "OTP Sended",
+                                  "OTP sent",
                                 ),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(

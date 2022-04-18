@@ -6,6 +6,7 @@ import 'package:borderpay/model/datamodels/countries_data_model.dart';
 import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:country_picker/country_picker.dart';
 
@@ -24,6 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController lnameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool _obscureText = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController currentNationality = TextEditingController();
   String countryISO = '';
@@ -319,6 +321,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.black,
                           ),
                         ),
+                        suffixIcon: Icon(
+                          Icons.arrow_drop_down
+                        )
                       ),
                       onTap: () {
                         showCountryPicker(
@@ -336,13 +341,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                           countryListTheme: CountryListThemeData(
                             borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(40.0),
-                              topRight: Radius.circular(40.0),
+                              topLeft: Radius.circular(8.0),
+                              topRight: Radius.circular(8.0),
                             ),
                             // Optional. Styles the search field.
                             inputDecoration: InputDecoration(
                               labelText: 'Search',
-                              hintText: 'Start typing to search',
+                              hintText: 'Find your country',
                               prefixIcon: const Icon(Icons.search),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -362,6 +367,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       controller: passwordController,
                       keyboardType: TextInputType.visiblePassword,
+                      obscureText: _obscureText,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(
                           left: 24.44.w,
@@ -392,11 +398,24 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.black,
                           ),
                         ),
+                        suffixIcon: IconButton(
+                          icon: SvgPicture.asset(
+                            'assets/svg/eye.svg',
+                            color: _obscureText
+                                ? Colors.black
+                                : Colors.black.withOpacity(
+                              .3,
+                            ),
+                          ),
+                          onPressed: () {
+                            _toggle();
+                          },
+                        ),
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if (value!.trim().isEmpty &&
-                            value.trim().length <= 10) {
+                        if (value!.isEmpty || value.length <= 10) {
+                          debugPrint('password length');
                           return 'Password should contain 10 characters';
                         }
                         return null;
@@ -520,5 +539,11 @@ class _RegisterPageState extends State<RegisterPage> {
       return countriesController.countries[index].id;
     }
     return 1;
+  }
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 }

@@ -4,6 +4,7 @@ import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/model/arguments/register_two.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -539,5 +540,24 @@ class _ScanIDPageState extends State<ScanIDPage> {
         ),
       ),
     );
+  }
+}
+
+class EmiratesIdFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+
+
+
+    if (newValue.text.length == 3) {
+      return newValue.copyWith(text: "${newValue.text}-");
+    } else if(newValue.text.length == 8){
+      return newValue.copyWith(text: "${newValue.text}-");
+    } else if(newValue.text.length == 16){
+      return newValue.copyWith(text: "${newValue.text}-");
+    }
+
+    return newValue;
   }
 }

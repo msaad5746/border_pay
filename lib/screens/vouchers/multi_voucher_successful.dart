@@ -11,6 +11,10 @@ import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:screenshot/screenshot.dart';
 
 class MultiVoucherSuccessPage extends StatefulWidget {
   final List<Vouchers> vouchersData;
@@ -27,7 +31,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
   CountriesController countriesController = Get.find<CountriesController>();
   bool _expanded = false;
 
-  List<Uint8List?>? qrImages;
+  ScreenshotController screenshotController = ScreenshotController();
+  List<Uint8List>? qrImages = List.empty(growable: true);
+  Uint8List? _imageFile;
 
   @override
   void initState() {
@@ -188,7 +194,7 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                             Container(
                               width: 150.w,
                               child: Text(
-                                'L${widget.vouchersData[0].id.toString()}',
+                                  widget.vouchersData.isNotEmpty?'L${widget.vouchersData[0].id.toString()}':'L',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: CustomizedTheme.roboto_w_W700_20,
@@ -239,235 +245,241 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                 padding: EdgeInsets.symmetric(
                   horizontal: 20.w,
                 ),
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: widget.vouchersData.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return ExpansionPanelList.radio(
-                      animationDuration: const Duration(
-                        milliseconds: 600,
-                      ),
-                      expansionCallback: (panelIndex, isExpanded) {
-                        setState(() {
-                          _expanded = !_expanded;
-                        });
-                      },
-                      children: [
-                        ExpansionPanelRadio(
-                          backgroundColor: CustomizedTheme.primaryBright,
-                          headerBuilder: (context, isExpanded) {
-                            return ListTile(
-                              title: Text(
-                                "Traveller ${index + 1}",
-                                style: CustomizedTheme.sf_b_W500_19,
-                              ),
-                            );
-                          },
-                          body: Container(
-                            decoration: BoxDecoration(
-                              color: CustomizedTheme.primaryBright,
-                              borderRadius: BorderRadius.vertical(
-                                bottom: Radius.circular(
-                                  10.r,
+                child: Screenshot(
+                  controller: screenshotController,
+                  child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: widget.vouchersData.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return ExpansionPanelList.radio(
+                        animationDuration: const Duration(
+                          milliseconds: 600,
+                        ),
+                        expansionCallback: (panelIndex, isExpanded) {
+                          setState(() {
+                            _expanded = !_expanded;
+                          });
+                        },
+                        children: [
+                          ExpansionPanelRadio(
+                            backgroundColor: CustomizedTheme.primaryBright,
+                            headerBuilder: (context, isExpanded) {
+                              return ListTile(
+                                title: Text(
+                                  "Traveller ${index + 1}",
+                                  style: CustomizedTheme.sf_b_W500_19,
+                                ),
+                              );
+                            },
+                            body: Container(
+                              decoration: BoxDecoration(
+                                color: CustomizedTheme.primaryBright,
+                                borderRadius: BorderRadius.vertical(
+                                  bottom: Radius.circular(
+                                    10.r,
+                                  ),
                                 ),
                               ),
-                            ),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 15.w,
-                                    right: 15.w,
-                                    top: 32.h,
-                                    bottom: 26.45.h,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildText(
-                                        'Traveller Name',
-                                        CustomizedTheme.sf_bo_W300_1503,
-                                      ),
-                                      buildText(
-                                        '${widget.vouchersData[index].user.firstName} ${widget.vouchersData[index].user.lastName}',
-                                        CustomizedTheme.sf_bo_W500_1503,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 15.w,
-                                    right: 15.w,
-                                    bottom: 26.45.h,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildText(
-                                        'Email ID',
-                                        CustomizedTheme.sf_bo_W300_1503,
-                                      ),
-                                      buildText(
-                                        widget.vouchersData[index].user.email,
-                                        CustomizedTheme.sf_bo_W500_1503,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 15.w,
-                                    right: 15.w,
-                                    bottom: 26.45.h,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildText(
-                                        'Phone Number',
-                                        CustomizedTheme.sf_bo_W300_1503,
-                                      ),
-                                      buildText(
-                                        widget.vouchersData[index].user
-                                            .mobileNumber,
-                                        CustomizedTheme.sf_bo_W500_1503,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 15.w,
-                                    right: 15.w,
-                                    bottom: 26.45.h,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildText(
-                                        'Nationality',
-                                        CustomizedTheme.sf_bo_W300_1503,
-                                      ),
-                                      buildText(
-                                        getNationality(widget
-                                            .vouchersData[index]
-                                            .user
-                                            .nationalityId),
-                                        CustomizedTheme.sf_bo_W500_1503,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 15.w,
-                                    right: 15.w,
-                                    bottom: 26.45.h,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildText(
-                                        'Emirates ID',
-                                        CustomizedTheme.sf_bo_W300_1503,
-                                      ),
-                                      buildText(
-                                        widget
-                                            .vouchersData[index].user.emirateId,
-                                        CustomizedTheme.sf_bo_W500_1503,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 15.w,
-                                    right: 15.w,
-                                    bottom: 26.45.h,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildText(
-                                        'Total Amount',
-                                        CustomizedTheme.sf_bo_W300_1503,
-                                      ),
-                                      buildText(
-                                        'AED ${widget.vouchersData[index].amount}',
-                                        CustomizedTheme.sf_bo_W500_1503,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 15.w, right: 15.w, bottom: 26.45.h),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildText(
-                                        'Payment Date',
-                                        CustomizedTheme.sf_bo_W300_1503,
-                                      ),
-                                      buildText(
-                                        getPaymentDate(widget
-                                            .vouchersData[index].createdAt),
-                                        CustomizedTheme.sf_bo_W500_1503,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 15.w,
-                                    right: 15.w,
-                                    bottom: 24.01.h,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildText(
-                                        'Payment Time',
-                                        CustomizedTheme.sf_bo_W300_1503,
-                                      ),
-                                      buildText(
-                                        getPaymentTime(
-                                          widget.vouchersData[index].createdAt,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      top: 32.h,
+                                      bottom: 26.45.h,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        buildText(
+                                          'Traveller Name',
+                                          CustomizedTheme.sf_bo_W300_1503,
                                         ),
-                                        CustomizedTheme.sf_bo_W500_1503,
-                                      ),
-                                    ],
+                                        buildText(
+                                          '${widget.vouchersData[index].user.firstName} ${widget.vouchersData[index].user.lastName}',
+                                          CustomizedTheme.sf_bo_W500_1503,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                widget.vouchersData[index].image != null
-                                    ? Image.memory(
-                                        widget.vouchersData[index].image!,
-                                      )
-                                    : const Icon(
-                                        Icons.image,
-                                      ),
-                                SizedBox(
-                                  height: 24.h,
-                                ),
-                              ],
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      bottom: 26.45.h,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        buildText(
+                                          'Email ID',
+                                          CustomizedTheme.sf_bo_W300_1503,
+                                        ),
+                                        buildText(
+                                          widget.vouchersData[index].user.email,
+                                          CustomizedTheme.sf_bo_W500_1503,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      bottom: 26.45.h,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        buildText(
+                                          'Phone Number',
+                                          CustomizedTheme.sf_bo_W300_1503,
+                                        ),
+                                        buildText(
+                                          widget.vouchersData[index].user
+                                              .mobileNumber,
+                                          CustomizedTheme.sf_bo_W500_1503,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      bottom: 26.45.h,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        buildText(
+                                          'Nationality',
+                                          CustomizedTheme.sf_bo_W300_1503,
+                                        ),
+                                        buildText(
+                                          getNationality(widget
+                                              .vouchersData[index]
+                                              .user
+                                              .nationalityId),
+                                          CustomizedTheme.sf_bo_W500_1503,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      bottom: 26.45.h,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        buildText(
+                                          'Emirates ID',
+                                          CustomizedTheme.sf_bo_W300_1503,
+                                        ),
+                                        buildText(
+                                          widget.vouchersData[index].user
+                                              .emirateId,
+                                          CustomizedTheme.sf_bo_W500_1503,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      bottom: 26.45.h,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        buildText(
+                                          'Total Amount',
+                                          CustomizedTheme.sf_bo_W300_1503,
+                                        ),
+                                        buildText(
+                                          'AED ${widget.vouchersData[index].amount}',
+                                          CustomizedTheme.sf_bo_W500_1503,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 15.w,
+                                        right: 15.w,
+                                        bottom: 26.45.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        buildText(
+                                          'Payment Date',
+                                          CustomizedTheme.sf_bo_W300_1503,
+                                        ),
+                                        buildText(
+                                          getPaymentDate(widget
+                                              .vouchersData[index].createdAt),
+                                          CustomizedTheme.sf_bo_W500_1503,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      bottom: 24.01.h,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        buildText(
+                                          'Payment Time',
+                                          CustomizedTheme.sf_bo_W300_1503,
+                                        ),
+                                        buildText(
+                                          getPaymentTime(
+                                            widget
+                                                .vouchersData[index].createdAt,
+                                          ),
+                                          CustomizedTheme.sf_bo_W500_1503,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  qrImages != null && qrImages!.isNotEmpty
+                                      ? Image.memory(
+                                          qrImages![index],
+                                        )
+                                      : const Icon(
+                                          Icons.image,
+                                        ),
+                                  SizedBox(
+                                    height: 24.h,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          canTapOnHeader: true,
-                          value: index + 1,
-                        )
-                      ],
-                    );
-                  },
+                            canTapOnHeader: true,
+                            value: index + 1,
+                          )
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
               Padding(
@@ -499,13 +511,7 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              RouteConstant.hostPage,
-                              ModalRoute.withName(
-                                RouteConstant.hostPage,
-                              ),
-                            );
+                            generateScreenshotImages("L${widget.vouchersData[0].id}");
                           },
                           child: Text(
                             "Download / Print Summary",
@@ -522,6 +528,31 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
         ),
       ),
     );
+  }
+
+  Future generateScreenshotImages(String fileName) async {
+    screenshotController.capture(delay: const Duration(milliseconds: 10)).then((image) async {
+      if (image != null) {
+        final directory = await getApplicationDocumentsDirectory();
+        final imagePath = await File('${directory.path}/image.png').create();
+        await imagePath.writeAsBytes(image);
+        if(await Permission.manageExternalStorage.request().isGranted){
+          await ImageGallerySaver.saveImage(
+              image,
+              quality: 100,
+              name: fileName
+          );
+        }
+      }
+
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RouteConstant.hostPage,
+        ModalRoute.withName(
+          RouteConstant.hostPage,
+        ),
+      );
+    });
   }
 
   Text buildText(String title, TextStyle textStyle) =>

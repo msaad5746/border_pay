@@ -12,6 +12,10 @@ import 'package:borderpay/screens/download_pdf/download_pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:screenshot/screenshot.dart';
 
 class VoucherSuccessPage extends StatefulWidget {
   final Vouchers data;
@@ -26,6 +30,7 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
   CountriesController countriesController = Get.find<CountriesController>();
   bool isLoading = false;
   Uint8List? image;
+  ScreenshotController screenshotController = ScreenshotController();
 
   @override
   void initState() {
@@ -357,22 +362,8 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                               ),
                             ),
                             onPressed: () async {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              final pdfFile = await PdfApi.generateCenteredText(
-                                widget.data,
-                              );
-                              setState(() {
-                                isLoading = false;
-                              });
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                RouteConstant.hostPage,
-                                ModalRoute.withName(
-                                  RouteConstant.hostPage,
-                                ),
-                              );
+                              generateScreenshotImages('L${widget.data.id.toString()}');
+
                             },
                             child: isLoading
                                 ? const CircularProgressIndicator(
@@ -392,6 +383,31 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
             ),
           ),
         ));
+  }
+
+  Future generateScreenshotImages(String fileName) async {
+    screenshotController.capture(delay: const Duration(milliseconds: 10)).then((image) async {
+      if (image != null) {
+        final directory = await getApplicationDocumentsDirectory();
+        final imagePath = await File('${directory.path}/image.png').create();
+        await imagePath.writeAsBytes(image);
+        if(await Permission.manageExternalStorage.request().isGranted){
+          await ImageGallerySaver.saveImage(
+              image,
+              quality: 100,
+              name: fileName
+          );
+        }
+      }
+
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RouteConstant.hostPage,
+        ModalRoute.withName(
+          RouteConstant.hostPage,
+        ),
+      );
+    });
   }
 
   Text buildText(String title, TextStyle textStyle) =>

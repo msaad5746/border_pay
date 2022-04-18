@@ -177,7 +177,7 @@ class _OTPPageState extends State<OTPPage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
             child: Text(
-              "A 6 digit code has been sent to your mobile number ${"+" + widget.areaCode + widget.phone}",
+              "A 6 digit code has been sent to your mobile number ${widget.areaCode + widget.phone}",
               style: CustomizedTheme.sf_b_W400_15,
             ),
           ),
@@ -205,175 +205,185 @@ class _OTPPageState extends State<OTPPage> {
                 ),
               ),
             ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 19.36.w,
-                vertical: 76.57.h,
-              ),
-              child: Table(
-                // defaultColumnWidth: IntrinsicColumnWidth(),
-                columnWidths: {
-                  0: FlexColumnWidth(92.96.w),
-                  1: FlexColumnWidth(92.96.w),
-                  2: FlexColumnWidth(92.96.w),
-                },
-                children: [
-                  TableRow(children: [
-                    buildButton(1),
-                    buildButton(2),
-                    buildButton(3),
-                  ]),
-                  TableRow(children: [
-                    buildButton(4),
-                    buildButton(5),
-                    buildButton(6),
-                  ]),
-                  TableRow(children: [
-                    buildButton(7),
-                    buildButton(8),
-                    buildButton(9),
-                  ]),
-                  TableRow(children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(
-                          () {
-                            if (_fourthDigit != checker) {
-                              _fourthDigit = checker;
-                            } else if (_thirdDigit != checker) {
-                              _thirdDigit = checker;
-                            } else if (_secondDigit != checker) {
-                              _secondDigit = checker;
-                            } else if (_firstDigit != checker) {
-                              _firstDigit = checker;
-                            } else if (_fifthDigit != checker) {
-                              _fifthDigit = checker;
-                            } else if (_sixthDigit != checker) {
-                              _sixthDigit = checker;
-                            }
-                            OtpCode = "no";
-                          },
-                        );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15.0.w,
-                          vertical: 5.h,
-                        ),
-                        child: Container(
-                          height: 44.86.h,
-                          // width: 92.96,
-                          decoration: BoxDecoration(
-                            color: CustomizedTheme.white,
-                            borderRadius: BorderRadius.circular(6.93.r),
-                            border: Border.all(
-                              color: CustomizedTheme.white,
-                            ),
-                          ),
-                          child: Image.asset(
-                            'assets/icons/ic_backspace.png',
-                          ),
-                        ),
-                      ),
+            child: Stack(
+              children: [
+                otpPage(),
+                isLoading
+                    ? Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
                     ),
-                    buildButton(0),
-                    OtpCode == "no"
-                        ? Container()
-                        : GestureDetector(
-                            onTap: () async {
-                              if (widget.phone.isNotEmpty) {
-                                setState(() {
-                                  isLoading = true;
-                                });
-                                Map<String, String> loginData = {
-                                  "mobileNumber":
-                                      '+${widget.areaCode}${widget.phone}',
-                                  "password": widget.password,
-                                };
-                                var res1 = await networkHandler
-                                    .verifyUser(VerifyUserModel(
-                                  mobileNumber:
-                                      '+${widget.areaCode}${widget.phone}',
-                                  newPassword: widget.password,
-                                  code: OtpCode,
-                                ));
-                                if (res1 != null &&
-                                    res1['data']['acknowledged']) {
-                                  var res =
-                                      await networkHandler.loginUser(loginData);
-                                  if (res != null) {
-                                    LoginUserModel loginModel =
-                                        LoginUserModel.fromJson(res);
-                                    storage.setStringValue(
-                                        SharedPrefKeys.userPhone, widget.phone);
-                                    storage.setStringValue(
-                                        SharedPrefKeys.userPassword,
-                                        widget.password);
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                    CustomAlertDialog.baseDialog(
-                                        context: context,
-                                        title: 'Successfully Created',
-                                        message:
-                                            'Your account has been successfully created.',
-                                        buttonAction: () {
-                                          Navigator.pushNamedAndRemoveUntil(
-                                              context,
-                                              RouteConstant.hostPage,
-                                              (Route<dynamic> route) => false);
-                                        });
-                                  } else {
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content:
-                                          const Text("Something went wrong"),
-                                      behavior: SnackBarBehavior.floating,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      backgroundColor:
-                                          CustomizedTheme.voucherUnpaid,
-                                    ));
-                                  }
-                                } else {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: const Text("Invalid OTP!"),
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(24),
-                                    ),
-                                    backgroundColor:
-                                        CustomizedTheme.voucherUnpaid,
-                                  ));
-                                }
-                              }
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 15.0.w, vertical: 5.h),
-                              child: Container(
-                                height: 44.86.h,
-                                // width: 92.96,
-                                decoration: BoxDecoration(
-                                    color: CustomizedTheme.white,
-                                    borderRadius: BorderRadius.circular(6.93.r),
-                                    border: Border.all(
-                                        color: CustomizedTheme.white)),
-                                child:
-                                    Image.asset('assets/icons/ic_polygon.png'),
-                              ),
-                            ),
-                          ),
-                  ]),
-                ],
-              ),
+                  ),
+                )
+                    : const SizedBox.shrink(),
+              ],
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  otpPage() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 19.36.w,
+        vertical: 76.57.h,
+      ),
+      child: Table(
+        // defaultColumnWidth: IntrinsicColumnWidth(),
+        columnWidths: {
+          0: FlexColumnWidth(92.96.w),
+          1: FlexColumnWidth(92.96.w),
+          2: FlexColumnWidth(92.96.w),
+        },
+        children: [
+          TableRow(children: [
+            buildButton(1),
+            buildButton(2),
+            buildButton(3),
+          ]),
+          TableRow(children: [
+            buildButton(4),
+            buildButton(5),
+            buildButton(6),
+          ]),
+          TableRow(children: [
+            buildButton(7),
+            buildButton(8),
+            buildButton(9),
+          ]),
+          TableRow(children: [
+            GestureDetector(
+              onTap: () {
+                setState(
+                  () {
+                    if (_fourthDigit != checker) {
+                      _fourthDigit = checker;
+                    } else if (_thirdDigit != checker) {
+                      _thirdDigit = checker;
+                    } else if (_secondDigit != checker) {
+                      _secondDigit = checker;
+                    } else if (_firstDigit != checker) {
+                      _firstDigit = checker;
+                    } else if (_fifthDigit != checker) {
+                      _fifthDigit = checker;
+                    } else if (_sixthDigit != checker) {
+                      _sixthDigit = checker;
+                    }
+                    OtpCode = "no";
+                  },
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 15.0.w,
+                  vertical: 5.h,
+                ),
+                child: Container(
+                  height: 44.86.h,
+                  // width: 92.96,
+                  decoration: BoxDecoration(
+                    color: CustomizedTheme.white,
+                    borderRadius: BorderRadius.circular(6.93.r),
+                    border: Border.all(
+                      color: CustomizedTheme.white,
+                    ),
+                  ),
+                  child: Image.asset(
+                    'assets/icons/ic_backspace.png',
+                  ),
+                ),
+              ),
+            ),
+            buildButton(0),
+            OtpCode == "no"
+                ? Container()
+                : GestureDetector(
+                    onTap: () async {
+                      if (widget.phone.isNotEmpty) {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        Map<String, String> loginData = {
+                          "mobileNumber": '${widget.areaCode}${widget.phone}',
+                          "password": widget.password,
+                        };
+                        var res1 =
+                            await networkHandler.verifyUser(VerifyUserModel(
+                          mobileNumber: '${widget.areaCode}${widget.phone}',
+                          newPassword: widget.password,
+                          code: OtpCode,
+                        ));
+                        if (res1 != null && res1['data']['acknowledged']) {
+                          var res = await networkHandler.loginUser(loginData);
+                          if (res != null) {
+                            LoginUserModel loginModel =
+                                LoginUserModel.fromJson(res);
+                            storage.setStringValue(
+                                SharedPrefKeys.userPhone, widget.phone);
+                            storage.setStringValue(
+                                SharedPrefKeys.userPassword, widget.password);
+                            setState(() {
+                              isLoading = false;
+                            });
+                            CustomAlertDialog.baseDialog(
+                                context: context,
+                                title: 'Successfully Created',
+                                message:
+                                    'Your account has been successfully created.',
+                                buttonAction: () {
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      RouteConstant.hostPage,
+                                      (Route<dynamic> route) => false);
+                                });
+                          } else {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: const Text("Something went wrong"),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              backgroundColor: CustomizedTheme.voucherUnpaid,
+                            ));
+                          }
+                        } else {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: const Text("Invalid OTP!"),
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            backgroundColor: CustomizedTheme.voucherUnpaid,
+                          ));
+                        }
+                      }
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 15.0.w, vertical: 5.h),
+                      child: Container(
+                        height: 44.86.h,
+                        // width: 92.96,
+                        decoration: BoxDecoration(
+                            color: CustomizedTheme.white,
+                            borderRadius: BorderRadius.circular(6.93.r),
+                            border: Border.all(color: CustomizedTheme.white)),
+                        child: Image.asset('assets/icons/ic_polygon.png'),
+                      ),
+                    ),
+                  ),
+          ]),
         ],
       ),
     );

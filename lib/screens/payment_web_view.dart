@@ -24,8 +24,6 @@ class _PaymentGatewayState extends State<PaymentGateway> {
   bool isLoading = false;
   bool isCodeReceived = false;
 
-  WebViewController? _controller = null;
-
   @override
   void initState() {
     paymentGateWay =
@@ -51,28 +49,15 @@ class _PaymentGatewayState extends State<PaymentGateway> {
           : WebView(
               initialUrl: paymentGateWay,
               javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (WebViewController webViewController) =>
-                  _controller = webViewController,
-              onProgress: (value) {
-                setState(() {
-                  isLoading = false;
-                });
-              },
               onPageStarted: (url) {
-                setState(() {
-                  isLoading = true;
-                });
-                print('on page start allowing navigation to $url');
+                debugPrint('onPageStarted $url');
               },
               onPageFinished: (url) {
-                setState(() {
-                  isLoading = false;
-                });
-                print('on page finish allowing navigation to $url');
+                debugPrint('onPageFinished $url');
                 if (!isCodeReceived &&
                     url.contains(
                         'https://discoveritech.com/BorderPay_Payment_Api/cdb_recieve.php')) {
-                  print('got it');
+                  debugPrint('CBD response received');
                   isCodeReceived = true;
                   var CBDReferenceNo = getResponse(
                       Uri.parse(url).queryParameters['string'] ?? '');
@@ -80,10 +65,6 @@ class _PaymentGatewayState extends State<PaymentGateway> {
                     Navigator.pop(context, CBDReferenceNo);
                   }
                 }
-              },
-              navigationDelegate: (NavigationRequest request) {
-                print('on delegate allowing navigation to $request');
-                return NavigationDecision.navigate;
               },
             ),
     );
@@ -97,9 +78,4 @@ class _PaymentGatewayState extends State<PaymentGateway> {
     var data = jsonDecode(jsonString);
     return response;
   }
-
-// void readData() {
-//   _controller?.evaluateJavascript(javascriptString)
-// }
-
 }

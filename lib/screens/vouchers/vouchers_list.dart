@@ -187,27 +187,32 @@ class _VouchersPageState extends State<VouchersPage> {
                         ? const SizedBox.shrink()
                         : selector == 1 && individualVoucherList.data.isNotEmpty
                             ? const SizedBox.shrink()
-                            : Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: .5.h,
-                                      color: CustomizedTheme.colorAccent,
+                            : Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20.h),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        height: .5.h,
+                                        color: CustomizedTheme.colorAccent,
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 5.56.w),
-                                    child: Text('No transaction yet',
-                                        style: CustomizedTheme.sf_b_W300_14),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      height: .5.h,
-                                      color: CustomizedTheme.colorAccent,
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 40.h),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 5.56.w, vertical: 16.h),
+                                      child: Text('No transaction yet',
+                                          style: CustomizedTheme.sf_b_W300_14),
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: Container(
+                                        height: .5.h,
+                                        color: CustomizedTheme.colorAccent,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                     Expanded(
                       child: MyVouchers(
