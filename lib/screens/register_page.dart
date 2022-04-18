@@ -3,11 +3,14 @@ import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
 import 'package:borderpay/model/datamodels/countries_data_model.dart';
+import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+
+import 'custom_intl_phone_field.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -22,340 +25,511 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController lnameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool _obscureText = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController currentNationality = TextEditingController();
   String countryISO = '';
   List<String> localCountries = List.empty(growable: true);
-  String currentAreaCode = '971';
-
-  // var currentNationality;
+  String currentAreaCode = '+971';
   bool allCompleted = false;
+  bool termsAndCondition = false;
 
   @override
   void initState() {
-    // countriesController.fetchCountries();
     getCountries(countriesController.countries);
     super.initState();
-  }
-
-  Future fetchCountry() async {
-    // await countriesController.fetchCountries();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 100.h,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: Center(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                  height: 33.73.h,
-                  width: 33.73.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.16.r),
-                      color: CustomizedTheme.colorAccent),
-                  child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
+      appBar: AppBar(
+        toolbarHeight: 100.h,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: Center(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+              height: 33.73.h,
+              width: 33.73.w,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    9.16.r,
+                  ),
+                  color: CustomizedTheme.colorAccent),
+              child: Icon(
+                Icons.arrow_back,
+                color: CustomizedTheme.white,
+              ),
             ),
           ),
-          title: Text("Register", style: CustomizedTheme.title_p_W500_21),
-          centerTitle: false,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.36.w, vertical: 10.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Form(
-                  key: Utils.registerFormKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextFormField(
-                        controller: fnameController,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
-                          labelText: "First Name",
-                          labelStyle: CustomizedTheme.b_W400_12,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide: const BorderSide(color: Colors.black),
+        title: Text("Register", style: CustomizedTheme.title_p_W500_21),
+        centerTitle: false,
+      ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.36.w,
+            vertical: 10.h,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Form(
+                key: Utils.registerFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      controller: fnameController,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                          left: 24.44.w,
+                          right: 34.47.w,
+                          bottom: 12.3.h,
+                          top: 15.03.h,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1.0.w,
                           ),
                         ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.trim().isEmpty) {
-                            return '';
-                          }
-                          // Check if the entered email has the right format
-                          // if (value.trim().length < 6) {
-                          //   return 'Enter correct password';
-                          // }
-                          // Return null if the entered email is valid
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 35.53.h,
-                      ),
-                      TextFormField(
-                        controller: lnameController,
-                        keyboardType: TextInputType.name,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
-                          labelText: "Last Name",
-                          labelStyle: CustomizedTheme.b_W400_12,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide: const BorderSide(color: Colors.black),
+                        labelText: "First Name",
+                        labelStyle: CustomizedTheme.b_W400_12,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
                           ),
                         ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.trim().isEmpty) {
-                            return '';
-                          }
-                          return null;
-                        },
                       ),
-                      SizedBox(
-                        height: 35.53.h,
-                      ),
-                      // buildPhoneDD(),
-                      IntlPhoneField(
-                        initialCountryCode: 'AE',
-                        controller: phoneController,
-                        decoration: InputDecoration(
-                          hintText: 'Phone Number',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0.r)),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return 'First name is empty';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 35.53.h,
+                    ),
+                    TextFormField(
+                      controller: lnameController,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                          left: 24.44.w,
+                          right: 34.47.w,
+                          bottom: 12.3.h,
+                          top: 15.03.h,
                         ),
-                        onChanged: (phone) {
-                          print(phone.completeNumber);
-                        },
-                        onCountryChanged: (country) {
-                          print('Country changed to: ' + country.name);
-                          print('dialCode changed to: ' + country.dialCode);
-                          setState(() {
-                            currentAreaCode = country.dialCode;
-                          });
-                        },
-                      ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      SizedBox(
-                        height: 25.53.h,
-                      ),
-                      TextFormField(
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
-                          labelText: "Email ID",
-                          labelStyle: CustomizedTheme.b_W400_12,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide: const BorderSide(color: Colors.black),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1.0.w,
                           ),
                         ),
-                        // controller: passwordController,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (!GetUtils.isEmail(value!)) {
-                            return '';
-                          }
-                          // Return null if the entered email is valid
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 35.53.h,
-                      ),
-                      TextFormField(
-                        readOnly: true,
-                        controller: currentNationality,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
-                          labelText: "Nationality",
-                          labelStyle: CustomizedTheme.b_W400_12,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide: const BorderSide(color: Colors.black),
+                        labelText: "Last Name",
+                        labelStyle: CustomizedTheme.b_W400_12,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
                           ),
                         ),
-                        onTap: () {
-                          showCountryPicker(
-                            context: context,
-                            //Optional.  Can be used to exclude(remove) one ore more country from the countries list (optional).
-                            // exclude: <String>['KN', 'MF'],
-                            //Optional. Shows phone code before the country name.
-                            countryFilter: localCountries,
-                            showPhoneCode: false,
-                            showWorldWide: false,
-                            onSelect: (Country country) {
-                              print('Select country: ${country.displayName}');
-                              setState(() {
+                      ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return 'Last name is empty';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 35.53.h,
+                    ),
+                    // buildPhoneDD(),
+                    CustomIntlPhoneField(
+                      flagDecoration: BoxDecoration(
+                        color: CustomizedTheme.primaryBold,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      initialCountryCode: 'US',
+                      controller: phoneController,
+                      decoration: InputDecoration(
+                        label: const Text("Phone Number"),
+                        labelStyle: TextStyle(
+                          color: CustomizedTheme.colorAccent,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: CustomizedTheme.colorAccent,
+                            width: .01.w,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.lightBlue,
+                            width: 1.w,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.lightBlue,
+                            width: 1.w,
+                          ),
+                        ),
+                      ),
+                      onChanged: (phone) {},
+                      onCountryChanged: (country) {
+                        setState(
+                          () {
+                            currentAreaCode = "+" + country.dialCode;
+                          },
+                        );
+                      },
+                      dropdownIconPosition: IconPosition.trailing,
+                      flagsButtonPadding:
+                          const EdgeInsets.symmetric(vertical: 8),
+                    ),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    SizedBox(
+                      height: 25.53.h,
+                    ),
+                    TextFormField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                          left: 24.44.w,
+                          right: 34.47.w,
+                          bottom: 12.3.h,
+                          top: 15.03.h,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1.0.w,
+                          ),
+                        ),
+                        labelText: "Email ID",
+                        labelStyle: CustomizedTheme.b_W400_12,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0.r)),
+                          borderSide: const BorderSide(color: Colors.black),
+                        ),
+                      ),
+                      // controller: passwordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (!GetUtils.isEmail(value!)) {
+                          return 'Email is empty';
+                        }
+                        // Return null if the entered email is valid
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 35.53.h,
+                    ),
+                    TextFormField(
+                      readOnly: true,
+                      controller: currentNationality,
+                      validator: (value) {
+                        if (currentNationality.text.isEmpty) {
+                          return 'Nationality is empty';
+                        }
+                        // Return null if the entered email is valid
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                          left: 24.44.w,
+                          right: 34.47.w,
+                          bottom: 12.3.h,
+                          top: 15.03.h,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1.0.w,
+                          ),
+                        ),
+                        labelText: "Nationality",
+                        labelStyle: CustomizedTheme.b_W400_12,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        suffixIcon: Icon(
+                          Icons.arrow_drop_down
+                        )
+                      ),
+                      onTap: () {
+                        showCountryPicker(
+                          context: context,
+                          countryFilter: localCountries,
+                          showPhoneCode: false,
+                          showWorldWide: false,
+                          onSelect: (Country country) {
+                            setState(
+                              () {
                                 currentNationality.text = country.name;
                                 countryISO = country.countryCode;
-                              });
-                            },
-                            // Optional. Sets the theme for the country list picker.
-                            countryListTheme: CountryListThemeData(
-                              // Optional. Sets the border radius for the bottomsheet.
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(40.0),
-                                topRight: Radius.circular(40.0),
-                              ),
-                              // Optional. Styles the search field.
-                              inputDecoration: InputDecoration(
-                                labelText: 'Search',
-                                hintText: 'Start typing to search',
-                                prefixIcon: const Icon(Icons.search),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: const Color(0xFF8C98A8)
-                                        .withOpacity(0.2),
-                                  ),
+                              },
+                            );
+                          },
+                          countryListTheme: CountryListThemeData(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(8.0),
+                              topRight: Radius.circular(8.0),
+                            ),
+                            // Optional. Styles the search field.
+                            inputDecoration: InputDecoration(
+                              labelText: 'Search',
+                              hintText: 'Find your country',
+                              prefixIcon: const Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      const Color(0xFF8C98A8).withOpacity(0.2),
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 35.53.h,
+                    ),
 
-                      SizedBox(
-                        height: 35.53.h,
-                      ),
-
-                      TextFormField(
-                        controller: passwordController,
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                              left: 24.44.w,
-                              right: 34.47.w,
-                              bottom: 12.3.h,
-                              top: 15.03.h),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0.r)),
-                              borderSide: BorderSide(
-                                  color: Colors.black, width: 1.0.w)),
-                          labelText: "Password",
-                          labelStyle: CustomizedTheme.b_W400_12,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide: const BorderSide(color: Colors.black),
+                    TextFormField(
+                      controller: passwordController,
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: _obscureText,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                          left: 24.44.w,
+                          right: 34.47.w,
+                          bottom: 12.3.h,
+                          top: 15.03.h,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1.0.w,
                           ),
                         ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.trim().isEmpty) {
-                            return '';
-                          }
-                          return null;
-                        },
+                        labelText: "Password",
+                        labelStyle: CustomizedTheme.b_W400_12,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: SvgPicture.asset(
+                            'assets/svg/eye.svg',
+                            color: _obscureText
+                                ? Colors.black
+                                : Colors.black.withOpacity(
+                              .3,
+                            ),
+                          ),
+                          onPressed: () {
+                            _toggle();
+                          },
+                        ),
                       ),
-                      SizedBox(height: 50.75.h),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 61.07.h,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7.r),
-                            color: CustomizedTheme.colorAccent),
-                        child: TextButton(
-                            onPressed: () {
-                              if (Utils.registerFormKey.currentState!
-                                  .validate()) {
-                                // setState(() {
-                                //   allCompleted = true;
-                                // });
-                                Navigator.pushNamed(context, '/ScanIDPage',
-                                    arguments: RegisterFirst(
-                                      firstName: fnameController.text,
-                                      lastName: lnameController.text,
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                      areaCode: '+$currentAreaCode',
-                                      phone: phoneController.text,
-                                      nationality: currentNationality.text,
-                                      nationalityId:
-                                          getNationalityId(countryISO),
-                                    ));
-                              } else {
-                                print("Invalid");
-                              }
-                            },
-                            child:
-                                Text("Next", style: CustomizedTheme.w_W500_19)),
-                      ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isEmpty || value.length <= 10) {
+                          debugPrint('password length');
+                          return 'Password should contain 10 characters';
+                        }
+                        return null;
+                      },
                     ),
+                    verticalSpacer(10),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: termsAndCondition,
+                          onChanged: (value) {
+                            termsAndCondition = value!;
+                            setState(() {});
+                          },
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'I accept',
+                                style: CustomizedTheme.b_W400_12.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const TextSpan(
+                                text: '  ',
+                              ),
+                              TextSpan(
+                                text: 'Terms & Conditions',
+                                style: CustomizedTheme.b_W400_12.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: CustomizedTheme.colorAccent,
+                                  decoration: TextDecoration.underline,
+                                  decorationThickness: 2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    verticalSpacer(30),
                   ],
                 ),
-              ],
-            ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 61.07.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          7.r,
+                        ),
+                        color: CustomizedTheme.colorAccent,
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          if (Utils.registerFormKey.currentState!.validate() &&
+                              termsAndCondition) {
+                            Navigator.pushNamed(
+                              context,
+                              '/ScanIDPage',
+                              arguments: RegisterFirst(
+                                firstName: fnameController.text,
+                                lastName: lnameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                                areaCode: currentAreaCode,
+                                phone: phoneController.text,
+                                nationality: currentNationality.text,
+                                nationalityId: getNationalityId(countryISO),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    'You have to accept term and conditions',
+                                    textAlign: TextAlign.center,
+                                    style: CustomizedTheme.w_W500_15.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      color: CustomizedTheme.white,
+                                    )),
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                backgroundColor: CustomizedTheme.voucherUnpaid,
+                              ),
+                            );
+                          }
+                        },
+                        child: Text(
+                          "Next",
+                          style: CustomizedTheme.w_W500_19,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   void getCountries(List<CountryDetails> countries) {
     if (countries.isNotEmpty) {
-      countries.forEach((element) {
+      for (var element in countries) {
         localCountries.add(element.iso);
-      });
+      }
     }
   }
 
@@ -367,88 +541,9 @@ class _RegisterPageState extends State<RegisterPage> {
     return 1;
   }
 
-// Widget buildPhoneDD() {
-//   return Row(
-//                   children: [
-//                     Expanded(
-//                       child: FormField(
-//                         builder: (FormFieldState state) {
-//                           return InputDecorator(
-//                             decoration: InputDecoration(
-//                                 contentPadding: EdgeInsets.only(left: 10.w, bottom: 12.3.h,top: 15.03.h),
-//                                 // label: Text('Nationality',style: TextStyle(color: Colors.black),),
-//                                 // labelStyle: CustomizedTheme.sf_b_W400_17,
-//                                 // hintStyle: CustomizedTheme.sf_b_W400_17,
-//                                 // hintText: 'Nationality',
-//                                 filled: true,
-//                                 fillColor: CustomizedTheme.primaryBold,
-//                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0.r))),
-//                             // isEmpty: _currentSelectedValue == '' ? false:true,
-//                             child: DropdownButtonHideUnderline(
-//                               child: DropdownButton(
-//                                 dropdownColor:CustomizedTheme.primaryBold,
-//                                 iconEnabledColor: CustomizedTheme.white,
-//                                 style: CustomizedTheme.w_W300_12,
-//                                 isExpanded: true,
-//                                 borderRadius: BorderRadius.circular(10.r),
-//                                 menuMaxHeight: 200.h,
-//                                 value: currentAreaCode,
-//                                 isDense: true,
-//                                 onChanged: (newValue) {
-//                                   setState(() {
-//                                     currentAreaCode = newValue;
-//                                   });
-//                                 },
-//                                 items: countriesController.countriesDataList.value.response!.detail.purchasedCoins.map((value) {
-//                                   return DropdownMenuItem(
-//                                     value: value.phonecode,
-//                                     child: FittedBox(
-//                                       child: Row(
-//                                         children: [
-//                                           Image.network(value.flag,height: 19.h,width: 29.w,),
-//                                           SizedBox(width: 5.w,),
-//                                           Text(value.iso,overflow: TextOverflow.ellipsis),
-//                                         ],
-//                                       ),
-//                                     ),
-//                                   );
-//                                 }).toList(),
-//                               ),
-//                             ),
-//                           );
-//                         },
-//                       ),
-//                     ),
-//                     SizedBox(width: 5.w,),
-//                     Expanded(
-//                       flex: 3,
-//                       child: TextFormField(
-//                         controller: phoneController,
-//                         keyboardType: TextInputType.phone,
-//                         decoration: InputDecoration(
-//                           contentPadding: EdgeInsets.only(left: 24.44.w,right: 34.47.w, bottom: 12.3.h,top: 15.03.h),
-//                           border: OutlineInputBorder(
-//                               borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-//                               borderSide: BorderSide(color: Colors.black,width: 1.0.w)),
-//                           labelText: "Phone Number",
-//                           labelStyle: CustomizedTheme.b_W400_12,
-//                           focusedBorder:  OutlineInputBorder(
-//                             borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-//                             borderSide: BorderSide(color: Colors.black),
-//                           ),
-//                         ),
-//                         // controller: passwordController,
-//                         autovalidateMode: AutovalidateMode.onUserInteraction,
-//                         validator: (value) {
-//                           if (value!.trim().isEmpty) {
-//                             return '';
-//                           }
-//                           return null;
-//                         },
-//                       ),
-//                     ),
-//                   ],
-//                 );
-// }
-
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 }

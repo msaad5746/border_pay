@@ -17,6 +17,7 @@ class VoucherRepoImpl implements VoucherRepo {
   NetworkHelper networkHelper = NetworkHelperImpl();
   EndPoints endPoints = EndPoints();
 
+
   @override
   Future getVoucherDetails(int userId, int voucherId) async {
     try {
@@ -38,7 +39,7 @@ class VoucherRepoImpl implements VoucherRepo {
   @override
   Future getVoucherList({int page = 1, int limit = 15, id}) async {
     try {
-      String url = endPoints.voucherList(1) +
+      String url = endPoints.voucherList(id) +
           "?page=" +
           page.toString() +
           "&limit=" +
@@ -64,9 +65,7 @@ class VoucherRepoImpl implements VoucherRepo {
       } else {
         return null;
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   @override
@@ -183,6 +182,24 @@ class VoucherRepoImpl implements VoucherRepo {
       } else {
         return null;
       }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  @override
+  Future getQrCodeImage({required String voucherNumber}) async {
+    try {
+      String url = endPoints.getQrCode().replaceAll(
+            "{voucher-no}",
+            voucherNumber,
+          );
+      var response = await networkHelper.get(
+        url,
+      );
+      return response.body.toString();
+      // return response.body.toString();
     } catch (e) {
       print(e);
       return null;

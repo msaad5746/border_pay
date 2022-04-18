@@ -11,7 +11,6 @@ import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/screens/home_page/my_vouchers.dart';
 import 'package:borderpay/widget/spacer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -31,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   final RefreshController refreshController = RefreshController(
     initialRefresh: false,
   );
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int pageNumber = 1;
   bool isLoading = true;
@@ -38,16 +38,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    getHomeData(1);
     if (loginData.firstName.isEmpty) {
       getUserData();
     }
+    getHomeData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         top: Platform.isIOS ? false : true,
         child: isLoading
@@ -157,62 +158,38 @@ class _HomePageState extends State<HomePage> {
                                           );
                                         });
                                       },
-                                      child: SizedBox(
-                                        height: 182.h,
-                                        // decoration: BoxDecoration(
-                                        //   borderRadius: BorderRadius.circular(10.r),
-                                        //   border: selection == 'hatta' ? Border.all(width: 4.w,color: CustomizedTheme.colorAccent):null,
-                                        //   // image: const DecorationImage(
-                                        //   //     image: AssetImage('assets/welcome/hatta-bg.png'),
-                                        //   //     fit: BoxFit.fill
-                                        //   // ),
-                                        // ),
-                                        child: Image.asset(
-                                          'assets/welcome/hatta-bg.png',
-                                          fit: BoxFit.fill,
-                                        ),
+                                      child: Image.asset(
+                                        'assets/welcome/hatta-bg.png',
+                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 11.w,
-                                  ),
+                                  horizontalSpacer(16),
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
-                                        setState(() {
-                                          location = LocationModel(
-                                            id: 1,
-                                            title: 'Port Rashid 1',
-                                          );
-                                          Navigator.pushNamed(
-                                            context,
-                                            '/VoucherTypePage',
-                                            arguments: location,
-                                          );
-                                        });
+                                        setState(
+                                          () {
+                                            location = LocationModel(
+                                              id: 1,
+                                              title: 'Port Rashid 1',
+                                            );
+                                            Navigator.pushNamed(
+                                              context,
+                                              '/VoucherTypePage',
+                                              arguments: location,
+                                            );
+                                          },
+                                        );
                                       },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(0),
-                                        // width: MediaQuery.of(context).size.width*5,
-                                        height: 182.h,
-                                        // decoration: BoxDecoration(
-                                        //     // borderRadius: BorderRadius.circular(10.r),
-                                        //     border: selection == 'port' ? Border.all(width: 4.w,color: CustomizedTheme.colorAccent):null,
-                                        //     // image: const DecorationImage(
-                                        //     //     image: AssetImage('assets/welcome/portrashid-bg.png'),
-                                        //     //     fit: BoxFit.fill
-                                        //     // )
-                                        // ),
-                                        child: Image.asset(
-                                            'assets/welcome/portrashid-bg.png',
-                                            fit: BoxFit.fill),
+                                      child: Image.asset(
+                                        'assets/welcome/portrashid-bg.png',
+                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                              // Image.asset('assets/icons/ic_card.png',fit: BoxFit.fill,height: 220,)
                             ),
                           ],
                         ),
@@ -301,23 +278,24 @@ class _HomePageState extends State<HomePage> {
                           voucherList: voucherList,
                           loadMoreData: () {
                             if (voucherList.lastPage) {
-                            }else{
+                            } else {
                               loadMoreData(1);
                             }
                           },
                           lastPage: voucherList.lastPage,
                         ),
                       ),
+                      verticalSpacer(32),
                     ],
                   ),
       ),
     );
   }
 
-  Future<void> getHomeData(int id) async {
+  Future<void> getHomeData() async {
     VoucherRepo repo = VoucherRepoImpl();
     var response = await repo.getVoucherList(
-      id: id,
+      id: loginData.userId,
       page: pageNumber,
     );
     if (response != null) {
@@ -336,7 +314,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> loadMoreData(int id) async {
     VoucherRepo repo = VoucherRepoImpl();
     var response = await repo.getVoucherList(
-      id: id,
+      id: loginData.userId,
       page: voucherList.page,
     );
     if (response != null) {

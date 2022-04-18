@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 /// status : true
 /// statusMsg : "Successfully created tourist voucher"
 /// data : {"acknowledged":true,"count":1,"vouchers":[{"id":44,"voucherNo":"029785e3-d6ff-4c37-8522-ab2ad44a45a2","status":"INACTIVE","type":"ENTRY","amount":"14.5753","createdByType":"Tourist","createdById":1,"createdByAdminId":null,"locationId":1,"userInfoId":45,"successfulTransactionId":null,"createdAt":"2022-04-06T10:55:06.907Z","updatedAt":"2022-04-06T10:55:06.912Z","user":{"id":45,"email":"traveler1@example.com","mobileNumber":"12312312213","firstName":"Traveler","lastName":"1","gender":null,"birthdate":null,"passport":null,"emirateId":"E13123","nationalityId":1,"createdAt":"2022-04-06T10:55:06.907Z","updatedAt":"2022-04-06T10:55:06.912Z"}}]}
@@ -78,6 +80,7 @@ class Vouchers {
   final String updatedAt;
   final BulkVoucherUser user;
   final Location location;
+  Uint8List? image;
 
   Vouchers({
     this.id = -1,

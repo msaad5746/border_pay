@@ -10,31 +10,29 @@ class RegisterDataServer {
   String password;
   int nationalityId;
   String emiratedpassport;
-  File image;
+  File image = File("initial file");
 
-  RegisterDataServer(
-      {required this.firstName,
-      required this.lastName,
-      required this.phone,
-      required this.areaCode,
-      required this.email,
-      required this.nationality,
-      required this.password,
-      required this.nationalityId,
-      required this.emiratedpassport,
-      required this.image});
+  RegisterDataServer({
+    required this.firstName,
+    required this.lastName,
+    required this.phone,
+    required this.areaCode,
+    required this.email,
+    required this.nationality,
+    required this.password,
+    required this.nationalityId,
+    required this.emiratedpassport,
+  });
 
   Map<String, dynamic> toJson() => {
         'firstName': firstName,
         'lastName': lastName,
+        'email': email,
         'mobileNumber': phone,
         'country_code': areaCode,
-        'email': email,
         'country': nationality,
         'nationalityId': nationalityId,
-        "emirate_id": emiratedpassport,
-        "passport": emiratedpassport,
-        "image": image.path,
+        "emirateId": emiratedpassport,
         "password": password,
       };
 }

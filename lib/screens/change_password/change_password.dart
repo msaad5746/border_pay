@@ -180,7 +180,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                   isLoading = true;
                                 });
                                 Map<String, String> loginData = {
-                                  "email": widget.userData.email,
+                                  "mobileNumber": widget.userData.phoneNumber,
                                   "oldPassword": oldPasswordController.text,
                                   "newPassword": newPasswordController.text,
                                 };
@@ -197,7 +197,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
                                     content: const Text(
-                                        "Password successfully updated!"),
+                                      "Password successfully updated!",
+                                    ),
                                     behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),

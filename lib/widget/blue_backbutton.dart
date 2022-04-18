@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class BlueBackButton extends StatefulWidget {
   BuildContext context;
 
-  BlueBackButton({Key? key, required this.context}) : super(key: key);
+  BlueBackButton({Key? key, required this.context,}) : super(key: key);
 
 
   @override

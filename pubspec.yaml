@@ -45,11 +45,15 @@ dependencies:
   webview_flutter: ^3.0.2
   xml2json: ^5.3.2
   pdf: ^3.6.0
+  open_file:
   path_provider: ^2.0.9
   url_launcher: ^6.0.20
   open_mail_app: ^0.4.5
   flutter_svg: ^0.21.0
   pull_to_refresh:
+  screenshot: ^1.2.3
+  image_gallery_saver: '^1.7.1'
+  permission_handler: ^9.2.0
 
 dev_dependencies:
   flutter_test:
@@ -126,5 +130,15 @@ flutter:
           weight: 100
         - asset: assets/fonts/Roboto/Roboto-ThinItalic.ttf
           weight: 100
+    - family: open-sans
+      fonts:
+        - asset: assets/fonts/OpenSans/open-sans-bold.ttf
+          weight: 700
+        - asset: assets/fonts/OpenSans/open-sans-bold-italic.ttf
+          weight: 500
+        - asset: assets/fonts/OpenSans/open-sans-italic.ttf
+          weight: 300
+        - asset: assets/fonts/OpenSans/open-sans-regular.ttf
+          weight: 300
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

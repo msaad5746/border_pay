@@ -4,7 +4,7 @@ class EndPoints {
   final String _registerUser = '/register';
   final String _verifyUser = '/verify-account';
   final String _loginUser = '/login-phone';
-  final String _password = '/password';
+  final String _password = '/change-password';
   final String _userInfo = '/user-info';
   final String _deactivate = '/deactivate';
   final String _voucherList = '/voucher/list';
@@ -17,6 +17,7 @@ class EndPoints {
   final String _createBulkVouchers = '/voucher/create-bulk';
   final String _createVouchersTransaction = '/voucher/create-transaction';
   final String _countries = '/database/country';
+  final String _qrCode = '/generate-qrcode?voucherNo={voucher-no}';
 
   String registerUser() {
     return _baseURL + _tourist + _registerUser;
@@ -35,10 +36,10 @@ class EndPoints {
   }
 
   String changePassword(int id) {
-    return _baseURL + _tourist + '/$id' + _password;
+    return _baseURL + _tourist + _password;
   }
 
- String updateUserDetails(int id) {
+  String updateUserDetails(int id) {
     return _baseURL + _tourist + '/$id' + _userInfo;
   }
 
@@ -76,5 +77,9 @@ class EndPoints {
 
   String getCountries() {
     return _baseURL + _countries;
+  }
+
+  String getQrCode() {
+    return _baseURL + _qrCode;
   }
 }

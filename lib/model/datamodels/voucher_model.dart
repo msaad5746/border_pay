@@ -75,6 +75,7 @@ class VoucherDataModel {
   String type;
   int amount;
   LocationModel location;
+  String voucherNumber;
   UserModel user;
   dynamic transaction;
 
@@ -86,6 +87,7 @@ class VoucherDataModel {
     required this.location,
     required this.user,
     this.transaction,
+    this.voucherNumber = '',
   });
 
   factory VoucherDataModel.fromJson(dynamic json) {
@@ -94,6 +96,7 @@ class VoucherDataModel {
       status: json['status'] ?? '',
       type: json['type'] ?? '',
       amount: json['amount'],
+      voucherNumber: json['voucherNo'],
       location: json['location'] != null
           ? LocationModel.fromJson(json['location'])
           : LocationModel(),
@@ -109,6 +112,7 @@ class VoucherDataModel {
     map['status'] = status;
     map['type'] = type;
     map['amount'] = amount;
+    map['voucherNo'] = voucherNumber;
     if (location != null) {
       map['location'] = location.toJson();
     }

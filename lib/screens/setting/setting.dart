@@ -112,7 +112,7 @@ class _SettingPageState extends State<SettingPage> {
                               padding:
                                   EdgeInsets.symmetric(horizontal: 18.01.w)),
                           icon: SvgPicture.asset(
-                            'assets/svg/ic_person.svg',
+                            'assets/svg/profile.svg',
                           ),
                           label: Padding(
                             padding: EdgeInsets.only(left: 31.7.w),
@@ -217,7 +217,7 @@ class _SettingPageState extends State<SettingPage> {
                               padding:
                                   EdgeInsets.symmetric(horizontal: 18.01.w)),
                           icon: SvgPicture.asset(
-                            'assets/svg/ic_lock.svg',
+                            'assets/svg/ic_password.svg',
                           ),
                           label: Padding(
                             padding: EdgeInsets.only(left: 31.7.w),
@@ -255,7 +255,7 @@ class _SettingPageState extends State<SettingPage> {
                               Padding(
                                 padding: EdgeInsets.only(right: 31.7.w),
                                 child: SvgPicture.asset(
-                                  'assets/svg/ic_biometric.svg',
+                                  'assets/svg/ic_finger.svg',
                                 ),
                               ),
                               Text("Biometric Authentication",
@@ -337,7 +337,7 @@ class _SettingPageState extends State<SettingPage> {
                               padding:
                                   EdgeInsets.symmetric(horizontal: 18.01.w)),
                           icon: SvgPicture.asset(
-                            'assets/svg/ic_trash.svg',
+                            'assets/svg/ic_delete.svg',
                           ),
                           label: Padding(
                             padding: EdgeInsets.only(left: 31.7.w),
@@ -366,7 +366,7 @@ class _SettingPageState extends State<SettingPage> {
                               Padding(
                                 padding: EdgeInsets.only(right: 31.7.w),
                                 child: SvgPicture.asset(
-                                  'assets/svg/ic_logout.svg',
+                                  'assets/svg/ic_exit.svg',
                                 ),
                               ),
                               Text("Logout",

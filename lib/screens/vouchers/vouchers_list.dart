@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/model/datamodels/voucher_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
@@ -21,6 +26,8 @@ class _VouchersPageState extends State<VouchersPage> {
   List<VoucherDataModel> searchIndividualResult = List.empty(growable: true);
 
   TextEditingController searchController = TextEditingController();
+  UserModel loginData = UserModel();
+  MySharedPreferences storage = MySharedPreferences.instance;
 
   bool isLoading = true;
   bool isError = false;
@@ -29,9 +36,24 @@ class _VouchersPageState extends State<VouchersPage> {
 
   @override
   void initState() {
-    getCompanyVoucherData(1);
-    getIndividualVoucherData(1);
+    if (loginData.firstName.isEmpty) {
+      getUserData();
+    }
+    getCompanyVoucherData(
+      loginData.userId,
+    );
+    getIndividualVoucherData(
+      loginData.userId,
+    );
     super.initState();
+  }
+
+  void getUserData() {
+    bool isUserExist = storage.containsKey(SharedPrefKeys.user);
+    if (isUserExist) {
+      String user = storage.getStringValue(SharedPrefKeys.user);
+      loginData = UserModel.fromJson(json.decode(user)['data']);
+    }
   }
 
   @override
@@ -165,27 +187,32 @@ class _VouchersPageState extends State<VouchersPage> {
                         ? const SizedBox.shrink()
                         : selector == 1 && individualVoucherList.data.isNotEmpty
                             ? const SizedBox.shrink()
-                            : Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: .5.h,
-                                      color: CustomizedTheme.colorAccent,
+                            : Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20.h),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        height: .5.h,
+                                        color: CustomizedTheme.colorAccent,
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 5.56.w),
-                                    child: Text('No transaction yet',
-                                        style: CustomizedTheme.sf_b_W300_14),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      height: .5.h,
-                                      color: CustomizedTheme.colorAccent,
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 40.h),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 5.56.w, vertical: 16.h),
+                                      child: Text('No transaction yet',
+                                          style: CustomizedTheme.sf_b_W300_14),
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: Container(
+                                        height: .5.h,
+                                        color: CustomizedTheme.colorAccent,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                     Expanded(
                       child: MyVouchers(

@@ -32,6 +32,8 @@ class _LoginPageState extends State<LoginPage> {
   bool isLoading = false;
   bool isBioMatric = false;
   String cuntryCode = '+1';
+  bool isPhoneNumberFilled = true;
+  bool isPasswordFilled = true;
 
   // Toggles the password show status
   void _toggle() {
@@ -42,6 +44,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    isPasswordFilled = true;
+    isPhoneNumberFilled = true;
     isBioMatricEnable();
     super.initState();
   }
@@ -51,10 +55,12 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: 1.sh,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.36.w),
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.36.w,
+              ),
               child: Form(
                 key: Utils.loginPageFormKey,
                 child: Column(
@@ -72,10 +78,11 @@ class _LoginPageState extends State<LoginPage> {
                             width: 37.26.w,
                             // margin: EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  10.11.r,
-                                ),
-                                color: CustomizedTheme.colorAccent),
+                              borderRadius: BorderRadius.circular(
+                                10.11.r,
+                              ),
+                              color: CustomizedTheme.colorAccent,
+                            ),
                             child: Icon(
                               Icons.arrow_back,
                               color: CustomizedTheme.white,
@@ -148,12 +155,23 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                       dropdownIconPosition: IconPosition.trailing,
-                      flagsButtonPadding: const EdgeInsets.symmetric(vertical: 8),
+                      flagsButtonPadding:
+                          const EdgeInsets.symmetric(vertical: 8),
                     ),
 
                     SizedBox(
                       height: 15.53.h,
                     ),
+                    isPhoneNumberFilled
+                        ? const SizedBox.shrink()
+                        : Text(
+                            'Phone number field is empty',
+                            style: CustomizedTheme.b_W400_12.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: CustomizedTheme.voucherUnpaid,
+                            ),
+                          ),
+                    verticalSpacer(16),
                     TextFormField(
                       controller: passwordController,
                       obscureText: _obscureText,
@@ -164,46 +182,74 @@ class _LoginPageState extends State<LoginPage> {
                           bottom: 12.3.h,
                           top: 15.03.h,
                         ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: CustomizedTheme.colorAccent,
+                            width: .01.w,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 1.w,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10.0.r,
+                            ),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 1.w,
+                          ),
+                        ),
                         suffixIcon: IconButton(
                           icon: SvgPicture.asset(
                             'assets/svg/eye.svg',
                             color: _obscureText
                                 ? Colors.black
-                                : Colors.black.withOpacity(.3),
+                                : Colors.black.withOpacity(
+                                    .3,
+                                  ),
                           ),
                           onPressed: () {
                             _toggle();
                           },
                         ),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0.r)),
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 1.0.w)),
                         labelText: "Password",
                         labelStyle: CustomizedTheme.b_W400_12,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0.r)),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
                       ),
                       // controller: passwordController,
+                      onEditingComplete: () {
+                        isPasswordFilled = true;
+                      },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if (value!.trim().isEmpty) {
-                          return 'Please enter password';
-                        }
-                        // Check if the entered email has the right format
-                        if (value.trim().length < 6) {
-                          return 'Enter correct password';
-                        }
-                        // Return null if the entered email is valid
                         return null;
                       },
                     ),
+                    verticalSpacer(12),
+                    isPasswordFilled
+                        ? const SizedBox.shrink()
+                        : Text(
+                            'Password field is empty',
+                            style: CustomizedTheme.b_W400_12.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: CustomizedTheme.voucherUnpaid,
+                            ),
+                          ),
                     verticalSpacer(12),
                     SizedBox(
                       width: double.infinity,
@@ -344,17 +390,26 @@ class _LoginPageState extends State<LoginPage> {
                             child: TextButton(
                               onPressed: () async {
                                 if (!isLoading) {
-                                  if (phoneController.text.isNotEmpty &&
-                                      passwordController.text.isNotEmpty) {
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    await userLogin(
-                                      phoneController.text,
-                                      passwordController.text,
-                                    );
+                                  if (phoneController.text.isNotEmpty) {
+                                    if (passwordController.text.isNotEmpty) {
+                                      isPhoneNumberFilled = true;
+                                      isPasswordFilled = true;
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      await userLogin(
+                                        phoneController.text,
+                                        passwordController.text,
+                                      );
+                                    } else {
+                                      isPhoneNumberFilled = true;
+                                      isPasswordFilled = false;
+                                    }
+                                  } else {
+                                    isPhoneNumberFilled = false;
                                   }
                                 }
+                                setState(() {});
                               },
                               child: isLoading
                                   ? const CircularProgressIndicator(
@@ -400,6 +455,10 @@ class _LoginPageState extends State<LoginPage> {
       });
       storage.setStringValue(SharedPrefKeys.userPhone, phone);
       storage.setStringValue(SharedPrefKeys.userPassword, password);
+      storage.setStringValue(
+        SharedPrefKeys.userId,
+        loginModel.data.userId.toString(),
+      );
       Navigator.pushNamedAndRemoveUntil(
         context,
         RouteConstant.hostPage,

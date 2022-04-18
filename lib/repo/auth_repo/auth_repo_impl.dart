@@ -7,6 +7,7 @@ import 'package:borderpay/model/arguments/register_datatoserver.dart';
 import 'package:borderpay/model/datamodels/login_model.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
 import 'package:borderpay/model/datamodels/verify_user_model.dart';
+import 'package:borderpay/response/register_response.dart';
 import 'package:borderpay/services/network/network_endpoints.dart';
 import 'package:borderpay/services/network/network_helper.dart';
 import 'package:borderpay/services/network/network_helper_impl.dart';
@@ -39,28 +40,29 @@ class AuthRepoImpl implements AuthRepo {
         return null;
       }
     } catch (e) {
-      print(e);
       return null;
     }
   }
 
   @override
-  Future registerUser(RegisterDataServer registerDataServer) async {
+  Future<RegisterResponse> registerUser(
+      RegisterDataServer registerDataServer) async {
+    RegisterResponse registerResponse = RegisterResponse.emptyObj();
     try {
       var response = await networkHelper.post(
         endPoints.registerUser(),
         body: registerDataServer.toJson(),
       );
-      if (response.statusCode == 201) {
-        print(response.body);
-        return json.decode(response.body.toString());
-      } else {
-        print(response.body);
-        return null;
-      }
+      registerResponse = RegisterResponse.fromJson(
+        jsonDecode(
+          response.body.toString(),
+        ),
+        response.statusCode,
+      );
+      return registerResponse;
     } catch (e) {
-      print(e.toString());
-      return null;
+      registerResponse.statusMsg = e.toString();
+      return registerResponse;
     }
   }
 
@@ -72,14 +74,11 @@ class AuthRepoImpl implements AuthRepo {
         body: verifyUserModel.toJson(),
       );
       if (response.statusCode == 200) {
-        print(response.body);
         return json.decode(response.body.toString());
       } else {
-        print(response.body);
         return null;
       }
     } catch (e) {
-      print(e.toString());
       return null;
     }
   }
@@ -166,7 +165,7 @@ class AuthRepoImpl implements AuthRepo {
         loginController.saveLoginData(json.decode(response.body.toString()));
         LoginUserModel loginModel =
             LoginUserModel.fromJson(json.decode(response.body.toString()));
-         storage.setStringValue(SharedPrefKeys.user, response.body.toString());
+        storage.setStringValue(SharedPrefKeys.user, response.body.toString());
         return json.decode(response.body.toString());
       } else {
         return null;
