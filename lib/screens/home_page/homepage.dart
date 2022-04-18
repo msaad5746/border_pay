@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   final RefreshController refreshController = RefreshController(
     initialRefresh: false,
   );
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int pageNumber = 1;
   bool isLoading = true;
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         top: Platform.isIOS ? false : true,
         child: isLoading
