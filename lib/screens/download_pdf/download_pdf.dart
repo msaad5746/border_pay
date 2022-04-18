@@ -26,22 +26,26 @@ class PdfApi {
     Uint8List image,
   ) async {
     final pdf = Document();
-    var data =
-        await rootBundle.load("assets/fonts/OpenSans/open-sans-regular.ttf");
+    var data = await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf");
     var myFont = Font.ttf(data);
     var myTheme = ThemeData.withFont(
       base: Font.ttf(
-          await rootBundle.load("assets/fonts/OpenSans/open-sans-regular.ttf")),
+        await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf"),
+      ),
       bold: Font.ttf(
-          await rootBundle.load("assets/fonts/OpenSans/open-sans-bold.ttf")),
+        await rootBundle.load("assets/fonts/Roboto/Roboto-Bold.ttf"),
+      ),
       italic: Font.ttf(
-          await rootBundle.load("assets/fonts/OpenSans/open-sans-italic.ttf")),
-      boldItalic: Font.ttf(await rootBundle
-          .load("assets/fonts/OpenSans/open-sans-bold-italic.ttf")),
+        await rootBundle.load("assets/fonts/Roboto/Roboto-Italic.ttf"),
+      ),
+      boldItalic: Font.ttf(
+        await rootBundle.load("assets/fonts/Roboto/Roboto-BoldItalic.ttf"),
+      ),
     );
 
     pdf.addPage(
       MultiPage(
+        theme: myTheme,
         build: (context) => [
           buildHeader(
             data: vouchers,
