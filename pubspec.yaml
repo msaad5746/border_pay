@@ -53,7 +53,7 @@ dependencies:
   pull_to_refresh:
   screenshot: ^1.2.3
   image_gallery_saver: '^1.7.1'
-  permission_handler: ^9.2.0
+  permission_handler: ^9.0.2
 
 dev_dependencies:
   flutter_test:

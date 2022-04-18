@@ -272,7 +272,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (!GetUtils.isEmail(value!)) {
-                          return 'Email is empty';
+                          return 'Enter valid email';
                         }
                         // Return null if the entered email is valid
                         return null;

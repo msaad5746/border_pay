@@ -8,6 +8,7 @@ import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
+import 'package:borderpay/screens/download_pdf/download_pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ class MultiVoucherSuccessPage extends StatefulWidget {
 class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
   CountriesController countriesController = Get.find<CountriesController>();
   bool _expanded = false;
+  bool isLoading = false;
 
   ScreenshotController screenshotController = ScreenshotController();
   List<Uint8List>? qrImages = List.empty(growable: true);
@@ -514,13 +516,16 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                             ),
                           ),
                           onPressed: () {
-                            generateScreenshotImages(
-                                "L${widget.vouchersData[0].id}");
+                            generateScreenshotImages(widget.vouchersData);
                           },
-                          child: Text(
-                            "Download / Print Summary",
-                            style: CustomizedTheme.sf_w_W500_19,
-                          ),
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  "Download / Print Summary",
+                                  style: CustomizedTheme.sf_w_W500_19,
+                                ),
                         ),
                       ),
                     ),
@@ -534,27 +539,41 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
     );
   }
 
-  Future generateScreenshotImages(String fileName) async {
-    screenshotController.capture(delay: const Duration(milliseconds: 10)).then(
-      (image) async {
-        if (image != null) {
-          final directory = await getApplicationDocumentsDirectory();
-          final imagePath = await File('${directory.path}/image.png').create();
-          await imagePath.writeAsBytes(image);
-          if (await Permission.manageExternalStorage.request().isGranted) {
-            await ImageGallerySaver.saveImage(image,
-                quality: 100, name: fileName);
-          }
-        }
+  Future generateScreenshotImages(List<Vouchers> vouchers) async {
+    setState(() {
+      isLoading = true;
+    });
+    for (int i = 0; i < vouchers.length; i++) {
+      final pdfFile = await PdfApi.generatePdfFile(
+        vouchers[i],
+        qrImages![i],
+      );
 
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          RouteConstant.hostPage,
-          ModalRoute.withName(
-            RouteConstant.hostPage,
-          ),
-        );
-      },
+      PdfApi.openFile(file: File(pdfFile.path));
+    }
+    // screenshotController
+    //     .capture(delay: const Duration(milliseconds: 10))
+    //     .then((image) async {
+    //   if (image != null) {
+    //     final directory = await getApplicationDocumentsDirectory();
+    //     final imagePath =
+    //         await File('${directory.path}/image.png').create();
+    //     await imagePath.writeAsBytes(image);
+    //     if (await Permission.manageExternalStorage.request().isGranted) {
+    //       await ImageGallerySaver.saveImage(image,
+    //           quality: 100, name: fileName);
+    //     }
+    //   }
+    // });
+    setState(() {
+      isLoading = true;
+    });
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      RouteConstant.hostPage,
+      ModalRoute.withName(
+        RouteConstant.hostPage,
+      ),
     );
   }
 

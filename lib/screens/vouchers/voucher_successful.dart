@@ -409,13 +409,25 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
     //     }
     //   },
     // );
-
+    setState(() {
+      isLoading = true;
+    });
     final pdfFile = await PdfApi.generatePdfFile(
       widget.data,
       image!,
     );
 
     PdfApi.openFile(file: File(pdfFile.path));
+    setState(() {
+      isLoading = false;
+    });
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      RouteConstant.hostPage,
+      ModalRoute.withName(
+        RouteConstant.hostPage,
+      ),
+    );
   }
 
   Text buildText(String title, TextStyle textStyle) =>
