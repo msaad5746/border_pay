@@ -33,7 +33,7 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
 
   ScreenshotController screenshotController = ScreenshotController();
   List<Uint8List>? qrImages = List.empty(growable: true);
-  Uint8List? _imageFile;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -63,6 +63,7 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: CustomizedTheme.white,
       body: SafeArea(
         top: Platform.isIOS ? false : true,
@@ -194,7 +195,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                             Container(
                               width: 150.w,
                               child: Text(
-                                  widget.vouchersData.isNotEmpty?'L${widget.vouchersData[0].id.toString()}':'L',
+                                widget.vouchersData.isNotEmpty
+                                    ? 'L${widget.vouchersData[0].id.toString()}'
+                                    : 'L',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: CustomizedTheme.roboto_w_W700_20,
@@ -511,7 +514,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                             ),
                           ),
                           onPressed: () {
-                            generateScreenshotImages("L${widget.vouchersData[0].id}");
+                            generateScreenshotImages(
+                                "L${widget.vouchersData[0].id}");
                           },
                           child: Text(
                             "Download / Print Summary",
@@ -531,28 +535,27 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
   }
 
   Future generateScreenshotImages(String fileName) async {
-    screenshotController.capture(delay: const Duration(milliseconds: 10)).then((image) async {
-      if (image != null) {
-        final directory = await getApplicationDocumentsDirectory();
-        final imagePath = await File('${directory.path}/image.png').create();
-        await imagePath.writeAsBytes(image);
-        if(await Permission.manageExternalStorage.request().isGranted){
-          await ImageGallerySaver.saveImage(
-              image,
-              quality: 100,
-              name: fileName
-          );
+    screenshotController.capture(delay: const Duration(milliseconds: 10)).then(
+      (image) async {
+        if (image != null) {
+          final directory = await getApplicationDocumentsDirectory();
+          final imagePath = await File('${directory.path}/image.png').create();
+          await imagePath.writeAsBytes(image);
+          if (await Permission.manageExternalStorage.request().isGranted) {
+            await ImageGallerySaver.saveImage(image,
+                quality: 100, name: fileName);
+          }
         }
-      }
 
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        RouteConstant.hostPage,
-        ModalRoute.withName(
+        Navigator.pushNamedAndRemoveUntil(
+          context,
           RouteConstant.hostPage,
-        ),
-      );
-    });
+          ModalRoute.withName(
+            RouteConstant.hostPage,
+          ),
+        );
+      },
+    );
   }
 
   Text buildText(String title, TextStyle textStyle) =>

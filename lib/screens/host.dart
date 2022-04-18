@@ -16,6 +16,7 @@ class HostPage extends StatefulWidget {
 
 class _HostPageState extends State<HostPage> {
   late PageController _pageController;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // String selectedPage = RouteConstant.homePage;
   List<String> pageKeys = [
@@ -58,7 +59,7 @@ class _HostPageState extends State<HostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: Utils.scaffoldKey,
+      key: _scaffoldKey,
       body: tabs[currentIndex],
       bottomNavigationBar:
           // _bottomNavigationBar(

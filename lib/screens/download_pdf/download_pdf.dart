@@ -1,222 +1,450 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
+import 'package:borderpay/res/res.dart';
+import 'package:borderpay/widget/spacer.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/widgets.dart';
+import 'package:open_file/open_file.dart';
 
 class PdfApi {
   static CountriesController countriesController =
       Get.find<CountriesController>();
 
-  static Future<File> generateCenteredText(Vouchers data) async {
-    final pdfD = pw.Document();
-    var data = await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf");
-    var myFont = pw.Font.ttf(data);
-    var myTheme = pw.ThemeData.withFont(
-      base: pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf")),
-      bold: pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto/Roboto-Bold.ttf")),
-      italic: pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto/Roboto-Italic.ttf")),
-      boldItalic:
-          pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto/Roboto-BoldItalic.ttf")),
+  static Future openFile({required File file}) {
+    return PDFDocument.openFile(file);
+  }
+
+  static Future<File> generatePdfFile(
+    Vouchers vouchers,
+    Uint8List image,
+  ) async {
+    final pdf = Document();
+    var data =
+        await rootBundle.load("assets/fonts/OpenSans/open-sans-regular.ttf");
+    var myFont = Font.ttf(data);
+    var myTheme = ThemeData.withFont(
+      base: Font.ttf(
+          await rootBundle.load("assets/fonts/OpenSans/open-sans-regular.ttf")),
+      bold: Font.ttf(
+          await rootBundle.load("assets/fonts/OpenSans/open-sans-bold.ttf")),
+      italic: Font.ttf(
+          await rootBundle.load("assets/fonts/OpenSans/open-sans-italic.ttf")),
+      boldItalic: Font.ttf(await rootBundle
+          .load("assets/fonts/OpenSans/open-sans-bold-italic.ttf")),
     );
 
-    // final font = await pdfGoogleFonts.nunitoExtraLight();
-    // Text is added here in center
-    pdfD.addPage(pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        theme: myTheme,
-        build: (context) => pw.Text(
-              'download $data',
-              style: pw.TextStyle(font: myFont),
-            )
-        // pw.Column(
-        //   crossAxisAlignment: pw.CrossAxisAlignment.start,
-        //   children: [
-        //     pw.Padding(
-        //       padding: const pw.EdgeInsets.only(top: 75.39, left: 20, right: 20),
-        //       child: pw.Container(
-        //         width: 1,
-        //         height: 60,
-        //         // decoration: pw.BoxDecoration(
-        //         //     image: pw.DecorationImage(
-        //         //   fit: pw.BoxFit.fill,
-        //         //   // image: pw.Image(image: 'assets/payments/voucher-bg2.png')),
-        //         // )),
-        //         child: pw.Row(
-        //           mainAxisAlignment: pw.MainAxisAlignment.center,
-        //           children: [
-        //             pw.Text(
-        //               'Voucher Number : ',
-        //               style:const pw.TextStyle(fontSize: 14),
-        //             ),
-        //             pw.SizedBox(width: 20),
-        //             pw.Container(
-        //               width: 100,
-        //               child: pw.Text(
-        //                 'L${data.id.toString()}',
-        //                 maxLines: 1,
-        //                 overflow: pw.TextOverflow.clip,
-        //                 style: const pw.TextStyle(fontSize: 14),
-        //               ),
-        //             ),
-        //             pw.SizedBox(width: 20),
-        //             // pw.Container(
-        //             //   height: 50,
-        //             //   width: 50,
-        //             //   padding: pw.EdgeInsets.all(5),
-        //             //   // color: pdfC.white,
-        //             //   child: pw.Image.asset(
-        //             //     'assets/icons/ic_qr_small.png',
-        //             //     fit: BoxFit.fill,
-        //             //   ),
-        //             // )
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //     pw.Padding(
-        //       padding: const pw.EdgeInsets.symmetric(horizontal: 20),
-        //       child: pw.Container(
-        //         decoration: const pw.BoxDecoration(
-        //             // color: CustomizedTheme.primaryBright,
-        //             borderRadius: pw.BorderRadius.vertical(
-        //                 bottom: pw.Radius.circular(10))),
-        //         child: pw.Column(
-        //           children: [
-        //             pw.Padding(
-        //               padding: const pw.EdgeInsets.only(
-        //                   left: 15, right: 15, top: 32, bottom: 26.45),
-        //               child: pw.Row(
-        //                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   pw.Text(
-        //                       'Traveller Name',style: const pw.TextStyle(fontSize: 15)),
-        //                   pw.Text(
-        //                       data.user.firstName + ' ' + data.user.lastName,
-        //                       style: const pw.TextStyle(fontSize: 15)),
-        //                 ],
-        //               ),
-        //             ),
-        //             pw.Padding(
-        //               padding: const pw.EdgeInsets.only(
-        //                   left: 15, right: 15, bottom: 26.45),
-        //               child: pw.Row(
-        //                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   pw.Text('Email ID',style: const pw.TextStyle(fontSize: 15)),
-        //                   pw.Text(
-        //                       data.user.email,style: const pw.TextStyle(fontSize: 15)),
-        //                 ],
-        //               ),
-        //             ),
-        //             pw.Padding(
-        //               padding: const pw.EdgeInsets.only(
-        //                   left: 15, right: 15, bottom: 26.45),
-        //               child: pw.Row(
-        //                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   pw.Text(
-        //                       'Phone Number',style: const pw.TextStyle(fontSize: 15)),
-        //                   pw.Text(data.user.mobileNumber,
-        //                       style: const pw.TextStyle(fontSize: 15)),
-        //                 ],
-        //               ),
-        //             ),
-        //             pw.Padding(
-        //               padding: const pw.EdgeInsets.only(
-        //                   left: 15, right: 15, bottom: 26.45),
-        //               child: pw.Row(
-        //                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   pw.Text(
-        //                       'Nationality',style: const pw.TextStyle(fontSize: 15)),
-        //                   pw.Text(getNationality(data.user.nationalityId),
-        //                       style: const pw.TextStyle(fontSize: 15)),
-        //                 ],
-        //               ),
-        //             ),
-        //             pw.Padding(
-        //               padding: const pw.EdgeInsets.only(
-        //                   left: 15, right: 15, bottom: 26.45),
-        //               child: pw.Row(
-        //                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   pw.Text(
-        //                       'Emirates ID', style: const pw.TextStyle(fontSize: 15)),
-        //                   pw.Text(data.user.emirateId,
-        //                       style: const pw.TextStyle(fontSize: 15)),
-        //                 ],
-        //               ),
-        //             ),
-        //             pw.Padding(
-        //               padding: const pw.EdgeInsets.only(
-        //                   left: 15, right: 15, bottom: 26.45),
-        //               child: pw.Row(
-        //                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   pw.Text(
-        //                       'Total Amount',style: const pw.TextStyle(fontSize: 15)),
-        //                   pw.Text(data.amount.toString(),
-        //                       style: const pw.TextStyle(fontSize: 15)),
-        //                 ],
-        //               ),
-        //             ),
-        //             pw.Padding(
-        //               padding: const pw.EdgeInsets.only(
-        //                   left: 15, right: 15, bottom: 26.45),
-        //               child: pw.Row(
-        //                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   pw.Text(
-        //                       'Payment Date',style: const pw.TextStyle(fontSize: 15)),
-        //                   pw.Text('21 October, 2021',
-        //                       style: const pw.TextStyle(fontSize: 15)),
-        //                 ],
-        //               ),
-        //             ),
-        //             pw.Padding(
-        //               padding: const pw.EdgeInsets.only(
-        //                   left: 15, right: 15, bottom: 24.01),
-        //               child: pw.Row(
-        //                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   pw.Text(
-        //                       'Payment Time', style: const pw.TextStyle(fontSize: 15)),
-        //                   pw.Text('09:30 PM', style: const pw.TextStyle(fontSize: 15)),
-        //                 ],
-        //               ),
-        //             ),
-        //             // pw.Container(
-        //             //     height: 117,
-        //             //     width: 117,
-        //             //     // color: CustomizedTheme.white,
-        //             //     padding: const pw.EdgeInsets.all(11.86),
-        //             //     child: pw.Image.asset(
-        //             //       'assets/icons/ic_QR.png',
-        //             //       fit: BoxFit.fill,
-        //             //     )),
-        //             pw.SizedBox(
-        //               height: 24,
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        ));
+    pdf.addPage(
+      MultiPage(
+        build: (context) => [
+          buildHeader(
+            data: vouchers,
+            font: myFont,
+          ),
+          spacing(),
+          buildBody(
+            data: vouchers,
+            font: myFont,
+          ),
+          spacing(),
+          buildQrImage(
+            image: image,
+          ),
+        ],
+      ),
+    );
 
-    // passing the pdf and name of the docoment to make a direcotory in  the internal storage
-    return saveDocument(name: 'voucher.pdf', pdfD: pdfD);
+    return PDFDocument.saveDocument(name: 'voucher.pdf', pdf: pdf);
+  }
+
+  static Widget buildHeader({
+    required Vouchers data,
+    required font,
+  }) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(
+        horizontal: horizontalValue(12),
+        vertical: verticalValue(6),
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: verticalValue(16),
+      ),
+      color: const PdfColor(
+        0.078,
+        0.498,
+        0.559,
+      ),
+      child: Row(
+        children: [
+          Spacer(),
+          Text(
+            'Voucher Number: ',
+            style: TextStyle(
+              font: font,
+              fontSize: sizes.fontRatio! * 18,
+              color: const PdfColor(
+                1,
+                1,
+                1,
+              ),
+            ),
+          ),
+          Text(
+            data.voucherNo,
+            style: TextStyle(
+              font: font,
+              fontSize: sizes.fontRatio! * 18,
+              color: const PdfColor(
+                1,
+                1,
+                1,
+              ),
+            ),
+          ),
+          Spacer(),
+        ],
+      ),
+    );
+  }
+
+  static Widget spacing() {
+    return SizedBox(
+      height: 3 * PdfPageFormat.cm,
+    );
+  }
+
+  static Widget buildBody({
+    required Vouchers data,
+    required font,
+  }) {
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'Traveller Name ',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  data.user.firstName + data.user.lastName,
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'Email ID ',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  data.user.email,
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'Phone Number ',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  data.user.mobileNumber,
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'Nationality: ',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  getNationality(data.user.nationalityId),
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'Emirates ID ',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  data.user.emirateId,
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'Total Amount',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  data.amount.toString(),
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'Payment Date',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  getPaymentDate(
+                    data.createdAt,
+                  ),
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'Payment Time',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  getPaymentTime(
+                    data.createdAt,
+                  ),
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget buildQrImage({required Uint8List image}) {
+    var img = MemoryImage(image);
+    return Container(
+      width: double.infinity,
+      alignment: Alignment.center,
+      child: Image(
+        img,
+      ),
+    );
+  }
+
+  static Widget buildFooter({
+    required Vouchers data,
+  }) {
+    return Container(
+      width: double.infinity,
+      height: sizes.heightRatio! * 60,
+      color: const PdfColor(
+        00,
+        0.345,
+        0.392,
+      ),
+    );
   }
 
   // it will make a named dircotory in the internal storage and then return to its call
   static Future<File> saveDocument({
     String name = 'voucher',
-    required pw.Document pdfD,
+    required Document pdfD,
   }) async {
     // pdf save to the variable called bytes
     final bytes = await pdfD.save();
@@ -237,5 +465,40 @@ class PdfApi {
     int index = countriesController.countries
         .indexWhere((element) => element.id == nationalityId);
     return countriesController.countries[index].name;
+  }
+
+  static String getPaymentTime(String dateTime) {
+    if (dateTime.isNotEmpty) {
+      return dateTime.substring(12, 19);
+    }
+    return '';
+  }
+
+  static String getPaymentDate(String dateTime) {
+    if (dateTime.isNotEmpty) {
+      return dateTime.substring(0, 10);
+    }
+    return '';
+  }
+}
+
+class PDFDocument {
+  static Future<File> saveDocument({
+    required String name,
+    required Document pdf,
+  }) async {
+    final bytes = await pdf.save();
+
+    final dir = (await getApplicationDocumentsDirectory()).path;
+    final file = File('$dir/$name');
+
+    await file.writeAsBytes(bytes);
+    return file;
+  }
+
+  static Future openFile(File file) async {
+    final url = file.path;
+
+    await OpenFile.open(url);
   }
 }
