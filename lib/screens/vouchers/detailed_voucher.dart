@@ -13,6 +13,9 @@ import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class DetailedVoucher extends StatefulWidget {
   final VoucherDataModel voucherDetails;
 
@@ -61,7 +64,9 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
           ],
         ),
         title: Text(
-          "Vouchers",
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.vouchers,
+          ),
           style: CustomizedTheme.sf_b_W500_19,
         ),
       ),
@@ -93,7 +98,9 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Voucher Number : ',
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.voucher_Number,
+                                ),
                                 style: CustomizedTheme.roboto_w_W400_14,
                               ),
                               Text(
@@ -155,7 +162,9 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     buildText(
-                                      'Traveller Name',
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.travellerName,
+                                      ),
                                       CustomizedTheme.sf_bo_W300_1503,
                                     ),
                                     buildText(
@@ -178,7 +187,9 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     buildText(
-                                      'Email ID',
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.emailID,
+                                      ),
                                       CustomizedTheme.sf_bo_W300_1503,
                                     ),
                                     buildText(
@@ -199,7 +210,9 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     buildText(
-                                      'Phone Number',
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.phoneNumber,
+                                      ),
                                       CustomizedTheme.sf_bo_W300_1503,
                                     ),
                                     buildText(
@@ -220,7 +233,9 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     buildText(
-                                      'Nationality',
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.nationality,
+                                      ),
                                       CustomizedTheme.sf_bo_W300_1503,
                                     ),
                                     buildText(
@@ -242,7 +257,9 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     buildText(
-                                      'Emirates ID',
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.emiratesID,
+                                      ),
                                       CustomizedTheme.sf_bo_W300_1503,
                                     ),
                                     buildText(
@@ -263,7 +280,9 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     buildText(
-                                      'Total Amount',
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.totalAmount,
+                                      ),
                                       CustomizedTheme.sf_bo_W300_1503,
                                     ),
                                     buildText(

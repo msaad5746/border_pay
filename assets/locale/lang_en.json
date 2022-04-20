@@ -100,7 +100,7 @@
   "biometricAuthentication": "Biometric Authentication",
   "otherSettings": "Other Settings",
   "deleteAccount": "Delete Account",
-  "deleteAccount!": "Delete Account!",
+  "delete_Account!": "Delete Account!",
   "areYouSureToDeleteAccount?": "Are you sure to delete account?",
   "accountDeletedSuccessfully": "Account deleted successfully!",
   "logout": "Logout",
@@ -156,5 +156,7 @@
   "successfullySavedInDownload!": "Successfully Saved in Downloads!",
   "numberOfTravellers": "Number of travellers: ",
   "continueButton": "Continue",
-  "somethingWentWrong": "Something went wrong"
+  "somethingWentWrong": "Something went wrong",
+  "qoma": ","
+
 }

@@ -11,6 +11,9 @@ import 'package:borderpay/screens/home_page/my_vouchers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class VouchersPage extends StatefulWidget {
   const VouchersPage({Key? key}) : super(key: key);
 
@@ -66,7 +69,9 @@ class _VouchersPageState extends State<VouchersPage> {
         elevation: 0,
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Text("My Vouchers", style: CustomizedTheme.title_sf_W500_21),
+          child: Text(AppLocalizations.of(context)!.translate(
+            TranslationKeys.myVouchers,
+          ), style: CustomizedTheme.title_sf_W500_21),
         ),
       ),
       body: isLoading
@@ -92,7 +97,9 @@ class _VouchersPageState extends State<VouchersPage> {
                                     : CustomizedTheme.primaryColor,
                               ),
                               child: Text(
-                                'Company Voucher',
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.companyVoucher,
+                                ),
                                 style: CustomizedTheme.w_W300_12,
                               ),
                             ),
@@ -115,7 +122,9 @@ class _VouchersPageState extends State<VouchersPage> {
                                 );
                               },
                               child: Text(
-                                'Individual Voucher',
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.individualVoucher,
+                                ),
                                 style: CustomizedTheme.w_W300_12,
                               ),
                             ),
@@ -138,7 +147,9 @@ class _VouchersPageState extends State<VouchersPage> {
                           filled: true,
                           fillColor: Colors.white,
                           prefixIcon: const Icon(Icons.search),
-                          label: const Text("Search"),
+                          label:  Text(AppLocalizations.of(context)!.translate(
+                            TranslationKeys.search,
+                          ),),
                           hintStyle: TextStyle(
                             color: Colors.black,
                             fontSize: 18.sp,
@@ -168,16 +179,22 @@ class _VouchersPageState extends State<VouchersPage> {
                             SizedBox(
                               width: 80.w,
                               child: Text(
-                                'Voucher No',
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.voucherNo,
+                                ),
                                 style: CustomizedTheme.roboto_w_W500_14,
                               ),
                             ),
                             SizedBox(
                               width: 100.w,
-                              child: Text('Location',
+                              child: Text(AppLocalizations.of(context)!.translate(
+                                TranslationKeys.location,
+                              ),
                                   style: CustomizedTheme.roboto_w_W500_14),
                             ),
-                            Text('Status',
+                            Text(AppLocalizations.of(context)!.translate(
+                              TranslationKeys.status,
+                            ),
                                 style: CustomizedTheme.roboto_w_W500_14),
                           ],
                         ),
@@ -202,7 +219,9 @@ class _VouchersPageState extends State<VouchersPage> {
                                           EdgeInsets.symmetric(vertical: 40.h),
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 5.56.w, vertical: 16.h),
-                                      child: Text('No transaction yet',
+                                      child: Text(AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.noTransactionYet,
+                                      ),
                                           style: CustomizedTheme.sf_b_W300_14),
                                     ),
                                     Expanded(
@@ -394,9 +413,11 @@ class _VouchersPageState extends State<VouchersPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'No data found',
-            style: TextStyle(
+           Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.noDataFound,
+            ),
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
@@ -425,9 +446,11 @@ class _VouchersPageState extends State<VouchersPage> {
                 loginData.userId,
               );
             },
-            child: const Text(
-              'Retry',
-              style: TextStyle(
+            child: Text(
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.retry,
+              ),
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
