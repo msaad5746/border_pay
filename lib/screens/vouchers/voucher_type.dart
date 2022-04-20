@@ -28,7 +28,7 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              verticalSpacer(60),
+              verticalSpacer(56),
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).pop();
@@ -49,7 +49,7 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                   ),
                 ),
               ),
-              verticalSpacer(16),
+              verticalSpacer(26),
               Text(
                 "Select the voucher type:",
                 style: CustomizedTheme.sf_b_W500_17,

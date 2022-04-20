@@ -64,7 +64,7 @@ class PdfApi {
       ),
     );
 
-    return PDFDocument.saveDocument(name: 'voucher.pdf', pdf: pdf);
+    return PDFDocument.saveDocument(name: 'L${vouchers.id}', pdf: pdf);
   }
 
   static Widget buildHeader({
@@ -492,9 +492,8 @@ class PDFDocument {
     required Document pdf,
   }) async {
     final bytes = await pdf.save();
-
-    final dir = (await getApplicationDocumentsDirectory()).path;
-    final file = File('$dir/$name');
+    // final dir = (await getExternalStorageDirectory())?.path;
+    final file = File('/storage/emulated/0/Download/$name.pdf');
 
     await file.writeAsBytes(bytes);
     return file;

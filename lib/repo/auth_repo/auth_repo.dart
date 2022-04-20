@@ -8,7 +8,13 @@ mixin AuthRepo {
 
   Future verifyUser(VerifyUserModel user);
 
+  Future verifyOtp(body);
+
+  Future resetPassword(body);
+
   Future changePassword(body, int userId);
+
+  Future forgetPassword(body);
 
   Future updateUserDetails(int userId, body);
 

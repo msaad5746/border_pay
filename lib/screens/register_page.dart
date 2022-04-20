@@ -231,7 +231,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       dropdownIconPosition: IconPosition.trailing,
                       flagsButtonPadding:
-                          const EdgeInsets.symmetric(vertical: 8),
+                          const EdgeInsets.symmetric(vertical: 6),
                     ),
                     SizedBox(
                       width: 5.w,

@@ -1,8 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:borderpay/Route_Constants/route_constants.dart';
-import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
@@ -13,35 +9,19 @@ import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class OTPPage extends StatefulWidget {
-  String firstName;
-  String lastName;
+class ForgetOtpPage extends StatefulWidget {
   String phone;
-  String password;
-  String areaCode;
-  String email;
-  String nationality;
-  String emiratedpassport;
-  File image;
 
-  OTPPage(
-      {Key? key,
-      required this.firstName,
-      required this.lastName,
-      required this.phone,
-      required this.password,
-      required this.areaCode,
-      required this.email,
-      required this.nationality,
-      required this.emiratedpassport,
-      required this.image})
-      : super(key: key);
+  ForgetOtpPage({
+    Key? key,
+    required this.phone,
+  }) : super(key: key);
 
   @override
-  _OTPPageState createState() => _OTPPageState();
+  _ForgetOtpPageState createState() => _ForgetOtpPageState();
 }
 
-class _OTPPageState extends State<OTPPage> {
+class _ForgetOtpPageState extends State<ForgetOtpPage> {
   MySharedPreferences storage = MySharedPreferences.instance;
   AuthRepo networkHandler = AuthRepoImpl();
   int _firstDigit = 010;
@@ -177,7 +157,7 @@ class _OTPPageState extends State<OTPPage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
             child: Text(
-              "A 6 digit code has been sent to your mobile number ${widget.areaCode + widget.phone}",
+              "A 6 digit code has been sent to your mobile number ${widget.phone}",
               style: CustomizedTheme.sf_b_W400_15,
             ),
           ),
@@ -209,7 +189,7 @@ class _OTPPageState extends State<OTPPage> {
               children: [
                 otpPage(),
                 isLoading
-                    ? SizedBox(
+                    ? Container(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         child: const Center(
@@ -305,68 +285,41 @@ class _OTPPageState extends State<OTPPage> {
                 : GestureDetector(
                     onTap: () async {
                       if (widget.phone.isNotEmpty) {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        Map<String, String> loginData = {
-                          "mobileNumber": '${widget.areaCode}${widget.phone}',
-                          "password": widget.password,
-                        };
-                        var res1 =
-                            await networkHandler.verifyUser(VerifyUserModel(
-                          mobileNumber: '${widget.areaCode}${widget.phone}',
-                          newPassword: widget.password,
-                          code: OtpCode,
-                        ));
-                        if (res1 != null && res1['data']['acknowledged']) {
-                          var res = await networkHandler.loginUser(loginData);
-                          if (res != null) {
-                            LoginUserModel loginModel =
-                                LoginUserModel.fromJson(res);
-                            storage.setStringValue(
-                                SharedPrefKeys.userPhone, widget.phone);
-                            storage.setStringValue(
-                                SharedPrefKeys.userPassword, widget.password);
-                            setState(() {
-                              isLoading = false;
-                            });
-                            CustomAlertDialog.baseDialog(
-                                context: context,
-                                title: 'Successfully Created',
-                                message:
-                                    'Your account has been successfully created.',
-                                buttonAction: () {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      RouteConstant.hostPage,
-                                      (Route<dynamic> route) => false);
-                                });
-                          } else {
-                            setState(() {
-                              isLoading = false;
-                            });
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: const Text("Something went wrong"),
-                              behavior: SnackBarBehavior.floating,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              backgroundColor: CustomizedTheme.voucherUnpaid,
-                            ));
-                          }
-                        } else {
-                          setState(() {
-                            isLoading = false;
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: const Text("Invalid OTP!"),
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            backgroundColor: CustomizedTheme.voucherUnpaid,
-                          ));
-                        }
+                        Navigator.pushNamed(
+                          context,
+                          RouteConstant.forgetNewPassword,
+                          arguments: [widget.phone, OtpCode],
+                        );
+                        // setState(() {
+                        //   isLoading = true;
+                        // });
+                        // Map<String, String> loginData = {
+                        //   "mobileNumber": widget.phone,
+                        //   "otp": OtpCode,
+                        // };
+                        // var res = await networkHandler.verifyOtp(loginData);
+                        // if (res != null && res['data']['acknowledged']) {
+                        //   setState(() {
+                        //     isLoading = false;
+                        //   });
+                        //   Navigator.pushNamed(
+                        //     context,
+                        //     RouteConstant.forgetNewPassword,
+                        //     arguments: [widget.phone, OtpCode],
+                        //   );
+                        // } else {
+                        //   setState(() {
+                        //     isLoading = false;
+                        //   });
+                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //     content: const Text("Invalid OTP!"),
+                        //     behavior: SnackBarBehavior.floating,
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(24),
+                        //     ),
+                        //     backgroundColor: CustomizedTheme.voucherUnpaid,
+                        //   ));
+                        // }
                       }
                     },
                     child: Padding(
@@ -376,9 +329,10 @@ class _OTPPageState extends State<OTPPage> {
                         height: 44.86.h,
                         // width: 92.96,
                         decoration: BoxDecoration(
-                            color: CustomizedTheme.white,
-                            borderRadius: BorderRadius.circular(6.93.r),
-                            border: Border.all(color: CustomizedTheme.white)),
+                          color: CustomizedTheme.white,
+                          borderRadius: BorderRadius.circular(6.93.r),
+                          border: Border.all(color: CustomizedTheme.white),
+                        ),
                         child: Image.asset('assets/icons/ic_polygon.png'),
                       ),
                     ),
