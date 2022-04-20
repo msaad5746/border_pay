@@ -16,6 +16,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
 
@@ -49,7 +52,11 @@ class _SettingPageState extends State<SettingPage> {
         elevation: 0,
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: 0.w),
-          child: Text("Settings", style: CustomizedTheme.title_sf_W500_21),
+          child: Text(
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.settings,
+              ),
+              style: CustomizedTheme.title_sf_W500_21),
         ),
       ),
       body: Stack(
@@ -65,8 +72,11 @@ class _SettingPageState extends State<SettingPage> {
                     right: 20.36.w,
                     bottom: 12.h,
                   ),
-                  child:
-                      Text('General', style: CustomizedTheme.sf_bo_W400_1592),
+                  child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.general,
+                      ),
+                      style: CustomizedTheme.sf_bo_W400_1592),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.36.w),
@@ -99,7 +109,10 @@ class _SettingPageState extends State<SettingPage> {
                               Padding(
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 31.7.w),
-                                child: Text("Change Profile Information",
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.changeProfileInformation,
+                                    ),
                                     style: CustomizedTheme.sf_bo_W400_1592),
                               ),
                               const Spacer(),
@@ -134,7 +147,10 @@ class _SettingPageState extends State<SettingPage> {
                               Padding(
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 31.7.w),
-                                child: Text("Push Notifications",
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.pushNotifications,
+                                    ),
                                     style: CustomizedTheme.sf_bo_W400_1592),
                               ),
                               const Spacer(),
@@ -180,7 +196,10 @@ class _SettingPageState extends State<SettingPage> {
                     right: 20.36.w,
                     bottom: 12.h,
                   ),
-                  child: Text('Security & Privacy',
+                  child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.security_Privacy,
+                      ),
                       style: CustomizedTheme.sf_bo_W400_1592),
                 ),
                 Padding(
@@ -210,7 +229,10 @@ class _SettingPageState extends State<SettingPage> {
                               Padding(
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 31.7.w),
-                                child: Text("Change Password",
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.changePassword,
+                                    ),
                                     style: CustomizedTheme.sf_bo_W400_1592),
                               ),
                               const Spacer(),
@@ -250,7 +272,10 @@ class _SettingPageState extends State<SettingPage> {
                               Padding(
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 31.7.w),
-                                child: Text("Biometric Authentication",
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.biometricAuthentication,
+                                    ),
                                     style: CustomizedTheme.sf_bo_W400_1592),
                               ),
                               const Spacer(),
@@ -301,7 +326,10 @@ class _SettingPageState extends State<SettingPage> {
                     right: 20.36,
                     bottom: 12,
                   ),
-                  child: Text('Other Settings',
+                  child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.otherSettings,
+                      ),
                       style: CustomizedTheme.sf_bo_W400_1592),
                 ),
                 Padding(
@@ -363,8 +391,12 @@ class _SettingPageState extends State<SettingPage> {
                         onTap: () {
                           CustomAlertDialog.baseDialog(
                               context: context,
-                              title: 'Delete Account!',
-                              message: 'Are you sure to delete account?',
+                              title: AppLocalizations.of(context)!.translate(
+                                TranslationKeys.delete_Account,
+                              ),
+                              message: AppLocalizations.of(context)!.translate(
+                                TranslationKeys.areYouSureToDeleteAccount,
+                              ),
                               buttonAction: () {
                                 deleteUser();
                               });
@@ -387,7 +419,10 @@ class _SettingPageState extends State<SettingPage> {
                               Padding(
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 31.7.w),
-                                child: Text("Delete Account",
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.deleteAccount,
+                                    ),
                                     style: CustomizedTheme.sf_bo_W400_1592),
                               ),
                               const Spacer(),
@@ -418,7 +453,10 @@ class _SettingPageState extends State<SettingPage> {
                               Padding(
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 31.7.w),
-                                child: Text("Logout",
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.logout,
+                                    ),
                                     style: CustomizedTheme.sf_bo_W400_1592),
                               ),
                               const Spacer(),
@@ -497,7 +535,11 @@ class _SettingPageState extends State<SettingPage> {
     );
     if (res != null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Account deleted successfully!"),
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.accountDeletedSuccessfully,
+          ),
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
@@ -525,7 +567,11 @@ class _SettingPageState extends State<SettingPage> {
         isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Something went wrong"),
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.somethingWentWrong,
+          ),
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),

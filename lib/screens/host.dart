@@ -5,6 +5,8 @@ import 'package:borderpay/screens/setting/setting.dart';
 import 'package:borderpay/screens/vouchers/vouchers_list.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import '../localization/app_localization.dart';
+import '../localization/translation_keys.dart';
 import 'home_page/homepage.dart';
 
 int currentIndex = 0;
@@ -84,20 +86,28 @@ class _HostPageState extends State<HostPage> {
                 backgroundColor: CustomizedTheme.white,
                 child: Image.asset('assets/icons/ic_home_active.png')),
             icon: Image.asset('assets/icons/ic_home.png'),
-            title: 'Home',
+            title: AppLocalizations.of(context)!.translate(
+              TranslationKeys.home,
+            ),
           ),
           TabItem(
-              activeIcon: CircleAvatar(
-                  backgroundColor: CustomizedTheme.white,
-                  child: Image.asset('assets/icons/ic_voucher_active.png')),
-              icon: Image.asset('assets/icons/ic_voucher.png'),
-              title: 'Vouchers'),
+            activeIcon: CircleAvatar(
+                backgroundColor: CustomizedTheme.white,
+                child: Image.asset('assets/icons/ic_voucher_active.png')),
+            icon: Image.asset('assets/icons/ic_voucher.png'),
+            title: AppLocalizations.of(context)!.translate(
+              TranslationKeys.vouchers,
+            ),
+          ),
           TabItem(
-              activeIcon: CircleAvatar(
-                  backgroundColor: CustomizedTheme.white,
-                  child: Image.asset('assets/icons/ic_setting_active.png')),
-              icon: Image.asset('assets/icons/ic_setting.png'),
-              title: 'Settings'),
+            activeIcon: CircleAvatar(
+                backgroundColor: CustomizedTheme.white,
+                child: Image.asset('assets/icons/ic_setting_active.png')),
+            icon: Image.asset('assets/icons/ic_setting.png'),
+            title: AppLocalizations.of(context)!.translate(
+              TranslationKeys.settings,
+            ),
+          ),
         ],
       ),
     );
