@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -307,6 +308,57 @@ class _SettingPageState extends State<SettingPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.36),
                   child: Column(
                     children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          height: 59.h,
+                          width: 1.sw,
+                          padding: EdgeInsets.symmetric(horizontal: 18.01.w),
+                          decoration: BoxDecoration(
+                              color: CustomizedTheme.white,
+                              borderRadius: BorderRadius.circular(7),
+                              border: Border.all(
+                                  color: CustomizedTheme.primaryColor)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              // SvgPicture.asset(
+                              //   'assets/svg/ic_delete.svg',
+                              // ),
+                              Icon(
+                                Icons.language,
+                                color: CustomizedTheme.primaryBold,
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text("Change Language",
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
+                              const Spacer(),
+                              FlutterToggleTab(
+                                width: 20,
+                                height: 40,
+                                borderRadius: 15,
+                                selectedTextStyle: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
+                                unSelectedTextStyle: const TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400),
+                                labels: const ["Eng", "Ar"],
+                                selectedLabelIndex: (index) {
+                                  print("Selected Index $index");
+                                },
+                                selectedIndex: 0,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 19.h),
                       GestureDetector(
                         onTap: () {
                           CustomAlertDialog.baseDialog(
