@@ -99,7 +99,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                             SizedBox(
                               width: 150.w,
                               child: Text(
-                                'L${widget.data[index].id.toString()}',
+                                widget.data[index].voucherNo,
                                 overflow: TextOverflow.clip,
                                 maxLines: 1,
                                 style: CustomizedTheme.w_W500_17,
@@ -205,7 +205,8 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                           setState(() {
                             isLoading = true;
                           });
-                          var res = await networkHandler.createVoucherTransaction(
+                          var res =
+                              await networkHandler.createVoucherTransaction(
                             getVoucherIds(),
                             loginData.userId,
                           );
@@ -257,14 +258,16 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24),
                                   ),
-                                  backgroundColor: CustomizedTheme.voucherUnpaid,
+                                  backgroundColor:
+                                      CustomizedTheme.voucherUnpaid,
                                 ));
                               }
                             } else {
                               setState(() {
                                 isLoading = false;
                               });
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
                                 content: const Text(
                                     "Unable to complete your request!"),
                                 behavior: SnackBarBehavior.floating,
@@ -281,7 +284,8 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                               },
                             );
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: const Text("Something went wrong"),
+                              content: const Text(
+                                  "Something went wrong, try again!"),
                               behavior: SnackBarBehavior.floating,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24),

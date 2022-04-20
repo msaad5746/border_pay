@@ -80,8 +80,10 @@ class _MyVouchersState extends State<MyVouchers> {
                 SizedBox(
                   width: 80.w,
                   child: Text(
-                    widget.voucherList.data[index].id.toString(),
+                    widget.voucherList.data[index].voucherNumber,
                     style: CustomizedTheme.sf_pb_W700_13,
+                    maxLines: 1,
+                    
                   ),
                 ),
                 SizedBox(

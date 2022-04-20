@@ -6,6 +6,9 @@ class EndPoints {
   final String _loginUser = '/login-phone';
   final String _password = '/change-password';
   final String _userInfo = '/user-info';
+  final String _forgetPassword = '/forgot-password';
+  final String _verifyOTP = '/verify-otp';
+  final String _resetPassword = '/reset-password';
   final String _deactivate = '/deactivate';
   final String _voucherList = '/voucher/list';
   final String _company = '/tourist-company';
@@ -37,6 +40,18 @@ class EndPoints {
 
   String changePassword(int id) {
     return _baseURL + _tourist + _password;
+  }
+
+ String forgetPassword() {
+    return _baseURL + _tourist + _forgetPassword;
+  }
+
+ String verifyOtp() {
+    return _baseURL + _tourist + _verifyOTP;
+  }
+
+ String resetPassword() {
+    return _baseURL + _tourist + _resetPassword;
   }
 
   String updateUserDetails(int id) {

@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                 : Column(
                     children: [
                       SizedBox(
-                        height: 380.h,
+                        height: 400.h,
                         width: 1.sw,
                         child: Stack(
                           children: [
@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                   ),
-                                  horizontalSpacer(16),
+                                  horizontalSpacer(4),
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         width: double.infinity,
                         margin: EdgeInsets.symmetric(
-                          horizontal: horizontalValue(16),
+                          horizontal: horizontalValue(20),
                         ),
                         alignment: Alignment.topLeft,
                         child: Text(
@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                       verticalSpacer(16),
                       Container(
                         margin: EdgeInsets.symmetric(
-                          horizontal: horizontalValue(16),
+                          horizontal: horizontalValue(20),
                         ),
                         padding: EdgeInsets.symmetric(
                           horizontal: 7.w,
@@ -339,13 +339,46 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget getErrorScreen() {
-    return const Center(
-      child: Text(
-        'No data found',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'No data found',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              fixedSize: Size(100.w, 20.h),
+              primary: CustomizedTheme.colorAccent,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              setState(() {
+                isLoading = true;
+                isError = false;
+              });
+              getHomeData();
+              if (loginData.firstName.isEmpty) {
+                getUserData();
+              }
+            },
+            child: const Text(
+              'Retry',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -51,9 +51,12 @@ class _TravelerCategoryState extends State<TravelerCategory> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Center(
-            child: BlueBackButton(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: BlueBackButton(
           context: context,
-        )),
+        ),
+            )),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())

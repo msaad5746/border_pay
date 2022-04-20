@@ -389,12 +389,52 @@ class _VouchersPageState extends State<VouchersPage> {
   }
 
   Widget getErrorScreen() {
-    return const Center(
-      child: Text('No data found',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          )),
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'No data found',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              fixedSize: Size(100.w, 20.h),
+              primary: CustomizedTheme.colorAccent,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              setState(() {
+                isLoading = true;
+                isError = false;
+              });
+              if (loginData.firstName.isEmpty) {
+                getUserData();
+              }
+              getCompanyVoucherData(
+                loginData.userId,
+              );
+              getIndividualVoucherData(
+                loginData.userId,
+              );
+            },
+            child: const Text(
+              'Retry',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -408,7 +448,7 @@ class _VouchersPageState extends State<VouchersPage> {
                 .toUpperCase()
                 .contains(value.toUpperCase()) ||
             element.status.toUpperCase().contains(value.toUpperCase()) ||
-            element.id == int.parse(value)) {
+            element.voucherNumber.toUpperCase().contains(value.toUpperCase())) {
           searchCompanyResult.add(element);
         }
       });
@@ -417,20 +457,12 @@ class _VouchersPageState extends State<VouchersPage> {
                 .toUpperCase()
                 .contains(value.toUpperCase()) ||
             element.status.toUpperCase().contains(value.toUpperCase()) ||
-            element.id == checkInteger(value)) {
+            element.voucherNumber.toUpperCase().contains(value.toUpperCase())) {
           searchIndividualResult.add(element);
         }
       });
     }
     setState(() {});
-  }
-
-  int checkInteger(String value) {
-    try {
-      return int.parse(value);
-    } catch (e) {
-      return -1;
-    }
   }
 
   Future<void> loadMoreData(int id, int page) async {

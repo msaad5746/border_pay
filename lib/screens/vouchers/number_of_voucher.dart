@@ -32,7 +32,7 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            verticalSpacer(60 ),
+            verticalSpacer(56 ),
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
@@ -52,7 +52,7 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
                 ),
               ),
             ),
-            verticalSpacer(16),
+            verticalSpacer(26),
             Text(
               "Select the Number of Travellers",
               style: CustomizedTheme.sf_b_W500_17,

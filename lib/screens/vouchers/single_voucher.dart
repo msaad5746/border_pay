@@ -58,7 +58,7 @@ class _SingleVoucherState extends State<SingleVoucher> {
                       style: CustomizedTheme.roboto_w_W400_14,
                     ),
                     Text(
-                      'L${widget.voucher[0].id.toString()}',
+                      widget.voucher[0].voucherNo,
                       style: CustomizedTheme.roboto_w_W700_14,
                     ),
                   ],

@@ -169,7 +169,7 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                       SizedBox(
                         width: 100.w,
                         child: Text(
-                          'L${widget.data.id.toString()}',
+                          widget.data.voucherNo,
                           maxLines: 1,
                           overflow: TextOverflow.clip,
                           style: CustomizedTheme.roboto_w_W700_14,
@@ -418,16 +418,26 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
     );
 
     PdfApi.openFile(file: File(pdfFile.path));
+
     setState(() {
       isLoading = false;
     });
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      RouteConstant.hostPage,
-      ModalRoute.withName(
-        RouteConstant.hostPage,
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text("Successfully Saved in Download!"),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
       ),
-    );
+      backgroundColor: CustomizedTheme.voucherPaid,
+    ));
+
+    // Navigator.pushNamedAndRemoveUntil(
+    //   context,
+    //   RouteConstant.hostPage,
+    //   ModalRoute.withName(
+    //     RouteConstant.hostPage,
+    //   ),
+    // );
   }
 
   Text buildText(String title, TextStyle textStyle) =>

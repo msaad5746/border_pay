@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
@@ -156,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       dropdownIconPosition: IconPosition.trailing,
                       flagsButtonPadding:
-                          const EdgeInsets.symmetric(vertical: 8),
+                          const EdgeInsets.symmetric(vertical: 6),
                     ),
 
                     SizedBox(
@@ -251,8 +249,10 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                     verticalSpacer(12),
-                    SizedBox(
-                      width: double.infinity,
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, RouteConstant.forgetPhone);
+                      },
                       child: Text(
                         'Forgot password?',
                         style: CustomizedTheme.sf_b_W400_1137.copyWith(
@@ -398,7 +398,7 @@ class _LoginPageState extends State<LoginPage> {
                                         isLoading = true;
                                       });
                                       await userLogin(
-                                        phoneController.text,
+                                        cuntryCode + phoneController.text,
                                         passwordController.text,
                                       );
                                     } else {
@@ -440,7 +440,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> userLogin(String phone, String password) async {
     Map<String, String> loginData = {
-      "mobileNumber": cuntryCode + phone,
+      "mobileNumber": phone,
       "password": password,
     };
     var res = await networkHandler.loginUser(loginData);

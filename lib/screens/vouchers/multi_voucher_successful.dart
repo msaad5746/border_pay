@@ -198,8 +198,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                               width: 150.w,
                               child: Text(
                                 widget.vouchersData.isNotEmpty
-                                    ? 'L${widget.vouchersData[0].id.toString()}'
-                                    : 'L',
+                                    ? widget.vouchersData[0].voucherNo
+                                    : '',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: CustomizedTheme.roboto_w_W700_20,
@@ -549,8 +549,16 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
         qrImages![i],
       );
 
-      PdfApi.openFile(file: File(pdfFile.path));
+      // PdfApi.openFile(file: File(pdfFile.path));
     }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text("Successfully Saved in Downloads!"),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
+      backgroundColor: CustomizedTheme.voucherPaid,
+    ));
     // screenshotController
     //     .capture(delay: const Duration(milliseconds: 10))
     //     .then((image) async {

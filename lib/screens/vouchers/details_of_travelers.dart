@@ -52,7 +52,6 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
   late List<GlobalKey<FormState>> keys;
   late String currentAreaCode;
   UserModel loginData = UserModel();
-  TextEditingController phoneController = TextEditingController();
 
   bool isLoading = false;
   bool useMyDetail = false;
@@ -98,7 +97,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              verticalSpacer(60),
+              verticalSpacer(56),
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).pop();
@@ -119,7 +118,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                   ),
                 ),
               ),
-              verticalSpacer(16),
+              verticalSpacer(26),
               widget.travelerCount > 1
                   ? Text(
                       "Enter details of each traveller:",
@@ -246,8 +245,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                             ),
                           ),
                           // controller: personController,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           // Return null if the entered email is valid
                           validator: (value) {
                             if (value!.trim().isEmpty) {
@@ -302,8 +300,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                             ),
                           ),
                           // controller: personController,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           // Return null if the entered email is valid
                           validator: (value) {
                             if (value!.trim().isEmpty) {
@@ -319,7 +316,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           initialCountryCode: 'US',
-                          controller: phoneController,
+                          controller: phoneCtrl[index],
                           decoration: InputDecoration(
                             label: const Text("Phone Number \*"),
                             labelStyle: CustomizedTheme.b_W400_12,
@@ -367,7 +364,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                           },
                           dropdownIconPosition: IconPosition.trailing,
                           flagsButtonPadding:
-                              const EdgeInsets.symmetric(vertical: 8),
+                              const EdgeInsets.symmetric(vertical: 6),
                         ),
                         verticalSpacer(16),
                         TextFormField(
@@ -415,8 +412,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                             ),
                           ),
                           // controller: personController,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           // Return null if the entered email is valid
                           validator: (value) {
                             if (!GetUtils.isEmail(value!)) {
@@ -429,8 +425,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                         TextFormField(
                           readOnly: true,
                           controller: nationalityCtrl[index],
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (nationalityCtrl[index].text.isEmpty) {
                               return 'invalid Nationality';
@@ -566,8 +561,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                             ),
                           ),
                           // controller: personController,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           // Return null if the entered email is valid
                           validator: (value) {
                             if (value!.trim().isEmpty) {

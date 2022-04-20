@@ -51,8 +51,11 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Center(
-          child: BlueBackButton(
-            context: context,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: BlueBackButton(
+              context: context,
+            ),
           ),
         ),
         title: Text(
@@ -92,7 +95,7 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                 style: CustomizedTheme.roboto_w_W400_14,
                               ),
                               Text(
-                                voucher.id.toString(),
+                                voucher.voucherNumber,
                                 style: CustomizedTheme.roboto_w_W700_14,
                               ),
                             ],
@@ -341,6 +344,7 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
     } else {
       setState(
         () {
+          isLoading = false;
           isError = true;
         },
       );
@@ -354,13 +358,49 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
   }
 
   Widget getErrorScreen() {
-    return const Center(
-      child: Text(
-        'No data found',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'No data found',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              fixedSize: Size(100.w, 20.h),
+              primary: CustomizedTheme.colorAccent,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              setState(() {
+                isLoading = true;
+                isError = false;
+              });
+              getVoucherDetails(
+                loginData.userId,
+                widget.voucherDetails.id,
+              );
+              if (loginData.firstName.isEmpty) {
+                getUserData();
+              }
+            },
+            child: const Text(
+              'Retry',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

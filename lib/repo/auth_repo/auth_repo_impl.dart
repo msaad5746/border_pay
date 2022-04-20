@@ -4,7 +4,6 @@ import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/controllers/login_controller.dart';
 import 'package:borderpay/model/arguments/register_datatoserver.dart';
-import 'package:borderpay/model/datamodels/login_model.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
 import 'package:borderpay/model/datamodels/verify_user_model.dart';
 import 'package:borderpay/response/register_response.dart';
@@ -166,6 +165,60 @@ class AuthRepoImpl implements AuthRepo {
         LoginUserModel loginModel =
             LoginUserModel.fromJson(json.decode(response.body.toString()));
         storage.setStringValue(SharedPrefKeys.user, response.body.toString());
+        return json.decode(response.body.toString());
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  @override
+  Future forgetPassword(body) async {
+    try {
+      var response = await networkHelper.put(
+        endPoints.forgetPassword(),
+        body: body,
+      );
+      if (response.statusCode == 201) {
+        return json.decode(response.body.toString());
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  @override
+  Future verifyOtp(body) async {
+    try {
+      var response = await networkHelper.put(
+        endPoints.verifyOtp(),
+        body: body,
+      );
+      if (response.statusCode == 201) {
+        return json.decode(response.body.toString());
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  @override
+  Future resetPassword(body) async {
+    try {
+      var response = await networkHelper.put(
+        endPoints.resetPassword(),
+        body: body,
+      );
+      if (response.statusCode == 201) {
         return json.decode(response.body.toString());
       } else {
         return null;
