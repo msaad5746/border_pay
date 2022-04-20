@@ -154,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       dropdownIconPosition: IconPosition.trailing,
                       flagsButtonPadding:
-                          const EdgeInsets.symmetric(vertical: 6),
+                          const EdgeInsets.symmetric(vertical: 8),
                     ),
 
                     SizedBox(

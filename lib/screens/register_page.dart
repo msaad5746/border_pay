@@ -47,25 +47,30 @@ class _RegisterPageState extends State<RegisterPage> {
         toolbarHeight: 100.h,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Center(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              height: 33.73.h,
-              width: 33.73.w,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    9.16.r,
+        leading: Row(
+          children: [
+            SizedBox(width: 20.w),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: 33.73.h,
+                  width: 33.73.w,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        9.16.r,
+                      ),
+                      color: CustomizedTheme.colorAccent),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: CustomizedTheme.white,
                   ),
-                  color: CustomizedTheme.colorAccent),
-              child: Icon(
-                Icons.arrow_back,
-                color: CustomizedTheme.white,
+                ),
               ),
             ),
-          ),
+          ],
         ),
         title: Text("Register", style: CustomizedTheme.title_p_W500_21),
         centerTitle: false,
@@ -231,11 +236,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       dropdownIconPosition: IconPosition.trailing,
                       flagsButtonPadding:
-                          const EdgeInsets.symmetric(vertical: 6),
+                          const EdgeInsets.symmetric(vertical: 8),
                     ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
+
                     SizedBox(
                       height: 25.53.h,
                     ),
@@ -292,39 +295,36 @@ class _RegisterPageState extends State<RegisterPage> {
                         return null;
                       },
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                          left: 24.44.w,
-                          right: 34.47.w,
-                          bottom: 12.3.h,
-                          top: 15.03.h,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                              10.0.r,
+                          contentPadding: EdgeInsets.only(
+                            left: 24.44.w,
+                            right: 34.47.w,
+                            bottom: 12.3.h,
+                            top: 15.03.h,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                10.0.r,
+                              ),
+                            ),
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 1.0.w,
                             ),
                           ),
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 1.0.w,
-                          ),
-                        ),
-                        labelText: "Nationality",
-                        labelStyle: CustomizedTheme.b_W400_12,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                              10.0.r,
+                          labelText: "Nationality",
+                          labelStyle: CustomizedTheme.b_W400_12,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                10.0.r,
+                              ),
+                            ),
+                            borderSide: const BorderSide(
+                              color: Colors.black,
                             ),
                           ),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        suffixIcon: Icon(
-                          Icons.arrow_drop_down
-                        )
-                      ),
+                          suffixIcon: const Icon(Icons.arrow_drop_down)),
                       onTap: () {
                         showCountryPicker(
                           context: context,
@@ -404,8 +404,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: _obscureText
                                 ? Colors.black
                                 : Colors.black.withOpacity(
-                              .3,
-                            ),
+                                    .3,
+                                  ),
                           ),
                           onPressed: () {
                             _toggle();

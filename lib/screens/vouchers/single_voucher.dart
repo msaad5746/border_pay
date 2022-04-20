@@ -26,10 +26,15 @@ class _SingleVoucherState extends State<SingleVoucher> {
         toolbarHeight: 100.h,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Center(
-            child: BlueBackButton(
-          context: context,
-        )),
+        leading: Row(
+          children: [
+            SizedBox(width: 20.w),
+            Center(
+                child: BlueBackButton(
+              context: context,
+            )),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(

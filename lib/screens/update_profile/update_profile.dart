@@ -51,26 +51,31 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
         toolbarHeight: 100.h,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Center(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context, false);
-            },
-            child: Container(
-              height: 33.73.h,
-              width: 33.73.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  9.16.r,
+        leading: Row(
+          children: [
+            SizedBox(width: 20.w),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context, false);
+                },
+                child: Container(
+                  height: 33.73.h,
+                  width: 33.73.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      9.16.r,
+                    ),
+                    color: CustomizedTheme.colorAccent,
+                  ),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: CustomizedTheme.white,
+                  ),
                 ),
-                color: CustomizedTheme.colorAccent,
-              ),
-              child: Icon(
-                Icons.arrow_back,
-                color: CustomizedTheme.white,
               ),
             ),
-          ),
+          ],
         ),
         title: Text(
           "Update Profile",

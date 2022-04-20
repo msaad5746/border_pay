@@ -147,20 +147,26 @@ class _OTPPageState extends State<OTPPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         // leadingWidth: 33.73,
-        leading: Center(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-                height: 33.73.h,
-                width: 33.73.w,
-                // margin: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.16.r),
-                    color: CustomizedTheme.colorAccent),
-                child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
-          ),
+        leading: Row(
+          children: [
+            SizedBox(width: 20.w),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    height: 33.73.h,
+                    width: 33.73.w,
+                    // margin: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.16.r),
+                        color: CustomizedTheme.colorAccent),
+                    child:
+                        Icon(Icons.arrow_back, color: CustomizedTheme.white)),
+              ),
+            ),
+          ],
         ),
         title: Text("Confirm OTP", style: CustomizedTheme.title_p_W500_21),
       ),

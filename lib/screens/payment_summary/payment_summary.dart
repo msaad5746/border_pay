@@ -49,24 +49,30 @@ class _PaymentSummaryState extends State<PaymentSummary> {
         toolbarHeight: 100.h,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Center(
-          child: BlueBackButton(
-            context: context,
-          ),
+        leading: Row(
+          children: [
+            SizedBox(width: 20.w),
+            Center(
+              child: BlueBackButton(
+                context: context,
+              ),
+            ),
+          ],
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: horizontalValue(16),
-              ),
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Payment Summary',
-                style: CustomizedTheme.sf_b_W500_26,
-              ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    'Payment Summary',
+                    style: CustomizedTheme.sf_b_W500_26,
+                  ),
+                ),
+              ],
             ),
             // verticalSpacer(60),
             Container(

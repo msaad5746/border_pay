@@ -413,7 +413,7 @@ class CustomAlertDialog {
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
-                            top: 18.h, right: 18.w, bottom: 10.w),
+                            top: 18.h, right: 18.w,left: 18.w, bottom: 10.w),
                         child: showCrossIcon
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -518,7 +518,7 @@ class CustomAlertDialog {
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
-                            top: 18.h, right: 18.w, bottom: 10.w),
+                            top: 18.h, right: 18.w, left: 18.w, bottom: 10.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [

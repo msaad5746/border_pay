@@ -41,7 +41,10 @@ class _SupportPageState extends State<SupportPage> {
                           Icon(Icons.arrow_back, color: CustomizedTheme.white)),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 12.92.w),
+                  padding: EdgeInsets.only(
+                    left: 12.92.w,
+                    right: 12.92.w,
+                  ),
                   child:
                       Text("Support", style: CustomizedTheme.title_sf_W500_21),
                 ),

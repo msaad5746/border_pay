@@ -221,7 +221,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                             padding: EdgeInsets.only(
                               top: 12.h,
                               bottom: 5.h,
-                              left: 19.w,
+                              left: 20.w,
+                              right: 20.w,
                             ),
                             child: Container(
                               height: 50.h,

@@ -47,7 +47,7 @@ class _SettingPageState extends State<SettingPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 0.w),
           child: Text("Settings", style: CustomizedTheme.title_sf_W500_21),
         ),
       ),
@@ -58,31 +58,12 @@ class _SettingPageState extends State<SettingPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Padding(
-                //   padding:
-                //   EdgeInsets.only(top: 45.0.h, left: 20.36.w, right: 20.36.w),
-                //   child: Row(
-                //     children: [
-                //       // Container(
-                //       //     height: 33.73,
-                //       //     width: 33.73,
-                //       //     // margin: EdgeInsets.symmetric(horizontal: 10),
-                //       //     decoration: BoxDecoration(
-                //       //         borderRadius: BorderRadius.circular(10.11),
-                //       //         color: CustomizedTheme.colorAccent),
-                //       //     child: Icon(Icons.arrow_back,color: CustomizedTheme.white)),
-                //       Padding(
-                //         padding: EdgeInsets.only(left: 12.92),
-                //         child: Text("Settings", style: CustomizedTheme.title_sf_W500_21),
-                //       ),
-                //
-                //     ],
-                //   ),
-                // ),
-
-                // General
                 Padding(
-                  padding: EdgeInsets.only(left: 20.36.w, bottom: 12.h),
+                  padding: EdgeInsets.only(
+                    left: 20.36.w,
+                    right: 20.36.w,
+                    bottom: 12.h,
+                  ),
                   child:
                       Text('General', style: CustomizedTheme.sf_bo_W400_1592),
                 ),
@@ -90,34 +71,38 @@ class _SettingPageState extends State<SettingPage> {
                   padding: EdgeInsets.symmetric(horizontal: 20.36.w),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 59.h,
-                        width: 1.sw,
-                        child: OutlinedButton.icon(
-                          onPressed: () async {
-                            var isDataUpdate = await Navigator.pushNamed(
-                                context, '/updateProfile',
-                                arguments: loginData);
-                            if (isDataUpdate as bool) {
-                              getUserData();
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                              side: BorderSide(
-                                  color: CustomizedTheme.primaryColor),
-                              primary: CustomizedTheme.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7)),
-                              alignment: Alignment.centerLeft,
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 18.01.w)),
-                          icon: SvgPicture.asset(
-                            'assets/svg/profile.svg',
-                          ),
-                          label: Padding(
-                            padding: EdgeInsets.only(left: 31.7.w),
-                            child: Text("Change Profile Information",
-                                style: CustomizedTheme.sf_bo_W400_1592),
+                      GestureDetector(
+                        onTap: () async {
+                          var isDataUpdate = await Navigator.pushNamed(
+                              context, '/updateProfile',
+                              arguments: loginData);
+                          if (isDataUpdate as bool) {
+                            getUserData();
+                          }
+                        },
+                        child: Container(
+                          height: 59.h,
+                          width: 1.sw,
+                          padding: EdgeInsets.symmetric(horizontal: 18.01.w),
+                          decoration: BoxDecoration(
+                              color: CustomizedTheme.white,
+                              borderRadius: BorderRadius.circular(7),
+                              border: Border.all(
+                                  color: CustomizedTheme.primaryColor)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svg/profile.svg',
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text("Change Profile Information",
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
+                              const Spacer(),
+                            ],
                           ),
                         ),
                       ),
@@ -142,40 +127,38 @@ class _SettingPageState extends State<SettingPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: 31.7.w),
-                                child: SvgPicture.asset(
-                                  'assets/svg/ic_bell.svg',
-                                ),
+                              SvgPicture.asset(
+                                'assets/svg/ic_bell.svg',
                               ),
-                              Text("Push Notifications",
-                                  style: CustomizedTheme.sf_bo_W400_1592),
-                              const Spacer(),
                               Padding(
-                                padding: const EdgeInsets.only(right: 14.58),
-                                child: Container(
-                                  height: 17.15,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: CustomizedTheme.primaryColor,
-                                        width: 1),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: FittedBox(
-                                    child: CupertinoSwitch(
-                                      thumbColor: CustomizedTheme.white,
-                                      activeColor: CustomizedTheme.primaryColor,
-                                      trackColor: CustomizedTheme.primaryBright,
-                                      value: isNotificationEnable,
-                                      onChanged: (value) {
-                                        storage.setBoolValue(
-                                            SharedPrefKeys.isNotificationEnable,
-                                            value);
-                                        setState(() {
-                                          isNotificationEnable = value;
-                                        });
-                                      },
-                                    ),
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text("Push Notifications",
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
+                              const Spacer(),
+                              Container(
+                                height: 17.15,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: CustomizedTheme.primaryColor,
+                                      width: 1),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: FittedBox(
+                                  child: CupertinoSwitch(
+                                    thumbColor: CustomizedTheme.white,
+                                    activeColor: CustomizedTheme.primaryColor,
+                                    trackColor: CustomizedTheme.primaryBright,
+                                    value: isNotificationEnable,
+                                    onChanged: (value) {
+                                      storage.setBoolValue(
+                                          SharedPrefKeys.isNotificationEnable,
+                                          value);
+                                      setState(() {
+                                        isNotificationEnable = value;
+                                      });
+                                    },
                                   ),
                                 ),
                               )
@@ -190,8 +173,12 @@ class _SettingPageState extends State<SettingPage> {
 
                 // Security &  Privacy
                 Padding(
-                  padding:
-                      EdgeInsets.only(top: 42.h, left: 20.36.w, bottom: 12.h),
+                  padding: EdgeInsets.only(
+                    top: 42.h,
+                    left: 20.36.w,
+                    right: 20.36.w,
+                    bottom: 12.h,
+                  ),
                   child: Text('Security & Privacy',
                       style: CustomizedTheme.sf_bo_W400_1592),
                 ),
@@ -199,30 +186,34 @@ class _SettingPageState extends State<SettingPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.36),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 59.h,
-                        width: 1.sw,
-                        child: OutlinedButton.icon(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/changePassword',
-                                arguments: loginData);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              side: BorderSide(
-                                  color: CustomizedTheme.primaryColor),
-                              primary: CustomizedTheme.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7)),
-                              alignment: Alignment.centerLeft,
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 18.01.w)),
-                          icon: SvgPicture.asset(
-                            'assets/svg/ic_password.svg',
-                          ),
-                          label: Padding(
-                            padding: EdgeInsets.only(left: 31.7.w),
-                            child: Text("Change Password",
-                                style: CustomizedTheme.sf_bo_W400_1592),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/changePassword',
+                              arguments: loginData);
+                        },
+                        child: Container(
+                          height: 59.h,
+                          width: 1.sw,
+                          padding: EdgeInsets.symmetric(horizontal: 18.01.w),
+                          decoration: BoxDecoration(
+                              color: CustomizedTheme.white,
+                              borderRadius: BorderRadius.circular(7),
+                              border: Border.all(
+                                  color: CustomizedTheme.primaryColor)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svg/ic_password.svg',
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text("Change Password",
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
+                              const Spacer(),
+                            ],
                           ),
                         ),
                       ),
@@ -252,45 +243,43 @@ class _SettingPageState extends State<SettingPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: 31.7.w),
-                                child: SvgPicture.asset(
-                                  'assets/svg/ic_finger.svg',
-                                ),
+                              SvgPicture.asset(
+                                'assets/svg/ic_finger.svg',
                               ),
-                              Text("Biometric Authentication",
-                                  style: CustomizedTheme.sf_bo_W400_1592),
-                              const Spacer(),
                               Padding(
-                                padding: const EdgeInsets.only(right: 14.58),
-                                child: Container(
-                                  height: 17.15,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: CustomizedTheme.primaryColor,
-                                        width: 1),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: FittedBox(
-                                    child: CupertinoSwitch(
-                                      thumbColor: CustomizedTheme.white,
-                                      activeColor: CustomizedTheme.primaryColor,
-                                      trackColor: CustomizedTheme.primaryBright,
-                                      value: isAuthenticated,
-                                      onChanged: (value) async {
-                                        if (value) {
-                                          isAuthenticated = await LocalAuthApi
-                                              .authenticateWithBiometrics();
-                                        } else {
-                                          isAuthenticated = value;
-                                        }
-                                        storage.setBoolValue(
-                                            SharedPrefKeys.isBioMatric,
-                                            isAuthenticated);
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text("Biometric Authentication",
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
+                              const Spacer(),
+                              Container(
+                                height: 17.15,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: CustomizedTheme.primaryColor,
+                                      width: 1),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: FittedBox(
+                                  child: CupertinoSwitch(
+                                    thumbColor: CustomizedTheme.white,
+                                    activeColor: CustomizedTheme.primaryColor,
+                                    trackColor: CustomizedTheme.primaryBright,
+                                    value: isAuthenticated,
+                                    onChanged: (value) async {
+                                      if (value) {
+                                        isAuthenticated = await LocalAuthApi
+                                            .authenticateWithBiometrics();
+                                      } else {
+                                        isAuthenticated = value;
+                                      }
+                                      storage.setBoolValue(
+                                          SharedPrefKeys.isBioMatric,
+                                          isAuthenticated);
 
-                                        setState(() {});
-                                      },
-                                    ),
+                                      setState(() {});
+                                    },
                                   ),
                                 ),
                               )
@@ -306,7 +295,11 @@ class _SettingPageState extends State<SettingPage> {
                 //Other Settings
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 42.55, left: 20.36, bottom: 12),
+                    top: 42.55,
+                    left: 20.36,
+                    right: 20.36,
+                    bottom: 12,
+                  ),
                   child: Text('Other Settings',
                       style: CustomizedTheme.sf_bo_W400_1592),
                 ),
@@ -314,35 +307,39 @@ class _SettingPageState extends State<SettingPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.36),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 59.h,
-                        width: 1.sw,
-                        child: OutlinedButton.icon(
-                          onPressed: () {
-                            CustomAlertDialog.baseDialog(
-                                context: context,
-                                title: 'Delete Account!',
-                                message: 'Are you sure to delete account?',
-                                buttonAction: () {
-                                  deleteUser();
-                                });
-                          },
-                          style: ElevatedButton.styleFrom(
-                              side: BorderSide(
-                                  color: CustomizedTheme.primaryColor),
-                              primary: CustomizedTheme.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7)),
-                              alignment: Alignment.centerLeft,
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 18.01.w)),
-                          icon: SvgPicture.asset(
-                            'assets/svg/ic_delete.svg',
-                          ),
-                          label: Padding(
-                            padding: EdgeInsets.only(left: 31.7.w),
-                            child: Text("Delete Account",
-                                style: CustomizedTheme.sf_bo_W400_1592),
+                      GestureDetector(
+                        onTap: () {
+                          CustomAlertDialog.baseDialog(
+                              context: context,
+                              title: 'Delete Account!',
+                              message: 'Are you sure to delete account?',
+                              buttonAction: () {
+                                deleteUser();
+                              });
+                        },
+                        child: Container(
+                          height: 59.h,
+                          width: 1.sw,
+                          padding: EdgeInsets.symmetric(horizontal: 18.01.w),
+                          decoration: BoxDecoration(
+                              color: CustomizedTheme.white,
+                              borderRadius: BorderRadius.circular(7),
+                              border: Border.all(
+                                  color: CustomizedTheme.primaryColor)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svg/ic_delete.svg',
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text("Delete Account",
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
+                              const Spacer(),
+                            ],
                           ),
                         ),
                       ),
@@ -363,14 +360,15 @@ class _SettingPageState extends State<SettingPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: 31.7.w),
-                                child: SvgPicture.asset(
-                                  'assets/svg/ic_exit.svg',
-                                ),
+                              SvgPicture.asset(
+                                'assets/svg/ic_exit.svg',
                               ),
-                              Text("Logout",
-                                  style: CustomizedTheme.sf_bo_W400_1592),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text("Logout",
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
                               const Spacer(),
                               Padding(
                                 padding: const EdgeInsets.only(right: 14.58),

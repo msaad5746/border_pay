@@ -117,7 +117,10 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        top: 19.5.h, left: 20.w),
+                                      top: 19.5.h,
+                                      left: 20.w,
+                                      right: 20.w,
+                                    ),
                                     child: Text(
                                       "Hello ${loginData.firstName},",
                                       style: CustomizedTheme.sf_w_W500_23,
@@ -128,6 +131,7 @@ class _HomePageState extends State<HomePage> {
                                       top: 20.h,
                                       bottom: 10.h,
                                       left: 20.w,
+                                      right: 20.w,
                                     ),
                                     child: Text(
                                       "Choose location",
@@ -195,16 +199,16 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       verticalSpacer(32),
-                      Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.symmetric(
-                          horizontal: horizontalValue(20),
-                        ),
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "My Vouchers",
-                          style: CustomizedTheme.sf_b_W500_19,
-                        ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              "My Vouchers",
+                              style: CustomizedTheme.sf_b_W500_19,
+                            ),
+                          ),
+                        ],
                       ),
                       verticalSpacer(16),
                       Container(

@@ -50,13 +50,15 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
         toolbarHeight: 100.h,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 12.0),
-            child: BlueBackButton(
-              context: context,
+        leading: Row(
+          children: [
+            SizedBox(width: 20.w),
+            Center(
+              child: BlueBackButton(
+                context: context,
+              ),
             ),
-          ),
+          ],
         ),
         title: Text(
           "Vouchers",
