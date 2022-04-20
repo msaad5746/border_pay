@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:borderpay/Utils/utils.dart';
-import 'package:borderpay/l10n/l10n.dart';
+import 'package:borderpay/localization/locale_constants.dart';
 import 'package:borderpay/model/arguments/payment_arguments.dart';
 import 'package:borderpay/model/arguments/register_datatoserver.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
@@ -51,7 +51,6 @@ import 'model/datamodels/user_model.dart';
 import 'screens/forget_password/mobile_number.dart';
 import 'screens/welcome_screen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -133,12 +132,9 @@ class _MyAppState extends State<MyApp> {
         //   ?
         ScreenUtilInit(
       builder: () => MaterialApp(
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: L10n.all,
+        localizationsDelegates: localizationDelegates,
+        localeResolutionCallback: getSelectedLang,
+        supportedLocales: supportedLocale,
 
         debugShowCheckedModeBanner: false,
         navigatorKey: Utils.mainKey,
@@ -158,6 +154,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+
         // home: const ,
         onGenerateRoute: (settings) {
           Widget page = WelcomePage();

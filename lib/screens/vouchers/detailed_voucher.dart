@@ -223,7 +223,7 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                     ),
                                     buildText(
                                       voucher.user.nationality?.name ??
-                                          'missing',
+                                          '',
                                       CustomizedTheme.sf_bo_W500_1503,
                                     ),
                                   ],

@@ -171,7 +171,7 @@ class _SupportPageState extends State<SupportPage> {
         await launch(whatappUrlIOS, forceSafariVC: false);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("whatsapp no installed")));
+            const SnackBar(content: Text("whatsapp not installed")));
       }
     } else {
       // android , web
@@ -179,7 +179,7 @@ class _SupportPageState extends State<SupportPage> {
         await launch(whatsappUrlAndroid);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("whatsapp no installed")));
+            const SnackBar(content: Text("whatsapp not installed")));
       }
     }
   }

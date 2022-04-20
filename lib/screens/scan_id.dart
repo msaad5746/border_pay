@@ -341,12 +341,13 @@ class _ScanIDPageState extends State<ScanIDPage> {
                                                   ),
                                                 ),
                                                 child: whichImage == "gallery"
-                                                    ? FittedBox(
-                                                        child: Text(
-                                                          _image!.name,
-                                                          style: CustomizedTheme
-                                                              .sf_bo_W400_1592,
-                                                        ),
+                                                    ? Text(
+                                                        _image!.name,
+                                                        style: CustomizedTheme
+                                                            .sf_bo_W400_1592,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                       )
                                                     : Text(
                                                         _image?.name ??
@@ -587,7 +588,8 @@ class EmiratesIdFormatter extends TextInputFormatter {
 
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(
       text: newValue.text.toUpperCase(),
       selection: newValue.selection,

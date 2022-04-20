@@ -414,9 +414,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if (value!.isEmpty || value.length <= 10) {
-                          debugPrint('password length');
-                          return 'Password should contain 10 characters';
+                        if (value!.isEmpty || value.length < 10) {
+                          return 'Password should contain at least 10 characters';
                         }
                         return null;
                       },

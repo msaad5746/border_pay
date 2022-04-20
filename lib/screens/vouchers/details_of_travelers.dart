@@ -428,7 +428,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (nationalityCtrl[index].text.isEmpty) {
-                              return 'invalid Nationality';
+                              return 'Nationality is empty';
                             }
                             return null;
                           },

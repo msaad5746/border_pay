@@ -5,6 +5,8 @@ import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
+import 'package:borderpay/localization/app_localization.dart';
+import 'package:borderpay/localization/translation_keys.dart';
 import 'package:borderpay/res/res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,11 +98,22 @@ class _WelcomePageState extends State<WelcomePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 8.53.h),
-                      Text("BorderPay", style: CustomizedTheme.w_W500_2622),
+                      Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.borderPay,
+                          ),
+                          style: CustomizedTheme.w_W500_2622),
                       SizedBox(height: 3.19.h),
-                      Text("Powered by CBD", style: CustomizedTheme.w_W300_12),
+                      Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.poweredByCBD,
+                          ),
+                          style: CustomizedTheme.w_W300_12),
                       SizedBox(height: 64.55.h),
-                      Text("Payments Anywhere, Anytime",
+                      Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.paymentsAnywhereAnytime,
+                          ),
                           style: CustomizedTheme.w_W500_15),
                     ],
                   ),
@@ -127,7 +140,10 @@ class _WelcomePageState extends State<WelcomePage> {
                                     onPressed: () {
                                       Navigator.pushNamed(context, '/login');
                                     },
-                                    child: Text("Existing User",
+                                    child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          TranslationKeys.existingUser,
+                                        ),
                                         style: CustomizedTheme.p_W500_19)),
                               ),
                             ),
@@ -154,7 +170,10 @@ class _WelcomePageState extends State<WelcomePage> {
                                       Navigator.pushNamed(
                                           context, '/RegisterPage');
                                     },
-                                    child: Text("New User",
+                                    child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          TranslationKeys.newUser,
+                                        ),
                                         style: CustomizedTheme.w_W500_19)),
                               ),
                             ),

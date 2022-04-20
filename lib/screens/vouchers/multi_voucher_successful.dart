@@ -12,9 +12,6 @@ import 'package:borderpay/screens/download_pdf/download_pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 
 class MultiVoucherSuccessPage extends StatefulWidget {
@@ -595,10 +592,16 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
   }
 
   String getPaymentTime(String dateTime) {
-    return '09:30 PM';
+    if (dateTime.isNotEmpty) {
+      return dateTime.substring(12, 19);
+    }
+    return '';
   }
 
   String getPaymentDate(String dateTime) {
-    return '21 October, 2021';
+    if (dateTime.isNotEmpty) {
+      return dateTime.substring(0, 10);
+    }
+    return '';
   }
 }

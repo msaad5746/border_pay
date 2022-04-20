@@ -192,7 +192,7 @@ class _SettingPageState extends State<SettingPage> {
                 Padding(
                   padding:
                       EdgeInsets.only(top: 42.h, left: 20.36.w, bottom: 12.h),
-                  child: Text('Security &  Privacy',
+                  child: Text('Security & Privacy',
                       style: CustomizedTheme.sf_bo_W400_1592),
                 ),
                 Padding(
@@ -322,7 +322,7 @@ class _SettingPageState extends State<SettingPage> {
                             CustomAlertDialog.baseDialog(
                                 context: context,
                                 title: 'Delete Account!',
-                                message: 'Are you sure to delete account ?',
+                                message: 'Are you sure to delete account?',
                                 buttonAction: () {
                                   deleteUser();
                                 });

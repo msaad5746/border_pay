@@ -156,6 +156,14 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                     onEditingComplete: () {},
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
+                      if (value!.trim().isEmpty) {
+                        return 'Please enter new password';
+                      }
+                      // Check if the entered email has the right format
+                      if (value.trim().length < 10) {
+                        return 'Password should contain at least 10 characters';
+                      }
+                      // Return null if the entered email is valid
                       return null;
                     },
                   ),
@@ -203,7 +211,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                         context: context,
                                         title: 'Successfully Restored',
                                         message:
-                                            'Your Password has been successfully restored.',
+                                            'Your password has been successfully restored.',
                                         buttonAction: () {
                                           Navigator.pushNamedAndRemoveUntil(
                                               context,

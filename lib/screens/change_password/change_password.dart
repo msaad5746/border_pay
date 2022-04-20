@@ -107,10 +107,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     if (value!.trim().isEmpty) {
                       return 'Please enter old password';
                     }
-                    // Check if the entered email has the right format
-                    if (value.trim().length < 6) {
-                      return 'Enter correct password';
-                    }
                     // Return null if the entered email is valid
                     return null;
                   },
@@ -156,8 +152,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       return 'Please enter new password';
                     }
                     // Check if the entered email has the right format
-                    if (value.trim().length < 6) {
-                      return 'Enter correct password';
+                    if (value.trim().length < 10) {
+                      return 'Password should contain at least 10 characters';
                     }
                     // Return null if the entered email is valid
                     return null;
