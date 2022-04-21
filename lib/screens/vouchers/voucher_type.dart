@@ -54,9 +54,10 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                 ),
               ),
               verticalSpacer(26),
-              Text( AppLocalizations.of(context)!.translate(
-                TranslationKeys.selectTheVoucherType,
-              ),
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  TranslationKeys.selectTheVoucherType,
+                ),
                 style: CustomizedTheme.sf_b_W500_17,
               ),
               verticalSpacer(16),
@@ -77,38 +78,44 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                               // width: 150.w,
                               child: selection == 1
                                   ? SvgPicture.asset(
-                                      'assets/svg/ic_entry_active.svg',
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.ic_entry_active,
+                                      ),
                                       fit: BoxFit.fill,
                                     )
                                   : SvgPicture.asset(
-                                'assets/svg/ic_entry.svg',
-                                fit: BoxFit.fill,
-                              ),
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.ic_entry_inactive,
+                                      ),
+                                      fit: BoxFit.fill,
+                                    ),
                             ),
                           )
                         : SizedBox(
                             height: 150.h,
                             child: selection == 1
-                                ?  SvgPicture.asset(
-                              AppLocalizations.of(context)!.translate(
-                                TranslationKeys.ic_entry_active,
-                              ),
-                             /* 'assets/svg/ic_entry_active.svg',*/
-                              fit: BoxFit.fill,
-                            )
-                                :  SvgPicture.asset(
-                              AppLocalizations.of(context)!.translate(
-                                TranslationKeys.ic_entry_disable,
-                              ),
-                              /*'assets/svg/ic_entry_disabled.svg',*/
-                              fit: BoxFit.fill,
-                            ),
+                                ? SvgPicture.asset(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.ic_entry_active,
+                                    ),
+                                    /* 'assets/svg/ic_entry_active.svg',*/
+                                    fit: BoxFit.fill,
+                                  )
+                                : SvgPicture.asset(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.ic_entry_disable,
+                                    ),
+                                    /*'assets/svg/ic_entry_disabled.svg',*/
+                                    fit: BoxFit.fill,
+                                  ),
                           ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 20.h),
-                      child: Text( AppLocalizations.of(context)!.translate(
-                        TranslationKeys.entry,
-                      ), style: CustomizedTheme.sf_b_W500_17),
+                      child: Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.entry,
+                          ),
+                          style: CustomizedTheme.sf_b_W500_17),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -123,19 +130,19 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                         // width: 150.w,
                         child: selection == 2
                             ? SvgPicture.asset(
-                          AppLocalizations.of(context)!.translate(
-                            TranslationKeys.ic_entry_active,
-                          ),
-                          /*'assets/svg/ic_exit_active.svg',*/
-                          fit: BoxFit.fill,
-                        )
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.ic_exit_active,
+                                ),
+                                /*'assets/svg/ic_exit_active.svg',*/
+                                fit: BoxFit.fill,
+                              )
                             : SvgPicture.asset(
-                          AppLocalizations.of(context)!.translate(
-                            TranslationKeys.ic_entry_inactive,
-                          ),
-                          /*'assets/svg/ic_exit_with_circle.svg',*/
-                          fit: BoxFit.fill,
-                        ),
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.ic_exit_inactive,
+                                ),
+                                /*'assets/svg/ic_exit_with_circle.svg',*/
+                                fit: BoxFit.fill,
+                              ),
                       ),
                     ),
                     Padding(
