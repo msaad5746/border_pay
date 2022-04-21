@@ -489,7 +489,11 @@ class _LoginPageState extends State<LoginPage> {
         isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Login Failed"),
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.loginFailed,
+          ),
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),

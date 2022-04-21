@@ -18,6 +18,9 @@ import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class PaymentSummary extends StatefulWidget {
   final List<Vouchers> data;
 
@@ -68,7 +71,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Text(
-                    'Payment Summary',
+                    AppLocalizations.of(context)!.translate(
+                      TranslationKeys.paymentSummary,
+                    ),
                     style: CustomizedTheme.sf_b_W500_26,
                   ),
                 ),
@@ -97,7 +102,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                         Row(
                           children: [
                             Text(
-                              "Voucher Number: ",
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.voucher_Number,
+                              ),
                               style: CustomizedTheme.w_W500_17.copyWith(
                                 fontWeight: FontWeight.w700,
                               ),
@@ -118,7 +125,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText(
-                              "Traveller Name",
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.travellerName,
+                              ),
                               CustomizedTheme.w_W500_17.copyWith(
                                 fontWeight: FontWeight.w400,
                                 fontSize: sizes.fontRatio! * 17,
@@ -140,7 +149,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText(
-                              "Voucher Amount",
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.voucherAmount,
+                              ),
                               CustomizedTheme.w_W500_17.copyWith(
                                 fontWeight: FontWeight.w400,
                                 fontSize: sizes.fontRatio! * 17,
@@ -170,7 +181,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       buildText(
-                        "Total Amount",
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.totalAmount,
+                        ),
                         CustomizedTheme.w_W500_17,
                       ),
                       buildText(
@@ -209,8 +222,12 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                       onPressed: () async {
                         CustomAlertDialog.baseDialog(
                             context: context,
-                            title: 'Successfully Purchased',
-                            message: 'Voucher successfully purchased',
+                            title:AppLocalizations.of(context)!.translate(
+                              TranslationKeys.successfullyPurchased,
+                            ),
+                            message: AppLocalizations.of(context)!.translate(
+                              TranslationKeys.voucherSuccessfullyPurchased,
+                            ),
                             showCrossIcon: false,
                             buttonAction: () {
                               Navigator.pushNamed(
@@ -322,7 +339,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                               color: Colors.white,
                             )
                           : Text(
-                              "Pay",
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.pay,
+                        ),
                               style: CustomizedTheme.sf_w_W500_19,
                             ),
                     ),

@@ -360,7 +360,9 @@ class _SettingPageState extends State<SettingPage> {
                               Padding(
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 31.7.w),
-                                child: Text("Change Language",
+                                child: Text(AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.changeLanguage,
+                                ),
                                     style: CustomizedTheme.sf_bo_W400_1592),
                               ),
                               const Spacer(),

@@ -2,6 +2,9 @@ import 'package:borderpay/app_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../localization/app_localization.dart';
+import '../localization/translation_keys.dart';
+
 class CustomAlertDialog {
   static blueDialog({
     required BuildContext context,
@@ -413,7 +416,7 @@ class CustomAlertDialog {
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
-                            top: 18.h, right: 18.w,left: 18.w, bottom: 10.w),
+                            top: 18.h, right: 18.w, left: 18.w, bottom: 10.w),
                         child: showCrossIcon
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -480,7 +483,10 @@ class CustomAlertDialog {
                                 BorderRadius.all(Radius.circular(5.r)),
                           ),
                         ),
-                        child: Text("Continue",
+                        child: Text(
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.continueButton,
+                            ),
                             style: CustomizedTheme.roboto_p_W400_14)),
                     // SizedBox(height:20.75.h),
                   ],
@@ -567,7 +573,9 @@ class CustomAlertDialog {
                           ),
                         ),
                         child: Text(
-                          "Use Existing Details",
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.useExistingDetails,
+                          ),
                           style: CustomizedTheme.roboto_w_W400_14,
                         ),
                       ),
@@ -588,7 +596,9 @@ class CustomAlertDialog {
                           ),
                         ),
                         child: Text(
-                          "Buy for Different Traveller",
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.buyForDifferentTraveller,
+                          ),
                           style: CustomizedTheme.roboto_w_W400_14,
                         ),
                       ),

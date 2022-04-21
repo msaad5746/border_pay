@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
 import '../custom_intl_phone_field.dart';
 
 class DetailsTravelersPage extends StatefulWidget {
@@ -121,11 +123,15 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
               verticalSpacer(26),
               widget.travelerCount > 1
                   ? Text(
-                      "Enter details of each traveller:",
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.enterDetailsOfEachTraveller,
+                      ),
                       style: CustomizedTheme.sf_b_W500_17,
                     )
                   : Text(
-                      "Enter details of traveller:",
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.enterDetailsOfTraveller,
+                      ),
                       style: CustomizedTheme.sf_b_W500_17,
                     ),
               ListView.builder(
@@ -146,7 +152,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                             ? Row(
                                 children: [
                                   Text(
-                                    "Traveller ${index + 1}",
+                                    AppLocalizations.of(context)!.translate(
+                                          TranslationKeys.traveller,
+                                        ) +
+                                        "${index + 1}",
                                     style: CustomizedTheme.sf_b_W500_19,
                                   ),
                                   horizontalSpacer(24),
@@ -186,7 +195,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                         ),
                                   horizontalSpacer(16),
                                   Text(
-                                    'Your existing details will be utilised',
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys
+                                          .yourExistingDetailsWillBeUtilised,
+                                    ),
                                     style: CustomizedTheme.roboto_l_W400_10,
                                   ),
                                 ],
@@ -195,7 +207,11 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                 ? Padding(
                                     padding:
                                         EdgeInsets.symmetric(vertical: 30.h),
-                                    child: Text("Traveller ${index + 1}",
+                                    child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                              TranslationKeys.traveller,
+                                            ) +
+                                            " ${index + 1}",
                                         style: CustomizedTheme.sf_b_W500_19),
                                   )
                                 : const SizedBox.shrink(),
@@ -208,7 +224,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                               horizontal: horizontalValue(16),
                               vertical: verticalValue(16),
                             ),
-                            labelText: "First Name \*",
+                            labelText: AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.firstName,
+                                ) +
+                                " \*",
                             labelStyle: CustomizedTheme.b_W400_12,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -249,7 +268,9 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                           // Return null if the entered email is valid
                           validator: (value) {
                             if (value!.trim().isEmpty) {
-                              return 'Please enter a first name';
+                              return AppLocalizations.of(context)!.translate(
+                                TranslationKeys.pleaseEnterFirstName,
+                              );
                             }
                             return null;
                           },
@@ -263,7 +284,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                               horizontal: horizontalValue(16),
                               vertical: verticalValue(16),
                             ),
-                            labelText: "Last Name \*",
+                            labelText: AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.lastName,
+                                ) +
+                                " \*",
                             labelStyle: CustomizedTheme.b_W400_12,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -304,7 +328,9 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                           // Return null if the entered email is valid
                           validator: (value) {
                             if (value!.trim().isEmpty) {
-                              return 'Please enter last name';
+                              return AppLocalizations.of(context)!.translate(
+                                TranslationKeys.pleaseEnterLastName,
+                              );
                             }
                             return null;
                           },
@@ -315,10 +341,20 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                             color: CustomizedTheme.primaryBold,
                             borderRadius: BorderRadius.circular(10),
                           ),
+                          invalidNumberMessage:
+                              AppLocalizations.of(context)!.translate(
+                            TranslationKeys.invalidNumberMessage,
+                          ),
+                          searchText: AppLocalizations.of(context)!.translate(
+                            TranslationKeys.searchCountry,
+                          ),
                           initialCountryCode: 'US',
                           controller: phoneCtrl[index],
                           decoration: InputDecoration(
-                            label: const Text("Phone Number \*"),
+                            label: Text(AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.phoneNumber,
+                                ) +
+                                " \*"),
                             labelStyle: CustomizedTheme.b_W400_12,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -375,7 +411,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                               horizontal: horizontalValue(16),
                               vertical: verticalValue(16),
                             ),
-                            labelText: "Email \*",
+                            labelText: AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.emailID,
+                                ) +
+                                " \*",
                             labelStyle: CustomizedTheme.b_W400_12,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -416,7 +455,9 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                           // Return null if the entered email is valid
                           validator: (value) {
                             if (!GetUtils.isEmail(value!)) {
-                              return 'Invalid Email';
+                              return AppLocalizations.of(context)!.translate(
+                                TranslationKeys.invalidEmail,
+                              );
                             }
                             return null;
                           },
@@ -428,7 +469,9 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (nationalityCtrl[index].text.isEmpty) {
-                              return 'Nationality is empty';
+                              return AppLocalizations.of(context)!.translate(
+                                TranslationKeys.nationalityIsEmpty,
+                              );
                             }
                             return null;
                           },
@@ -437,7 +480,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                               horizontal: horizontalValue(16),
                               vertical: verticalValue(16),
                             ),
-                            labelText: "Nationality \*",
+                            labelText: AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.nationality,
+                                ) +
+                                " \*",
                             labelStyle: CustomizedTheme.b_W400_12,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -496,8 +542,14 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                 ),
                                 // Optional. Styles the search field.
                                 inputDecoration: InputDecoration(
-                                  labelText: 'Search',
-                                  hintText: 'Start typing to search',
+                                  labelText:
+                                      AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.search,
+                                  ),
+                                  hintText:
+                                      AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.startTypingToSearch,
+                                  ),
                                   prefixIcon: const Icon(
                                     Icons.search,
                                   ),
@@ -524,7 +576,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                               horizontal: horizontalValue(16),
                               vertical: verticalValue(16),
                             ),
-                            labelText: "Emirates ID/Passport Number \*",
+                            labelText: AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.emiratesIDPassportNumber,
+                                ) +
+                                " \*",
                             labelStyle: CustomizedTheme.b_W400_12,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -565,7 +620,10 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                           // Return null if the entered email is valid
                           validator: (value) {
                             if (value!.trim().isEmpty) {
-                              return 'Please enter a Emirates ID/Passport Number';
+                              return AppLocalizations.of(context)!.translate(
+                                TranslationKeys
+                                    .pleaseEnterEmiratesIDPassportNumber,
+                              );
                             }
                             return null;
                           },
@@ -656,7 +714,11 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: const Text("Something went wrong"),
+                                content: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.somethingWentWrong,
+                                  ),
+                                ),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24),
@@ -676,7 +738,9 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                                 color: Colors.white,
                               )
                             : Text(
-                                "Next",
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.next,
+                                ),
                                 style: CustomizedTheme.sf_w_W500_19,
                               ),
                       ),

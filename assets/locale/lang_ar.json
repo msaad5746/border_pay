@@ -28,7 +28,7 @@
   "iAccept": "موافق",
   "terms_Conditions": "البنود و الظروف",
   "youHaveToAcceptTermAndConditions": "يجب عليك قبول الشروط والأحكام",
-  "Next": "التالي",
+  "next": "التالي",
   "step1": "الخطوة 1",
   "chooseYourDocumentType": "اختر نوع المستند الخاص بك",
   "emiratesID": "هويه الإمارات",
@@ -41,7 +41,7 @@
   "uploadEmiratesID": "تحميل هوية الإمارات",
   "uploadPhoto": "حمل الصورة",
   "selectFile": "حدد ملف",
-  "Upload": "تحميل",
+  "upload": "تحميل",
   "step3": "الخطوه 3",
   "andEnterPassport": "وأدخل جواز السفر",
   "andEnterEmiratesID": "وأدخل هوية الإمارات",
@@ -117,7 +117,7 @@
   "selectTheNumberOfTravellers": "حدد عدد المسافرين",
   "pleaseEnterNumber": "الرجاء إدخال رقم",
   "youCanPayUpFor9People": "يمكنك أن تدفع حتى 9 أشخاص",
-  "enterDetailsOfEachTraveller:": "أدخل تفاصيل كل مسافر:",
+  "enterDetailsOfEachTraveller": "أدخل تفاصيل كل مسافر:",
   "enterDetailsOfTraveller": "أدخل تفاصيل المسافر:",
   "traveller": "المسافر",
   "yourExistingDetailsWillBeUtilised": "سيتم استخدام التفاصيل الموجودة الخاصة بك",
@@ -142,5 +142,11 @@
   "numberOfTravellers": "عدد المسافرين:",
   "continueButton": "يكمل",
   "somethingWentWrong": "هناك خطأ ما",
-  "qoma": "،"
+  "qoma": "،",
+  "enterEmirateID" : "أدخل رقم الهوية الإمارة",
+  "successfullyUpdated" : "تم التحديث بنجاح!",
+  "invalidNumberMessage" : "رقم الجوال غير صالح",
+  "searchCountry" : "البحث في البلد",
+  "changeLanguage" : "تغيير اللغة"
+
 }

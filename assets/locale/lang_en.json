@@ -30,7 +30,7 @@
   "iAccept": "I accept",
   "terms_Conditions": "Terms & Conditions",
   "youHaveToAcceptTermAndConditions": "You have to accept term and conditions",
-  "Next": "Next",
+  "next": "Next",
 
   "step1": "Step 1",
   "chooseYourDocumentType": "Choose your Document type",
@@ -44,7 +44,7 @@
   "uploadEmiratesID": "Upload Emirates ID",
   "uploadPhoto": "Upload Photo",
   "selectFile": "Select File",
-  "Upload": "Upload",
+  "upload": "Upload",
   "step3": "Step 3",
   "andEnterPassport": "And Enter Passport",
   "andEnterEmiratesID": "And Enter Emirates ID",
@@ -130,7 +130,7 @@
   "selectTheNumberOfTravellers": "Select the Number of Travellers",
   "pleaseEnterNumber": "Please enter a number",
   "youCanPayUpFor9People": "You can pay up for 9 people",
-  "enterDetailsOfEachTraveller:": "Enter details of each traveller:",
+  "enterDetailsOfEachTraveller": "Enter details of each traveller:",
   "enterDetailsOfTraveller": "Enter details of traveller:",
   "traveller": "Traveller",
   "yourExistingDetailsWillBeUtilised": "Your existing details will be utilised",
@@ -157,6 +157,11 @@
   "numberOfTravellers": "Number of travellers: ",
   "continueButton": "Continue",
   "somethingWentWrong": "Something went wrong",
-  "qoma": ","
+  "qoma": ",",
+  "enterEmirateID":"Enter Emirate Id",
+  "successfullyUpdated":"Successfully updated!",
+  "invalidNumberMessage":"Invalid Mobile Number",
+  "searchCountry":"Search Country",
+  "changeLanguage":"Change Language"
 
 }

@@ -8,6 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../localization/app_localization.dart';
+import '../localization/translation_keys.dart';
+
 class ScanIDPage extends StatefulWidget {
   String firstName;
   String lastName;
@@ -95,7 +98,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
             ),
           ],
         ),
-        title: Text("Scan", style: CustomizedTheme.title_p_W500_21),
+        title: Text(AppLocalizations.of(context)!.translate(
+          TranslationKeys.scan,
+        ), style: CustomizedTheme.title_p_W500_21),
         centerTitle: false,
       ),
       body: SingleChildScrollView(
@@ -107,12 +112,16 @@ class _ScanIDPageState extends State<ScanIDPage> {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 18.h),
                 child: Text(
-                  'Step 1',
+                  AppLocalizations.of(context)!.translate(
+                    TranslationKeys.step1,
+                  ),
                   style: CustomizedTheme.title_p_W500_21,
                 ),
               ),
               Text(
-                'Choose your Document type',
+                AppLocalizations.of(context)!.translate(
+                  TranslationKeys.chooseYourDocumentType,
+                ),
                 style: CustomizedTheme.sf_bo_W400_15,
               ),
               Row(
@@ -121,7 +130,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
                     child: RadioListTile(
                       contentPadding: const EdgeInsets.all(0),
                       title: Text(
-                        "Emirates ID",
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.emiratesID,
+                        ),
                         style: CustomizedTheme.sf_bo_W400_15,
                       ),
                       value: 0,
@@ -140,7 +151,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
                     child: RadioListTile(
                       contentPadding: const EdgeInsets.all(0),
                       title: Text(
-                        "Passport",
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.passport,
+                        ),
                         style: CustomizedTheme.sf_bo_W400_15,
                       ),
                       value: 1,
@@ -182,7 +195,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 18.h),
                 child: Text(
-                  'Step 2',
+                  AppLocalizations.of(context)!.translate(
+                    TranslationKeys.step2,
+                  ),
                   style: CustomizedTheme.title_p_W500_21,
                 ),
               ),
@@ -192,8 +207,12 @@ class _ScanIDPageState extends State<ScanIDPage> {
                 ),
                 child: Text(
                   groupValue == 1
-                      ? 'Scan or upload your Passport '
-                      : 'Scan or upload your Emirates ID',
+                      ? AppLocalizations.of(context)!.translate(
+                    TranslationKeys.scanOrUploadYourPassport,
+                  )
+                      : AppLocalizations.of(context)!.translate(
+                  TranslationKeys.scanOrUploadYourEmiratesID,
+                ),
                   style: CustomizedTheme.sf_bo_W400_15,
                 ),
               ),
@@ -220,7 +239,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
                           _imgFromCamera();
                         },
                         child: Text(
-                          "Scan",
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.scan,
+                          ),
                           style: CustomizedTheme.w_W500_19,
                         ),
                       ),
@@ -299,8 +320,12 @@ class _ScanIDPageState extends State<ScanIDPage> {
                                           ),
                                           child: Text(
                                             groupValue == 1
-                                                ? 'Upload Passport'
-                                                : 'Upload Emirates ID',
+                                                ? AppLocalizations.of(context)!.translate(
+                                              TranslationKeys.uploadPassport,
+                                            )
+                                                : AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.uploadEmiratesID,
+                                  ),
                                             style: CustomizedTheme
                                                 .roboto_w_W500_16,
                                           ),
@@ -356,7 +381,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
                                                       )
                                                     : Text(
                                                         _image?.name ??
-                                                            'Upload Photo',
+                                                            AppLocalizations.of(context)!.translate(
+                                                              TranslationKeys.uploadPhoto,
+                                                            ),
                                                         style: CustomizedTheme
                                                             .sf_bo_W400_1592,
                                                       ),
@@ -371,7 +398,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
                                                     vertical: 18.h,
                                                   ),
                                                   child: Text(
-                                                    'Select File',
+                                                    AppLocalizations.of(context)!.translate(
+                                                      TranslationKeys.selectFile,
+                                                    ),
                                                     style: CustomizedTheme
                                                         .roboto_w_W400_14,
                                                   ),
@@ -400,7 +429,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
                                                 // ),
                                               ),
                                               child: Text(
-                                                "Upload",
+                                                AppLocalizations.of(context)!.translate(
+                                                  TranslationKeys.upload,
+                                                ),
                                                 style: CustomizedTheme
                                                     .sf_w_W400_17,
                                               ),
@@ -415,7 +446,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
                             );
                           },
                           child: Text(
-                            "Upload",
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.upload,
+                            ),
                             style: CustomizedTheme.w_W500_19,
                           ),
                         ),
@@ -427,7 +460,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 18.h),
                 child: Text(
-                  'Step 3',
+                  AppLocalizations.of(context)!.translate(
+                    TranslationKeys.step3,
+                  ),
                   style: CustomizedTheme.title_p_W500_21,
                 ),
               ),
@@ -435,8 +470,12 @@ class _ScanIDPageState extends State<ScanIDPage> {
                 padding: EdgeInsets.only(bottom: 18.h),
                 child: Text(
                   groupValue == 1
-                      ? 'And Enter Passport'
-                      : 'And Enter Emirates ID ',
+                      ? AppLocalizations.of(context)!.translate(
+                    TranslationKeys.andEnterPassport,
+                  )
+                      : AppLocalizations.of(context)!.translate(
+                    TranslationKeys.andEnterEmiratesID,
+                  ),
                   style: CustomizedTheme.sf_bo_W400_15,
                 ),
               ),
@@ -472,7 +511,11 @@ class _ScanIDPageState extends State<ScanIDPage> {
                         width: 1.0.w,
                       ),
                     ),
-                    labelText: groupValue == 1 ? 'Passport' : "Emirates ID",
+                    labelText: groupValue == 1 ? AppLocalizations.of(context)!.translate(
+                      TranslationKeys.passport,
+                    ) : AppLocalizations.of(context)!.translate(
+                      TranslationKeys.emiratesID,
+                    ),
                     labelStyle: CustomizedTheme.b_W400_12,
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
@@ -540,7 +583,9 @@ class _ScanIDPageState extends State<ScanIDPage> {
                             }
                           },
                           child: Text(
-                            "Next",
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.next,
+                            ),
                             style: CustomizedTheme.w_W500_19,
                           ),
                         ),

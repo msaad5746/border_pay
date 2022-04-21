@@ -14,6 +14,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class MultiVoucherSuccessPage extends StatefulWidget {
   final List<Vouchers> vouchersData;
 
@@ -150,7 +153,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                         ),
                         child: Center(
                           child: Text(
-                            'Voucher Successful',
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.voucherSuccessful,
+                            ),
                             style: CustomizedTheme.sf_b_W600_2487,
                           ),
                         ),
@@ -188,7 +193,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Voucher Number : ',
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.voucher_Number,
+                              ),
                               style: CustomizedTheme.roboto_w_W400_20,
                             ),
                             Container(
@@ -210,7 +217,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Number of travellers: ',
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.numberOfTravellers,
+                            ),
                             style: CustomizedTheme.roboto_w_W400_14,
                           ),
                           Text(
@@ -270,7 +279,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                             headerBuilder: (context, isExpanded) {
                               return ListTile(
                                 title: Text(
-                                  "Traveller ${index + 1}",
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.traveller,
+                                  )+" ${index + 1}",
                                   style: CustomizedTheme.sf_b_W500_19,
                                 ),
                               );
@@ -298,7 +309,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          'Traveller Name',
+                                          AppLocalizations.of(context)!.translate(
+                                            TranslationKeys.travellerName,
+                                          ),
                                           CustomizedTheme.sf_bo_W300_1503,
                                         ),
                                         buildText(
@@ -319,7 +332,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          'Email ID',
+                                          AppLocalizations.of(context)!.translate(
+                                            TranslationKeys.emailID,
+                                          ),
                                           CustomizedTheme.sf_bo_W300_1503,
                                         ),
                                         buildText(
@@ -340,7 +355,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          'Phone Number',
+                                          AppLocalizations.of(context)!.translate(
+                                            TranslationKeys.phoneNumber,
+                                          ),
                                           CustomizedTheme.sf_bo_W300_1503,
                                         ),
                                         buildText(
@@ -362,7 +379,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          'Nationality',
+                                          AppLocalizations.of(context)!.translate(
+                                            TranslationKeys.nationality,
+                                          ),
                                           CustomizedTheme.sf_bo_W300_1503,
                                         ),
                                         buildText(
@@ -386,7 +405,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          'Emirates ID',
+                                          AppLocalizations.of(context)!.translate(
+                                            TranslationKeys.emiratesID,
+                                          ),
                                           CustomizedTheme.sf_bo_W300_1503,
                                         ),
                                         buildText(
@@ -408,7 +429,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          'Total Amount',
+                                          AppLocalizations.of(context)!.translate(
+                                            TranslationKeys.totalAmount,
+                                          ),
                                           CustomizedTheme.sf_bo_W300_1503,
                                         ),
                                         buildText(
@@ -428,7 +451,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          'Payment Date',
+                                          AppLocalizations.of(context)!.translate(
+                                            TranslationKeys.paymentDate,
+                                          ),
                                           CustomizedTheme.sf_bo_W300_1503,
                                         ),
                                         buildText(
@@ -450,7 +475,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          'Payment Time',
+                                          AppLocalizations.of(context)!.translate(
+                                            TranslationKeys.paymentTime,
+                                          ),
                                           CustomizedTheme.sf_bo_W300_1503,
                                         ),
                                         buildText(
@@ -521,7 +548,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                   color: Colors.white,
                                 )
                               : Text(
-                                  "Download / Print Summary",
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.downloadPrintSummary,
+                            ),
                                   style: CustomizedTheme.sf_w_W500_19,
                                 ),
                         ),
@@ -545,12 +574,15 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
       final pdfFile = await PdfApi.generatePdfFile(
         vouchers[i],
         qrImages![i],
+        context
       );
 
       // PdfApi.openFile(file: File(pdfFile.path));
     }
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: const Text("Successfully Saved in Downloads!"),
+      content:  Text(AppLocalizations.of(context)!.translate(
+        TranslationKeys.successfullySavedInDownload,
+      ),),
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
