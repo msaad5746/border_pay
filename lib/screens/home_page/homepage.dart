@@ -120,7 +120,10 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        top: 19.5.h, left: 20.w),
+                                      top: 19.5.h,
+                                      left: 20.w,
+                                      right: 20.w,
+                                    ),
                                     child: Text(
                                       AppLocalizations.of(context)!.translate(
                                             TranslationKeys.hello,
@@ -138,6 +141,7 @@ class _HomePageState extends State<HomePage> {
                                       top: 20.h,
                                       bottom: 10.h,
                                       left: 20.w,
+                                      right: 20.w,
                                     ),
                                     child: Text(
                                       AppLocalizations.of(context)!.translate(
@@ -214,18 +218,18 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       verticalSpacer(32),
-                      Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.symmetric(
-                          horizontal: horizontalValue(20),
-                        ),
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          AppLocalizations.of(context)!.translate(
-                            TranslationKeys.myVouchers,
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.myVouchers,
+                              ),
+                              style: CustomizedTheme.sf_b_W500_19,
+                            ),
                           ),
-                          style: CustomizedTheme.sf_b_W500_19,
-                        ),
+                        ],
                       ),
                       verticalSpacer(16),
                       Container(
@@ -373,7 +377,7 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-           Text(
+          Text(
             AppLocalizations.of(context)!.translate(
               TranslationKeys.noDataFound,
             ),
@@ -401,7 +405,7 @@ class _HomePageState extends State<HomePage> {
                 getUserData();
               }
             },
-            child:  Text(
+            child: Text(
               AppLocalizations.of(context)!.translate(
                 TranslationKeys.retry,
               ),

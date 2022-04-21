@@ -365,8 +365,8 @@ class _SettingPageState extends State<SettingPage> {
                               ),
                               const Spacer(),
                               FlutterToggleTab(
-                                width: 20,
-                                height: 40,
+                                width: 18,
+                                height: 30,
                                 borderRadius: 15,
                                 selectedTextStyle: const TextStyle(
                                     color: Colors.white,

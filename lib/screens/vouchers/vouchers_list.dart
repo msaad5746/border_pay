@@ -69,9 +69,11 @@ class _VouchersPageState extends State<VouchersPage> {
         elevation: 0,
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Text(AppLocalizations.of(context)!.translate(
-            TranslationKeys.myVouchers,
-          ), style: CustomizedTheme.title_sf_W500_21),
+          child: Text(
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.myVouchers,
+              ),
+              style: CustomizedTheme.title_sf_W500_21),
         ),
       ),
       body: isLoading
@@ -147,9 +149,11 @@ class _VouchersPageState extends State<VouchersPage> {
                           filled: true,
                           fillColor: Colors.white,
                           prefixIcon: const Icon(Icons.search),
-                          label:  Text(AppLocalizations.of(context)!.translate(
-                            TranslationKeys.search,
-                          ),),
+                          label: Text(
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.search,
+                            ),
+                          ),
                           hintStyle: TextStyle(
                             color: Colors.black,
                             fontSize: 18.sp,
@@ -163,41 +167,41 @@ class _VouchersPageState extends State<VouchersPage> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
+                    Container(
+                      height: 41.h,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 10.h),
+                      margin: EdgeInsets.only(
                           top: 17.35.h, left: 20.w, right: 20.w),
-                      child: Container(
-                        height: 41.h,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.w, vertical: 12.h),
-                        decoration: BoxDecoration(
-                            color: CustomizedTheme.colorAccent,
-                            borderRadius: BorderRadius.circular(6.r)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: 80.w,
-                              child: Text(
+                      decoration: BoxDecoration(
+                          color: CustomizedTheme.colorAccent,
+                          borderRadius: BorderRadius.circular(6.r)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 80.w,
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.voucherNo,
+                              ),
+                              style: CustomizedTheme.roboto_w_W500_14,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 100.w,
+                            child: Text(
                                 AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.voucherNo,
+                                  TranslationKeys.location,
                                 ),
-                                style: CustomizedTheme.roboto_w_W500_14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 100.w,
-                              child: Text(AppLocalizations.of(context)!.translate(
-                                TranslationKeys.location,
-                              ),
-                                  style: CustomizedTheme.roboto_w_W500_14),
-                            ),
-                            Text(AppLocalizations.of(context)!.translate(
-                              TranslationKeys.status,
-                            ),
                                 style: CustomizedTheme.roboto_w_W500_14),
-                          ],
-                        ),
+                          ),
+                          Text(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.status,
+                              ),
+                              style: CustomizedTheme.roboto_w_W500_14),
+                        ],
                       ),
                     ),
                     selector == 0 && companyVoucherList.data.isNotEmpty
@@ -219,9 +223,11 @@ class _VouchersPageState extends State<VouchersPage> {
                                           EdgeInsets.symmetric(vertical: 40.h),
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 5.56.w, vertical: 16.h),
-                                      child: Text(AppLocalizations.of(context)!.translate(
-                                        TranslationKeys.noTransactionYet,
-                                      ),
+                                      child: Text(
+                                          AppLocalizations.of(context)!
+                                              .translate(
+                                            TranslationKeys.noTransactionYet,
+                                          ),
                                           style: CustomizedTheme.sf_b_W300_14),
                                     ),
                                     Expanded(
@@ -413,7 +419,7 @@ class _VouchersPageState extends State<VouchersPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-           Text(
+          Text(
             AppLocalizations.of(context)!.translate(
               TranslationKeys.noDataFound,
             ),
