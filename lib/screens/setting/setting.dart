@@ -5,9 +5,11 @@ import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/auth/local_auth_api.dart';
 import 'package:borderpay/localization/locale_constants.dart';
+import 'package:borderpay/main.dart';
 import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
+import 'package:borderpay/res/res.dart';
 import 'package:borderpay/screens/host.dart';
 import 'package:borderpay/screens/welcome_screen.dart';
 import 'package:borderpay/widget/custom_alert.dart';
@@ -64,6 +66,7 @@ class _SettingPageState extends State<SettingPage> {
       body: Stack(
         children: [
           SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -343,12 +346,18 @@ class _SettingPageState extends State<SettingPage> {
                         child: Container(
                           height: 59.h,
                           width: 1.sw,
-                          padding: EdgeInsets.symmetric(horizontal: 18.01.w),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 18.01.w,
+                          ),
                           decoration: BoxDecoration(
-                              color: CustomizedTheme.white,
-                              borderRadius: BorderRadius.circular(7),
-                              border: Border.all(
-                                  color: CustomizedTheme.primaryColor)),
+                            color: CustomizedTheme.white,
+                            borderRadius: BorderRadius.circular(
+                              7,
+                            ),
+                            border: Border.all(
+                              color: CustomizedTheme.primaryColor,
+                            ),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -360,23 +369,33 @@ class _SettingPageState extends State<SettingPage> {
                                 color: CustomizedTheme.primaryBold,
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 31.7.w),
-                                child: Text(AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.changeLanguage,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 31.7.w,
                                 ),
-                                    style: CustomizedTheme.sf_bo_W400_1592),
+                                child: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.changeLanguage,
+                                  ),
+                                  style: CustomizedTheme.sf_bo_W400_1592,
+                                ),
                               ),
                               const Spacer(),
                               FlutterToggleTab(
-                                width: 18,
+                                width: 22,
                                 height: 30,
                                 borderRadius: 15,
                                 selectedTextStyle:
                                     CustomizedTheme.roboto_w_W400_14,
                                 unSelectedTextStyle:
                                     CustomizedTheme.popp_b_w400_1203,
-                                labels: const ["Eng", "Ar"],
+                                labels: [
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.english,
+                                  ),
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.arabic,
+                                  ),
+                                ],
                                 selectedLabelIndex: (index) {
                                   setState(() {
                                     languageIndex = index;
@@ -424,10 +443,11 @@ class _SettingPageState extends State<SettingPage> {
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 31.7.w),
                                 child: Text(
-                                    AppLocalizations.of(context)!.translate(
-                                      TranslationKeys.deleteAccount,
-                                    ),
-                                    style: CustomizedTheme.sf_bo_W400_1592),
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.deleteAccount,
+                                  ),
+                                  style: CustomizedTheme.sf_bo_W400_1592,
+                                ),
                               ),
                               const Spacer(),
                             ],
@@ -442,12 +462,18 @@ class _SettingPageState extends State<SettingPage> {
                         child: Container(
                           height: 59.h,
                           width: 1.sw,
-                          padding: EdgeInsets.symmetric(horizontal: 18.01.w),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 18.01.w,
+                          ),
                           decoration: BoxDecoration(
-                              color: CustomizedTheme.white,
-                              borderRadius: BorderRadius.circular(7),
-                              border: Border.all(
-                                  color: CustomizedTheme.primaryColor)),
+                            color: CustomizedTheme.white,
+                            borderRadius: BorderRadius.circular(
+                              7,
+                            ),
+                            border: Border.all(
+                              color: CustomizedTheme.primaryColor,
+                            ),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -541,6 +567,7 @@ class _SettingPageState extends State<SettingPage> {
           AppLocalizations.of(context)!.translate(
             TranslationKeys.accountDeletedSuccessfully,
           ),
+          textAlign: TextAlign.center,
         ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
@@ -573,6 +600,7 @@ class _SettingPageState extends State<SettingPage> {
           AppLocalizations.of(context)!.translate(
             TranslationKeys.somethingWentWrong,
           ),
+          textAlign: TextAlign.center,
         ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
@@ -599,6 +627,6 @@ class _SettingPageState extends State<SettingPage> {
   void onChangeLanguage(int index) {
     getSelectedLang(supportedLocale[index], supportedLocale);
     storage.setIntValue(SharedPrefKeys.selectedLanguage, languageIndex);
-    Restart.restartApp(webOrigin: '[your main route]');
+    MyApp.restartApp(context);
   }
 }

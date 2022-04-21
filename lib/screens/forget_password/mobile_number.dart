@@ -1,6 +1,8 @@
 import 'package:borderpay/Route_Constants/route_constants.dart';
+import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
-import 'package:borderpay/model/datamodels/login_user_model.dart';
+import 'package:borderpay/localization/app_localization.dart';
+import 'package:borderpay/localization/translation_keys.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:borderpay/screens/custom_intl_phone_field.dart';
@@ -32,51 +34,54 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height: 1.sh,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.36.w,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  verticalSpacer(30),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Container(
-                          height: 37.26.h,
-                          width: 37.26.w,
-                          // margin: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              10.11.r,
-                            ),
-                            color: CustomizedTheme.colorAccent,
+        child: SizedBox(
+          height: 1.sh,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.36.w,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                verticalSpacer(30),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        height: 37.26.h,
+                        width: 37.26.w,
+                        // margin: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            10.11.r,
                           ),
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: CustomizedTheme.white,
-                          ),
+                          color: CustomizedTheme.colorAccent,
+                        ),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: CustomizedTheme.white,
                         ),
                       ),
-                      horizontalSpacer(16),
-                      Text(
-                        "Phone Number",
-                        style: CustomizedTheme.title_p_W500_21,
+                    ),
+                    horizontalSpacer(16),
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.phoneNumber,
                       ),
-                    ],
-                  ),
-                  verticalSpacer(16),
-                  SizedBox(
-                    height: 68.54.h,
-                  ),
-                  CustomIntlPhoneField(
+                      style: CustomizedTheme.title_p_W500_21,
+                    ),
+                  ],
+                ),
+                verticalSpacer(16),
+                SizedBox(
+                  height: 68.54.h,
+                ),
+                Form(
+                  key: Utils.forgotPassword,
+                  child: CustomIntlPhoneField(
                     flagDecoration: BoxDecoration(
                       color: CustomizedTheme.primaryBold,
                       borderRadius: BorderRadius.circular(10),
@@ -95,7 +100,11 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                           width: .01.w,
                         ),
                       ),
-                      label: const Text("Phone Number"),
+                      label: Text(
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.phoneNumber,
+                        ),
+                      ),
                       labelStyle: TextStyle(
                         color: CustomizedTheme.colorAccent,
                       ),
@@ -133,21 +142,20 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                     dropdownIconPosition: IconPosition.trailing,
                     flagsButtonPadding: const EdgeInsets.symmetric(vertical: 6),
                   ),
-                  SizedBox(
-                    height: 15.53.h,
-                  ),
-                  SizedBox(height: 100.16.h),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 61.07.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7.r),
-                            color: CustomizedTheme.colorAccent,
-                          ),
-                          child: TextButton(
-                            onPressed: () async {
+                ),
+                const Spacer(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 61.07.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7.r),
+                          color: CustomizedTheme.colorAccent,
+                        ),
+                        child: TextButton(
+                          onPressed: () async {
+                            if (Utils.forgotPassword.currentState!.validate()) {
                               if (!isLoading &&
                                   phoneController.text.length > 6) {
                                 setState(() {
@@ -155,22 +163,25 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                                 });
                                 forgetPassword();
                               }
-                            },
-                            child: isLoading
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                : Text(
-                                    "Next",
-                                    style: CustomizedTheme.w_W500_19,
+                            }
+                          },
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.next,
                                   ),
-                          ),
+                                  style: CustomizedTheme.w_W500_19,
+                                ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                verticalSpacer(16),
+              ],
             ),
           ),
         ),
@@ -188,7 +199,10 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
         isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("OTP sent!"),
+        content: Text(
+          "OTP sent!",
+          textAlign: TextAlign.center,
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
@@ -205,7 +219,10 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
         isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Invalid Phone Number!"),
+        content: const Text(
+          "Invalid Phone Number!",
+          textAlign: TextAlign.center,
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),

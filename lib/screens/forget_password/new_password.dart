@@ -225,7 +225,10 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                   });
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content: const Text("Something went wrong"),
+                                    content: const Text(
+                                      "Something went wrong",
+                                      textAlign: TextAlign.center,
+                                    ),
                                     behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),
@@ -289,7 +292,10 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
         isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Login Failed"),
+        content: const Text(
+          "Login Failed",
+          textAlign: TextAlign.center,
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),

@@ -8,6 +8,7 @@ import 'package:borderpay/model/datamodels/voucher_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/screens/home_page/my_vouchers.dart';
+import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -34,7 +35,8 @@ class _VouchersPageState extends State<VouchersPage> {
 
   bool isLoading = true;
   bool isError = false;
-  int selector = 0;
+  int pageNumber = 1;
+  int selector = 1;
   String searchText = '';
 
   @override
@@ -252,11 +254,15 @@ class _VouchersPageState extends State<VouchersPage> {
                           if (selector == 0 &&
                               searchText.isEmpty &&
                               !companyVoucherList.lastPage) {
-                            loadMoreData(1, companyVoucherList.page);
+                            loadMoreData(
+                              companyVoucherList.page,
+                            );
                           } else if (selector != 0 &&
                               searchText.isEmpty &&
                               !individualVoucherList.lastPage) {
-                            loadMoreData(1, individualVoucherList.page);
+                            loadMoreData(
+                              individualVoucherList.page,
+                            );
                           }
                         },
                         lastPage: selector == 0
@@ -268,108 +274,7 @@ class _VouchersPageState extends State<VouchersPage> {
                                 : true,
                       ),
                     ),
-
-                    // ...List.generate(
-                    //   selector == 0
-                    //       ? searchText.isEmpty
-                    //           ? companyVoucherList.data.length
-                    //           : searchCompanyResult.length
-                    //       : searchText.isEmpty
-                    //           ? individualVoucherList.data.length
-                    //           : searchIndividualResult.length,
-                    //   (index) => Padding(
-                    //     padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-                    //     child: GestureDetector(
-                    //       onTap: () {
-                    //         Navigator.pushNamed(
-                    //           context,
-                    //           '/DetailedVoucher',
-                    //           arguments: selector == 0
-                    //               ? searchText.isEmpty
-                    //                   ? companyVoucherList.data[index]
-                    //                   : searchCompanyResult[index]
-                    //               : searchText.isEmpty
-                    //                   ? individualVoucherList.data[index]
-                    //                   : searchIndividualResult[index],
-                    //         );
-                    //       },
-                    //       child: Container(
-                    //         padding: EdgeInsets.only(
-                    //             bottom: 10.h,
-                    //             top: 15.h,
-                    //             left: 10.w,
-                    //             right: 10.w),
-                    //         decoration: BoxDecoration(
-                    //             border: Border(
-                    //                 bottom: BorderSide(
-                    //                     color: CustomizedTheme.colorAccent,
-                    //                     width: 1.w))),
-                    //         child: Row(
-                    //           mainAxisAlignment:
-                    //               MainAxisAlignment.spaceBetween,
-                    //           children: [
-                    //             SizedBox(
-                    //               width: 80.w,
-                    //               child: Text(
-                    //                   selector == 0
-                    //                       ? searchText.isEmpty
-                    //                           ? companyVoucherList
-                    //                               .data[index].id
-                    //                               .toString()
-                    //                           : searchCompanyResult[index]
-                    //                               .id
-                    //                               .toString()
-                    //                       : searchText.isEmpty
-                    //                           ? individualVoucherList
-                    //                               .data[index].id
-                    //                               .toString()
-                    //                           : searchIndividualResult[index]
-                    //                               .id
-                    //                               .toString(),
-                    //                   style: CustomizedTheme.sf_pb_W700_13),
-                    //             ),
-                    //             SizedBox(
-                    //               width: 80.w,
-                    //               child: Text(
-                    //                   selector == 0
-                    //                       ? searchText.isEmpty
-                    //                           ? companyVoucherList
-                    //                               .data[index].location.title
-                    //                           : searchCompanyResult[index]
-                    //                               .location
-                    //                               .title
-                    //                       : searchText.isEmpty
-                    //                           ? individualVoucherList
-                    //                               .data[index].location.title
-                    //                           : searchIndividualResult[index]
-                    //                               .location
-                    //                               .title,
-                    //                   style: CustomizedTheme.sf_pb_W300_13),
-                    //             ),
-                    //             SizedBox(
-                    //               width: 80.w,
-                    //               child: Text(
-                    //                 selector == 0
-                    //                     ? searchText.isEmpty
-                    //                         ? companyVoucherList
-                    //                             .data[index].status
-                    //                         : searchCompanyResult[index]
-                    //                             .status
-                    //                     : searchText.isEmpty
-                    //                         ? individualVoucherList
-                    //                             .data[index].status
-                    //                         : searchIndividualResult[index]
-                    //                             .status,
-                    //                 textAlign: TextAlign.end,
-                    //                 style: CustomizedTheme.sf_b_W300_13Paid,
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    verticalSpacer(32),
                   ],
                 ),
     );
@@ -494,10 +399,10 @@ class _VouchersPageState extends State<VouchersPage> {
     setState(() {});
   }
 
-  Future<void> loadMoreData(int id, int page) async {
+  Future<void> loadMoreData(int page) async {
     VoucherRepo repo = VoucherRepoImpl();
     var response = await repo.getVoucherList(
-      id: id,
+      id: loginData.userId,
       page: page,
     );
     if (response != null) {

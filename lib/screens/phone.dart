@@ -194,6 +194,7 @@ class _PhonePageState extends State<PhonePage> {
                                   AppLocalizations.of(context)!.translate(
                                     TranslationKeys.otpSent,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(

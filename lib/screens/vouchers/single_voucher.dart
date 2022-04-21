@@ -33,13 +33,15 @@ class _SingleVoucherState extends State<SingleVoucher> {
           children: [
             SizedBox(width: 20.w),
             Center(
-                child: BlueBackButton(
-              context: context,
-            )),
+              child: BlueBackButton(
+                context: context,
+              ),
+            ),
           ],
         ),
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.36.w),
           child: Column(
@@ -50,8 +52,9 @@ class _SingleVoucherState extends State<SingleVoucher> {
                 padding: EdgeInsets.only(bottom: 31.h),
                 child: Text(
                     AppLocalizations.of(context)!.translate(
-                  TranslationKeys.vouchers,
-                ), style: CustomizedTheme.sf_b_W500_19),
+                      TranslationKeys.vouchers,
+                    ),
+                    style: CustomizedTheme.sf_b_W500_19),
               ),
               Container(
                 width: 1.sw,
@@ -110,7 +113,8 @@ class _SingleVoucherState extends State<SingleVoucher> {
                           buildText(
                               AppLocalizations.of(context)!.translate(
                                 TranslationKeys.emailID,
-                              ), CustomizedTheme.sf_bo_W300_1503),
+                              ),
+                              CustomizedTheme.sf_bo_W300_1503),
                           buildText(widget.voucher[0].user.email,
                               CustomizedTheme.sf_bo_W500_1503),
                         ],
@@ -125,10 +129,12 @@ class _SingleVoucherState extends State<SingleVoucher> {
                           buildText(
                               AppLocalizations.of(context)!.translate(
                                 TranslationKeys.phoneNumber,
-                              ), CustomizedTheme.sf_bo_W300_1503),
+                              ),
+                              CustomizedTheme.sf_bo_W300_1503),
                           Directionality(
                             textDirection: TextDirection.ltr,
-                            child: buildText(widget.voucher[0].user.mobileNumber,
+                            child: buildText(
+                                widget.voucher[0].user.mobileNumber,
                                 CustomizedTheme.sf_bo_W500_1503),
                           ),
                         ],
@@ -143,7 +149,8 @@ class _SingleVoucherState extends State<SingleVoucher> {
                           buildText(
                               AppLocalizations.of(context)!.translate(
                                 TranslationKeys.nationality,
-                              ), CustomizedTheme.sf_bo_W300_1503),
+                              ),
+                              CustomizedTheme.sf_bo_W300_1503),
                           buildText(
                               getNationality(
                                   widget.voucher[0].user.nationalityId),
@@ -160,7 +167,8 @@ class _SingleVoucherState extends State<SingleVoucher> {
                           buildText(
                               AppLocalizations.of(context)!.translate(
                                 TranslationKeys.emiratesID,
-                              ), CustomizedTheme.sf_bo_W300_1503),
+                              ),
+                              CustomizedTheme.sf_bo_W300_1503),
                           buildText(widget.voucher[0].user.emirateId,
                               CustomizedTheme.sf_bo_W500_1503),
                         ],
@@ -175,7 +183,8 @@ class _SingleVoucherState extends State<SingleVoucher> {
                           buildText(
                               AppLocalizations.of(context)!.translate(
                                 TranslationKeys.totalAmount,
-                              ), CustomizedTheme.sf_bo_W300_1503),
+                              ),
+                              CustomizedTheme.sf_bo_W300_1503),
                           buildText('AED ${widget.voucher[0].amount}',
                               CustomizedTheme.sf_bo_W500_1503),
                         ],

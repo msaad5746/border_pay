@@ -148,6 +148,12 @@
   "invalidNumberMessage": "رقم الجوال غير صالح",
   "searchCountry": "البحث في البلد",
   "changeLanguage": "تغيير اللغة",
+  "invalidMobileNumber": "رقم الجوال غير صالح",
+  "active" : "نشيط",
+  "expired" : "منتهي الصلاحية",
+  "portRashid" : "ميناء راشد",
+  "english" : "إنكليزي",
+  "arabic" : "عربى",
 
 
   "ic_support": "assets/svg/ic_ar_support.svg",

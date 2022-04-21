@@ -200,6 +200,7 @@ class _SupportPageState extends State<SupportPage> {
               AppLocalizations.of(context)!.translate(
                 TranslationKeys.whatsappNotInstalled,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
         );
@@ -215,6 +216,7 @@ class _SupportPageState extends State<SupportPage> {
               AppLocalizations.of(context)!.translate(
                 TranslationKeys.whatsappNotInstalled,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
         );

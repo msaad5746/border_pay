@@ -6,6 +6,7 @@ class SharedPrefKeys{
   static const String isLogin = "isLogin";
   static const String user = "user";
   static const String userPhone = "userPhone";
+  static const String locale = "locale";
   static const String userPassword = "loginCredential";
   static const String userId = "userId";
   static const String isBioMatric = "isBioMatric";

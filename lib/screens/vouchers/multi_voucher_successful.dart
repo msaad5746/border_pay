@@ -280,8 +280,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                               return ListTile(
                                 title: Text(
                                   AppLocalizations.of(context)!.translate(
-                                    TranslationKeys.traveller,
-                                  )+" ${index + 1}",
+                                        TranslationKeys.traveller,
+                                      ) +
+                                      " ${index + 1}",
                                   style: CustomizedTheme.sf_b_W500_19,
                                 ),
                               );
@@ -309,7 +310,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          AppLocalizations.of(context)!.translate(
+                                          AppLocalizations.of(context)!
+                                              .translate(
                                             TranslationKeys.travellerName,
                                           ),
                                           CustomizedTheme.sf_bo_W300_1503,
@@ -332,7 +334,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          AppLocalizations.of(context)!.translate(
+                                          AppLocalizations.of(context)!
+                                              .translate(
                                             TranslationKeys.emailID,
                                           ),
                                           CustomizedTheme.sf_bo_W300_1503,
@@ -355,7 +358,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          AppLocalizations.of(context)!.translate(
+                                          AppLocalizations.of(context)!
+                                              .translate(
                                             TranslationKeys.phoneNumber,
                                           ),
                                           CustomizedTheme.sf_bo_W300_1503,
@@ -382,7 +386,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          AppLocalizations.of(context)!.translate(
+                                          AppLocalizations.of(context)!
+                                              .translate(
                                             TranslationKeys.nationality,
                                           ),
                                           CustomizedTheme.sf_bo_W300_1503,
@@ -408,7 +413,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          AppLocalizations.of(context)!.translate(
+                                          AppLocalizations.of(context)!
+                                              .translate(
                                             TranslationKeys.emiratesID,
                                           ),
                                           CustomizedTheme.sf_bo_W300_1503,
@@ -432,7 +438,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          AppLocalizations.of(context)!.translate(
+                                          AppLocalizations.of(context)!
+                                              .translate(
                                             TranslationKeys.totalAmount,
                                           ),
                                           CustomizedTheme.sf_bo_W300_1503,
@@ -454,7 +461,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          AppLocalizations.of(context)!.translate(
+                                          AppLocalizations.of(context)!
+                                              .translate(
                                             TranslationKeys.paymentDate,
                                           ),
                                           CustomizedTheme.sf_bo_W300_1503,
@@ -478,7 +486,8 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         buildText(
-                                          AppLocalizations.of(context)!.translate(
+                                          AppLocalizations.of(context)!
+                                              .translate(
                                             TranslationKeys.paymentTime,
                                           ),
                                           CustomizedTheme.sf_bo_W300_1503,
@@ -551,9 +560,9 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                   color: Colors.white,
                                 )
                               : Text(
-                            AppLocalizations.of(context)!.translate(
-                              TranslationKeys.downloadPrintSummary,
-                            ),
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.downloadPrintSummary,
+                                  ),
                                   style: CustomizedTheme.sf_w_W500_19,
                                 ),
                         ),
@@ -574,18 +583,18 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
       isLoading = true;
     });
     for (int i = 0; i < vouchers.length; i++) {
-      final pdfFile = await PdfApi.generatePdfFile(
-        vouchers[i],
-        qrImages![i],
-        context
-      );
+      final pdfFile =
+          await PdfApi.generatePdfFile(vouchers[i], qrImages![i], context);
 
       // PdfApi.openFile(file: File(pdfFile.path));
     }
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content:  Text(AppLocalizations.of(context)!.translate(
-        TranslationKeys.successfullySavedInDownload,
-      ),),
+      content: Text(
+        AppLocalizations.of(context)!.translate(
+          TranslationKeys.successfullySavedInDownload,
+        ),
+        textAlign: TextAlign.center,
+      ),
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),

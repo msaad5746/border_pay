@@ -476,6 +476,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
             AppLocalizations.of(context)!.translate(
               TranslationKeys.somethingWentWrong,
             ),
+            textAlign: TextAlign.center,
           ),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(

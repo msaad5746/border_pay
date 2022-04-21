@@ -215,10 +215,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                   });
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content:  Text(
+                                    content: Text(
                                       AppLocalizations.of(context)!.translate(
-                                        TranslationKeys.passwordSuccessfullyUpdated,
+                                        TranslationKeys
+                                            .passwordSuccessfullyUpdated,
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
                                     behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
@@ -234,9 +236,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                   });
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content:  Text(AppLocalizations.of(context)!.translate(
-                                      TranslationKeys.somethingWentWrong,
-                                    ),),
+                                    content: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.somethingWentWrong,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
                                     behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),
@@ -251,9 +256,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                 ? const CircularProgressIndicator(
                                     color: Colors.white,
                                   )
-                                : Text(AppLocalizations.of(context)!.translate(
-                              TranslationKeys.update,
-                            ),
+                                : Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.update,
+                                    ),
                                     style: CustomizedTheme.w_W500_19)),
                       ),
                     ),

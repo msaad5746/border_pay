@@ -29,18 +29,18 @@ class OTPPage extends StatefulWidget {
   String emiratedpassport;
   File image;
 
-  OTPPage(
-      {Key? key,
-      required this.firstName,
-      required this.lastName,
-      required this.phone,
-      required this.password,
-      required this.areaCode,
-      required this.email,
-      required this.nationality,
-      required this.emiratedpassport,
-      required this.image})
-      : super(key: key);
+  OTPPage({
+    Key? key,
+    required this.firstName,
+    required this.lastName,
+    required this.phone,
+    required this.password,
+    required this.areaCode,
+    required this.email,
+    required this.nationality,
+    required this.emiratedpassport,
+    required this.image,
+  }) : super(key: key);
 
   @override
   _OTPPageState createState() => _OTPPageState();
@@ -64,46 +64,57 @@ class _OTPPageState extends State<OTPPage> {
   Widget buildButton(int buttonText) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          if (_firstDigit == checker) {
-            _firstDigit = buttonText;
-          } else if (_secondDigit == checker) {
-            _secondDigit = buttonText;
-          } else if (_thirdDigit == checker) {
-            _thirdDigit = buttonText;
-          } else if (_fourthDigit == checker) {
-            _fourthDigit = buttonText;
-          } else if (_fifthDigit == checker) {
-            _fifthDigit = buttonText;
-          } else if (_sixthDigit == checker) {
-            _sixthDigit = buttonText;
+        setState(
+          () {
+            if (_firstDigit == checker) {
+              _firstDigit = buttonText;
+            } else if (_secondDigit == checker) {
+              _secondDigit = buttonText;
+            } else if (_thirdDigit == checker) {
+              _thirdDigit = buttonText;
+            } else if (_fourthDigit == checker) {
+              _fourthDigit = buttonText;
+            } else if (_fifthDigit == checker) {
+              _fifthDigit = buttonText;
+            } else if (_sixthDigit == checker) {
+              _sixthDigit = buttonText;
 
-            var otp = _firstDigit.toString() +
-                _secondDigit.toString() +
-                _thirdDigit.toString() +
-                _fourthDigit.toString() +
-                _fifthDigit.toString() +
-                _sixthDigit.toString();
-            setState(() {
-              OtpCode = otp;
-            });
-          }
-        });
+              var otp = _firstDigit.toString() +
+                  _secondDigit.toString() +
+                  _thirdDigit.toString() +
+                  _fourthDigit.toString() +
+                  _fifthDigit.toString() +
+                  _sixthDigit.toString();
+              setState(
+                () {
+                  OtpCode = otp;
+                },
+              );
+            }
+          },
+        );
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.0.w, vertical: 5.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: 15.0.w,
+          vertical: 5.h,
+        ),
         child: Container(
           height: 44.86.h,
           // width: 92.96.w,
           decoration: BoxDecoration(
-              color: CustomizedTheme.primaryBold,
-              borderRadius: BorderRadius.circular(6.93.r),
-              border: Border.all(color: CustomizedTheme.white)),
+            color: CustomizedTheme.primaryBold,
+            borderRadius: BorderRadius.circular(6.93.r),
+            border: Border.all(
+              color: CustomizedTheme.white,
+            ),
+          ),
           child: Center(
-              child: Text(
-            buttonText.toString(),
-            style: CustomizedTheme.sf_w_W500_23,
-          )),
+            child: Text(
+              buttonText.toString(),
+              style: CustomizedTheme.sf_w_W500_23,
+            ),
+          ),
         ),
       ),
     );
@@ -161,14 +172,20 @@ class _OTPPageState extends State<OTPPage> {
                   Navigator.pop(context);
                 },
                 child: Container(
-                    height: 33.73.h,
-                    width: 33.73.w,
-                    // margin: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.16.r),
-                        color: CustomizedTheme.colorAccent),
-                    child:
-                        Icon(Icons.arrow_back, color: CustomizedTheme.white)),
+                  height: 33.73.h,
+                  width: 33.73.w,
+                  // margin: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      9.16.r,
+                    ),
+                    color: CustomizedTheme.colorAccent,
+                  ),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: CustomizedTheme.white,
+                  ),
+                ),
               ),
             ),
           ],
@@ -177,6 +194,7 @@ class _OTPPageState extends State<OTPPage> {
             AppLocalizations.of(context)!.translate(
               TranslationKeys.confirmOTP,
             ),
+            maxLines: 2,
             style: CustomizedTheme.title_p_W500_21),
       ),
       body: Column(
@@ -291,82 +309,84 @@ class _OTPPageState extends State<OTPPage> {
             buildButton(8),
             buildButton(9),
           ]),
-          TableRow(children: [
-            GestureDetector(
-              onTap: () {
-                setState(
-                  () {
-                    if (_sixthDigit != checker) {
-                      _sixthDigit = checker;
-                    } else if (_fifthDigit != checker) {
-                      _fifthDigit = checker;
-                    } else if (_fourthDigit != checker) {
-                      _fourthDigit = checker;
-                    } else if (_thirdDigit != checker) {
-                      _thirdDigit = checker;
-                    } else if (_secondDigit != checker) {
-                      _secondDigit = checker;
-                    } else if (_firstDigit != checker) {
-                      _firstDigit = checker;
-                    }
-                    OtpCode = "no";
-                  },
-                );
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 15.0.w,
-                  vertical: 5.h,
-                ),
-                child: Container(
-                  height: 44.86.h,
-                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
-                  // width: 92.96,
-                  decoration: BoxDecoration(
-                    color: CustomizedTheme.white,
-                    borderRadius: BorderRadius.circular(6.93.r),
-                    border: Border.all(
-                      color: CustomizedTheme.white,
-                    ),
+          TableRow(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  setState(
+                    () {
+                      if (_sixthDigit != checker) {
+                        _sixthDigit = checker;
+                      } else if (_fifthDigit != checker) {
+                        _fifthDigit = checker;
+                      } else if (_fourthDigit != checker) {
+                        _fourthDigit = checker;
+                      } else if (_thirdDigit != checker) {
+                        _thirdDigit = checker;
+                      } else if (_secondDigit != checker) {
+                        _secondDigit = checker;
+                      } else if (_firstDigit != checker) {
+                        _firstDigit = checker;
+                      }
+                      OtpCode = "no";
+                    },
+                  );
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15.0.w,
+                    vertical: 5.h,
                   ),
-                  child: SvgPicture.asset(
-                    'assets/svg/ic_backspace.svg',
+                  child: Container(
+                    height: 44.86.h,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    // width: 92.96,
+                    decoration: BoxDecoration(
+                      color: CustomizedTheme.white,
+                      borderRadius: BorderRadius.circular(6.93.r),
+                      border: Border.all(
+                        color: CustomizedTheme.white,
+                      ),
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/svg/ic_backspace.svg',
+                    ),
                   ),
                 ),
               ),
-            ),
-            buildButton(0),
-            OtpCode == "no"
-                ? Container()
-                : GestureDetector(
-                    onTap: () async {
-                      if (widget.phone.isNotEmpty) {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        Map<String, String> loginData = {
-                          "mobileNumber": '${widget.areaCode}${widget.phone}',
-                          "password": widget.password,
-                        };
-                        var res1 =
-                            await networkHandler.verifyUser(VerifyUserModel(
-                          mobileNumber: '${widget.areaCode}${widget.phone}',
-                          newPassword: widget.password,
-                          code: OtpCode,
-                        ));
-                        if (res1 != null && res1['data']['acknowledged']) {
-                          var res = await networkHandler.loginUser(loginData);
-                          if (res != null) {
-                            LoginUserModel loginModel =
-                                LoginUserModel.fromJson(res);
-                            storage.setStringValue(
-                                SharedPrefKeys.userPhone, widget.phone);
-                            storage.setStringValue(
-                                SharedPrefKeys.userPassword, widget.password);
-                            setState(() {
-                              isLoading = false;
-                            });
-                            CustomAlertDialog.baseDialog(
+              buildButton(0),
+              OtpCode == "no"
+                  ? Container()
+                  : GestureDetector(
+                      onTap: () async {
+                        if (widget.phone.isNotEmpty) {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          Map<String, String> loginData = {
+                            "mobileNumber": '${widget.areaCode}${widget.phone}',
+                            "password": widget.password,
+                          };
+                          var res1 =
+                              await networkHandler.verifyUser(VerifyUserModel(
+                            mobileNumber: '${widget.areaCode}${widget.phone}',
+                            newPassword: widget.password,
+                            code: OtpCode,
+                          ));
+                          if (res1 != null && res1['data']['acknowledged']) {
+                            var res = await networkHandler.loginUser(loginData);
+                            if (res != null) {
+                              LoginUserModel loginModel =
+                                  LoginUserModel.fromJson(res);
+                              storage.setStringValue(
+                                  SharedPrefKeys.userPhone, widget.phone);
+                              storage.setStringValue(
+                                  SharedPrefKeys.userPassword, widget.password);
+                              setState(() {
+                                isLoading = false;
+                              });
+                              CustomAlertDialog.baseDialog(
                                 context: context,
                                 title: AppLocalizations.of(context)!.translate(
                                   TranslationKeys.successfullyCreated,
@@ -381,59 +401,68 @@ class _OTPPageState extends State<OTPPage> {
                                       context,
                                       RouteConstant.hostPage,
                                       (Route<dynamic> route) => false);
-                                });
+                                },
+                              );
+                            } else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.somethingWentWrong,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                backgroundColor: CustomizedTheme.voucherUnpaid,
+                              ));
+                            }
                           } else {
                             setState(() {
                               isLoading = false;
                             });
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.somethingWentWrong,
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.invalidOTP,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                backgroundColor: CustomizedTheme.voucherUnpaid,
                               ),
-                              behavior: SnackBarBehavior.floating,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              backgroundColor: CustomizedTheme.voucherUnpaid,
-                            ));
+                            );
                           }
-                        } else {
-                          setState(() {
-                            isLoading = false;
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(
-                              AppLocalizations.of(context)!.translate(
-                                TranslationKeys.invalidOTP,
-                              ),
-                            ),
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            backgroundColor: CustomizedTheme.voucherUnpaid,
-                          ));
                         }
-                      }
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 15.0.w, vertical: 5.h),
-                      child: Container(
-                        height: 44.86.h,
-                        // width: 92.96,
-                        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
-                        decoration: BoxDecoration(
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 15.0.w, vertical: 5.h),
+                        child: Container(
+                          height: 44.86.h,
+                          // width: 92.96,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          decoration: BoxDecoration(
                             color: CustomizedTheme.white,
                             borderRadius: BorderRadius.circular(6.93.r),
-                            border: Border.all(color: CustomizedTheme.white)),
-                        child: SvgPicture.asset('assets/svg/ic_polygon.svg'),
+                            border: Border.all(color: CustomizedTheme.white),
+                          ),
+                          child: SvgPicture.asset('assets/svg/ic_polygon.svg'),
+                        ),
                       ),
                     ),
-                  ),
-          ]),
+            ],
+          ),
         ],
       ),
     );

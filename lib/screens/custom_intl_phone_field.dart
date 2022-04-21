@@ -3,6 +3,8 @@ library intl_phone_field;
 import 'dart:async';
 
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/localization/app_localization.dart';
+import 'package:borderpay/localization/translation_keys.dart';
 import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -421,7 +423,7 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
                 FittedBox(
                   child: Text(
                     '+${_selectedCountry.dialCode}',
-                    style: CustomizedTheme.b_W400_12
+                    style: CustomizedTheme.b_W400_12,
                   ),
                 ),
                 if (widget.enabled &&
@@ -528,7 +530,9 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
               return value.length >= _selectedCountry.minLength &&
                       value.length <= _selectedCountry.maxLength
                   ? null
-                  : widget.invalidNumberMessage;
+                  : AppLocalizations.of(context)!.translate(
+                      TranslationKeys.invalidMobileNumber,
+                    );
             }
 
             return validatorMessage;

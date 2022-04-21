@@ -292,7 +292,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
                                   content: const Text(
-                                      "Unable to complete your request!"),
+                                    "Unable to complete your request!",
+                                    textAlign: TextAlign.center,
+                                  ),
                                   behavior: SnackBarBehavior.floating,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24),
@@ -308,7 +310,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                 content: const Text(
-                                    "Unable to complete your request!"),
+                                  "Unable to complete your request!",
+                                  textAlign: TextAlign.center,
+                                ),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24),
@@ -339,9 +343,9 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                               color: Colors.white,
                             )
                           : Text(
-                        AppLocalizations.of(context)!.translate(
-                          TranslationKeys.pay,
-                        ),
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.pay,
+                              ),
                               style: CustomizedTheme.sf_w_W500_19,
                             ),
                     ),

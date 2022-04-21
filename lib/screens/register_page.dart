@@ -532,15 +532,16 @@ class _RegisterPageState extends State<RegisterPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                    AppLocalizations.of(context)!.translate(
-                                      TranslationKeys
-                                          .youHaveToAcceptTermAndConditions,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    style: CustomizedTheme.w_W500_15.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: CustomizedTheme.white,
-                                    )),
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys
+                                        .youHaveToAcceptTermAndConditions,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  style: CustomizedTheme.w_W500_15.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomizedTheme.white,
+                                  ),
+                                ),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24),

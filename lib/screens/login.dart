@@ -493,6 +493,7 @@ class _LoginPageState extends State<LoginPage> {
           AppLocalizations.of(context)!.translate(
             TranslationKeys.loginFailed,
           ),
+          textAlign: TextAlign.center,
         ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(

@@ -171,6 +171,12 @@ class TranslationKeys {
   static const invalidNumberMessage = "invalidNumberMessage";
   static const searchCountry = "searchCountry";
   static const changeLanguage = "changeLanguage";
+  static const invalidMobileNumber = "invalidMobileNumber";
+  static const active = "active";
+  static const expired = "expired";
+  static const portRashid = "portRashid";
+  static const english = "english";
+  static const arabic = "arabic";
   static const ic_support = "ic_support";
 
 

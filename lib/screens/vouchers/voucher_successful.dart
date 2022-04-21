@@ -416,33 +416,6 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
   }
 
   Future generateScreenshotImages(String fileName) async {
-    // screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
-    //   if (image != null) {
-    //     final directory = await getApplicationDocumentsDirectory();
-    //     final imagePath = await File('${directory.path}/image.png').create();
-    //     await imagePath.writeAsBytes(image);
-    //     if (await Permission.manageExternalStorage.request().isGranted) {
-    //       await ImageGallerySaver.saveImage(image,
-    //           quality: 100, name: fileName);
-    //     }
-    //   }
-    //
-    //   // Navigator.pushNamedAndRemoveUntil(
-    //   //   context,
-    //   //   RouteConstant.hostPage,
-    //   //   ModalRoute.withName(
-    //   //     RouteConstant.hostPage,
-    //   //   ),
-    //   // );
-    // }).catchError(
-    //   (error, stackTrace) {
-    //     if (kDebugMode) {
-    //       print(
-    //       error,
-    //     );
-    //     }
-    //   },
-    // );
     setState(() {
       isLoading = true;
     });
@@ -457,18 +430,21 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
     setState(() {
       isLoading = false;
     });
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-        AppLocalizations.of(context)!.translate(
-          TranslationKeys.successfullySavedInDownload,
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.successfullySavedInDownload,
+          ),
+          textAlign: TextAlign.center,
         ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        backgroundColor: CustomizedTheme.voucherPaid,
       ),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
-      backgroundColor: CustomizedTheme.voucherPaid,
-    ));
+    );
 
     // Navigator.pushNamedAndRemoveUntil(
     //   context,

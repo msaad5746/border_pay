@@ -70,7 +70,8 @@ dev_dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
-  shared_preferences: ^2.0.8
+  shared_preferences:
+  get_it:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.

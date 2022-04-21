@@ -77,8 +77,8 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                       padding: EdgeInsets.only(bottom: 30.h),
                       child: Text(
                           AppLocalizations.of(context)!.translate(
-                        TranslationKeys.selectTheTravellerCategory,
-                      ),
+                            TranslationKeys.selectTheTravellerCategory,
+                          ),
                           style: CustomizedTheme.sf_b_W500_17),
                     ),
                     Center(
@@ -99,9 +99,9 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                                       fit: BoxFit.fill,
                                     )
                                   : SvgPicture.asset(
-                                'assets/svg/ic_single.svg',
-                                fit: BoxFit.fill,
-                              ),
+                                      'assets/svg/ic_single.svg',
+                                      fit: BoxFit.fill,
+                                    ),
                             ),
                           ),
                           Padding(
@@ -119,17 +119,18 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                               });
                             },
                             child: SizedBox(
-                                height: 150.h,
-                                // width: 150.w,
-                                child: selection == 2
-                                    ? SvgPicture.asset(
-                                  'assets/svg/ic_group_active.svg',
-                                  fit: BoxFit.fill,
-                                )
-                                    : SvgPicture.asset(
-                                  'assets/svg/ic_group.svg',
-                                  fit: BoxFit.fill,
-                                ),),
+                              height: 150.h,
+                              // width: 150.w,
+                              child: selection == 2
+                                  ? SvgPicture.asset(
+                                      'assets/svg/ic_group_active.svg',
+                                      fit: BoxFit.fill,
+                                    )
+                                  : SvgPicture.asset(
+                                      'assets/svg/ic_group.svg',
+                                      fit: BoxFit.fill,
+                                    ),
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -249,10 +250,11 @@ class _TravelerCategoryState extends State<TravelerCategory> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content:  Text(
-            AppLocalizations.of(context)!.translate(
-          TranslationKeys.somethingWentWrong,
-        ),),
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.somethingWentWrong,
+          ),
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
