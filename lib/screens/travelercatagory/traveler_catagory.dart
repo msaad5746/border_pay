@@ -14,6 +14,9 @@ import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class TravelerCategory extends StatefulWidget {
   final String type;
   final int locationId;
@@ -71,7 +74,10 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(bottom: 30.h),
-                      child: Text("Select the traveller category:",
+                      child: Text(
+                          AppLocalizations.of(context)!.translate(
+                        TranslationKeys.selectTheTravellerCategory,
+                      ),
                           style: CustomizedTheme.sf_b_W500_17),
                     ),
                     Center(
@@ -99,7 +105,10 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 20.h),
-                            child: Text("Single",
+                            child: Text(
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.single,
+                                ),
                                 style: CustomizedTheme.sf_b_W500_17),
                           ),
                           GestureDetector(
@@ -123,7 +132,10 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 20.h),
-                            child: Text("Group",
+                            child: Text(
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.group,
+                                ),
                                 style: CustomizedTheme.sf_b_W500_17),
                           ),
                           Padding(
@@ -176,7 +188,9 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                                         }
                                       },
                                       child: Text(
-                                        "Next",
+                                        AppLocalizations.of(context)!.translate(
+                                          TranslationKeys.next,
+                                        ),
                                         style: CustomizedTheme.sf_w_W500_19,
                                       ),
                                     ),
@@ -234,7 +248,10 @@ class _TravelerCategoryState extends State<TravelerCategory> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Something went wrong"),
+        content:  Text(
+            AppLocalizations.of(context)!.translate(
+          TranslationKeys.somethingWentWrong,
+        ),),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),

@@ -6,6 +6,9 @@ import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class VoucherTypePage extends StatefulWidget {
   LocationModel location;
 
@@ -50,8 +53,9 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                 ),
               ),
               verticalSpacer(26),
-              Text(
-                "Select the voucher type:",
+              Text( AppLocalizations.of(context)!.translate(
+                TranslationKeys.selectTheVoucherType,
+              ),
                 style: CustomizedTheme.sf_b_W500_17,
               ),
               verticalSpacer(16),
@@ -95,7 +99,9 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                           ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 20.h),
-                      child: Text("Entry", style: CustomizedTheme.sf_b_W500_17),
+                      child: Text( AppLocalizations.of(context)!.translate(
+                        TranslationKeys.entry,
+                      ), style: CustomizedTheme.sf_b_W500_17),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -124,7 +130,9 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                         vertical: 20.h,
                       ),
                       child: Text(
-                        "Exit",
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.exit,
+                        ),
                         style: CustomizedTheme.sf_b_W500_17,
                       ),
                     ),
@@ -169,7 +177,9 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                                   }
                                 },
                                 child: Text(
-                                  "Next",
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.next,
+                                  ),
                                   style: CustomizedTheme.sf_w_W500_19,
                                 ),
                               ),

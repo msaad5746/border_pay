@@ -5,6 +5,9 @@ import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class NumberofVoucherPage extends StatefulWidget {
   final String type;
   final int locationId;
@@ -32,7 +35,7 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            verticalSpacer(56 ),
+            verticalSpacer(56),
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
@@ -54,7 +57,9 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
             ),
             verticalSpacer(26),
             Text(
-              "Select the Number of Travellers",
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.selectTheNumberOfTravellers,
+              ),
               style: CustomizedTheme.sf_b_W500_17,
             ),
             verticalSpacer(16),
@@ -72,17 +77,17 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
                     borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
                     borderSide: BorderSide(
                         color: CustomizedTheme.colorAccent, width: .01)),
-                labelText: "Number of Travellers",
+                labelText: AppLocalizations.of(context)!.translate(
+                  TranslationKeys.numberOfTravellers,
+                ),
                 labelStyle: TextStyle(color: CustomizedTheme.colorAccent),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                  borderSide:
-                      BorderSide(color: Colors.lightBlue, width: 1.w),
+                  borderSide: BorderSide(color: Colors.lightBlue, width: 1.w),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                  borderSide:
-                      BorderSide(color: Colors.lightBlue, width: 1.w),
+                  borderSide: BorderSide(color: Colors.lightBlue, width: 1.w),
                 ),
               ),
               // controller: personController,
@@ -90,10 +95,14 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
               // Return null if the entered email is valid
               validator: (value) {
                 if (value!.trim().isEmpty) {
-                  return 'Please enter a number';
+                  return AppLocalizations.of(context)!.translate(
+                    TranslationKeys.pleaseEnterNumber,
+                  );
                 }
                 if (value.trim().length > 9) {
-                  return 'You can pay up for 9 people';
+                  return AppLocalizations.of(context)!.translate(
+                    TranslationKeys.youCanPayUpFor9People,
+                  );
                 }
                 return null;
               },
@@ -435,8 +444,7 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(11.72.r),
                           border: Border.all(
-                              color: CustomizedTheme.primaryColor,
-                              width: .5.w),
+                              color: CustomizedTheme.primaryColor, width: .5.w),
                           color: CustomizedTheme.white),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -455,7 +463,10 @@ class _NumberofVoucherPageState extends State<NumberofVoucherPage> {
                                   locationId: widget.locationId,
                                 ));
                           },
-                          child: Text("Next",
+                          child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.next,
+                              ),
                               style: CustomizedTheme.sf_w_W500_19)),
                     ),
                   ),

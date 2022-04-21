@@ -13,6 +13,9 @@ import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../localization/app_localization.dart';
+import '../localization/translation_keys.dart';
+
 class OTPPage extends StatefulWidget {
   String firstName;
   String lastName;
@@ -168,7 +171,9 @@ class _OTPPageState extends State<OTPPage> {
             ),
           ],
         ),
-        title: Text("Confirm OTP", style: CustomizedTheme.title_p_W500_21),
+        title: Text(AppLocalizations.of(context)!.translate(
+          TranslationKeys.confirmOTP,
+        ),style: CustomizedTheme.title_p_W500_21),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,13 +182,18 @@ class _OTPPageState extends State<OTPPage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
             child:
-                Text("Enter OTP", style: CustomizedTheme.poppins_dark_W500_19),
+                Text(AppLocalizations.of(context)!.translate(
+                  TranslationKeys.enterOTP,
+                ), style: CustomizedTheme.poppins_dark_W500_19),
           ),
           const SizedBox(height: 7.76),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
             child: Text(
-              "A 6 digit code has been sent to your mobile number ${widget.areaCode + widget.phone}",
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.a6DigitCodeHasBeenSentToYourMobileNumber,
+              )+
+               widget.areaCode + widget.phone,
               style: CustomizedTheme.sf_b_W400_15,
             ),
           ),
@@ -338,9 +348,13 @@ class _OTPPageState extends State<OTPPage> {
                             });
                             CustomAlertDialog.baseDialog(
                                 context: context,
-                                title: 'Successfully Created',
+                                title: AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.successfullyCreated,
+                                ),
                                 message:
-                                    'Your account has been successfully created.',
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.yourAccountHasBeenSuccessfullyCreated,
+                                ),
                                 buttonAction: () {
                                   Navigator.pushNamedAndRemoveUntil(
                                       context,
@@ -352,7 +366,9 @@ class _OTPPageState extends State<OTPPage> {
                               isLoading = false;
                             });
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: const Text("Something went wrong"),
+                              content:  Text(AppLocalizations.of(context)!.translate(
+                                TranslationKeys.somethingWentWrong,
+                              ),),
                               behavior: SnackBarBehavior.floating,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24),
@@ -365,7 +381,9 @@ class _OTPPageState extends State<OTPPage> {
                             isLoading = false;
                           });
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: const Text("Invalid OTP!"),
+                            content:  Text(AppLocalizations.of(context)!.translate(
+                              TranslationKeys.invalidOTP,
+                            ),),
                             behavior: SnackBarBehavior.floating,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24),

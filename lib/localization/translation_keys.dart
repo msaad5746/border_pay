@@ -33,7 +33,7 @@ class TranslationKeys {
   static const terms_Conditions = "terms_Conditions";
   static const youHaveToAcceptTermAndConditions =
       "youHaveToAcceptTermAndConditions";
-  static const Next = "Next";
+  static const next = "next";
 
   static const step1 = "step1";
   static const chooseYourDocumentType = "chooseYourDocumentType";
@@ -47,7 +47,7 @@ class TranslationKeys {
   static const uploadEmiratesID = "uploadEmiratesID";
   static const uploadPhoto = "uploadPhoto";
   static const selectFile = "selectFile";
-  static const Upload = "Upload";
+  static const upload = "upload";
   static const step3 = "step3";
   static const andEnterPassport = "andEnterPassport";
   static const andEnterEmiratesID = "andEnterEmiratesID";
@@ -166,4 +166,10 @@ class TranslationKeys {
   static const continueButton = "continueButton";
   static const somethingWentWrong = "somethingWentWrong";
   static const qoma = "qoma";
+  static const enterEmirateID = "enterEmirateID";
+  static const successfullyUpdated = "successfullyUpdated";
+  static const invalidNumberMessage = "invalidNumberMessage";
+  static const searchCountry = "searchCountry";
+  static const changeLanguage = "changeLanguage";
+
 }

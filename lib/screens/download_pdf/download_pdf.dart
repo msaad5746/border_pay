@@ -13,6 +13,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart';
 import 'package:open_file/open_file.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class PdfApi {
   static CountriesController countriesController =
       Get.find<CountriesController>();
@@ -24,6 +27,7 @@ class PdfApi {
   static Future<File> generatePdfFile(
     Vouchers vouchers,
     Uint8List image,
+      material.BuildContext buildContext
   ) async {
     final pdf = Document();
     var data = await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf");
@@ -50,11 +54,13 @@ class PdfApi {
           buildHeader(
             data: vouchers,
             font: myFont,
+            context: buildContext
           ),
           spacing(),
           buildBody(
             data: vouchers,
             font: myFont,
+            buildContext: buildContext
           ),
           spacing(),
           buildQrImage(
@@ -70,6 +76,7 @@ class PdfApi {
   static Widget buildHeader({
     required Vouchers data,
     required font,
+    required material.BuildContext context,
   }) {
     return Container(
       width: double.infinity,
@@ -89,7 +96,9 @@ class PdfApi {
         children: [
           Spacer(),
           Text(
-            'Voucher Number: ',
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.voucher_Number,
+            ),
             style: TextStyle(
               font: font,
               fontSize: sizes.fontRatio! * 18,
@@ -127,6 +136,7 @@ class PdfApi {
   static Widget buildBody({
     required Vouchers data,
     required font,
+    required material.BuildContext buildContext,
   }) {
     return Container(
       child: Column(
@@ -139,7 +149,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Traveller Name ',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.travellerName,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -174,7 +186,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Email ID ',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.emailID,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -209,7 +223,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Phone Number ',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.phoneNumber,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -244,7 +260,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Nationality: ',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.nationality,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -279,7 +297,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Emirates ID ',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.emiratesID,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -314,7 +334,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Total Amount',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.totalAmount,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -349,7 +371,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Payment Date',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.paymentDate,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -386,7 +410,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Payment Time',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.paymentTime,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,

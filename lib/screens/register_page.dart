@@ -10,6 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:country_picker/country_picker.dart';
 
+import '../localization/app_localization.dart';
+import '../localization/translation_keys.dart';
 import 'custom_intl_phone_field.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -72,7 +74,9 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ],
         ),
-        title: Text("Register", style: CustomizedTheme.title_p_W500_21),
+        title: Text(AppLocalizations.of(context)!.translate(
+          TranslationKeys.register,
+        ), style: CustomizedTheme.title_p_W500_21),
         centerTitle: false,
       ),
       body: SingleChildScrollView(
@@ -110,7 +114,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             width: 1.0.w,
                           ),
                         ),
-                        labelText: "First Name",
+                        labelText: AppLocalizations.of(context)!.translate(
+                          TranslationKeys.firstName,
+                        ),
                         labelStyle: CustomizedTheme.b_W400_12,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
@@ -126,7 +132,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value!.trim().isEmpty) {
-                          return 'First name is empty';
+                          return AppLocalizations.of(context)!.translate(
+                            TranslationKeys.firstNameIsEmpty,
+                          );
                         }
                         return null;
                       },
@@ -155,7 +163,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             width: 1.0.w,
                           ),
                         ),
-                        labelText: "Last Name",
+                        labelText: AppLocalizations.of(context)!.translate(
+                          TranslationKeys.lastName,
+                        ),
                         labelStyle: CustomizedTheme.b_W400_12,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
@@ -171,7 +181,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value!.trim().isEmpty) {
-                          return 'Last name is empty';
+                          return AppLocalizations.of(context)!.translate(
+                            TranslationKeys.lastNameIsEmpty,
+                          );
                         }
                         return null;
                       },
@@ -188,7 +200,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       initialCountryCode: 'US',
                       controller: phoneController,
                       decoration: InputDecoration(
-                        label: const Text("Phone Number"),
+                        label:  Text(AppLocalizations.of(context)!.translate(
+                          TranslationKeys.phoneNumber,
+                        ),),
                         labelStyle: TextStyle(
                           color: CustomizedTheme.colorAccent,
                         ),
@@ -263,7 +277,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             width: 1.0.w,
                           ),
                         ),
-                        labelText: "Email ID",
+                        labelText: AppLocalizations.of(context)!.translate(
+                          TranslationKeys.emailID,
+                        ),
                         labelStyle: CustomizedTheme.b_W400_12,
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
@@ -275,7 +291,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (!GetUtils.isEmail(value!)) {
-                          return 'Enter valid email';
+                          return AppLocalizations.of(context)!.translate(
+                            TranslationKeys.enterValidEmail,
+                          );
                         }
                         // Return null if the entered email is valid
                         return null;
@@ -289,7 +307,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: currentNationality,
                       validator: (value) {
                         if (currentNationality.text.isEmpty) {
-                          return 'Nationality is empty';
+                          return AppLocalizations.of(context)!.translate(
+                            TranslationKeys.nationalityIsEmpty,
+                          );
                         }
                         // Return null if the entered email is valid
                         return null;
@@ -312,7 +332,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               width: 1.0.w,
                             ),
                           ),
-                          labelText: "Nationality",
+                          labelText: AppLocalizations.of(context)!.translate(
+                            TranslationKeys.nationality,
+                          ),
                           labelStyle: CustomizedTheme.b_W400_12,
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
@@ -346,8 +368,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             // Optional. Styles the search field.
                             inputDecoration: InputDecoration(
-                              labelText: 'Search',
-                              hintText: 'Find your country',
+                              labelText: AppLocalizations.of(context)!.translate(
+                                TranslationKeys.search,
+                              ),
+                              hintText: AppLocalizations.of(context)!.translate(
+                                TranslationKeys.findYourCountry,
+                              ),
                               prefixIcon: const Icon(Icons.search),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -386,7 +412,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             width: 1.0.w,
                           ),
                         ),
-                        labelText: "Password",
+                        labelText: AppLocalizations.of(context)!.translate(
+                          TranslationKeys.password,
+                        ),
                         labelStyle: CustomizedTheme.b_W400_12,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
@@ -415,7 +443,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value!.isEmpty || value.length < 10) {
-                          return 'Password should contain at least 10 characters';
+                          return AppLocalizations.of(context)!.translate(
+                            TranslationKeys.passwordShouldContain10Characters,
+                          );
                         }
                         return null;
                       },
@@ -434,7 +464,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: 'I accept',
+                                text: AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.iAccept,
+                                ),
                                 style: CustomizedTheme.b_W400_12.copyWith(
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -443,7 +475,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 text: '  ',
                               ),
                               TextSpan(
-                                text: 'Terms & Conditions',
+                                text: AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.terms_Conditions,
+                                ),
                                 style: CustomizedTheme.b_W400_12.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: CustomizedTheme.colorAccent,
@@ -493,7 +527,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                    'You have to accept term and conditions',
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.youHaveToAcceptTermAndConditions,
+                                    ),
                                     textAlign: TextAlign.center,
                                     style: CustomizedTheme.w_W500_15.copyWith(
                                       fontWeight: FontWeight.w400,
@@ -509,7 +545,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                         },
                         child: Text(
-                          "Next",
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.next,
+                          ),
                           style: CustomizedTheme.w_W500_19,
                         ),
                       ),
