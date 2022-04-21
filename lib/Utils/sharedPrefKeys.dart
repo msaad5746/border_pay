@@ -10,4 +10,5 @@ class SharedPrefKeys{
   static const String userId = "userId";
   static const String isBioMatric = "isBioMatric";
   static const String isNotificationEnable = "isNotificationEnable";
+  static const String selectedLanguage = "selectedLanguage";
 }

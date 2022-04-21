@@ -14,17 +14,18 @@ class MySharedPreferences {
   }
 
   setStringValue(String key, String value) {
-    // SharedPreferences myPrefs = await SharedPreferences.getInstance();
     myPrefs.setString(key, value);
   }
 
+  setIntValue(String key, int value) {
+    myPrefs.setInt(key, value);
+  }
+
   setBoolValue(String key, bool value) {
-    // SharedPreferences myPrefs = await SharedPreferences.getInstance();
     myPrefs.setBool(key, value);
   }
 
   bool getBoolValue(String key) {
-    // SharedPreferences myPrefs = await SharedPreferences.getInstance();
     if (myPrefs.containsKey(key)) {
       return myPrefs.getBool(key) ?? false;
     } else {
@@ -33,8 +34,11 @@ class MySharedPreferences {
   }
 
   String getStringValue(String key) {
-    // SharedPreferences myPrefs = await SharedPreferences.getInstance();
     return myPrefs.getString(key) ?? "";
+  }
+
+  int getIntValue(String key) {
+    return myPrefs.getInt(key) ?? 0;
   }
 
   bool containsKey(String key) {
@@ -42,12 +46,10 @@ class MySharedPreferences {
   }
 
   removeValue(String key) {
-    // SharedPreferences myPrefs = await SharedPreferences.getInstance();
     return myPrefs.remove(key);
   }
 
   removeAll() {
-    // SharedPreferences myPrefs = await SharedPreferences.getInstance();
     return myPrefs.clear();
   }
 }

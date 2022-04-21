@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -35,5 +37,11 @@ List<Locale> supportedLocale = [
 ];
 
 Locale? getSelectedLang(Locale? locale, Iterable<Locale> supportedLocales) {
-  return const Locale('ar');
+  try{
+    MySharedPreferences storage = MySharedPreferences.instance;
+    int selectedLang = storage.getIntValue(SharedPrefKeys.selectedLanguage);
+    return supportedLocale[selectedLang];
+  }catch(e){
+    return supportedLocale[0];
+  }
 }

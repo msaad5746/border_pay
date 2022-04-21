@@ -4,6 +4,7 @@ import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/auth/local_auth_api.dart';
+import 'package:borderpay/localization/locale_constants.dart';
 import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
 import '../../localization/app_localization.dart';
 import '../../localization/translation_keys.dart';
+import 'package:restart_app/restart_app.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -33,12 +35,12 @@ class _SettingPageState extends State<SettingPage> {
   bool isAuthenticated = false;
   bool isNotificationEnable = false;
   bool isLoading = false;
+  int languageIndex = 0;
 
   @override
   void initState() {
     getUserData();
-    isBioMetricEnable();
-    isPushNotificationEnable();
+    getDataFromPref();
     super.initState();
   }
 
@@ -368,19 +370,19 @@ class _SettingPageState extends State<SettingPage> {
                                 width: 18,
                                 height: 30,
                                 borderRadius: 15,
-                                selectedTextStyle: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                                unSelectedTextStyle: const TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w400),
+                                selectedTextStyle:
+                                    CustomizedTheme.roboto_w_W400_14,
+                                unSelectedTextStyle:
+                                    CustomizedTheme.popp_b_w400_1203,
                                 labels: const ["Eng", "Ar"],
                                 selectedLabelIndex: (index) {
+                                  setState(() {
+                                    languageIndex = index;
+                                  });
+                                  onChangeLanguage(index);
                                   print("Selected Index $index");
                                 },
-                                selectedIndex: 0,
+                                selectedIndex: languageIndex,
                               ),
                             ],
                           ),
@@ -517,11 +519,9 @@ class _SettingPageState extends State<SettingPage> {
     }
   }
 
-  isBioMetricEnable() {
+  getDataFromPref() {
+    languageIndex = storage.getIntValue(SharedPrefKeys.selectedLanguage);
     isAuthenticated = storage.getBoolValue(SharedPrefKeys.isBioMatric);
-  }
-
-  isPushNotificationEnable() {
     isNotificationEnable =
         storage.getBoolValue(SharedPrefKeys.isNotificationEnable);
   }
@@ -592,5 +592,11 @@ class _SettingPageState extends State<SettingPage> {
         MaterialPageRoute(
             builder: (BuildContext context) => const WelcomePage()),
         ModalRoute.withName('/'));
+  }
+
+  void onChangeLanguage(int index) {
+    getSelectedLang(supportedLocale[index], supportedLocale);
+    storage.setIntValue(SharedPrefKeys.selectedLanguage, languageIndex);
+    Restart.restartApp(webOrigin: '[your main route]');
   }
 }

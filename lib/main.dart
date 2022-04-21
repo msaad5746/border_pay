@@ -47,6 +47,7 @@ import 'package:borderpay/screens/vouchers/voucher_successful.dart';
 import 'package:borderpay/screens/vouchers/voucher_type.dart';
 import 'package:borderpay/screens/vouchers/vouchers_list.dart';
 
+import 'Utils/sharedpref.dart';
 import 'model/datamodels/user_model.dart';
 import 'screens/forget_password/mobile_number.dart';
 import 'screens/welcome_screen.dart';
@@ -56,6 +57,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  MySharedPreferences storage = MySharedPreferences.instance;
   runApp(const MyApp());
 }
 
