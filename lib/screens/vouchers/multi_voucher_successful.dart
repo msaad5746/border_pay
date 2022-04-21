@@ -360,10 +360,13 @@ class _MultiVoucherSuccessPageState extends State<MultiVoucherSuccessPage> {
                                           ),
                                           CustomizedTheme.sf_bo_W300_1503,
                                         ),
-                                        buildText(
-                                          widget.vouchersData[index].user
-                                              .mobileNumber,
-                                          CustomizedTheme.sf_bo_W500_1503,
+                                        Directionality(
+                                          textDirection: TextDirection.ltr,
+                                          child: buildText(
+                                            widget.vouchersData[index].user
+                                                .mobileNumber,
+                                            CustomizedTheme.sf_bo_W500_1503,
+                                          ),
                                         ),
                                       ],
                                     ),

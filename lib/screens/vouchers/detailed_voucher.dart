@@ -215,9 +215,12 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                       ),
                                       CustomizedTheme.sf_bo_W300_1503,
                                     ),
-                                    buildText(
-                                      voucher.user.phoneNumber,
-                                      CustomizedTheme.sf_bo_W500_1503,
+                                    Directionality(
+                                      textDirection: TextDirection.ltr,
+                                      child: buildText(
+                                        voucher.user.phoneNumber,
+                                        CustomizedTheme.sf_bo_W500_1503,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -239,8 +242,7 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                       CustomizedTheme.sf_bo_W300_1503,
                                     ),
                                     buildText(
-                                      voucher.user.nationality?.name ??
-                                          '',
+                                      voucher.user.nationality?.name ?? '',
                                       CustomizedTheme.sf_bo_W500_1503,
                                     ),
                                   ],
@@ -258,7 +260,8 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                   children: [
                                     buildText(
                                       AppLocalizations.of(context)!.translate(
-                                        TranslationKeys.emiratesID_PassportNumber,
+                                        TranslationKeys
+                                            .emiratesID_PassportNumber,
                                       ),
                                       CustomizedTheme.sf_bo_W300_1503,
                                     ),

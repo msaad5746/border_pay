@@ -37,11 +37,11 @@ List<Locale> supportedLocale = [
 ];
 
 Locale? getSelectedLang(Locale? locale, Iterable<Locale> supportedLocales) {
-  try{
+  try {
     MySharedPreferences storage = MySharedPreferences.instance;
     int selectedLang = storage.getIntValue(SharedPrefKeys.selectedLanguage);
     return supportedLocale[selectedLang];
-  }catch(e){
-    return supportedLocale[0];
+  } catch (e) {
+    return supportedLocale[1];
   }
 }

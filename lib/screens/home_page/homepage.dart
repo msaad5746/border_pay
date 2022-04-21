@@ -12,6 +12,7 @@ import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/screens/home_page/my_vouchers.dart';
 import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -177,9 +178,52 @@ class _HomePageState extends State<HomePage> {
                                           );
                                         });
                                       },
-                                      child: Image.asset(
-                                        'assets/welcome/hatta-bg.png',
-                                        fit: BoxFit.fill,
+                                      child: SizedBox(
+                                        width: 160,
+                                        height: 180,
+                                        child: Stack(
+                                          children: [
+                                            Image.asset(
+                                              'assets/icons/hatta-bg.png',
+                                              fit: BoxFit.fill,
+                                            ),
+                                            Container(
+                                              width: 148,
+                                              height: 164,
+                                              margin: const EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    Colors.transparent,
+                                                    Colors.black
+                                                        .withOpacity(0.5),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20.0),
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .translate(
+                                                    TranslationKeys.hatta,
+                                                  ),
+                                                  style: CustomizedTheme
+                                                      .sf_b_W700_18,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -205,9 +249,52 @@ class _HomePageState extends State<HomePage> {
                                           },
                                         );
                                       },
-                                      child: Image.asset(
-                                        'assets/welcome/portrashid-bg.png',
-                                        fit: BoxFit.fill,
+                                      child: SizedBox(
+                                        width: 160,
+                                        height: 180,
+                                        child: Stack(
+                                          children: [
+                                            Image.asset(
+                                              'assets/icons/portrashid-bg.png',
+                                              fit: BoxFit.fill,
+                                            ),
+                                            Container(
+                                              width: 148,
+                                              height: 164,
+                                              margin: const EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    Colors.transparent,
+                                                    Colors.black
+                                                        .withOpacity(0.5),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20.0),
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .translate(
+                                                    TranslationKeys.portRashid1,
+                                                  ),
+                                                  style: CustomizedTheme
+                                                      .sf_b_W700_18,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -221,7 +308,8 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Text(
                               AppLocalizations.of(context)!.translate(
                                 TranslationKeys.myVouchers,

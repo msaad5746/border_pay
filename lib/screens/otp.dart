@@ -5,6 +5,7 @@ import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/localization/locale_constants.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
 import 'package:borderpay/model/datamodels/verify_user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
@@ -12,6 +13,7 @@ import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../localization/app_localization.dart';
 import '../localization/translation_keys.dart';
@@ -171,9 +173,11 @@ class _OTPPageState extends State<OTPPage> {
             ),
           ],
         ),
-        title: Text(AppLocalizations.of(context)!.translate(
-          TranslationKeys.confirmOTP,
-        ),style: CustomizedTheme.title_p_W500_21),
+        title: Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.confirmOTP,
+            ),
+            style: CustomizedTheme.title_p_W500_21),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,20 +185,35 @@ class _OTPPageState extends State<OTPPage> {
           SizedBox(height: 29.92.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
-            child:
-                Text(AppLocalizations.of(context)!.translate(
+            child: Text(
+                AppLocalizations.of(context)!.translate(
                   TranslationKeys.enterOTP,
-                ), style: CustomizedTheme.poppins_dark_W500_19),
+                ),
+                style: CustomizedTheme.poppins_dark_W500_19),
           ),
           const SizedBox(height: 7.76),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
-            child: Text(
-              AppLocalizations.of(context)!.translate(
-                TranslationKeys.a6DigitCodeHasBeenSentToYourMobileNumber,
-              )+
-               widget.areaCode + widget.phone,
-              style: CustomizedTheme.sf_b_W400_15,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: Text(
+                    AppLocalizations.of(context)!.translate(
+                      TranslationKeys.a6DigitCodeHasBeenSentToYourMobileNumber,
+                    ),
+                    style: CustomizedTheme.sf_b_W400_15,
+                  ),
+                ),
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Text(
+                    widget.areaCode + widget.phone,
+                    style: CustomizedTheme.sf_b_W400_15,
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(height: 112.6.h),
@@ -301,6 +320,7 @@ class _OTPPageState extends State<OTPPage> {
                 ),
                 child: Container(
                   height: 44.86.h,
+                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                   // width: 92.96,
                   decoration: BoxDecoration(
                     color: CustomizedTheme.white,
@@ -309,8 +329,8 @@ class _OTPPageState extends State<OTPPage> {
                       color: CustomizedTheme.white,
                     ),
                   ),
-                  child: Image.asset(
-                    'assets/icons/ic_backspace.png',
+                  child: SvgPicture.asset(
+                    'assets/svg/ic_backspace.svg',
                   ),
                 ),
               ),
@@ -352,8 +372,9 @@ class _OTPPageState extends State<OTPPage> {
                                   TranslationKeys.successfullyCreated,
                                 ),
                                 message:
-                                AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.yourAccountHasBeenSuccessfullyCreated,
+                                    AppLocalizations.of(context)!.translate(
+                                  TranslationKeys
+                                      .yourAccountHasBeenSuccessfullyCreated,
                                 ),
                                 buttonAction: () {
                                   Navigator.pushNamedAndRemoveUntil(
@@ -366,9 +387,11 @@ class _OTPPageState extends State<OTPPage> {
                               isLoading = false;
                             });
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content:  Text(AppLocalizations.of(context)!.translate(
-                                TranslationKeys.somethingWentWrong,
-                              ),),
+                              content: Text(
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.somethingWentWrong,
+                                ),
+                              ),
                               behavior: SnackBarBehavior.floating,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24),
@@ -381,9 +404,11 @@ class _OTPPageState extends State<OTPPage> {
                             isLoading = false;
                           });
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:  Text(AppLocalizations.of(context)!.translate(
-                              TranslationKeys.invalidOTP,
-                            ),),
+                            content: Text(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.invalidOTP,
+                              ),
+                            ),
                             behavior: SnackBarBehavior.floating,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24),
@@ -399,11 +424,12 @@ class _OTPPageState extends State<OTPPage> {
                       child: Container(
                         height: 44.86.h,
                         // width: 92.96,
+                        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                         decoration: BoxDecoration(
                             color: CustomizedTheme.white,
                             borderRadius: BorderRadius.circular(6.93.r),
                             border: Border.all(color: CustomizedTheme.white)),
-                        child: Image.asset('assets/icons/ic_polygon.png'),
+                        child: SvgPicture.asset('assets/svg/ic_polygon.svg'),
                       ),
                     ),
                   ),

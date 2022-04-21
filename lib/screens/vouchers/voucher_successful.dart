@@ -227,7 +227,8 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                             buildText(
                                 AppLocalizations.of(context)!.translate(
                                   TranslationKeys.emailID,
-                                ), CustomizedTheme.sf_bo_W300_1503),
+                                ),
+                                CustomizedTheme.sf_bo_W300_1503),
                             buildText(widget.data.user.email,
                                 CustomizedTheme.sf_bo_W500_1503),
                           ],
@@ -244,8 +245,11 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                                   TranslationKeys.phoneNumber,
                                 ),
                                 CustomizedTheme.sf_bo_W300_1503),
-                            buildText(widget.data.user.mobileNumber,
-                                CustomizedTheme.sf_bo_W500_1503),
+                            Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: buildText(widget.data.user.mobileNumber,
+                                  CustomizedTheme.sf_bo_W500_1503),
+                            ),
                           ],
                         ),
                       ),
@@ -258,7 +262,8 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                             buildText(
                                 AppLocalizations.of(context)!.translate(
                                   TranslationKeys.nationality,
-                                ), CustomizedTheme.sf_bo_W300_1503),
+                                ),
+                                CustomizedTheme.sf_bo_W300_1503),
                             buildText(
                                 getNationality(widget.data.user.nationalityId),
                                 CustomizedTheme.sf_bo_W500_1503),
@@ -274,7 +279,8 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                             buildText(
                                 AppLocalizations.of(context)!.translate(
                                   TranslationKeys.emiratesID,
-                                ),CustomizedTheme.sf_bo_W300_1503),
+                                ),
+                                CustomizedTheme.sf_bo_W300_1503),
                             buildText(widget.data.user.emirateId,
                                 CustomizedTheme.sf_bo_W500_1503),
                           ],
@@ -391,9 +397,9 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                                   color: Colors.white,
                                 )
                               : Text(
-                            AppLocalizations.of(context)!.translate(
-                              TranslationKeys.downloadPrintSummary,
-                            ),
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.downloadPrintSummary,
+                                  ),
                                   style: CustomizedTheme.sf_w_W500_19,
                                 ),
                         ),
@@ -452,9 +458,11 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
       isLoading = false;
     });
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content:  Text(AppLocalizations.of(context)!.translate(
-        TranslationKeys.successfullySavedInDownload,
-      ),),
+      content: Text(
+        AppLocalizations.of(context)!.translate(
+          TranslationKeys.successfullySavedInDownload,
+        ),
+      ),
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),

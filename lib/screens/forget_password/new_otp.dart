@@ -8,6 +8,7 @@ import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ForgetOtpPage extends StatefulWidget {
   String phone;
@@ -266,6 +267,7 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
                 child: Container(
                   height: 44.86.h,
                   // width: 92.96,
+                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                   decoration: BoxDecoration(
                     color: CustomizedTheme.white,
                     borderRadius: BorderRadius.circular(6.93.r),
@@ -273,8 +275,8 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
                       color: CustomizedTheme.white,
                     ),
                   ),
-                  child: Image.asset(
-                    'assets/icons/ic_backspace.png',
+                  child: SvgPicture.asset(
+                    'assets/svg/ic_backspace.svg',
                   ),
                 ),
               ),
@@ -328,12 +330,13 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
                       child: Container(
                         height: 44.86.h,
                         // width: 92.96,
+                        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                         decoration: BoxDecoration(
                           color: CustomizedTheme.white,
                           borderRadius: BorderRadius.circular(6.93.r),
                           border: Border.all(color: CustomizedTheme.white),
                         ),
-                        child: Image.asset('assets/icons/ic_polygon.png'),
+                        child: SvgPicture.asset('assets/svg/ic_polygon.svg'),
                       ),
                     ),
                   ),

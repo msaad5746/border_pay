@@ -10,6 +10,7 @@ import 'package:borderpay/localization/translation_keys.dart';
 import 'package:borderpay/res/res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -73,23 +74,13 @@ class _WelcomePageState extends State<WelcomePage> {
                       Container(
                         height: 80.27.h,
                         width: 1.w,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/welcome/ic_Line.png"),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+                        color: colors.white,
                       ),
                       SizedBox(width: 20.08.w),
                       Container(
                         height: 59.57.h,
                         width: 59.57.w,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/welcome/ic_Icon.png"),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+                        child: SvgPicture.asset('assets/welcome/ic_tomb.svg'),
                       ),
                     ],
                   ),

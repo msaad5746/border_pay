@@ -74,9 +74,11 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ],
         ),
-        title: Text(AppLocalizations.of(context)!.translate(
-          TranslationKeys.register,
-        ), style: CustomizedTheme.title_p_W500_21),
+        title: Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.register,
+            ),
+            style: CustomizedTheme.title_p_W500_21),
         centerTitle: false,
       ),
       body: SingleChildScrollView(
@@ -200,9 +202,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       initialCountryCode: 'US',
                       controller: phoneController,
                       decoration: InputDecoration(
-                        label:  Text(AppLocalizations.of(context)!.translate(
-                          TranslationKeys.phoneNumber,
-                        ),),
+                        label: Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.phoneNumber,
+                          ),
+                        ),
                         labelStyle: TextStyle(
                           color: CustomizedTheme.colorAccent,
                         ),
@@ -368,7 +372,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             // Optional. Styles the search field.
                             inputDecoration: InputDecoration(
-                              labelText: AppLocalizations.of(context)!.translate(
+                              labelText:
+                                  AppLocalizations.of(context)!.translate(
                                 TranslationKeys.search,
                               ),
                               hintText: AppLocalizations.of(context)!.translate(
@@ -528,7 +533,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               SnackBar(
                                 content: Text(
                                     AppLocalizations.of(context)!.translate(
-                                      TranslationKeys.youHaveToAcceptTermAndConditions,
+                                      TranslationKeys
+                                          .youHaveToAcceptTermAndConditions,
                                     ),
                                     textAlign: TextAlign.center,
                                     style: CustomizedTheme.w_W500_15.copyWith(

@@ -24,11 +24,8 @@ class PdfApi {
     return PDFDocument.openFile(file);
   }
 
-  static Future<File> generatePdfFile(
-    Vouchers vouchers,
-    Uint8List image,
-      material.BuildContext buildContext
-  ) async {
+  static Future<File> generatePdfFile(Vouchers vouchers, Uint8List image,
+      material.BuildContext buildContext) async {
     final pdf = Document();
     var data = await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf");
     var myFont = Font.ttf(data);
@@ -51,17 +48,9 @@ class PdfApi {
       MultiPage(
         theme: myTheme,
         build: (context) => [
-          buildHeader(
-            data: vouchers,
-            font: myFont,
-            context: buildContext
-          ),
+          buildHeader(data: vouchers, font: myFont, context: buildContext),
           spacing(),
-          buildBody(
-            data: vouchers,
-            font: myFont,
-            buildContext: buildContext
-          ),
+          buildBody(data: vouchers, font: myFont, buildContext: buildContext),
           spacing(),
           buildQrImage(
             image: image,
@@ -237,15 +226,18 @@ class PdfApi {
                   ),
                 ),
                 Spacer(),
-                Text(
-                  data.user.mobileNumber,
-                  style: TextStyle(
-                    font: font,
-                    fontSize: sizes.fontRatio! * 16,
-                    color: const PdfColor(
-                      00,
-                      0.345,
-                      0.392,
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Text(
+                    data.user.mobileNumber,
+                    style: TextStyle(
+                      font: font,
+                      fontSize: sizes.fontRatio! * 16,
+                      color: const PdfColor(
+                        00,
+                        0.345,
+                        0.392,
+                      ),
                     ),
                   ),
                 ),
