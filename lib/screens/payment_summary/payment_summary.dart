@@ -220,119 +220,119 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                         ),
                       ),
                       onPressed: () async {
-                        CustomAlertDialog.baseDialog(
-                            context: context,
-                            title:AppLocalizations.of(context)!.translate(
-                              TranslationKeys.successfullyPurchased,
-                            ),
-                            message: AppLocalizations.of(context)!.translate(
-                              TranslationKeys.voucherSuccessfullyPurchased,
-                            ),
-                            showCrossIcon: false,
-                            buttonAction: () {
-                              Navigator.pushNamed(
-                                context,
-                                widget.data.length > 1
-                                    ? '/MultiVoucherSuccessPage'
-                                    : '/VoucherSuccessPage',
-                                arguments: widget.data.length > 1
-                                    ? widget.data
-                                    : widget.data[0],
-                              );
-                            });
-                        // if (!isLoading) {
-                        //   setState(() {
-                        //     isLoading = true;
-                        //   });
-                        //   var res =
-                        //       await networkHandler.createVoucherTransaction(
-                        //     getVoucherIds(),
-                        //     loginData.userId,
-                        //   );
-                        //   if (res != null) {
-                        //     final response = await Navigator.pushNamed(
-                        //       context,
-                        //       PaymentGateway.route,
-                        //       arguments: PaymentArgument(
-                        //         payment: getTotalAmount(),
-                        //         orderId: res.orderId,
-                        //       ),
-                        //     );
-                        //
-                        //     if (response != null) {
-                        //       var res = await networkHandler
-                        //           .payVoucherTransaction(response);
-                        //       if (res != null) {
-                        //         PaidVoucherModel data =
-                        //             PaidVoucherModel.fromJson(res);
-                        //         setState(() {
-                        //           isLoading = false;
-                        //         });
-                        //         CustomAlertDialog.baseDialog(
-                        //             context: context,
-                        //             title: 'Successfully Purchased',
-                        //             message: 'Voucher successfully purchased',
-                        //             showCrossIcon: false,
-                        //             buttonAction: () {
-                        //               Navigator.pushNamed(
-                        //                 context,
-                        //                 widget.data.length > 1
-                        //                     ? '/MultiVoucherSuccessPage'
-                        //                     : '/VoucherSuccessPage',
-                        //                 arguments: widget.data.length > 1
-                        //                     ? data.data.vouchers
-                        //                     : data.data.vouchers[0],
-                        //               );
-                        //             });
-                        //       } else {
-                        //         setState(() {
-                        //           isLoading = false;
-                        //         });
-                        //         failedTransactions.add(response);
-                        //         ScaffoldMessenger.of(context)
-                        //             .showSnackBar(SnackBar(
-                        //           content: const Text(
-                        //               "Unable to complete your request!"),
-                        //           behavior: SnackBarBehavior.floating,
-                        //           shape: RoundedRectangleBorder(
-                        //             borderRadius: BorderRadius.circular(24),
-                        //           ),
-                        //           backgroundColor:
-                        //               CustomizedTheme.voucherUnpaid,
-                        //         ));
-                        //       }
-                        //     } else {
-                        //       setState(() {
-                        //         isLoading = false;
-                        //       });
-                        //       ScaffoldMessenger.of(context)
-                        //           .showSnackBar(SnackBar(
-                        //         content: const Text(
-                        //             "Unable to complete your request!"),
-                        //         behavior: SnackBarBehavior.floating,
-                        //         shape: RoundedRectangleBorder(
-                        //           borderRadius: BorderRadius.circular(24),
-                        //         ),
-                        //         backgroundColor: CustomizedTheme.voucherUnpaid,
-                        //       ));
-                        //     }
-                        //   } else {
-                        //     setState(
-                        //       () {
-                        //         isLoading = false;
-                        //       },
-                        //     );
-                        //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //       content: const Text(
-                        //           "Something went wrong, try again!"),
-                        //       behavior: SnackBarBehavior.floating,
-                        //       shape: RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.circular(24),
-                        //       ),
-                        //       backgroundColor: CustomizedTheme.voucherUnpaid,
-                        //     ));
-                        //   }
-                        // }
+                        // CustomAlertDialog.baseDialog(
+                        //     context: context,
+                        //     title:AppLocalizations.of(context)!.translate(
+                        //       TranslationKeys.successfullyPurchased,
+                        //     ),
+                        //     message: AppLocalizations.of(context)!.translate(
+                        //       TranslationKeys.voucherSuccessfullyPurchased,
+                        //     ),
+                        //     showCrossIcon: false,
+                        //     buttonAction: () {
+                        //       Navigator.pushNamed(
+                        //         context,
+                        //         widget.data.length > 1
+                        //             ? '/MultiVoucherSuccessPage'
+                        //             : '/VoucherSuccessPage',
+                        //         arguments: widget.data.length > 1
+                        //             ? widget.data
+                        //             : widget.data[0],
+                        //       );
+                        //     });
+                        if (!isLoading) {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          var res =
+                              await networkHandler.createVoucherTransaction(
+                            getVoucherIds(),
+                            loginData.userId,
+                          );
+                          if (res != null) {
+                            final response = await Navigator.pushNamed(
+                              context,
+                              PaymentGateway.route,
+                              arguments: PaymentArgument(
+                                payment: getTotalAmount(),
+                                orderId: res.orderId,
+                              ),
+                            );
+
+                            if (response != null) {
+                              var res = await networkHandler
+                                  .payVoucherTransaction(response);
+                              if (res != null) {
+                                PaidVoucherModel data =
+                                    PaidVoucherModel.fromJson(res);
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                CustomAlertDialog.baseDialog(
+                                    context: context,
+                                    title: 'Successfully Purchased',
+                                    message: 'Voucher successfully purchased',
+                                    showCrossIcon: false,
+                                    buttonAction: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        widget.data.length > 1
+                                            ? '/MultiVoucherSuccessPage'
+                                            : '/VoucherSuccessPage',
+                                        arguments: widget.data.length > 1
+                                            ? data.data.vouchers
+                                            : data.data.vouchers[0],
+                                      );
+                                    });
+                              } else {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                failedTransactions.add(response);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: const Text(
+                                      "Unable to complete your request!"),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  backgroundColor:
+                                      CustomizedTheme.voucherUnpaid,
+                                ));
+                              }
+                            } else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: const Text(
+                                    "Unable to complete your request!"),
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                backgroundColor: CustomizedTheme.voucherUnpaid,
+                              ));
+                            }
+                          } else {
+                            setState(
+                              () {
+                                isLoading = false;
+                              },
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: const Text(
+                                  "Something went wrong, try again!"),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              backgroundColor: CustomizedTheme.voucherUnpaid,
+                            ));
+                          }
+                        }
                       },
                       child: isLoading
                           ? const CircularProgressIndicator(

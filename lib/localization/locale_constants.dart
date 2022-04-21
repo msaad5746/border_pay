@@ -42,6 +42,6 @@ Locale? getSelectedLang(Locale? locale, Iterable<Locale> supportedLocales) {
     int selectedLang = storage.getIntValue(SharedPrefKeys.selectedLanguage);
     return supportedLocale[selectedLang];
   } catch (e) {
-    return supportedLocale[1];
+    return supportedLocale[0];
   }
 }
