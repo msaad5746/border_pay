@@ -577,7 +577,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                               vertical: verticalValue(16),
                             ),
                             labelText: AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.emiratesIDPassportNumber,
+                                  TranslationKeys.emiratesID_PassportNumber,
                                 ) +
                                 " \*",
                             labelStyle: CustomizedTheme.b_W400_12,
