@@ -5,6 +5,7 @@ import 'package:borderpay/screens/setting/setting.dart';
 import 'package:borderpay/screens/vouchers/vouchers_list.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../localization/app_localization.dart';
 import '../localization/translation_keys.dart';
 import 'home_page/homepage.dart';
@@ -84,8 +85,8 @@ class _HostPageState extends State<HostPage> {
           TabItem(
             activeIcon: CircleAvatar(
                 backgroundColor: CustomizedTheme.white,
-                child: Image.asset('assets/icons/ic_home_active.png')),
-            icon: Image.asset('assets/icons/ic_home.png'),
+                child: SvgPicture.asset('assets/svg/ic_home_active.svg')),
+            icon: SvgPicture.asset('assets/svg/ic_home_inactive.svg'),
             title: AppLocalizations.of(context)!.translate(
               TranslationKeys.home,
             ),
@@ -93,8 +94,8 @@ class _HostPageState extends State<HostPage> {
           TabItem(
             activeIcon: CircleAvatar(
                 backgroundColor: CustomizedTheme.white,
-                child: Image.asset('assets/icons/ic_voucher_active.png')),
-            icon: Image.asset('assets/icons/ic_voucher.png'),
+                child: SvgPicture.asset('assets/svg/ic_voucher_active.svg')),
+            icon: SvgPicture.asset('assets/svg/ic_voucher_inactive.svg'),
             title: AppLocalizations.of(context)!.translate(
               TranslationKeys.vouchers,
             ),
@@ -102,8 +103,8 @@ class _HostPageState extends State<HostPage> {
           TabItem(
             activeIcon: CircleAvatar(
                 backgroundColor: CustomizedTheme.white,
-                child: Image.asset('assets/icons/ic_setting_active.png')),
-            icon: Image.asset('assets/icons/ic_setting.png'),
+                child: SvgPicture.asset('assets/svg/ic_settings_active.svg')),
+            icon: SvgPicture.asset('assets/svg/ic_settings_inactive.svg'),
             title: AppLocalizations.of(context)!.translate(
               TranslationKeys.settings,
             ),

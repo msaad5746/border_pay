@@ -13,6 +13,7 @@ import 'package:borderpay/widget/blue_backbutton.dart';
 import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../localization/app_localization.dart';
 import '../../localization/translation_keys.dart';
@@ -93,14 +94,14 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                               height: 150.h,
                               // width: 150.w,
                               child: selection == 1
-                                  ? Image.asset(
-                                      'assets/icons/ic_single_active.png',
+                                  ? SvgPicture.asset(
+                                      'assets/svg/ic_single_active.svg',
                                       fit: BoxFit.fill,
                                     )
-                                  : Image.asset(
-                                      'assets/icons/ic_single.png',
-                                      fit: BoxFit.fill,
-                                    ),
+                                  : SvgPicture.asset(
+                                'assets/svg/ic_single.svg',
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                           Padding(
@@ -121,14 +122,14 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                                 height: 150.h,
                                 // width: 150.w,
                                 child: selection == 2
-                                    ? Image.asset(
-                                        'assets/icons/ic_group_active.png',
-                                        fit: BoxFit.fill,
-                                      )
-                                    : Image.asset(
-                                        'assets/icons/ic_group.png',
-                                        fit: BoxFit.fill,
-                                      )),
+                                    ? SvgPicture.asset(
+                                  'assets/svg/ic_group_active.svg',
+                                  fit: BoxFit.fill,
+                                )
+                                    : SvgPicture.asset(
+                                  'assets/svg/ic_group.svg',
+                                  fit: BoxFit.fill,
+                                ),),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 20.h),

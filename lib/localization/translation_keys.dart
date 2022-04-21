@@ -171,5 +171,14 @@ class TranslationKeys {
   static const invalidNumberMessage = "invalidNumberMessage";
   static const searchCountry = "searchCountry";
   static const changeLanguage = "changeLanguage";
+  static const ic_support = "ic_support";
+
+
+  static const ic_entry_active = "ic_entry_active";
+  static const ic_entry_inactive = "ic_entry_inactive";
+  static const ic_entry_disable = "ic_entry_disable";
+  static const ic_exit_active = "ic_exit_active";
+  static const ic_exit_inactive = "ic_exit_inactive";
+
 
 }

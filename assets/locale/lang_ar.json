@@ -4,7 +4,6 @@
   "paymentsAnywhereAnytime": "الدفع في أي مكان وفي أي وقت",
   "existingUser": "المستخدم الحالي",
   "newUser": "المستخدم الجديد",
-
   "phoneNumber": "رقم الهاتف",
   "phoneNumberFieldIsEmpty": "رقم الهاتف فارغ",
   "password": "كلمة المرور",
@@ -13,7 +12,6 @@
   "loginWithTouchID": "تسجيل الدخول باستخدام معرف اللمس",
   "signIn": "تسجيل الدخول",
   "loginFailed": "تسجيل الدخول الدخول",
-
   "register": "التسجيل",
   "firstName": "االسم األول",
   "firstNameIsEmpty": "االسم األول فارغ",
@@ -31,7 +29,6 @@
   "terms_Conditions": "الشروط واألحكام",
   "youHaveToAcceptTermAndConditions": "يجب عليك قبول الشروط والأحكام",
   "next": "التالي",
-
   "step1": "الخطوة 1",
   "chooseYourDocumentType": "اختر نوع المستند الخاص بك",
   "emiratesID": "هويه الإمارات",
@@ -50,14 +47,12 @@
   "andEnterEmiratesID": "وأدخل هوية الإمارات",
   "confirmYourPhoneNumberBelow": "تأكيد رقم هاتفك أدناه",
   "otpSent": "تم إرسال OTP",
-
   "confirmOTP": "التأكيد عن طريق إدخال كلمة المرور لمرو واحدة OTP",
   "enterOTP": "أدخل OTP",
   "invalidOTP!": "دخل كلمة المرور OTP",
   "a6DigitCodeHasBeenSentToYourMobileNumber": "تم إرسال رمز مكون من 6 أرقام إلى رقم هاتفك المحمول",
   "successfullyCreated": "تم إنشاء حسابك بنجاح",
   "yourAccountHasBeenSuccessfullyCreated": "تم إنشاء حسابك بنجاح.",
-
   "home": "الرئيسية",
   "hello": "مرحبا",
   "chooseLocation": "اختر الموقع",
@@ -70,7 +65,6 @@
   "noTransactionYet": "لا توجد معاملة حتى الآن",
   "noDataFound": "لاتوجد بيانات",
   "retry": "أعد المحاولة",
-
   "support": "الدعم",
   "areYouFacingDifficulty?": "هل تواجه أية صعوبة؟",
   "ifYouAreFacingAnyDifficultyOrYouHaveAnyQuestionYouCanContactUsByTheFollowingWays": "إذا كنت تواجه أي صعوبة أو لديك أي سؤال، فال تترد في االتصال بنا عن طريق:",
@@ -82,14 +76,12 @@
   "openMailApp": "افتح تطبيق البريد",
   "noMailAppsInstalled": "لا توجد تطبيقات بريد مثبتة",
   "ok": "نعم",
-
   "vouchers": "قسائمي",
   "companyVoucher": "قسائم الشركة",
   "individualVoucher": "قسائم فردية",
   "voucherNumber": "رقم القسيمة",
   "travellerName": "اسم المسافر",
   "totalAmount": "المبلغ اإلجمالي",
-
   "settings": "اإلعدادات",
   "general": "العامة",
   "changeProfileInformation": "تغيير معلومات الملف الشخصي",
@@ -103,11 +95,9 @@
   "areYouSureToDeleteAccount?": "هل أنت متأكد من حذف الحساب؟",
   "accountDeletedSuccessfully": "تم حذف الحساب بنجاح!",
   "logout": "تسجيل الخروج",
-
   "updateProfile": "تعديل الملف الشخصي",
   "update": "يحفظ",
   "nothingToUpdate": "لا شيء لتحديث",
-
   "oldPassword": "كلمة سر قديمة",
   "pleaseEnterOldPassword": "الرجاء إدخال كلمة المرور القديمة",
   "newPassword": "كلمة المرور الجديدة",
@@ -116,17 +106,14 @@
   "updatePassword": "تطوير كلمة السر",
   "successfullyRestored": "تمت الاستعادة بنجاح",
   "yourPasswordHasBeenSuccessfullyRestored": "تمت استعادة كلمة المرور الخاصة بك بنجاح.",
-
   "selectTheVoucherType": "اختر نوع القسيمة",
   "entry": "دخول",
   "exit": "مجموعة",
-
   "selectTheTravellerCategory": "اختر فئة المسافر",
   "single": "فردي",
   "group": "مجموعة",
   "useExistingDetails": "استخدم التفاصيل الموجودة",
   "buyForDifferentTraveller": "الشراء لمسافر مختلف",
-
   "selectTheNumberOfTravellers": "حدد عدد المسافرين",
   "pleaseEnterNumber": "عدد المسافرين",
   "youCanPayUpFor9People": "يمكنك أن تدفع حتى 9 أشخاص",
@@ -139,7 +126,6 @@
   "invalidEmail": "بريد إلكتروني خاطئ",
   "emiratesID_PassportNumber": "الهوية اإلماراتية/رقم جواز السفر",
   "pleaseEnterEmiratesIDPassportNumber": "الرجاء إدخال هوية الإمارات / رقم جواز السفر",
-
   "paymentSummary": "ملخص الدفع",
   "voucher_Number": "قسيمة :",
   "voucherAmount": "مبلغ القسيمة",
@@ -148,21 +134,27 @@
   "unableToCompleteYourRequest": "لا يمكن إكمال طلبك!",
   "somethingWentWrongTryAgain": "حدث خطأ ما حاول مرة أخرى!",
   "pay": "ادفع",
-
   "voucherSuccessful": "القسيمة ناجحة",
   "paymentDate": "تاريخ الدفع",
   "paymentTime": "وقت الدفع",
   "downloadPrintSummary": "تحميل / طباعة الملخص",
   "successfullySavedInDownload!": "تم الحفظ بنجاح في التنزيلات!",
-
   "numberOfTravellers": "عدد المسافرين:",
   "continueButton": "تابع",
   "somethingWentWrong": "هناك خطأ ما",
   "qoma": "،",
-  "enterEmirateID" : "أدخل رقم الهوية الإمارة",
-  "successfullyUpdated" : "تم التحديث بنجاح!",
-  "invalidNumberMessage" : "رقم الجوال غير صالح",
-  "searchCountry" : "البحث في البلد",
-  "changeLanguage" : "تغيير اللغة"
+  "enterEmirateID": "أدخل رقم الهوية الإمارة",
+  "successfullyUpdated": "تم التحديث بنجاح!",
+  "invalidNumberMessage": "رقم الجوال غير صالح",
+  "searchCountry": "البحث في البلد",
+  "changeLanguage": "تغيير اللغة",
+
+
+  "ic_support": "assets/svg/ic_ar_support.svg",
+  "ic_entry_active": "assets/svg/ic_ar_enter_active.svg",
+  "ic_entry_inactive": "assets/svg/ic_ar_enter.svg",
+  "ic_entry_disable": "assets/svg/ic_ar_enter_disabled.svg",
+  "ic_exit_active": "assets/svg/ic_ar_exit_active.svg",
+  "ic_exit_inactive": "assets/svg/ic_ar_exit.svg"
 
 }

@@ -14,6 +14,7 @@ import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../localization/app_localization.dart';
@@ -101,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                                           child: Container(
                                             height: 37.26.h,
                                             width: 37.26.w,
-                                            // margin: EdgeInsets.symmetric(horizontal: 10),
+                                             padding: const EdgeInsets.symmetric(horizontal: 6.8),
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(
@@ -109,8 +110,10 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                               color: CustomizedTheme.white,
                                             ),
-                                            child: Image.asset(
-                                              'assets/icons/ic_help.png',
+                                            child: SvgPicture.asset(
+                                              AppLocalizations.of(context)!
+                                                  .translate(TranslationKeys
+                                                      .ic_support),
                                               color:
                                                   CustomizedTheme.colorAccent,
                                             ),

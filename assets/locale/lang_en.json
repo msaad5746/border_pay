@@ -163,6 +163,16 @@
   "successfullyUpdated":"Successfully updated!",
   "invalidNumberMessage":"Invalid Mobile Number",
   "searchCountry":"Search Country",
-  "changeLanguage":"Change Language"
+  "changeLanguage":"Change Language",
+
+  "ic_support": "assets/svg/ic_en_support.svg",
+  "ic_entry_active": "assets/svg/ic_entry_active.svg",
+  "ic_entry_inactive": "assets/svg/ic_entry.svg",
+  "ic_entry_disable": "assets/svg/ic_entry_disabled.svg",
+  "ic_exit_active": "assets/svg/ic_exit_active.svg",
+  "ic_exit_inactive": "assets/svg/ic_exit_with_circle.svg"
+
+
+
 
 }
