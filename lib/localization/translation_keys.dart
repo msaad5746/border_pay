@@ -144,7 +144,7 @@ class TranslationKeys {
   static const pleaseEnterFirstName = "pleaseEnterFirstName";
   static const pleaseEnterLastName = "pleaseEnterLastName";
   static const invalidEmail = "invalidEmail";
-  static const emiratesIDPassportNumber = "emiratesIDPassportNumber";
+  static const emiratesID_PassportNumber = "emiratesID_PassportNumber";
   static const pleaseEnterEmiratesIDPassportNumber =
       "pleaseEnterEmiratesIDPassportNumber";
 

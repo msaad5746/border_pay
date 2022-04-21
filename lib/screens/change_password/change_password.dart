@@ -252,7 +252,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                     color: Colors.white,
                                   )
                                 : Text(AppLocalizations.of(context)!.translate(
-                              TranslationKeys.updatePassword,
+                              TranslationKeys.update,
                             ),
                                     style: CustomizedTheme.w_W500_19)),
                       ),

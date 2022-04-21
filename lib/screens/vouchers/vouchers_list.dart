@@ -34,7 +34,7 @@ class _VouchersPageState extends State<VouchersPage> {
 
   bool isLoading = true;
   bool isError = false;
-  int selector = 1;
+  int selector = 0;
   String searchText = '';
 
   @override

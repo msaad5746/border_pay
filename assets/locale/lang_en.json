@@ -137,7 +137,7 @@
   "pleaseEnterFirstName": "Please enter a first name",
   "pleaseEnterLastName": "Please enter a last name",
   "invalidEmail": "Invalid Email",
-  "emiratesIDPassportNumber": "Emirates ID/Passport Number",
+  "emiratesID_PassportNumber": "Emirates ID/Passport Number",
   "pleaseEnterEmiratesIDPassportNumber": "Please enter a Emirates ID/Passport Number",
 
   "paymentSummary": "Payment Summary",
@@ -154,6 +154,7 @@
   "paymentTime": "Payment Time",
   "downloadPrintSummary": "Download / Print Summary",
   "successfullySavedInDownload!": "Successfully Saved in Downloads!",
+
   "numberOfTravellers": "Number of travellers: ",
   "continueButton": "Continue",
   "somethingWentWrong": "Something went wrong",

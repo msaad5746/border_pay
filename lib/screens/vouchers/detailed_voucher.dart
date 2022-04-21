@@ -258,7 +258,7 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                                   children: [
                                     buildText(
                                       AppLocalizations.of(context)!.translate(
-                                        TranslationKeys.emiratesID,
+                                        TranslationKeys.emiratesID_PassportNumber,
                                       ),
                                       CustomizedTheme.sf_bo_W300_1503,
                                     ),
