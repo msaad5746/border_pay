@@ -5,6 +5,7 @@ import 'package:borderpay/widget/blue_backbutton.dart';
 import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../localization/app_localization.dart';
 import '../../localization/translation_keys.dart';
@@ -75,27 +76,33 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                               height: 150.h,
                               // width: 150.w,
                               child: selection == 1
-                                  ? Image.asset(
-                                      'assets/icons/ic_entry_active.png',
+                                  ? SvgPicture.asset(
+                                      'assets/svg/ic_entry_active.svg',
                                       fit: BoxFit.fill,
                                     )
-                                  : Image.asset(
-                                      'assets/icons/ic_entry.png',
-                                      fit: BoxFit.fill,
-                                    ),
+                                  : SvgPicture.asset(
+                                'assets/svg/ic_entry.svg',
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           )
                         : SizedBox(
                             height: 150.h,
                             child: selection == 1
-                                ? Image.asset(
-                                    'assets/icons/ic_entry_active.png',
-                                    fit: BoxFit.fill,
-                                  )
-                                : Image.asset(
-                                    'assets/icons/ic_entry_disabled.png',
-                                    fit: BoxFit.fill,
-                                  ),
+                                ?  SvgPicture.asset(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.ic_entry_active,
+                              ),
+                             /* 'assets/svg/ic_entry_active.svg',*/
+                              fit: BoxFit.fill,
+                            )
+                                :  SvgPicture.asset(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.ic_entry_disable,
+                              ),
+                              /*'assets/svg/ic_entry_disabled.svg',*/
+                              fit: BoxFit.fill,
+                            ),
                           ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -115,14 +122,20 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                         height: 150.h,
                         // width: 150.w,
                         child: selection == 2
-                            ? Image.asset(
-                                'assets/icons/ic_exit_active.png',
-                                fit: BoxFit.fill,
-                              )
-                            : Image.asset(
-                                'assets/icons/ic_exit.png',
-                                fit: BoxFit.fill,
-                              ),
+                            ? SvgPicture.asset(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.ic_entry_active,
+                          ),
+                          /*'assets/svg/ic_exit_active.svg',*/
+                          fit: BoxFit.fill,
+                        )
+                            : SvgPicture.asset(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.ic_entry_inactive,
+                          ),
+                          /*'assets/svg/ic_exit_with_circle.svg',*/
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     Padding(

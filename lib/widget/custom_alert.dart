@@ -1,6 +1,7 @@
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../localization/app_localization.dart';
 import '../localization/translation_keys.dart';
@@ -538,10 +539,11 @@ class CustomAlertDialog {
                       ),
                     ),
                     SizedBox(
-                      width: 100.w,
+                      width: 70.w,
+                      height: 90.w,
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 23.42.h),
-                        child: Image.asset('assets/icons/ic_tick.png',
+                        child: SvgPicture.asset('assets/svg/ic_tick.svg',
                             fit: BoxFit.fill),
                       ),
                     )

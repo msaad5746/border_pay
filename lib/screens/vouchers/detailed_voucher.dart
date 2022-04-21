@@ -384,9 +384,11 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'No data found',
-            style: TextStyle(
+           Text(
+             AppLocalizations.of(context)!.translate(
+               TranslationKeys.noDataFound,
+             ),
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
@@ -413,9 +415,11 @@ class _DetailedVoucherState extends State<DetailedVoucher> {
                 getUserData();
               }
             },
-            child: const Text(
-              'Retry',
-              style: TextStyle(
+            child:  Text(
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.retry,
+              ),
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
