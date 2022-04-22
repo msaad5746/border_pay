@@ -37,19 +37,20 @@ class LocalAuthApi {
       //       useErrorDialogs: true);
       // } else if (biometricTypes.contains(BiometricType.fingerprint)) {
       // Touch ID.
-      isAuthenticated = await localAuthentication.authenticate(
-        localizedReason: 'Scan Fingerprint to Proceed',
-        biometricOnly: true,
-        // stickyAuth: true,
-        useErrorDialogs: true,
-      );
+      // isAuthenticated = await localAuthentication.authenticate(
+      //   localizedReason: 'Scan Fingerprint to Proceed',
+      //   biometricOnly: true,
+      //   stickyAuth: true,
+      //   useErrorDialogs: true,
+      // );
       // }
     }
 
     if (isBiometricSupported && canCheckBiometrics) {
       try {
         isAuthenticated = await localAuthentication.authenticate(
-          localizedReason: 'Please authenticate',
+          // localizedReason: 'Please authenticate',
+          localizedReason: 'Scan Fingerprint to Proceed',
           biometricOnly: true,
           stickyAuth: true,
           useErrorDialogs: true,

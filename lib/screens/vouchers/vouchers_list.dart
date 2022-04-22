@@ -403,17 +403,20 @@ class _VouchersPageState extends State<VouchersPage> {
     VoucherRepo repo = VoucherRepoImpl();
     var response = await repo.getVoucherList(
       id: loginData.userId,
-      page: page,
+      page:
+          selector == 0 ? companyVoucherList.page : individualVoucherList.page,
     );
     if (response != null) {
       VoucherModel model = response;
       if (selector == 0) {
         companyVoucherList.lastPage = model.lastPage;
+        companyVoucherList.page = model.page;
         for (int i = 0; i < model.data.length; i++) {
           companyVoucherList.data.add(model.data[i]);
         }
       } else {
         individualVoucherList.lastPage = model.lastPage;
+        individualVoucherList.page = model.page;
         for (int i = 0; i < model.data.length; i++) {
           individualVoucherList.data.add(model.data[i]);
         }

@@ -17,7 +17,6 @@ class VoucherRepoImpl implements VoucherRepo {
   NetworkHelper networkHelper = NetworkHelperImpl();
   EndPoints endPoints = EndPoints();
 
-
   @override
   Future getVoucherDetails(int userId, int voucherId) async {
     try {
@@ -49,6 +48,7 @@ class VoucherRepoImpl implements VoucherRepo {
       );
       if (response.statusCode == 200) {
         VoucherModel model = VoucherModel.fromJson(
+          page: page,
           json: json.decode(
             response.body.toString(),
           ),
@@ -56,7 +56,7 @@ class VoucherRepoImpl implements VoucherRepo {
 
         if (model.data.length > model.limit) {
           model.lastPage = false;
-          model.page += 1;
+          model.page = page + 1;
           return model;
         } else {
           model.lastPage = true;

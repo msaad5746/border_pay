@@ -41,6 +41,8 @@ Locale? getSelectedLang(Locale? locale, Iterable<Locale> supportedLocales) {
     );
     return supportedLocale[selectedLang];
   } catch (e) {
+    MySharedPreferences.instance
+        .setIntValue(SharedPrefKeys.selectedLanguage, 0);
     return supportedLocale[0];
   }
 }

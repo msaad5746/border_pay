@@ -64,14 +64,7 @@ class _HostPageState extends State<HostPage> {
     return Scaffold(
       key: _scaffoldKey,
       body: tabs[currentIndex],
-      bottomNavigationBar:
-          // _bottomNavigationBar(
-          //   (pageIndex) => (pageIndex) => setState(
-          //         () => currentIndex = pageIndex,
-          //       ),
-          //   selectedIndex: currentIndex,
-          // ),
-          ConvexAppBar(
+      bottomNavigationBar: ConvexAppBar(
         // top: -30,
         curve: Curves.linear,
         curveSize: 70,

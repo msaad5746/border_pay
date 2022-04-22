@@ -91,8 +91,8 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                               });
                             },
                             child: SizedBox(
-                              height: 150.h,
-                              // width: 150.w,
+                              height: 150.w,
+                              width: 150.w,
                               child: selection == 1
                                   ? SvgPicture.asset(
                                       'assets/svg/ic_single_active.svg',
@@ -119,8 +119,8 @@ class _TravelerCategoryState extends State<TravelerCategory> {
                               });
                             },
                             child: SizedBox(
-                              height: 150.h,
-                              // width: 150.w,
+                              height: 150.w,
+                              width: 150.w,
                               child: selection == 2
                                   ? SvgPicture.asset(
                                       'assets/svg/ic_group_active.svg',

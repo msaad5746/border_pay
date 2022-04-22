@@ -240,6 +240,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                         //             : widget.data[0],
                         //       );
                         //     });
+
                         if (!isLoading) {
                           setState(() {
                             isLoading = true;
@@ -319,8 +320,10 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                               });
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: const Text(
-                                  "Unable to complete your request!",
+                                content: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.unableToCompleteYourRequest,
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                                 behavior: SnackBarBehavior.floating,

@@ -52,7 +52,7 @@ class _PhonePageState extends State<PhonePage> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      phoneController.text = widget.areaCode + widget.phone;
+      phoneController.text = widget.areaCode.substring(1) + widget.phone;
     });
     return Scaffold(
       appBar: AppBar(
@@ -75,14 +75,17 @@ class _PhonePageState extends State<PhonePage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(9.16.r),
                         color: CustomizedTheme.colorAccent),
-                    child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
+                    child:
+                        Icon(Icons.arrow_back, color: CustomizedTheme.white)),
               ),
             ),
           ],
         ),
-        title: Text(AppLocalizations.of(context)!.translate(
-          TranslationKeys.phoneNumber,
-        ), style: CustomizedTheme.title_p_W500_21),
+        title: Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.phoneNumber,
+            ),
+            style: CustomizedTheme.title_p_W500_21),
         centerTitle: false,
       ),
       body: Padding(
@@ -120,7 +123,7 @@ class _PhonePageState extends State<PhonePage> {
                     width: 1.0.w,
                   ),
                 ),
-                labelText:AppLocalizations.of(context)!.translate(
+                labelText: AppLocalizations.of(context)!.translate(
                   TranslationKeys.phoneNumber,
                 ),
                 labelStyle: CustomizedTheme.b_W400_12,
@@ -159,9 +162,6 @@ class _PhonePageState extends State<PhonePage> {
                     ),
                     child: TextButton(
                       onPressed: () async {
-
-
-
                         if (phoneController.text.isNotEmpty) {
                           setState(() {
                             isLoading = true;
@@ -171,7 +171,7 @@ class _PhonePageState extends State<PhonePage> {
                             lastName: widget.lastName,
                             nationality: widget.nationality,
                             nationalityId: widget.nationalityId,
-                            phone: phoneController.text,
+                            phone: '+' + phoneController.text,
                             password: widget.password,
                             areaCode: widget.areaCode,
                             email: widget.email,
@@ -190,7 +190,7 @@ class _PhonePageState extends State<PhonePage> {
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content:  Text(
+                                content: Text(
                                   AppLocalizations.of(context)!.translate(
                                     TranslationKeys.otpSent,
                                   ),
@@ -231,14 +231,12 @@ class _PhonePageState extends State<PhonePage> {
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(
-                                  response.statusMsg!,
-                                  textAlign: TextAlign.center,
-                                  style: CustomizedTheme.w_W500_15.copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    color: CustomizedTheme.white,
-                                  )
-                                ),
+                                content: Text(response.statusMsg!,
+                                    textAlign: TextAlign.center,
+                                    style: CustomizedTheme.w_W500_15.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      color: CustomizedTheme.white,
+                                    )),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24),
@@ -251,9 +249,9 @@ class _PhonePageState extends State<PhonePage> {
                       },
                       child: isLoading == false
                           ? Text(
-                        AppLocalizations.of(context)!.translate(
-                          TranslationKeys.next,
-                        ),
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.next,
+                              ),
                               style: CustomizedTheme.w_W500_19,
                             )
                           : const CircularProgressIndicator(

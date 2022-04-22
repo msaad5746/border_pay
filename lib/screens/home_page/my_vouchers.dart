@@ -85,7 +85,6 @@ class _MyVouchersState extends State<MyVouchers> {
                     widget.voucherList.data[index].voucherNumber,
                     style: CustomizedTheme.sf_pb_W700_13,
                     maxLines: 1,
-                    
                   ),
                 ),
                 SizedBox(
@@ -98,7 +97,7 @@ class _MyVouchersState extends State<MyVouchers> {
                 SizedBox(
                   width: 80.w,
                   child: Text(
-                    _getText(text: widget.voucherList.data[index].status),
+                    widget.voucherList.data[index].status,
                     textAlign: TextAlign.end,
                     style: CustomizedTheme.sf_b_W300_13Paid,
                   ),
@@ -109,33 +108,5 @@ class _MyVouchersState extends State<MyVouchers> {
         );
       },
     );
-  }
-
-  String _getText({required String text}){
-    if(text == 'ACTIVE'){
-      return AppLocalizations.of(context)!.translate(
-        TranslationKeys.active,
-      );
-    }else if(text == 'EXPIRED'){
-      return AppLocalizations.of(context)!.translate(
-        TranslationKeys.expired,
-      );
-    }
-
-    return '';
-  }
-
-  String _getPort({required String text}){
-    if(text == 'ACTIVE'){
-      return AppLocalizations.of(context)!.translate(
-        TranslationKeys.active,
-      );
-    }else if(text == 'EXPIRED'){
-      return AppLocalizations.of(context)!.translate(
-        TranslationKeys.expired,
-      );
-    }
-
-    return '';
   }
 }

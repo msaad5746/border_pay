@@ -8,6 +8,7 @@ import 'package:borderpay/model/datamodels/login_user_model.dart';
 import 'package:borderpay/model/datamodels/verify_user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
+import 'package:borderpay/res/res.dart';
 import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -156,48 +157,48 @@ class _OTPPageState extends State<OTPPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100.h,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        // leadingWidth: 33.73,
-        leading: Row(
-          children: [
-            SizedBox(width: 20.w),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  height: 33.73.h,
-                  width: 33.73.w,
-                  // margin: EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      9.16.r,
-                    ),
-                    color: CustomizedTheme.colorAccent,
-                  ),
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: CustomizedTheme.white,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        title: Text(
-            AppLocalizations.of(context)!.translate(
-              TranslationKeys.confirmOTP,
-            ),
-            maxLines: 2,
-            style: CustomizedTheme.title_p_W500_21),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 50.h),
+          Padding(
+            padding: EdgeInsets.all(20.w),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 33.73.h,
+                    width: 33.73.w,
+                    // margin: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        9.16.r,
+                      ),
+                      color: CustomizedTheme.colorAccent,
+                    ),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: CustomizedTheme.white,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20.92.h),
+                SizedBox(
+                  width: sizes.width! * 0.7,
+                  child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.confirmOTP,
+                      ),
+                      maxLines: 2,
+                      style: CustomizedTheme.title_p_W500_21),
+                ),
+              ],
+            ),
+          ),
           SizedBox(height: 29.92.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
@@ -214,13 +215,11 @@ class _OTPPageState extends State<OTPPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  child: Text(
-                    AppLocalizations.of(context)!.translate(
-                      TranslationKeys.a6DigitCodeHasBeenSentToYourMobileNumber,
-                    ),
-                    style: CustomizedTheme.sf_b_W400_15,
+                Text(
+                  AppLocalizations.of(context)!.translate(
+                    TranslationKeys.a6DigitCodeHasBeenSentToYourMobileNumber,
                   ),
+                  style: CustomizedTheme.sf_b_W400_15,
                 ),
                 Directionality(
                   textDirection: TextDirection.ltr,
@@ -232,7 +231,7 @@ class _OTPPageState extends State<OTPPage> {
               ],
             ),
           ),
-          SizedBox(height: 112.6.h),
+          SizedBox(height: 90.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[

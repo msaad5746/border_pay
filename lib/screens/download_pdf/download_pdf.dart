@@ -13,9 +13,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart';
 import 'package:open_file/open_file.dart';
 
-import '../../localization/app_localization.dart';
-import '../../localization/translation_keys.dart';
-
 class PdfApi {
   static CountriesController countriesController =
       Get.find<CountriesController>();
@@ -24,8 +21,11 @@ class PdfApi {
     return PDFDocument.openFile(file);
   }
 
-  static Future<File> generatePdfFile(Vouchers vouchers, Uint8List image,
-      material.BuildContext buildContext) async {
+  static Future<File> generatePdfFile(
+    Vouchers vouchers,
+    Uint8List image,
+    int selectedLang,
+  ) async {
     final pdf = Document();
     var data = await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf");
     var myFont = Font.ttf(data);
@@ -44,20 +44,47 @@ class PdfApi {
       ),
     );
 
-    pdf.addPage(
-      MultiPage(
-        theme: myTheme,
-        build: (context) => [
-          buildHeader(data: vouchers, font: myFont, context: buildContext),
-          spacing(),
-          buildBody(data: vouchers, font: myFont, buildContext: buildContext),
-          spacing(),
-          buildQrImage(
-            image: image,
-          ),
-        ],
-      ),
-    );
+    selectedLang == 0
+        ? pdf.addPage(
+            MultiPage(
+              theme: myTheme,
+              build: (context) => [
+                buildHeader(
+                  data: vouchers,
+                  font: myFont,
+                ),
+                spacing(),
+                buildBody(
+                  data: vouchers,
+                  font: myFont,
+                ),
+                spacing(),
+                buildQrImage(
+                  image: image,
+                ),
+              ],
+            ),
+          )
+        : pdf.addPage(
+            MultiPage(
+              theme: myTheme,
+              build: (context) => [
+                buildArabicHeader(
+                  data: vouchers,
+                  font: myFont,
+                ),
+                spacing(),
+                buildArabicBody(
+                  data: vouchers,
+                  font: myFont,
+                ),
+                spacing(),
+                buildQrImage(
+                  image: image,
+                ),
+              ],
+            ),
+          );
 
     return PDFDocument.saveDocument(name: 'L${vouchers.id}', pdf: pdf);
   }
@@ -65,7 +92,6 @@ class PdfApi {
   static Widget buildHeader({
     required Vouchers data,
     required font,
-    required material.BuildContext context,
   }) {
     return Container(
       width: double.infinity,
@@ -85,9 +111,7 @@ class PdfApi {
         children: [
           Spacer(),
           Text(
-            AppLocalizations.of(context)!.translate(
-              TranslationKeys.voucher_Number,
-            ),
+            'Voucher Number: ',
             style: TextStyle(
               font: font,
               fontSize: sizes.fontRatio! * 18,
@@ -116,16 +140,66 @@ class PdfApi {
     );
   }
 
+  static Widget buildArabicHeader({
+    required Vouchers data,
+    required font,
+  }) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(
+        horizontal: horizontalValue(12),
+        vertical: verticalValue(6),
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: verticalValue(16),
+      ),
+      color: const PdfColor(
+        0.078,
+        0.498,
+        0.559,
+      ),
+      child: Row(
+        children: [
+          Spacer(),
+          Text(
+            data.voucherNo,
+            style: TextStyle(
+              font: font,
+              fontSize: sizes.fontRatio! * 18,
+              color: const PdfColor(
+                1,
+                1,
+                1,
+              ),
+            ),
+          ),
+          Text(
+            'رقم القسيمة: ',
+            style: TextStyle(
+              font: font,
+              fontSize: sizes.fontRatio! * 18,
+              color: const PdfColor(
+                1,
+                1,
+                1,
+              ),
+            ),
+          ),
+          Spacer(),
+        ],
+      ),
+    );
+  }
+
   static Widget spacing() {
     return SizedBox(
       height: 3 * PdfPageFormat.cm,
     );
   }
 
-  static Widget buildBody({
+  static Widget buildArabicBody({
     required Vouchers data,
     required font,
-    required material.BuildContext buildContext,
   }) {
     return Container(
       child: Column(
@@ -138,9 +212,308 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(buildContext)!.translate(
-                    TranslationKeys.travellerName,
+                  data.user.firstName + data.user.lastName,
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
                   ),
+                ),
+                Spacer(),
+                Text(
+                  'اسم المسافر ',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  data.user.email,
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  'عنوان البريد ',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Text(
+                    data.user.mobileNumber,
+                    style: TextStyle(
+                      font: font,
+                      fontSize: sizes.fontRatio! * 16,
+                      color: const PdfColor(
+                        00,
+                        0.345,
+                        0.392,
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  'رقم الهاتف ',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  getNationality(data.user.nationalityId),
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  'الجنسية: ',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  data.user.emirateId,
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  'هويه الإمارات ',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  data.amount.toString(),
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  'المبلغ اإلجمالي',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  getPaymentDate(
+                    data.createdAt,
+                  ),
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  'تاريخ الدفع',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  getPaymentTime(
+                    data.createdAt,
+                  ),
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      00,
+                      0.345,
+                      0.392,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  'وقت الدفع',
+                  style: TextStyle(
+                    font: font,
+                    fontSize: sizes.fontRatio! * 16,
+                    color: const PdfColor(
+                      0.078,
+                      0.498,
+                      0.559,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget buildBody({
+    required Vouchers data,
+    required font,
+  }) {
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalValue(6),
+              horizontal: horizontalValue(16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'Traveller Name ',
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -175,9 +548,7 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(buildContext)!.translate(
-                    TranslationKeys.emailID,
-                  ),
+                  'Email ID ',
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -212,9 +583,7 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(buildContext)!.translate(
-                    TranslationKeys.phoneNumber,
-                  ),
+                  'Phone Number ',
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -252,9 +621,7 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(buildContext)!.translate(
-                    TranslationKeys.nationality,
-                  ),
+                  'Nationality: ',
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -289,9 +656,7 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(buildContext)!.translate(
-                    TranslationKeys.emiratesID,
-                  ),
+                  'Emirates ID ',
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -326,9 +691,7 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(buildContext)!.translate(
-                    TranslationKeys.totalAmount,
-                  ),
+                  'Total Amount',
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -363,9 +726,7 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(buildContext)!.translate(
-                    TranslationKeys.paymentDate,
-                  ),
+                  'Payment Date',
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -402,9 +763,7 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(buildContext)!.translate(
-                    TranslationKeys.paymentTime,
-                  ),
+                  'Payment Time',
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -450,6 +809,20 @@ class PdfApi {
   }
 
   static Widget buildFooter({
+    required Vouchers data,
+  }) {
+    return Container(
+      width: double.infinity,
+      height: sizes.heightRatio! * 60,
+      color: const PdfColor(
+        00,
+        0.345,
+        0.392,
+      ),
+    );
+  }
+
+  static Widget buildArabicFooter({
     required Vouchers data,
   }) {
     return Container(
@@ -512,6 +885,7 @@ class PDFDocument {
     final bytes = await pdf.save();
     final dir = (await getExternalStorageDirectory())?.path;
     final file = File('$dir/$name.pdf');
+    // final file = File('/storage/emulated/0/Download/$name.pdf');
 
     await file.writeAsBytes(bytes);
     return file;

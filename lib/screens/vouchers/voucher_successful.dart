@@ -3,6 +3,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:borderpay/Route_Constants/route_constants.dart';
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
 import 'package:borderpay/model/datamodels/bulk_vouchers_model.dart';
@@ -53,362 +55,376 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomizedTheme.white,
-      body: SafeArea(
-        top: Platform.isIOS ? false : true,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 235.61.h,
-                width: 1.sw,
-                decoration: BoxDecoration(
-                  color: CustomizedTheme.primaryBold,
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(
-                      30.r,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RouteConstant.hostPage,
+          ModalRoute.withName(
+            RouteConstant.hostPage,
+          ),
+        );
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: CustomizedTheme.white,
+        body: SafeArea(
+          top: Platform.isIOS ? false : true,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 235.61.h,
+                  width: 1.sw,
+                  decoration: BoxDecoration(
+                    color: CustomizedTheme.primaryBold,
+                    borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(
+                        30.r,
+                      ),
                     ),
                   ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          RouteConstant.hostPage,
-                          ModalRoute.withName(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
                             RouteConstant.hostPage,
+                            ModalRoute.withName(
+                              RouteConstant.hostPage,
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 50.0.h,
+                            left: 20.36.w,
+                            right: 20.36.w,
                           ),
-                        );
-                      },
-                      child: Padding(
+                          child: Container(
+                            height: 37.26.h,
+                            width: 37.26.w,
+                            // margin: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                10.11.r,
+                              ),
+                              color: CustomizedTheme.white,
+                            ),
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: CustomizedTheme.colorAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Padding(
                         padding: EdgeInsets.only(
-                          top: 50.0.h,
-                          left: 20.36.w,
-                          right: 20.36.w,
+                          left: 37.w,
+                          right: 37.w,
+                          top: 17.43.h,
                         ),
                         child: Container(
-                          height: 37.26.h,
-                          width: 37.26.w,
-                          // margin: EdgeInsets.symmetric(horizontal: 10),
+                          width: 1.sw,
+                          height: 83.h,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              10.11.r,
+                            boxShadow: [
+                              BoxShadow(
+                                color: CustomizedTheme.white,
+                                spreadRadius: 0,
+                                blurRadius: 1,
+                                offset: const Offset(
+                                    0, 5), // changes position of shadow
+                              ),
+                            ],
+                            // border: Border.all(color: CustomizedTheme.white,width: 5),
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(
+                                22.r,
+                              ),
                             ),
                             color: CustomizedTheme.white,
                           ),
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: CustomizedTheme.colorAccent,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 37.w,
-                        right: 37.w,
-                        top: 17.43.h,
-                      ),
-                      child: Container(
-                        width: 1.sw,
-                        height: 83.h,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: CustomizedTheme.white,
-                              spreadRadius: 0,
-                              blurRadius: 1,
-                              offset: const Offset(
-                                  0, 5), // changes position of shadow
-                            ),
-                          ],
-                          // border: Border.all(color: CustomizedTheme.white,width: 5),
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(
-                              22.r,
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.voucherSuccessful,
+                              ),
+                              style: CustomizedTheme.sf_b_W600_2487,
                             ),
                           ),
-                          color: CustomizedTheme.white,
                         ),
-                        child: Center(
-                          child: Text(
-                            AppLocalizations.of(context)!.translate(
-                              TranslationKeys.voucherSuccessful,
-                            ),
-                            style: CustomizedTheme.sf_b_W600_2487,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-
-              //Center
-              Padding(
-                padding: EdgeInsets.only(top: 75.39.h, left: 20.w, right: 20.w),
-                child: Container(
-                  width: 1.sw,
-                  height: 60.sp,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage(
-                      'assets/payments/voucher-bg2.png',
-                    ),
-                  )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.translate(
-                          TranslationKeys.voucher_Number,
-                        ),
-                        style: CustomizedTheme.roboto_w_W400_14,
-                      ),
-                      SizedBox(
-                        width: 100.w,
-                        child: Text(
-                          widget.data.voucherNo,
-                          maxLines: 1,
-                          overflow: TextOverflow.clip,
-                          style: CustomizedTheme.roboto_w_W700_14,
-                        ),
-                      ),
-                      const SizedBox(width: 20),
+                      )
                     ],
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: CustomizedTheme.primaryBright,
-                      borderRadius: const BorderRadius.vertical(
-                          bottom: Radius.circular(10))),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
+
+                //Center
+                Padding(
+                  padding:
+                      EdgeInsets.only(top: 75.39.h, left: 20.w, right: 20.w),
+                  child: Container(
+                    width: 1.sw,
+                    height: 60.sp,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(
+                        'assets/payments/voucher-bg2.png',
+                      ),
+                    )),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.voucher_Number,
+                          ),
+                          style: CustomizedTheme.roboto_w_W400_14,
+                        ),
+                        SizedBox(
+                          width: 100.w,
+                          child: Text(
+                            widget.data.voucherNo,
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                            style: CustomizedTheme.roboto_w_W700_14,
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: CustomizedTheme.primaryBright,
+                        borderRadius: const BorderRadius.vertical(
+                            bottom: Radius.circular(10))),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.w,
+                              right: 15.w,
+                              top: 32.h,
+                              bottom: 26.45.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.travellerName,
+                                  ),
+                                  CustomizedTheme.sf_bo_W300_1503),
+                              buildText(
+                                  widget.data.user.firstName +
+                                      ' ' +
+                                      widget.data.user.lastName,
+                                  CustomizedTheme.sf_bo_W500_1503),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.w, right: 15.w, bottom: 26.45.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.emailID,
+                                  ),
+                                  CustomizedTheme.sf_bo_W300_1503),
+                              buildText(widget.data.user.email,
+                                  CustomizedTheme.sf_bo_W500_1503),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.w, right: 15.w, bottom: 26.45.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.phoneNumber,
+                                  ),
+                                  CustomizedTheme.sf_bo_W300_1503),
+                              Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: buildText(widget.data.user.mobileNumber,
+                                    CustomizedTheme.sf_bo_W500_1503),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.w, right: 15.w, bottom: 26.45.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.nationality,
+                                  ),
+                                  CustomizedTheme.sf_bo_W300_1503),
+                              buildText(
+                                  getNationality(
+                                      widget.data.user.nationalityId),
+                                  CustomizedTheme.sf_bo_W500_1503),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.w, right: 15.w, bottom: 26.45.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.emiratesID,
+                                  ),
+                                  CustomizedTheme.sf_bo_W300_1503),
+                              buildText(widget.data.user.emirateId,
+                                  CustomizedTheme.sf_bo_W500_1503),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.w, right: 15.w, bottom: 26.45.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.totalAmount,
+                                  ),
+                                  CustomizedTheme.sf_bo_W300_1503),
+                              buildText(widget.data.amount.toString(),
+                                  CustomizedTheme.sf_bo_W500_1503),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.w, right: 15.w, bottom: 26.45.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText(
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.paymentDate,
+                                ),
+                                CustomizedTheme.sf_bo_W300_1503,
+                              ),
+                              buildText(
+                                getPaymentDate(
+                                  widget.data.createdAt,
+                                ),
+                                CustomizedTheme.sf_bo_W500_1503,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
                             left: 15.w,
                             right: 15.w,
-                            top: 32.h,
-                            bottom: 26.45.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText(
+                            bottom: 24.01.h,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText(
                                 AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.travellerName,
+                                  TranslationKeys.paymentTime,
                                 ),
-                                CustomizedTheme.sf_bo_W300_1503),
-                            buildText(
-                                widget.data.user.firstName +
-                                    ' ' +
-                                    widget.data.user.lastName,
-                                CustomizedTheme.sf_bo_W500_1503),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 15.w, right: 15.w, bottom: 26.45.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText(
-                                AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.emailID,
-                                ),
-                                CustomizedTheme.sf_bo_W300_1503),
-                            buildText(widget.data.user.email,
-                                CustomizedTheme.sf_bo_W500_1503),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 15.w, right: 15.w, bottom: 26.45.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText(
-                                AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.phoneNumber,
-                                ),
-                                CustomizedTheme.sf_bo_W300_1503),
-                            Directionality(
-                              textDirection: TextDirection.ltr,
-                              child: buildText(widget.data.user.mobileNumber,
-                                  CustomizedTheme.sf_bo_W500_1503),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 15.w, right: 15.w, bottom: 26.45.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText(
-                                AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.nationality,
-                                ),
-                                CustomizedTheme.sf_bo_W300_1503),
-                            buildText(
-                                getNationality(widget.data.user.nationalityId),
-                                CustomizedTheme.sf_bo_W500_1503),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 15.w, right: 15.w, bottom: 26.45.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText(
-                                AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.emiratesID,
-                                ),
-                                CustomizedTheme.sf_bo_W300_1503),
-                            buildText(widget.data.user.emirateId,
-                                CustomizedTheme.sf_bo_W500_1503),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 15.w, right: 15.w, bottom: 26.45.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText(
-                                AppLocalizations.of(context)!.translate(
-                                  TranslationKeys.totalAmount,
-                                ),
-                                CustomizedTheme.sf_bo_W300_1503),
-                            buildText(widget.data.amount.toString(),
-                                CustomizedTheme.sf_bo_W500_1503),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 15.w, right: 15.w, bottom: 26.45.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText(
-                              AppLocalizations.of(context)!.translate(
-                                TranslationKeys.paymentDate,
+                                CustomizedTheme.sf_bo_W300_1503,
                               ),
-                              CustomizedTheme.sf_bo_W300_1503,
-                            ),
-                            buildText(
-                              getPaymentDate(
-                                widget.data.createdAt,
+                              buildText(
+                                getPaymentTime(
+                                  widget.data.createdAt,
+                                ),
+                                CustomizedTheme.sf_bo_W500_1503,
                               ),
-                              CustomizedTheme.sf_bo_W500_1503,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 15.w,
-                          right: 15.w,
-                          bottom: 24.01.h,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText(
-                              AppLocalizations.of(context)!.translate(
-                                TranslationKeys.paymentTime,
+                        image != null
+                            ? Image.memory(
+                                image!,
+                              )
+                            : const Icon(
+                                Icons.image,
                               ),
-                              CustomizedTheme.sf_bo_W300_1503,
-                            ),
-                            buildText(
-                              getPaymentTime(
-                                widget.data.createdAt,
-                              ),
-                              CustomizedTheme.sf_bo_W500_1503,
-                            ),
-                          ],
+                        SizedBox(
+                          height: 24.h,
                         ),
-                      ),
-                      image != null
-                          ? Image.memory(
-                              image!,
-                            )
-                          : const Icon(
-                              Icons.image,
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 50.h,
+                    horizontal: 20.w,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          // width: 154.94,
+                          height: 56.8.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              11.72.r,
                             ),
-                      SizedBox(
-                        height: 24.h,
+                            color: CustomizedTheme.colorAccent,
+                          ),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: CustomizedTheme.colorAccent,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  10,
+                                ),
+                              ),
+                            ),
+                            onPressed: () async {
+                              generateScreenshotImages(
+                                  'L${widget.data.id.toString()}');
+                            },
+                            child: isLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.downloadPrintSummary,
+                                    ),
+                                    style: CustomizedTheme.sf_w_W500_19,
+                                  ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 50.h,
-                  horizontal: 20.w,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        // width: 154.94,
-                        height: 56.8.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            11.72.r,
-                          ),
-                          color: CustomizedTheme.colorAccent,
-                        ),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: CustomizedTheme.colorAccent,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                10,
-                              ),
-                            ),
-                          ),
-                          onPressed: () async {
-                            generateScreenshotImages(
-                                'L${widget.data.id.toString()}');
-                          },
-                          child: isLoading
-                              ? const CircularProgressIndicator(
-                                  color: Colors.white,
-                                )
-                              : Text(
-                                  AppLocalizations.of(context)!.translate(
-                                    TranslationKeys.downloadPrintSummary,
-                                  ),
-                                  style: CustomizedTheme.sf_w_W500_19,
-                                ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -416,13 +432,16 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
   }
 
   Future generateScreenshotImages(String fileName) async {
+    int selectedLang = MySharedPreferences.instance.getIntValue(
+      SharedPrefKeys.selectedLanguage,
+    );
     setState(() {
       isLoading = true;
     });
     final pdfFile = await PdfApi.generatePdfFile(
       widget.data,
       image!,
-      context,
+      selectedLang,
     );
 
     PdfApi.openFile(file: File(pdfFile.path));

@@ -74,8 +74,8 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                               );
                             },
                             child: SizedBox(
-                              height: 150.h,
-                              // width: 150.w,
+                              height: 150.w,
+                              width: 150.w,
                               child: selection == 1
                                   ? SvgPicture.asset(
                                       AppLocalizations.of(context)!.translate(
@@ -92,7 +92,8 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                             ),
                           )
                         : SizedBox(
-                            height: 150.h,
+                            height: 150.w,
+                            width: 150.w,
                             child: selection == 1
                                 ? SvgPicture.asset(
                                     AppLocalizations.of(context)!.translate(
@@ -126,8 +127,8 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                         );
                       },
                       child: SizedBox(
-                        height: 150.h,
-                        // width: 150.w,
+                        height: 150.w,
+                        width: 150.w,
                         child: selection == 2
                             ? SvgPicture.asset(
                                 AppLocalizations.of(context)!.translate(

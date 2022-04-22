@@ -172,19 +172,14 @@ class TranslationKeys {
   static const searchCountry = "searchCountry";
   static const changeLanguage = "changeLanguage";
   static const invalidMobileNumber = "invalidMobileNumber";
-  static const active = "active";
-  static const expired = "expired";
   static const portRashid = "portRashid";
   static const english = "english";
   static const arabic = "arabic";
   static const ic_support = "ic_support";
-
 
   static const ic_entry_active = "ic_entry_active";
   static const ic_entry_inactive = "ic_entry_inactive";
   static const ic_entry_disable = "ic_entry_disable";
   static const ic_exit_active = "ic_exit_active";
   static const ic_exit_inactive = "ic_exit_inactive";
-
-
 }

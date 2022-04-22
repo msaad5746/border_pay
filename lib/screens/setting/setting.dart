@@ -9,7 +9,6 @@ import 'package:borderpay/main.dart';
 import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
-import 'package:borderpay/res/res.dart';
 import 'package:borderpay/screens/host.dart';
 import 'package:borderpay/screens/welcome_screen.dart';
 import 'package:borderpay/widget/custom_alert.dart';
@@ -21,7 +20,6 @@ import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
 import '../../localization/app_localization.dart';
 import '../../localization/translation_keys.dart';
-import 'package:restart_app/restart_app.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -397,11 +395,12 @@ class _SettingPageState extends State<SettingPage> {
                                   ),
                                 ],
                                 selectedLabelIndex: (index) {
-                                  setState(() {
-                                    languageIndex = index;
-                                  });
-                                  onChangeLanguage(index);
-                                  print("Selected Index $index");
+                                  if (languageIndex != index) {
+                                    setState(() {
+                                      languageIndex = index;
+                                    });
+                                    onChangeLanguage(index);
+                                  }
                                 },
                                 selectedIndex: languageIndex,
                               ),

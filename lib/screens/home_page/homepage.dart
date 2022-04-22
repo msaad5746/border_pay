@@ -101,7 +101,8 @@ class _HomePageState extends State<HomePage> {
                                           child: Container(
                                             height: 37.26.h,
                                             width: 37.26.w,
-                                             padding: const EdgeInsets.symmetric(horizontal: 6.8),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 6.8),
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(
@@ -443,6 +444,7 @@ class _HomePageState extends State<HomePage> {
     if (response != null) {
       VoucherModel model = response;
       voucherList.lastPage = model.lastPage;
+      voucherList.page = model.page;
       for (int i = 0; i < model.data.length; i++) {
         voucherList.data.add(model.data[i]);
       }
