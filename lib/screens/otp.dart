@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
-import 'package:borderpay/localization/locale_constants.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
 import 'package:borderpay/model/datamodels/verify_user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';

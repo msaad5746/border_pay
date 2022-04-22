@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
-import 'package:borderpay/repo/locale_repo/locale_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

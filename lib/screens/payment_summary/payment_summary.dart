@@ -270,8 +270,15 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                 });
                                 CustomAlertDialog.baseDialog(
                                     context: context,
-                                    title: 'Successfully Purchased',
-                                    message: 'Voucher successfully purchased',
+                                    title:
+                                        AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.successfullyPurchased,
+                                    ),
+                                    message:
+                                        AppLocalizations.of(context)!.translate(
+                                      TranslationKeys
+                                          .voucherSuccessfullyPurchased,
+                                    ),
                                     showCrossIcon: false,
                                     buttonAction: () {
                                       Navigator.pushNamed(
@@ -291,8 +298,11 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                                 failedTransactions.add(response);
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
-                                  content: const Text(
-                                    "Unable to complete your request!",
+                                  content: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys
+                                          .unableToCompleteYourRequest,
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                   behavior: SnackBarBehavior.floating,
