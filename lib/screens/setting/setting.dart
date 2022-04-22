@@ -21,7 +21,6 @@ import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
 import '../../localization/app_localization.dart';
 import '../../localization/translation_keys.dart';
-import 'package:restart_app/restart_app.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);

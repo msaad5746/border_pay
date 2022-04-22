@@ -10,9 +10,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:country_picker/country_picker.dart';
 
+import '../Utils/sharedPrefKeys.dart';
+import '../Utils/sharedpref.dart';
 import '../localization/app_localization.dart';
 import '../localization/translation_keys.dart';
-import 'custom_intl_phone_field.dart';
+import 'intl_phone_number_dropdown/custom_intl_phone_field.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -36,8 +38,14 @@ class _RegisterPageState extends State<RegisterPage> {
   bool allCompleted = false;
   bool termsAndCondition = false;
 
+
+  int selectedLang = 0;
+
   @override
   void initState() {
+    selectedLang = MySharedPreferences.instance
+        .getIntValue(SharedPrefKeys.selectedLanguage);
+
     getCountries(countriesController.countries);
     super.initState();
   }
@@ -195,6 +203,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     // buildPhoneDD(),
                     CustomIntlPhoneField(
+                      locale: selectedLang,
                       flagDecoration: BoxDecoration(
                         color: CustomizedTheme.primaryBold,
                         borderRadius: BorderRadius.circular(10),

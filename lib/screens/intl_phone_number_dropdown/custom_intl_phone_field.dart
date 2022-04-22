@@ -1,7 +1,4 @@
-library intl_phone_field;
-
 import 'dart:async';
-
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/localization/app_localization.dart';
 import 'package:borderpay/localization/translation_keys.dart';
@@ -9,9 +6,11 @@ import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/country_picker_dialog.dart';
-import 'package:intl_phone_field/phone_number.dart';
+import 'country.dart';
+import 'custom_country_picker_dialog.dart';
+import 'custom_en_countries.dart';
+import 'custom_ar_countries.dart';
+import 'custom_phone_number.dart';
 
 class CustomIntlPhoneField extends StatefulWidget {
   /// Whether to hide the text being edited (e.g., for passwords).
@@ -26,7 +25,7 @@ class CustomIntlPhoneField extends StatefulWidget {
 
   /// {@macro flutter.widgets.editableText.readOnly}
   final bool readOnly;
-  final FormFieldSetter<PhoneNumber>? onSaved;
+  final FormFieldSetter<CustomPhoneNumber>? onSaved;
 
   /// {@macro flutter.widgets.editableText.onChanged}
   ///
@@ -36,7 +35,7 @@ class CustomIntlPhoneField extends StatefulWidget {
   ///    runs and can validate and change ("format") the input value.
   ///  * [onEditingComplete], [onSubmitted], [onSelectionChanged]:
   ///    which are more specialized input change notifications.
-  final ValueChanged<PhoneNumber>? onChanged;
+  final ValueChanged<CustomPhoneNumber>? onChanged;
 
   final ValueChanged<Country>? onCountryChanged;
 
@@ -49,7 +48,7 @@ class CustomIntlPhoneField extends StatefulWidget {
   /// By default, the validator checks whether the input number length is between selected country's phone numbers min and max length.
   /// If `disableLengthCheck` is not set to `true`, your validator returned value will be overwritten by the default validator.
   /// But, if `disableLengthCheck` is set to `true`, your validator will have to check phone number length itself.
-  final FutureOr<String?> Function(PhoneNumber?)? validator;
+  final FutureOr<String?> Function(CustomPhoneNumber?)? validator;
 
   /// {@macro flutter.widgets.editableText.keyboardType}
   final TextInputType keyboardType;
@@ -229,7 +228,7 @@ class CustomIntlPhoneField extends StatefulWidget {
 
   /// Optional set of styles to allow for customizing the country search
   /// & pick dialog
-  final PickerDialogStyle? pickerDialogStyle;
+  final CustomPickerDialogStyle? pickerDialogStyle;
 
   /// The margin of the country selector button.
   ///
@@ -238,8 +237,11 @@ class CustomIntlPhoneField extends StatefulWidget {
   /// If unset, defaults to [EdgeInsets.zero].
   final EdgeInsets flagsButtonMargin;
 
-  CustomIntlPhoneField({
+  final int locale;
+
+  const CustomIntlPhoneField({
     Key? key,
+    required this.locale,
     this.initialCountryCode,
     this.obscureText = false,
     this.textAlign = TextAlign.left,
@@ -304,18 +306,26 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
   void initState() {
     super.initState();
     _countryList = widget.countries == null
-        ? countries
-        : countries
-            .where((country) => widget.countries!.contains(country.code))
-            .toList();
+        ? widget.locale == 0
+            ? enCountries
+            : arCountries
+        : widget.locale == 0
+            ? enCountries
+            : arCountries
+                .where((country) => widget.countries!.contains(country.code))
+                .toList();
     filteredCountries = _countryList;
     number = widget.initialValue ?? '';
     if (widget.initialCountryCode == null && number.startsWith('+')) {
       number = number.substring(1);
       // parse initial value
-      _selectedCountry = countries.firstWhere(
-          (country) => number.startsWith(country.dialCode),
-          orElse: () => _countryList.first);
+      _selectedCountry = widget.locale == 0
+          ? enCountries.firstWhere(
+              (country) => number.startsWith(country.dialCode),
+              orElse: () => _countryList.first)
+          : arCountries.firstWhere(
+              (country) => number.startsWith(country.dialCode),
+              orElse: () => _countryList.first);
       number = number.substring(_selectedCountry.dialCode.length);
     } else {
       _selectedCountry = _countryList.firstWhere(
@@ -324,7 +334,7 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
     }
 
     if (widget.autovalidateMode == AutovalidateMode.always) {
-      final initialPhoneNumber = PhoneNumber(
+      final initialPhoneNumber = CustomPhoneNumber(
         countryISOCode: _selectedCountry.code,
         countryCode: '+${_selectedCountry.dialCode}',
         number: widget.initialValue ?? '',
@@ -348,7 +358,7 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
       context: context,
       useRootNavigator: false,
       builder: (context) => StatefulBuilder(
-        builder: (ctx, setState) => CountryPickerDialog(
+        builder: (ctx, setState) => CustomCountryPickerDialog(
           style: widget.pickerDialogStyle,
           filteredCountries: filteredCountries,
           searchText: widget.searchText,
@@ -362,14 +372,14 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
         ),
       ),
     );
-    if (this.mounted) setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       _buildFlagsButton(),
-      SizedBox(
+      const SizedBox(
         width: 5,
       ),
       _buildTextButton()
@@ -505,7 +515,7 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
           style: widget.style,
           onSaved: (value) {
             widget.onSaved?.call(
-              PhoneNumber(
+              CustomPhoneNumber(
                 countryISOCode: _selectedCountry.code,
                 countryCode: '+${_selectedCountry.dialCode}',
                 number: value!,
@@ -513,7 +523,7 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
             );
           },
           onChanged: (value) async {
-            final phoneNumber = PhoneNumber(
+            final phoneNumber = CustomPhoneNumber(
               countryISOCode: _selectedCountry.code,
               countryCode: '+${_selectedCountry.dialCode}',
               number: value,
