@@ -13,7 +13,11 @@ import 'package:borderpay/screens/home_page/my_vouchers.dart';
 import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -97,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                                           child: Container(
                                             height: 37.26.h,
                                             width: 37.26.w,
-                                            // margin: EdgeInsets.symmetric(horizontal: 10),
+                                             padding: const EdgeInsets.symmetric(horizontal: 6.8),
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(
@@ -105,8 +109,10 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                               color: CustomizedTheme.white,
                                             ),
-                                            child: Image.asset(
-                                              'assets/icons/ic_help.png',
+                                            child: SvgPicture.asset(
+                                              AppLocalizations.of(context)!
+                                                  .translate(TranslationKeys
+                                                      .ic_support),
                                               color:
                                                   CustomizedTheme.colorAccent,
                                             ),
@@ -117,9 +123,19 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        top: 19.5.h, left: 20.w),
+                                      top: 19.5.h,
+                                      left: 20.w,
+                                      right: 20.w,
+                                    ),
                                     child: Text(
-                                      "Hello ${loginData.firstName},",
+                                      AppLocalizations.of(context)!.translate(
+                                            TranslationKeys.hello,
+                                          ) +
+                                          " ${loginData.firstName}" +
+                                          AppLocalizations.of(context)!
+                                              .translate(
+                                            TranslationKeys.qoma,
+                                          ),
                                       style: CustomizedTheme.sf_w_W500_23,
                                     ),
                                   ),
@@ -128,9 +144,12 @@ class _HomePageState extends State<HomePage> {
                                       top: 20.h,
                                       bottom: 10.h,
                                       left: 20.w,
+                                      right: 20.w,
                                     ),
                                     child: Text(
-                                      "Choose location",
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.chooseLocation,
+                                      ),
                                       style: CustomizedTheme.sf_w_W400_20,
                                     ),
                                   ),
@@ -149,7 +168,10 @@ class _HomePageState extends State<HomePage> {
                                         setState(() {
                                           location = LocationModel(
                                             id: 2,
-                                            title: 'hatta',
+                                            title: AppLocalizations.of(context)!
+                                                .translate(
+                                              TranslationKeys.hatta,
+                                            ),
                                           );
                                           Navigator.pushNamed(
                                             context,
@@ -158,9 +180,52 @@ class _HomePageState extends State<HomePage> {
                                           );
                                         });
                                       },
-                                      child: Image.asset(
-                                        'assets/welcome/hatta-bg.png',
-                                        fit: BoxFit.fill,
+                                      child: SizedBox(
+                                        width: 160,
+                                        height: 180,
+                                        child: Stack(
+                                          children: [
+                                            Image.asset(
+                                              'assets/icons/hatta-bg.png',
+                                              fit: BoxFit.fill,
+                                            ),
+                                            Container(
+                                              width: 148,
+                                              height: 164,
+                                              margin: const EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    Colors.transparent,
+                                                    Colors.black
+                                                        .withOpacity(0.5),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20.0),
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .translate(
+                                                    TranslationKeys.hatta,
+                                                  ),
+                                                  style: CustomizedTheme
+                                                      .sf_b_W700_18,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -172,7 +237,11 @@ class _HomePageState extends State<HomePage> {
                                           () {
                                             location = LocationModel(
                                               id: 1,
-                                              title: 'Port Rashid 1',
+                                              title:
+                                                  AppLocalizations.of(context)!
+                                                      .translate(
+                                                TranslationKeys.portRashid1,
+                                              ),
                                             );
                                             Navigator.pushNamed(
                                               context,
@@ -182,9 +251,52 @@ class _HomePageState extends State<HomePage> {
                                           },
                                         );
                                       },
-                                      child: Image.asset(
-                                        'assets/welcome/portrashid-bg.png',
-                                        fit: BoxFit.fill,
+                                      child: SizedBox(
+                                        width: 160,
+                                        height: 180,
+                                        child: Stack(
+                                          children: [
+                                            Image.asset(
+                                              'assets/icons/portrashid-bg.png',
+                                              fit: BoxFit.fill,
+                                            ),
+                                            Container(
+                                              width: 148,
+                                              height: 164,
+                                              margin: const EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    Colors.transparent,
+                                                    Colors.black
+                                                        .withOpacity(0.5),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20.0),
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .translate(
+                                                    TranslationKeys.portRashid1,
+                                                  ),
+                                                  style: CustomizedTheme
+                                                      .sf_b_W700_18,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -195,16 +307,19 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       verticalSpacer(32),
-                      Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.symmetric(
-                          horizontal: horizontalValue(20),
-                        ),
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "My Vouchers",
-                          style: CustomizedTheme.sf_b_W500_19,
-                        ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.myVouchers,
+                              ),
+                              style: CustomizedTheme.sf_b_W500_19,
+                            ),
+                          ),
+                        ],
                       ),
                       verticalSpacer(16),
                       Container(
@@ -227,19 +342,25 @@ class _HomePageState extends State<HomePage> {
                             SizedBox(
                               width: 80.w,
                               child: Text(
-                                'Voucher No',
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.voucherNo,
+                                ),
                                 style: CustomizedTheme.roboto_w_W500_14,
                               ),
                             ),
                             SizedBox(
                               width: 100.w,
                               child: Text(
-                                'Location',
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.location,
+                                ),
                                 style: CustomizedTheme.roboto_w_W500_14,
                               ),
                             ),
                             Text(
-                              'Status',
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.status,
+                              ),
                               style: CustomizedTheme.roboto_w_W500_14,
                             ),
                           ],
@@ -260,7 +381,9 @@ class _HomePageState extends State<HomePage> {
                                     horizontal: 5.56.w,
                                   ),
                                   child: Text(
-                                    'No transaction yet',
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.noTransactionYet,
+                                    ),
                                     style: CustomizedTheme.sf_b_W300_14,
                                   ),
                                 ),
@@ -344,9 +467,11 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'No data found',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.noDataFound,
+            ),
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
@@ -370,9 +495,11 @@ class _HomePageState extends State<HomePage> {
                 getUserData();
               }
             },
-            child: const Text(
-              'Retry',
-              style: TextStyle(
+            child: Text(
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.retry,
+              ),
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),

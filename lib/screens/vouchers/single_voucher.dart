@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class SingleVoucher extends StatefulWidget {
   final List<Vouchers> voucher;
 
@@ -26,12 +29,19 @@ class _SingleVoucherState extends State<SingleVoucher> {
         toolbarHeight: 100.h,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Center(
-            child: BlueBackButton(
-          context: context,
-        )),
+        leading: Row(
+          children: [
+            SizedBox(width: 20.w),
+            Center(
+              child: BlueBackButton(
+                context: context,
+              ),
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.36.w),
           child: Column(
@@ -40,7 +50,11 @@ class _SingleVoucherState extends State<SingleVoucher> {
             children: [
               Padding(
                 padding: EdgeInsets.only(bottom: 31.h),
-                child: Text("Vouchers", style: CustomizedTheme.sf_b_W500_19),
+                child: Text(
+                    AppLocalizations.of(context)!.translate(
+                      TranslationKeys.vouchers,
+                    ),
+                    style: CustomizedTheme.sf_b_W500_19),
               ),
               Container(
                 width: 1.sw,
@@ -54,7 +68,9 @@ class _SingleVoucherState extends State<SingleVoucher> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Voucher Number : ',
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.voucher_Number,
+                      ),
                       style: CustomizedTheme.roboto_w_W400_14,
                     ),
                     Text(
@@ -77,7 +93,10 @@ class _SingleVoucherState extends State<SingleVoucher> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          buildText('Traveller Name',
+                          buildText(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.travellerName,
+                              ),
                               CustomizedTheme.sf_bo_W300_1503),
                           buildText(
                               '${widget.voucher[0].user.firstName} ${widget.voucher[0].user.lastName}',
@@ -92,7 +111,10 @@ class _SingleVoucherState extends State<SingleVoucher> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildText(
-                              'Email ID', CustomizedTheme.sf_bo_W300_1503),
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.emailID,
+                              ),
+                              CustomizedTheme.sf_bo_W300_1503),
                           buildText(widget.voucher[0].user.email,
                               CustomizedTheme.sf_bo_W500_1503),
                         ],
@@ -105,9 +127,16 @@ class _SingleVoucherState extends State<SingleVoucher> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildText(
-                              'Phone Number', CustomizedTheme.sf_bo_W300_1503),
-                          buildText(widget.voucher[0].user.mobileNumber,
-                              CustomizedTheme.sf_bo_W500_1503),
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.phoneNumber,
+                              ),
+                              CustomizedTheme.sf_bo_W300_1503),
+                          Directionality(
+                            textDirection: TextDirection.ltr,
+                            child: buildText(
+                                widget.voucher[0].user.mobileNumber,
+                                CustomizedTheme.sf_bo_W500_1503),
+                          ),
                         ],
                       ),
                     ),
@@ -118,7 +147,10 @@ class _SingleVoucherState extends State<SingleVoucher> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildText(
-                              'Nationality', CustomizedTheme.sf_bo_W300_1503),
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.nationality,
+                              ),
+                              CustomizedTheme.sf_bo_W300_1503),
                           buildText(
                               getNationality(
                                   widget.voucher[0].user.nationalityId),
@@ -133,7 +165,10 @@ class _SingleVoucherState extends State<SingleVoucher> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildText(
-                              'Emirates ID', CustomizedTheme.sf_bo_W300_1503),
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.emiratesID,
+                              ),
+                              CustomizedTheme.sf_bo_W300_1503),
                           buildText(widget.voucher[0].user.emirateId,
                               CustomizedTheme.sf_bo_W500_1503),
                         ],
@@ -146,7 +181,10 @@ class _SingleVoucherState extends State<SingleVoucher> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildText(
-                              'Total Amount', CustomizedTheme.sf_bo_W300_1503),
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.totalAmount,
+                              ),
+                              CustomizedTheme.sf_bo_W300_1503),
                           buildText('AED ${widget.voucher[0].amount}',
                               CustomizedTheme.sf_bo_W500_1503),
                         ],
@@ -181,7 +219,9 @@ class _SingleVoucherState extends State<SingleVoucher> {
                                 arguments: widget.voucher);
                           },
                           child: Text(
-                            "Continue",
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.continueButton,
+                            ),
                             style: CustomizedTheme.sf_w_W500_19,
                           ),
                         ),

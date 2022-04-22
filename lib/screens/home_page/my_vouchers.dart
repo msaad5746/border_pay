@@ -1,4 +1,6 @@
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/localization/app_localization.dart';
+import 'package:borderpay/localization/translation_keys.dart';
 import 'package:borderpay/model/datamodels/voucher_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,7 +98,7 @@ class _MyVouchersState extends State<MyVouchers> {
                 SizedBox(
                   width: 80.w,
                   child: Text(
-                    widget.voucherList.data[index].status,
+                    _getText(text: widget.voucherList.data[index].status),
                     textAlign: TextAlign.end,
                     style: CustomizedTheme.sf_b_W300_13Paid,
                   ),
@@ -107,5 +109,33 @@ class _MyVouchersState extends State<MyVouchers> {
         );
       },
     );
+  }
+
+  String _getText({required String text}){
+    if(text == 'ACTIVE'){
+      return AppLocalizations.of(context)!.translate(
+        TranslationKeys.active,
+      );
+    }else if(text == 'EXPIRED'){
+      return AppLocalizations.of(context)!.translate(
+        TranslationKeys.expired,
+      );
+    }
+
+    return '';
+  }
+
+  String _getPort({required String text}){
+    if(text == 'ACTIVE'){
+      return AppLocalizations.of(context)!.translate(
+        TranslationKeys.active,
+      );
+    }else if(text == 'EXPIRED'){
+      return AppLocalizations.of(context)!.translate(
+        TranslationKeys.expired,
+      );
+    }
+
+    return '';
   }
 }

@@ -1,6 +1,8 @@
 import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/localization/app_localization.dart';
+import 'package:borderpay/localization/translation_keys.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
 import 'package:borderpay/model/datamodels/verify_user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
@@ -8,6 +10,7 @@ import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:borderpay/widget/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ForgetOtpPage extends StatefulWidget {
   String phone;
@@ -142,7 +145,11 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
                 child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
           ),
         ),
-        title: Text("Confirm OTP", style: CustomizedTheme.title_p_W500_21),
+        title: Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.confirmOTP,
+            ),
+            style: CustomizedTheme.title_p_W500_21),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,15 +157,35 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
           SizedBox(height: 29.92.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
-            child:
-                Text("Enter OTP", style: CustomizedTheme.poppins_dark_W500_19),
+            child: Text(
+                AppLocalizations.of(context)!.translate(
+                  TranslationKeys.enterOTP,
+                ),
+                style: CustomizedTheme.poppins_dark_W500_19),
           ),
           const SizedBox(height: 7.76),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.36.w),
-            child: Text(
-              "A 6 digit code has been sent to your mobile number ${widget.phone}",
-              style: CustomizedTheme.sf_b_W400_15,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: Text(
+                    AppLocalizations.of(context)!.translate(
+                      TranslationKeys.a6DigitCodeHasBeenSentToYourMobileNumber,
+                    ),
+                    style: CustomizedTheme.sf_b_W400_15,
+                  ),
+                ),
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Text(
+                    widget.phone,
+                    style: CustomizedTheme.sf_b_W400_15,
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(height: 112.6.h),
@@ -266,6 +293,8 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
                 child: Container(
                   height: 44.86.h,
                   // width: 92.96,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   decoration: BoxDecoration(
                     color: CustomizedTheme.white,
                     borderRadius: BorderRadius.circular(6.93.r),
@@ -273,8 +302,8 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
                       color: CustomizedTheme.white,
                     ),
                   ),
-                  child: Image.asset(
-                    'assets/icons/ic_backspace.png',
+                  child: SvgPicture.asset(
+                    'assets/svg/ic_backspace.svg',
                   ),
                 ),
               ),
@@ -328,12 +357,14 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
                       child: Container(
                         height: 44.86.h,
                         // width: 92.96,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 20),
                         decoration: BoxDecoration(
                           color: CustomizedTheme.white,
                           borderRadius: BorderRadius.circular(6.93.r),
                           border: Border.all(color: CustomizedTheme.white),
                         ),
-                        child: Image.asset('assets/icons/ic_polygon.png'),
+                        child: SvgPicture.asset('assets/svg/ic_polygon.svg'),
                       ),
                     ),
                   ),

@@ -275,7 +275,7 @@ class _NumberPeoplePageState extends State<NumberPeoplePage> {
           //                           borderRadius: BorderRadius.circular(6.93),
           //                           border: Border.all(color: CustomizedTheme.white)
           //                       ),
-          //                       child: Image.asset('assets/icons/ic_backspace.png'),
+          //                       child: SvgPicture.asset('assets/svg/ic_backspace.svg'),
           //                     ),
           //                   ),
           //                 ),
@@ -292,7 +292,7 @@ class _NumberPeoplePageState extends State<NumberPeoplePage> {
           //                           borderRadius: BorderRadius.circular(6.93),
           //                           border: Border.all(color: CustomizedTheme.white)
           //                       ),
-          //                       child: Image.asset('assets/icons/ic_polygon.png'),
+          //                       child: SvgPicture.asset('assets/svg/ic_polygon.svg'),
           //                     ),
           //                   ),
           //                 ),

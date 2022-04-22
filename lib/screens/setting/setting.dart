@@ -4,9 +4,12 @@ import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/auth/local_auth_api.dart';
+import 'package:borderpay/localization/locale_constants.dart';
+import 'package:borderpay/main.dart';
 import 'package:borderpay/model/datamodels/user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
+import 'package:borderpay/res/res.dart';
 import 'package:borderpay/screens/host.dart';
 import 'package:borderpay/screens/welcome_screen.dart';
 import 'package:borderpay/widget/custom_alert.dart';
@@ -14,6 +17,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
+
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+import 'package:restart_app/restart_app.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -29,12 +37,12 @@ class _SettingPageState extends State<SettingPage> {
   bool isAuthenticated = false;
   bool isNotificationEnable = false;
   bool isLoading = false;
+  int languageIndex = 0;
 
   @override
   void initState() {
     getUserData();
-    isBioMetricEnable();
-    isPushNotificationEnable();
+    getDataFromPref();
     super.initState();
   }
 
@@ -47,77 +55,73 @@ class _SettingPageState extends State<SettingPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Text("Settings", style: CustomizedTheme.title_sf_W500_21),
+          padding: EdgeInsets.symmetric(horizontal: 0.w),
+          child: Text(
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.settings,
+              ),
+              style: CustomizedTheme.title_sf_W500_21),
         ),
       ),
       body: Stack(
         children: [
           SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Padding(
-                //   padding:
-                //   EdgeInsets.only(top: 45.0.h, left: 20.36.w, right: 20.36.w),
-                //   child: Row(
-                //     children: [
-                //       // Container(
-                //       //     height: 33.73,
-                //       //     width: 33.73,
-                //       //     // margin: EdgeInsets.symmetric(horizontal: 10),
-                //       //     decoration: BoxDecoration(
-                //       //         borderRadius: BorderRadius.circular(10.11),
-                //       //         color: CustomizedTheme.colorAccent),
-                //       //     child: Icon(Icons.arrow_back,color: CustomizedTheme.white)),
-                //       Padding(
-                //         padding: EdgeInsets.only(left: 12.92),
-                //         child: Text("Settings", style: CustomizedTheme.title_sf_W500_21),
-                //       ),
-                //
-                //     ],
-                //   ),
-                // ),
-
-                // General
                 Padding(
-                  padding: EdgeInsets.only(left: 20.36.w, bottom: 12.h),
-                  child:
-                      Text('General', style: CustomizedTheme.sf_bo_W400_1592),
+                  padding: EdgeInsets.only(
+                    left: 20.36.w,
+                    right: 20.36.w,
+                    bottom: 12.h,
+                  ),
+                  child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.general,
+                      ),
+                      style: CustomizedTheme.sf_bo_W400_1592),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.36.w),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 59.h,
-                        width: 1.sw,
-                        child: OutlinedButton.icon(
-                          onPressed: () async {
-                            var isDataUpdate = await Navigator.pushNamed(
-                                context, '/updateProfile',
-                                arguments: loginData);
-                            if (isDataUpdate as bool) {
-                              getUserData();
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                              side: BorderSide(
-                                  color: CustomizedTheme.primaryColor),
-                              primary: CustomizedTheme.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7)),
-                              alignment: Alignment.centerLeft,
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 18.01.w)),
-                          icon: SvgPicture.asset(
-                            'assets/svg/profile.svg',
-                          ),
-                          label: Padding(
-                            padding: EdgeInsets.only(left: 31.7.w),
-                            child: Text("Change Profile Information",
-                                style: CustomizedTheme.sf_bo_W400_1592),
+                      GestureDetector(
+                        onTap: () async {
+                          var isDataUpdate = await Navigator.pushNamed(
+                              context, '/updateProfile',
+                              arguments: loginData);
+                          if (isDataUpdate as bool) {
+                            getUserData();
+                          }
+                        },
+                        child: Container(
+                          height: 59.h,
+                          width: 1.sw,
+                          padding: EdgeInsets.symmetric(horizontal: 18.01.w),
+                          decoration: BoxDecoration(
+                              color: CustomizedTheme.white,
+                              borderRadius: BorderRadius.circular(7),
+                              border: Border.all(
+                                  color: CustomizedTheme.primaryColor)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svg/profile.svg',
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.changeProfileInformation,
+                                    ),
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
+                              const Spacer(),
+                            ],
                           ),
                         ),
                       ),
@@ -142,40 +146,41 @@ class _SettingPageState extends State<SettingPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: 31.7.w),
-                                child: SvgPicture.asset(
-                                  'assets/svg/ic_bell.svg',
-                                ),
+                              SvgPicture.asset(
+                                'assets/svg/ic_bell.svg',
                               ),
-                              Text("Push Notifications",
-                                  style: CustomizedTheme.sf_bo_W400_1592),
-                              const Spacer(),
                               Padding(
-                                padding: const EdgeInsets.only(right: 14.58),
-                                child: Container(
-                                  height: 17.15,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: CustomizedTheme.primaryColor,
-                                        width: 1),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: FittedBox(
-                                    child: CupertinoSwitch(
-                                      thumbColor: CustomizedTheme.white,
-                                      activeColor: CustomizedTheme.primaryColor,
-                                      trackColor: CustomizedTheme.primaryBright,
-                                      value: isNotificationEnable,
-                                      onChanged: (value) {
-                                        storage.setBoolValue(
-                                            SharedPrefKeys.isNotificationEnable,
-                                            value);
-                                        setState(() {
-                                          isNotificationEnable = value;
-                                        });
-                                      },
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.pushNotifications,
                                     ),
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
+                              const Spacer(),
+                              Container(
+                                height: 17.15,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: CustomizedTheme.primaryColor,
+                                      width: 1),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: FittedBox(
+                                  child: CupertinoSwitch(
+                                    thumbColor: CustomizedTheme.white,
+                                    activeColor: CustomizedTheme.primaryColor,
+                                    trackColor: CustomizedTheme.primaryBright,
+                                    value: isNotificationEnable,
+                                    onChanged: (value) {
+                                      storage.setBoolValue(
+                                          SharedPrefKeys.isNotificationEnable,
+                                          value);
+                                      setState(() {
+                                        isNotificationEnable = value;
+                                      });
+                                    },
                                   ),
                                 ),
                               )
@@ -190,39 +195,53 @@ class _SettingPageState extends State<SettingPage> {
 
                 // Security &  Privacy
                 Padding(
-                  padding:
-                      EdgeInsets.only(top: 42.h, left: 20.36.w, bottom: 12.h),
-                  child: Text('Security &  Privacy',
+                  padding: EdgeInsets.only(
+                    top: 42.h,
+                    left: 20.36.w,
+                    right: 20.36.w,
+                    bottom: 12.h,
+                  ),
+                  child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.security_Privacy,
+                      ),
                       style: CustomizedTheme.sf_bo_W400_1592),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.36),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 59.h,
-                        width: 1.sw,
-                        child: OutlinedButton.icon(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/changePassword',
-                                arguments: loginData);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              side: BorderSide(
-                                  color: CustomizedTheme.primaryColor),
-                              primary: CustomizedTheme.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7)),
-                              alignment: Alignment.centerLeft,
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 18.01.w)),
-                          icon: SvgPicture.asset(
-                            'assets/svg/ic_password.svg',
-                          ),
-                          label: Padding(
-                            padding: EdgeInsets.only(left: 31.7.w),
-                            child: Text("Change Password",
-                                style: CustomizedTheme.sf_bo_W400_1592),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/changePassword',
+                              arguments: loginData);
+                        },
+                        child: Container(
+                          height: 59.h,
+                          width: 1.sw,
+                          padding: EdgeInsets.symmetric(horizontal: 18.01.w),
+                          decoration: BoxDecoration(
+                              color: CustomizedTheme.white,
+                              borderRadius: BorderRadius.circular(7),
+                              border: Border.all(
+                                  color: CustomizedTheme.primaryColor)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svg/ic_password.svg',
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.changePassword,
+                                    ),
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
+                              const Spacer(),
+                            ],
                           ),
                         ),
                       ),
@@ -252,45 +271,46 @@ class _SettingPageState extends State<SettingPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: 31.7.w),
-                                child: SvgPicture.asset(
-                                  'assets/svg/ic_finger.svg',
-                                ),
+                              SvgPicture.asset(
+                                'assets/svg/ic_finger.svg',
                               ),
-                              Text("Biometric Authentication",
-                                  style: CustomizedTheme.sf_bo_W400_1592),
-                              const Spacer(),
                               Padding(
-                                padding: const EdgeInsets.only(right: 14.58),
-                                child: Container(
-                                  height: 17.15,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: CustomizedTheme.primaryColor,
-                                        width: 1),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: FittedBox(
-                                    child: CupertinoSwitch(
-                                      thumbColor: CustomizedTheme.white,
-                                      activeColor: CustomizedTheme.primaryColor,
-                                      trackColor: CustomizedTheme.primaryBright,
-                                      value: isAuthenticated,
-                                      onChanged: (value) async {
-                                        if (value) {
-                                          isAuthenticated = await LocalAuthApi
-                                              .authenticateWithBiometrics();
-                                        } else {
-                                          isAuthenticated = value;
-                                        }
-                                        storage.setBoolValue(
-                                            SharedPrefKeys.isBioMatric,
-                                            isAuthenticated);
-
-                                        setState(() {});
-                                      },
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.biometricAuthentication,
                                     ),
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
+                              const Spacer(),
+                              Container(
+                                height: 17.15,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: CustomizedTheme.primaryColor,
+                                      width: 1),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: FittedBox(
+                                  child: CupertinoSwitch(
+                                    thumbColor: CustomizedTheme.white,
+                                    activeColor: CustomizedTheme.primaryColor,
+                                    trackColor: CustomizedTheme.primaryBright,
+                                    value: isAuthenticated,
+                                    onChanged: (value) async {
+                                      if (value) {
+                                        isAuthenticated = await LocalAuthApi
+                                            .authenticateWithBiometrics();
+                                      } else {
+                                        isAuthenticated = value;
+                                      }
+                                      storage.setBoolValue(
+                                          SharedPrefKeys.isBioMatric,
+                                          isAuthenticated);
+
+                                      setState(() {});
+                                    },
                                   ),
                                 ),
                               )
@@ -306,50 +326,103 @@ class _SettingPageState extends State<SettingPage> {
                 //Other Settings
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 42.55, left: 20.36, bottom: 12),
-                  child: Text('Other Settings',
+                    top: 42.55,
+                    left: 20.36,
+                    right: 20.36,
+                    bottom: 12,
+                  ),
+                  child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.otherSettings,
+                      ),
                       style: CustomizedTheme.sf_bo_W400_1592),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.36),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 59.h,
-                        width: 1.sw,
-                        child: OutlinedButton.icon(
-                          onPressed: () {
-                            CustomAlertDialog.baseDialog(
-                                context: context,
-                                title: 'Delete Account!',
-                                message: 'Are you sure to delete account ?',
-                                buttonAction: () {
-                                  deleteUser();
-                                });
-                          },
-                          style: ElevatedButton.styleFrom(
-                              side: BorderSide(
-                                  color: CustomizedTheme.primaryColor),
-                              primary: CustomizedTheme.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7)),
-                              alignment: Alignment.centerLeft,
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 18.01.w)),
-                          icon: SvgPicture.asset(
-                            'assets/svg/ic_delete.svg',
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          height: 59.h,
+                          width: 1.sw,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 18.01.w,
                           ),
-                          label: Padding(
-                            padding: EdgeInsets.only(left: 31.7.w),
-                            child: Text("Delete Account",
-                                style: CustomizedTheme.sf_bo_W400_1592),
+                          decoration: BoxDecoration(
+                            color: CustomizedTheme.white,
+                            borderRadius: BorderRadius.circular(
+                              7,
+                            ),
+                            border: Border.all(
+                              color: CustomizedTheme.primaryColor,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              // SvgPicture.asset(
+                              //   'assets/svg/ic_delete.svg',
+                              // ),
+                              Icon(
+                                Icons.language,
+                                color: CustomizedTheme.primaryBold,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 31.7.w,
+                                ),
+                                child: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.changeLanguage,
+                                  ),
+                                  style: CustomizedTheme.sf_bo_W400_1592,
+                                ),
+                              ),
+                              const Spacer(),
+                              FlutterToggleTab(
+                                width: 22,
+                                height: 30,
+                                borderRadius: 15,
+                                selectedTextStyle:
+                                    CustomizedTheme.roboto_w_W400_14,
+                                unSelectedTextStyle:
+                                    CustomizedTheme.popp_b_w400_1203,
+                                labels: [
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.english,
+                                  ),
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.arabic,
+                                  ),
+                                ],
+                                selectedLabelIndex: (index) {
+                                  setState(() {
+                                    languageIndex = index;
+                                  });
+                                  onChangeLanguage(index);
+                                  print("Selected Index $index");
+                                },
+                                selectedIndex: languageIndex,
+                              ),
+                            ],
                           ),
                         ),
                       ),
                       SizedBox(height: 19.h),
                       GestureDetector(
                         onTap: () {
-                          logOutUser();
+                          CustomAlertDialog.baseDialog(
+                              context: context,
+                              title: AppLocalizations.of(context)!.translate(
+                                TranslationKeys.delete_Account,
+                              ),
+                              message: AppLocalizations.of(context)!.translate(
+                                TranslationKeys.areYouSureToDeleteAccount,
+                              ),
+                              buttonAction: () {
+                                deleteUser();
+                              });
                         },
                         child: Container(
                           height: 59.h,
@@ -363,14 +436,59 @@ class _SettingPageState extends State<SettingPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              SvgPicture.asset(
+                                'assets/svg/ic_delete.svg',
+                              ),
                               Padding(
-                                padding: EdgeInsets.only(right: 31.7.w),
-                                child: SvgPicture.asset(
-                                  'assets/svg/ic_exit.svg',
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.deleteAccount,
+                                  ),
+                                  style: CustomizedTheme.sf_bo_W400_1592,
                                 ),
                               ),
-                              Text("Logout",
-                                  style: CustomizedTheme.sf_bo_W400_1592),
+                              const Spacer(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 19.h),
+                      GestureDetector(
+                        onTap: () {
+                          logOutUser();
+                        },
+                        child: Container(
+                          height: 59.h,
+                          width: 1.sw,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 18.01.w,
+                          ),
+                          decoration: BoxDecoration(
+                            color: CustomizedTheme.white,
+                            borderRadius: BorderRadius.circular(
+                              7,
+                            ),
+                            border: Border.all(
+                              color: CustomizedTheme.primaryColor,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svg/ic_exit.svg',
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 31.7.w),
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.logout,
+                                    ),
+                                    style: CustomizedTheme.sf_bo_W400_1592),
+                              ),
                               const Spacer(),
                               Padding(
                                 padding: const EdgeInsets.only(right: 14.58),
@@ -429,11 +547,9 @@ class _SettingPageState extends State<SettingPage> {
     }
   }
 
-  isBioMetricEnable() {
+  getDataFromPref() {
+    languageIndex = storage.getIntValue(SharedPrefKeys.selectedLanguage);
     isAuthenticated = storage.getBoolValue(SharedPrefKeys.isBioMatric);
-  }
-
-  isPushNotificationEnable() {
     isNotificationEnable =
         storage.getBoolValue(SharedPrefKeys.isNotificationEnable);
   }
@@ -447,7 +563,12 @@ class _SettingPageState extends State<SettingPage> {
     );
     if (res != null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Account deleted successfully!"),
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.accountDeletedSuccessfully,
+          ),
+          textAlign: TextAlign.center,
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
@@ -475,7 +596,12 @@ class _SettingPageState extends State<SettingPage> {
         isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Something went wrong"),
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.somethingWentWrong,
+          ),
+          textAlign: TextAlign.center,
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
@@ -496,5 +622,11 @@ class _SettingPageState extends State<SettingPage> {
         MaterialPageRoute(
             builder: (BuildContext context) => const WelcomePage()),
         ModalRoute.withName('/'));
+  }
+
+  void onChangeLanguage(int index) {
+    getSelectedLang(supportedLocale[index], supportedLocale);
+    storage.setIntValue(SharedPrefKeys.selectedLanguage, languageIndex);
+    MyApp.restartApp(context);
   }
 }

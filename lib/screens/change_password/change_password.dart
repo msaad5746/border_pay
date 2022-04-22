@@ -8,6 +8,9 @@ import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class ChangePasswordPage extends StatefulWidget {
   final UserModel userData;
 
@@ -42,22 +45,32 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         // leadingWidth: 33.73,
-        leading: Center(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-                height: 33.73.h,
-                width: 33.73.w,
-                // margin: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.16.r),
-                    color: CustomizedTheme.colorAccent),
-                child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
-          ),
+        leading: Row(
+          children: [
+            SizedBox(width: 20.w),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    height: 33.73.h,
+                    width: 33.73.w,
+                    // margin: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.16.r),
+                        color: CustomizedTheme.colorAccent),
+                    child:
+                        Icon(Icons.arrow_back, color: CustomizedTheme.white)),
+              ),
+            ),
+          ],
         ),
-        title: Text("Change password", style: CustomizedTheme.title_p_W500_21),
+        title: Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.changePassword,
+            ),
+            style: CustomizedTheme.title_p_W500_21),
       ),
       body: SafeArea(
         child: Padding(
@@ -94,7 +107,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
                         borderSide:
                             BorderSide(color: Colors.black, width: 1.0.w)),
-                    labelText: "Old password",
+                    labelText: AppLocalizations.of(context)!.translate(
+                      TranslationKeys.oldPassword,
+                    ),
                     labelStyle: CustomizedTheme.b_W400_12,
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
@@ -105,11 +120,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.trim().isEmpty) {
-                      return 'Please enter old password';
-                    }
-                    // Check if the entered email has the right format
-                    if (value.trim().length < 6) {
-                      return 'Enter correct password';
+                      return AppLocalizations.of(context)!.translate(
+                        TranslationKeys.pleaseEnterOldPassword,
+                      );
                     }
                     // Return null if the entered email is valid
                     return null;
@@ -142,7 +155,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
                         borderSide:
                             BorderSide(color: Colors.black, width: 1.0.w)),
-                    labelText: "New password",
+                    labelText: AppLocalizations.of(context)!.translate(
+                      TranslationKeys.newPassword,
+                    ),
                     labelStyle: CustomizedTheme.b_W400_12,
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
@@ -153,11 +168,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.trim().isEmpty) {
-                      return 'Please enter new password';
+                      return AppLocalizations.of(context)!.translate(
+                        TranslationKeys.pleaseEnterNewPassword,
+                      );
                     }
                     // Check if the entered email has the right format
-                    if (value.trim().length < 6) {
-                      return 'Enter correct password';
+                    if (value.trim().length < 10) {
+                      return AppLocalizations.of(context)!.translate(
+                        TranslationKeys.passwordShouldContain10Characters,
+                      );
                     }
                     // Return null if the entered email is valid
                     return null;
@@ -196,8 +215,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                   });
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content: const Text(
-                                      "Password successfully updated!",
+                                    content: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys
+                                            .passwordSuccessfullyUpdated,
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
                                     behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
@@ -213,7 +236,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                   });
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content: const Text("Something went wrong"),
+                                    content: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.somethingWentWrong,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
                                     behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),
@@ -228,7 +256,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                 ? const CircularProgressIndicator(
                                     color: Colors.white,
                                   )
-                                : Text("Update password",
+                                : Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.update,
+                                    ),
                                     style: CustomizedTheme.w_W500_19)),
                       ),
                     ),

@@ -2,8 +2,9 @@ import 'package:borderpay/Route_Constants/route_constants.dart';
 import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
+import 'package:borderpay/localization/app_localization.dart';
+import 'package:borderpay/localization/translation_keys.dart';
 import 'package:borderpay/model/datamodels/login_user_model.dart';
-import 'package:borderpay/model/datamodels/verify_user_model.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
 import 'package:borderpay/widget/custom_alert.dart';
@@ -84,7 +85,9 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                       ),
                       horizontalSpacer(16),
                       Text(
-                        "New password",
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.newPassword,
+                        ),
                         style: CustomizedTheme.title_p_W500_21,
                       ),
                     ],
@@ -149,13 +152,27 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                           _toggle();
                         },
                       ),
-                      labelText: "New Password",
+                      labelText: AppLocalizations.of(context)!.translate(
+                        TranslationKeys.newPassword,
+                      ),
                       labelStyle: CustomizedTheme.b_W400_12,
                     ),
                     // controller: passwordController,
                     onEditingComplete: () {},
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
+                      if (value!.trim().isEmpty) {
+                        return AppLocalizations.of(context)!.translate(
+                          TranslationKeys.pleaseEnterNewPassword,
+                        );
+                      }
+                      // Check if the entered email has the right format
+                      if (value.trim().length < 10) {
+                        return AppLocalizations.of(context)!.translate(
+                          TranslationKeys.passwordShouldContain10Characters,
+                        );
+                      }
+                      // Return null if the entered email is valid
                       return null;
                     },
                   ),
@@ -201,9 +218,15 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                     });
                                     CustomAlertDialog.baseDialog(
                                         context: context,
-                                        title: 'Successfully Restored',
-                                        message:
-                                            'Your Password has been successfully restored.',
+                                        title: AppLocalizations.of(context)!
+                                            .translate(
+                                          TranslationKeys.successfullyRestored,
+                                        ),
+                                        message: AppLocalizations.of(context)!
+                                            .translate(
+                                          TranslationKeys
+                                              .yourPasswordHasBeenSuccessfullyRestored,
+                                        ),
                                         buttonAction: () {
                                           Navigator.pushNamedAndRemoveUntil(
                                               context,
@@ -217,7 +240,12 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                   });
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content: const Text("Something went wrong"),
+                                    content: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.somethingWentWrong,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
                                     behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),
@@ -234,7 +262,9 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                     color: Colors.white,
                                   )
                                 : Text(
-                                    "Continue",
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.continueButton,
+                                    ),
                                     style: CustomizedTheme.w_W500_19,
                                   ),
                           ),
@@ -281,7 +311,12 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
         isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Login Failed"),
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.loginFailed,
+          ),
+          textAlign: TextAlign.center,
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),

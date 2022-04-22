@@ -11,6 +11,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:country_picker/country_picker.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class UpdateProfilePage extends StatefulWidget {
   final UserModel userData;
 
@@ -51,29 +54,36 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
         toolbarHeight: 100.h,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Center(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context, false);
-            },
-            child: Container(
-              height: 33.73.h,
-              width: 33.73.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  9.16.r,
+        leading: Row(
+          children: [
+            SizedBox(width: 20.w),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context, false);
+                },
+                child: Container(
+                  height: 33.73.h,
+                  width: 33.73.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      9.16.r,
+                    ),
+                    color: CustomizedTheme.colorAccent,
+                  ),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: CustomizedTheme.white,
+                  ),
                 ),
-                color: CustomizedTheme.colorAccent,
-              ),
-              child: Icon(
-                Icons.arrow_back,
-                color: CustomizedTheme.white,
               ),
             ),
-          ),
+          ],
         ),
         title: Text(
-          "Update Profile",
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.updateProfile,
+          ),
           style: CustomizedTheme.title_p_W500_21,
         ),
         centerTitle: false,
@@ -109,7 +119,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             width: 1.0.w,
                           ),
                         ),
-                        labelText: "First Name",
+                        labelText: AppLocalizations.of(context)!.translate(
+                          TranslationKeys.firstName,
+                        ),
                         labelStyle: CustomizedTheme.b_W400_12,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
@@ -125,7 +137,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value!.trim().isEmpty) {
-                          return 'First name is empty';
+                          return AppLocalizations.of(context)!.translate(
+                            TranslationKeys.firstNameIsEmpty,
+                          );
                         }
                         return null;
                       },
@@ -154,7 +168,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             width: 1.0.w,
                           ),
                         ),
-                        labelText: "Last Name",
+                        labelText: AppLocalizations.of(context)!.translate(
+                          TranslationKeys.lastName,
+                        ),
                         labelStyle: CustomizedTheme.b_W400_12,
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
@@ -165,7 +181,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value!.trim().isEmpty) {
-                          return 'Last name is empty';
+                          return AppLocalizations.of(context)!.translate(
+                            TranslationKeys.lastNameIsEmpty,
+                          );
                         }
                         return null;
                       },
@@ -194,7 +212,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             width: 1.0.w,
                           ),
                         ),
-                        labelText: "Emirate Id",
+                        labelText: AppLocalizations.of(context)!.translate(
+                          TranslationKeys.emiratesID,
+                        ),
                         labelStyle: CustomizedTheme.b_W400_12,
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
@@ -206,7 +226,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value != null && value.isEmpty) {
-                          return 'Enter Emirate Id';
+                          return AppLocalizations.of(context)!.translate(
+                            TranslationKeys.enterEmirateID,
+                          );
                         }
                         // Return null if the id is valid
                         return null;
@@ -220,7 +242,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                       controller: currentNationality,
                       validator: (value) {
                         if (value != null && value.isEmpty) {
-                          return 'Nationality is empty';
+                          return AppLocalizations.of(context)!.translate(
+                            TranslationKeys.nationalityIsEmpty,
+                          );
                         }
                         return null;
                       },
@@ -242,7 +266,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             width: 1.0.w,
                           ),
                         ),
-                        labelText: "Nationality",
+                        labelText: AppLocalizations.of(context)!.translate(
+                          TranslationKeys.nationality,
+                        ),
                         labelStyle: CustomizedTheme.b_W400_12,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
@@ -280,8 +306,13 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             ),
                             // Optional. Styles the search field.
                             inputDecoration: InputDecoration(
-                              labelText: 'Search',
-                              hintText: 'Start typing to search',
+                              labelText:
+                                  AppLocalizations.of(context)!.translate(
+                                TranslationKeys.search,
+                              ),
+                              hintText: AppLocalizations.of(context)!.translate(
+                                TranslationKeys.startTypingToSearch,
+                              ),
                               prefixIcon: const Icon(
                                 Icons.search,
                               ),
@@ -326,7 +357,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  "Nothing to update",
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.nothingToUpdate,
+                                  ),
                                   textAlign: TextAlign.center,
                                   style: CustomizedTheme.b_W400_12.copyWith(
                                     fontWeight: FontWeight.w400,
@@ -351,7 +384,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                 color: Colors.white,
                               )
                             : Text(
-                                "Update",
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.update,
+                                ),
                                 style: CustomizedTheme.w_W500_19,
                               ),
                       ),
@@ -414,7 +449,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            "Successfully updated!",
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.successfullyUpdated,
+            ),
             textAlign: TextAlign.center,
             style: CustomizedTheme.b_W400_12.copyWith(
               fontWeight: FontWeight.w400,
@@ -435,7 +472,12 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text("Something went wrong"),
+          content: Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.somethingWentWrong,
+            ),
+            textAlign: TextAlign.center,
+          ),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),

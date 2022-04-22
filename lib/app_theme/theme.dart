@@ -62,6 +62,7 @@ class CustomizedTheme{
   static TextStyle sf_b_W400_176 =TextStyle(color: primaryBold,fontWeight: FontWeight.w400,fontSize: 17.6.sp, fontFamily: 'roboto');
   static TextStyle sf_b_W500_17 =TextStyle(color: primaryBold,fontWeight: FontWeight.w500,fontSize: 17.sp, fontFamily: 'roboto');
   static TextStyle sf_b_W700_17 =TextStyle(color: primaryBold,fontWeight: FontWeight.w700,fontSize: 17.sp, fontFamily: 'roboto');
+  static TextStyle sf_b_W700_18 =TextStyle(color: white,fontWeight: FontWeight.w700,fontSize: 18.sp, fontFamily: 'roboto');
   static TextStyle sf_b_W500_18 =TextStyle(color: primaryBold,fontWeight: FontWeight.w500,fontSize: 18.sp, fontFamily: 'roboto');
   static TextStyle sf_b_W400_17 =TextStyle(color: primaryBold,fontWeight: FontWeight.w400,fontSize: 17.sp, fontFamily: 'roboto');
   static TextStyle sf_w_W400_17 =TextStyle(color: white,fontWeight: FontWeight.w400,fontSize: 17.sp, fontFamily: 'roboto');

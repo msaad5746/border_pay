@@ -5,6 +5,10 @@ import 'package:borderpay/widget/blue_backbutton.dart';
 import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
 
 class VoucherTypePage extends StatefulWidget {
   LocationModel location;
@@ -51,7 +55,9 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
               ),
               verticalSpacer(26),
               Text(
-                "Select the voucher type:",
+                AppLocalizations.of(context)!.translate(
+                  TranslationKeys.selectTheVoucherType,
+                ),
                 style: CustomizedTheme.sf_b_W500_17,
               ),
               verticalSpacer(16),
@@ -71,12 +77,16 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                               height: 150.h,
                               // width: 150.w,
                               child: selection == 1
-                                  ? Image.asset(
-                                      'assets/icons/ic_entry_active.png',
+                                  ? SvgPicture.asset(
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.ic_entry_active,
+                                      ),
                                       fit: BoxFit.fill,
                                     )
-                                  : Image.asset(
-                                      'assets/icons/ic_entry.png',
+                                  : SvgPicture.asset(
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.ic_entry_inactive,
+                                      ),
                                       fit: BoxFit.fill,
                                     ),
                             ),
@@ -84,18 +94,28 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                         : SizedBox(
                             height: 150.h,
                             child: selection == 1
-                                ? Image.asset(
-                                    'assets/icons/ic_entry_active.png',
+                                ? SvgPicture.asset(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.ic_entry_active,
+                                    ),
+                                    /* 'assets/svg/ic_entry_active.svg',*/
                                     fit: BoxFit.fill,
                                   )
-                                : Image.asset(
-                                    'assets/icons/ic_entry_disabled.png',
+                                : SvgPicture.asset(
+                                    AppLocalizations.of(context)!.translate(
+                                      TranslationKeys.ic_entry_disable,
+                                    ),
+                                    /*'assets/svg/ic_entry_disabled.svg',*/
                                     fit: BoxFit.fill,
                                   ),
                           ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 20.h),
-                      child: Text("Entry", style: CustomizedTheme.sf_b_W500_17),
+                      child: Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.entry,
+                          ),
+                          style: CustomizedTheme.sf_b_W500_17),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -109,12 +129,18 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                         height: 150.h,
                         // width: 150.w,
                         child: selection == 2
-                            ? Image.asset(
-                                'assets/icons/ic_exit_active.png',
+                            ? SvgPicture.asset(
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.ic_exit_active,
+                                ),
+                                /*'assets/svg/ic_exit_active.svg',*/
                                 fit: BoxFit.fill,
                               )
-                            : Image.asset(
-                                'assets/icons/ic_exit.png',
+                            : SvgPicture.asset(
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.ic_exit_inactive,
+                                ),
+                                /*'assets/svg/ic_exit_with_circle.svg',*/
                                 fit: BoxFit.fill,
                               ),
                       ),
@@ -124,7 +150,9 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                         vertical: 20.h,
                       ),
                       child: Text(
-                        "Exit",
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.exit,
+                        ),
                         style: CustomizedTheme.sf_b_W500_17,
                       ),
                     ),
@@ -169,7 +197,9 @@ class _VoucherTypePageState extends State<VoucherTypePage> {
                                   }
                                 },
                                 child: Text(
-                                  "Next",
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.next,
+                                  ),
                                   style: CustomizedTheme.sf_w_W500_19,
                                 ),
                               ),

@@ -6,6 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class SupportPage extends StatefulWidget {
   const SupportPage({Key? key}) : super(key: key);
 
@@ -41,9 +44,15 @@ class _SupportPageState extends State<SupportPage> {
                           Icon(Icons.arrow_back, color: CustomizedTheme.white)),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 12.92.w),
-                  child:
-                      Text("Support", style: CustomizedTheme.title_sf_W500_21),
+                  padding: EdgeInsets.only(
+                    left: 12.92.w,
+                    right: 12.92.w,
+                  ),
+                  child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        TranslationKeys.support,
+                      ),
+                      style: CustomizedTheme.title_sf_W500_21),
                 ),
               ],
             ),
@@ -51,14 +60,20 @@ class _SupportPageState extends State<SupportPage> {
           Padding(
             padding: EdgeInsets.only(
                 left: 20.36.w, right: 20.36.w, top: 29.92.h, bottom: 18.63.h),
-            child: Text("Are you facing a difficulty?",
+            child: Text(
+                AppLocalizations.of(context)!.translate(
+                  TranslationKeys.areYouFacingDifficulty,
+                ),
                 style: CustomizedTheme.poppins_dark_W500_19),
           ),
           Padding(
             padding:
                 EdgeInsets.symmetric(horizontal: 20.36.w, vertical: 29.92.h),
             child: Text(
-                "If you are facing any difficulty or you have any question, you can contact us by the following ways.",
+                AppLocalizations.of(context)!.translate(
+                  TranslationKeys
+                      .ifYouAreFacingAnyDifficultyOrYouHaveAnyQuestionYouCanContactUsByTheFollowingWays,
+                ),
                 style: CustomizedTheme.sf_b_W400_15),
           ),
           Padding(
@@ -87,7 +102,10 @@ class _SupportPageState extends State<SupportPage> {
                         ),
                       ),
                       Expanded(
-                          child: Text("Live Chat with Customer Support",
+                          child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.liveChatWithCustomerSupport,
+                              ),
                               style: CustomizedTheme.sf_w_W400_1592)),
                     ],
                   )),
@@ -118,7 +136,10 @@ class _SupportPageState extends State<SupportPage> {
                           color: CustomizedTheme.white,
                         ),
                       ),
-                      Text("Contact Us By Email",
+                      Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.contactUsByEmail,
+                          ),
                           style: CustomizedTheme.sf_w_W400_1592),
                     ],
                   )),
@@ -149,7 +170,10 @@ class _SupportPageState extends State<SupportPage> {
                           color: CustomizedTheme.white,
                         ),
                       ),
-                      Text("Check the FAQs",
+                      Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.checkTheFAQs,
+                          ),
                           style: CustomizedTheme.sf_w_W400_1592),
                     ],
                   )),
@@ -171,7 +195,15 @@ class _SupportPageState extends State<SupportPage> {
         await launch(whatappUrlIOS, forceSafariVC: false);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("whatsapp no installed")));
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.whatsappNotInstalled,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
       }
     } else {
       // android , web
@@ -179,7 +211,15 @@ class _SupportPageState extends State<SupportPage> {
         await launch(whatsappUrlAndroid);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("whatsapp no installed")));
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.whatsappNotInstalled,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
       }
     }
   }
@@ -196,7 +236,10 @@ class _SupportPageState extends State<SupportPage> {
     );
 
     OpenMailAppResult result = await OpenMailApp.composeNewEmailInMailApp(
-        nativePickerTitle: 'Select email app to compose', emailContent: email);
+        nativePickerTitle: AppLocalizations.of(context)!.translate(
+          TranslationKeys.selectEmailAppToCompose,
+        ),
+        emailContent: email);
     if (!result.didOpen && !result.canOpen) {
       showNoMailAppsDialog(context);
     } else if (!result.didOpen && result.canOpen) {
@@ -215,11 +258,23 @@ class _SupportPageState extends State<SupportPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Open Mail App"),
-          content: const Text("No mail apps installed"),
+          title: Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.openMailApp,
+            ),
+          ),
+          content: Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.noMailAppsInstalled,
+            ),
+          ),
           actions: <Widget>[
             TextButton(
-              child: const Text("OK"),
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  TranslationKeys.ok,
+                ),
+              ),
               onPressed: () {
                 Navigator.pop(context);
               },

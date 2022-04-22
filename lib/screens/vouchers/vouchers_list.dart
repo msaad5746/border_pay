@@ -8,8 +8,12 @@ import 'package:borderpay/model/datamodels/voucher_model.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo.dart';
 import 'package:borderpay/repo/voucher_repo/voucher_repo_impl.dart';
 import 'package:borderpay/screens/home_page/my_vouchers.dart';
+import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
 
 class VouchersPage extends StatefulWidget {
   const VouchersPage({Key? key}) : super(key: key);
@@ -31,6 +35,7 @@ class _VouchersPageState extends State<VouchersPage> {
 
   bool isLoading = true;
   bool isError = false;
+  int pageNumber = 1;
   int selector = 1;
   String searchText = '';
 
@@ -66,7 +71,11 @@ class _VouchersPageState extends State<VouchersPage> {
         elevation: 0,
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Text("My Vouchers", style: CustomizedTheme.title_sf_W500_21),
+          child: Text(
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.myVouchers,
+              ),
+              style: CustomizedTheme.title_sf_W500_21),
         ),
       ),
       body: isLoading
@@ -92,7 +101,9 @@ class _VouchersPageState extends State<VouchersPage> {
                                     : CustomizedTheme.primaryColor,
                               ),
                               child: Text(
-                                'Company Voucher',
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.companyVoucher,
+                                ),
                                 style: CustomizedTheme.w_W300_12,
                               ),
                             ),
@@ -115,7 +126,9 @@ class _VouchersPageState extends State<VouchersPage> {
                                 );
                               },
                               child: Text(
-                                'Individual Voucher',
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.individualVoucher,
+                                ),
                                 style: CustomizedTheme.w_W300_12,
                               ),
                             ),
@@ -138,7 +151,11 @@ class _VouchersPageState extends State<VouchersPage> {
                           filled: true,
                           fillColor: Colors.white,
                           prefixIcon: const Icon(Icons.search),
-                          label: const Text("Search"),
+                          label: Text(
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.search,
+                            ),
+                          ),
                           hintStyle: TextStyle(
                             color: Colors.black,
                             fontSize: 18.sp,
@@ -152,35 +169,41 @@ class _VouchersPageState extends State<VouchersPage> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
+                    Container(
+                      height: 41.h,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 10.h),
+                      margin: EdgeInsets.only(
                           top: 17.35.h, left: 20.w, right: 20.w),
-                      child: Container(
-                        height: 41.h,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.w, vertical: 12.h),
-                        decoration: BoxDecoration(
-                            color: CustomizedTheme.colorAccent,
-                            borderRadius: BorderRadius.circular(6.r)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: 80.w,
-                              child: Text(
-                                'Voucher No',
-                                style: CustomizedTheme.roboto_w_W500_14,
+                      decoration: BoxDecoration(
+                          color: CustomizedTheme.colorAccent,
+                          borderRadius: BorderRadius.circular(6.r)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 80.w,
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.voucherNo,
                               ),
+                              style: CustomizedTheme.roboto_w_W500_14,
                             ),
-                            SizedBox(
-                              width: 100.w,
-                              child: Text('Location',
-                                  style: CustomizedTheme.roboto_w_W500_14),
-                            ),
-                            Text('Status',
+                          ),
+                          SizedBox(
+                            width: 100.w,
+                            child: Text(
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.location,
+                                ),
                                 style: CustomizedTheme.roboto_w_W500_14),
-                          ],
-                        ),
+                          ),
+                          Text(
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.status,
+                              ),
+                              style: CustomizedTheme.roboto_w_W500_14),
+                        ],
                       ),
                     ),
                     selector == 0 && companyVoucherList.data.isNotEmpty
@@ -202,7 +225,11 @@ class _VouchersPageState extends State<VouchersPage> {
                                           EdgeInsets.symmetric(vertical: 40.h),
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 5.56.w, vertical: 16.h),
-                                      child: Text('No transaction yet',
+                                      child: Text(
+                                          AppLocalizations.of(context)!
+                                              .translate(
+                                            TranslationKeys.noTransactionYet,
+                                          ),
                                           style: CustomizedTheme.sf_b_W300_14),
                                     ),
                                     Expanded(
@@ -227,11 +254,15 @@ class _VouchersPageState extends State<VouchersPage> {
                           if (selector == 0 &&
                               searchText.isEmpty &&
                               !companyVoucherList.lastPage) {
-                            loadMoreData(1, companyVoucherList.page);
+                            loadMoreData(
+                              companyVoucherList.page,
+                            );
                           } else if (selector != 0 &&
                               searchText.isEmpty &&
                               !individualVoucherList.lastPage) {
-                            loadMoreData(1, individualVoucherList.page);
+                            loadMoreData(
+                              individualVoucherList.page,
+                            );
                           }
                         },
                         lastPage: selector == 0
@@ -243,108 +274,7 @@ class _VouchersPageState extends State<VouchersPage> {
                                 : true,
                       ),
                     ),
-
-                    // ...List.generate(
-                    //   selector == 0
-                    //       ? searchText.isEmpty
-                    //           ? companyVoucherList.data.length
-                    //           : searchCompanyResult.length
-                    //       : searchText.isEmpty
-                    //           ? individualVoucherList.data.length
-                    //           : searchIndividualResult.length,
-                    //   (index) => Padding(
-                    //     padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-                    //     child: GestureDetector(
-                    //       onTap: () {
-                    //         Navigator.pushNamed(
-                    //           context,
-                    //           '/DetailedVoucher',
-                    //           arguments: selector == 0
-                    //               ? searchText.isEmpty
-                    //                   ? companyVoucherList.data[index]
-                    //                   : searchCompanyResult[index]
-                    //               : searchText.isEmpty
-                    //                   ? individualVoucherList.data[index]
-                    //                   : searchIndividualResult[index],
-                    //         );
-                    //       },
-                    //       child: Container(
-                    //         padding: EdgeInsets.only(
-                    //             bottom: 10.h,
-                    //             top: 15.h,
-                    //             left: 10.w,
-                    //             right: 10.w),
-                    //         decoration: BoxDecoration(
-                    //             border: Border(
-                    //                 bottom: BorderSide(
-                    //                     color: CustomizedTheme.colorAccent,
-                    //                     width: 1.w))),
-                    //         child: Row(
-                    //           mainAxisAlignment:
-                    //               MainAxisAlignment.spaceBetween,
-                    //           children: [
-                    //             SizedBox(
-                    //               width: 80.w,
-                    //               child: Text(
-                    //                   selector == 0
-                    //                       ? searchText.isEmpty
-                    //                           ? companyVoucherList
-                    //                               .data[index].id
-                    //                               .toString()
-                    //                           : searchCompanyResult[index]
-                    //                               .id
-                    //                               .toString()
-                    //                       : searchText.isEmpty
-                    //                           ? individualVoucherList
-                    //                               .data[index].id
-                    //                               .toString()
-                    //                           : searchIndividualResult[index]
-                    //                               .id
-                    //                               .toString(),
-                    //                   style: CustomizedTheme.sf_pb_W700_13),
-                    //             ),
-                    //             SizedBox(
-                    //               width: 80.w,
-                    //               child: Text(
-                    //                   selector == 0
-                    //                       ? searchText.isEmpty
-                    //                           ? companyVoucherList
-                    //                               .data[index].location.title
-                    //                           : searchCompanyResult[index]
-                    //                               .location
-                    //                               .title
-                    //                       : searchText.isEmpty
-                    //                           ? individualVoucherList
-                    //                               .data[index].location.title
-                    //                           : searchIndividualResult[index]
-                    //                               .location
-                    //                               .title,
-                    //                   style: CustomizedTheme.sf_pb_W300_13),
-                    //             ),
-                    //             SizedBox(
-                    //               width: 80.w,
-                    //               child: Text(
-                    //                 selector == 0
-                    //                     ? searchText.isEmpty
-                    //                         ? companyVoucherList
-                    //                             .data[index].status
-                    //                         : searchCompanyResult[index]
-                    //                             .status
-                    //                     : searchText.isEmpty
-                    //                         ? individualVoucherList
-                    //                             .data[index].status
-                    //                         : searchIndividualResult[index]
-                    //                             .status,
-                    //                 textAlign: TextAlign.end,
-                    //                 style: CustomizedTheme.sf_b_W300_13Paid,
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    verticalSpacer(32),
                   ],
                 ),
     );
@@ -394,9 +324,11 @@ class _VouchersPageState extends State<VouchersPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'No data found',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.noDataFound,
+            ),
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
@@ -425,9 +357,11 @@ class _VouchersPageState extends State<VouchersPage> {
                 loginData.userId,
               );
             },
-            child: const Text(
-              'Retry',
-              style: TextStyle(
+            child: Text(
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.retry,
+              ),
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -465,10 +399,10 @@ class _VouchersPageState extends State<VouchersPage> {
     setState(() {});
   }
 
-  Future<void> loadMoreData(int id, int page) async {
+  Future<void> loadMoreData(int page) async {
     VoucherRepo repo = VoucherRepoImpl();
     var response = await repo.getVoucherList(
-      id: id,
+      id: loginData.userId,
       page: page,
     );
     if (response != null) {

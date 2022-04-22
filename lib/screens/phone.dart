@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../localization/app_localization.dart';
+import '../localization/translation_keys.dart';
+
 class PhonePage extends StatefulWidget {
   String firstName;
   String lastName;
@@ -57,22 +60,29 @@ class _PhonePageState extends State<PhonePage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         // leadingWidth: 33.73,
-        leading: Center(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-                height: 33.73.h,
-                width: 33.73.w,
-                // margin: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.16.r),
-                    color: CustomizedTheme.colorAccent),
-                child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
-          ),
+        leading: Row(
+          children: [
+            SizedBox(width: 20.w),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    height: 33.73.h,
+                    width: 33.73.w,
+                    // margin: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.16.r),
+                        color: CustomizedTheme.colorAccent),
+                    child: Icon(Icons.arrow_back, color: CustomizedTheme.white)),
+              ),
+            ),
+          ],
         ),
-        title: Text("Phone Number", style: CustomizedTheme.title_p_W500_21),
+        title: Text(AppLocalizations.of(context)!.translate(
+          TranslationKeys.phoneNumber,
+        ), style: CustomizedTheme.title_p_W500_21),
         centerTitle: false,
       ),
       body: Padding(
@@ -81,7 +91,9 @@ class _PhonePageState extends State<PhonePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Confirm your phone number below',
+              AppLocalizations.of(context)!.translate(
+                TranslationKeys.confirmYourPhoneNumberBelow,
+              ),
               style: CustomizedTheme.sf_bo_W400_15,
             ),
             SizedBox(
@@ -108,7 +120,9 @@ class _PhonePageState extends State<PhonePage> {
                     width: 1.0.w,
                   ),
                 ),
-                labelText: "Phone Number",
+                labelText:AppLocalizations.of(context)!.translate(
+                  TranslationKeys.phoneNumber,
+                ),
                 labelStyle: CustomizedTheme.b_W400_12,
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
@@ -176,8 +190,11 @@ class _PhonePageState extends State<PhonePage> {
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: const Text(
-                                  "OTP sent",
+                                content:  Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.otpSent,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(
@@ -234,7 +251,9 @@ class _PhonePageState extends State<PhonePage> {
                       },
                       child: isLoading == false
                           ? Text(
-                              "Next",
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.next,
+                        ),
                               style: CustomizedTheme.w_W500_19,
                             )
                           : const CircularProgressIndicator(

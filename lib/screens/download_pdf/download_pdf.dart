@@ -13,6 +13,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart';
 import 'package:open_file/open_file.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class PdfApi {
   static CountriesController countriesController =
       Get.find<CountriesController>();
@@ -21,10 +24,8 @@ class PdfApi {
     return PDFDocument.openFile(file);
   }
 
-  static Future<File> generatePdfFile(
-    Vouchers vouchers,
-    Uint8List image,
-  ) async {
+  static Future<File> generatePdfFile(Vouchers vouchers, Uint8List image,
+      material.BuildContext buildContext) async {
     final pdf = Document();
     var data = await rootBundle.load("assets/fonts/Roboto/Roboto-Regular.ttf");
     var myFont = Font.ttf(data);
@@ -47,15 +48,9 @@ class PdfApi {
       MultiPage(
         theme: myTheme,
         build: (context) => [
-          buildHeader(
-            data: vouchers,
-            font: myFont,
-          ),
+          buildHeader(data: vouchers, font: myFont, context: buildContext),
           spacing(),
-          buildBody(
-            data: vouchers,
-            font: myFont,
-          ),
+          buildBody(data: vouchers, font: myFont, buildContext: buildContext),
           spacing(),
           buildQrImage(
             image: image,
@@ -70,6 +65,7 @@ class PdfApi {
   static Widget buildHeader({
     required Vouchers data,
     required font,
+    required material.BuildContext context,
   }) {
     return Container(
       width: double.infinity,
@@ -89,7 +85,9 @@ class PdfApi {
         children: [
           Spacer(),
           Text(
-            'Voucher Number: ',
+            AppLocalizations.of(context)!.translate(
+              TranslationKeys.voucher_Number,
+            ),
             style: TextStyle(
               font: font,
               fontSize: sizes.fontRatio! * 18,
@@ -127,6 +125,7 @@ class PdfApi {
   static Widget buildBody({
     required Vouchers data,
     required font,
+    required material.BuildContext buildContext,
   }) {
     return Container(
       child: Column(
@@ -139,7 +138,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Traveller Name ',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.travellerName,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -174,7 +175,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Email ID ',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.emailID,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -209,7 +212,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Phone Number ',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.phoneNumber,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -221,15 +226,18 @@ class PdfApi {
                   ),
                 ),
                 Spacer(),
-                Text(
-                  data.user.mobileNumber,
-                  style: TextStyle(
-                    font: font,
-                    fontSize: sizes.fontRatio! * 16,
-                    color: const PdfColor(
-                      00,
-                      0.345,
-                      0.392,
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Text(
+                    data.user.mobileNumber,
+                    style: TextStyle(
+                      font: font,
+                      fontSize: sizes.fontRatio! * 16,
+                      color: const PdfColor(
+                        00,
+                        0.345,
+                        0.392,
+                      ),
                     ),
                   ),
                 ),
@@ -244,7 +252,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Nationality: ',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.nationality,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -279,7 +289,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Emirates ID ',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.emiratesID,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -314,7 +326,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Total Amount',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.totalAmount,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -349,7 +363,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Payment Date',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.paymentDate,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -386,7 +402,9 @@ class PdfApi {
             child: Row(
               children: [
                 Text(
-                  'Payment Time',
+                  AppLocalizations.of(buildContext)!.translate(
+                    TranslationKeys.paymentTime,
+                  ),
                   style: TextStyle(
                     font: font,
                     fontSize: sizes.fontRatio! * 16,
@@ -492,8 +510,8 @@ class PDFDocument {
     required Document pdf,
   }) async {
     final bytes = await pdf.save();
-    // final dir = (await getExternalStorageDirectory())?.path;
-    final file = File('/storage/emulated/0/Download/$name.pdf');
+    final dir = (await getExternalStorageDirectory())?.path;
+    final file = File('$dir/$name.pdf');
 
     await file.writeAsBytes(bytes);
     return file;

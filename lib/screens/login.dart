@@ -11,6 +11,8 @@ import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../localization/app_localization.dart';
+import '../localization/translation_keys.dart';
 import 'custom_intl_phone_field.dart';
 
 class LoginPage extends StatefulWidget {
@@ -89,7 +91,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         horizontalSpacer(16),
                         Text(
-                          "Sign in",
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.signIn,
+                          ),
                           style: CustomizedTheme.title_p_W500_21,
                         ),
                       ],
@@ -117,7 +121,11 @@ class _LoginPageState extends State<LoginPage> {
                             width: .01.w,
                           ),
                         ),
-                        label: const Text("Phone Number"),
+                        label: Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.phoneNumber,
+                          ),
+                        ),
                         labelStyle: TextStyle(
                           color: CustomizedTheme.colorAccent,
                         ),
@@ -154,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       dropdownIconPosition: IconPosition.trailing,
                       flagsButtonPadding:
-                          const EdgeInsets.symmetric(vertical: 6),
+                          const EdgeInsets.symmetric(vertical: 8),
                     ),
 
                     SizedBox(
@@ -163,7 +171,9 @@ class _LoginPageState extends State<LoginPage> {
                     isPhoneNumberFilled
                         ? const SizedBox.shrink()
                         : Text(
-                            'Phone number field is empty',
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.phoneNumberFieldIsEmpty,
+                            ),
                             style: CustomizedTheme.b_W400_12.copyWith(
                               fontWeight: FontWeight.w400,
                               color: CustomizedTheme.voucherUnpaid,
@@ -226,7 +236,9 @@ class _LoginPageState extends State<LoginPage> {
                             _toggle();
                           },
                         ),
-                        labelText: "Password",
+                        labelText: AppLocalizations.of(context)!.translate(
+                          TranslationKeys.password,
+                        ),
                         labelStyle: CustomizedTheme.b_W400_12,
                       ),
                       // controller: passwordController,
@@ -242,7 +254,9 @@ class _LoginPageState extends State<LoginPage> {
                     isPasswordFilled
                         ? const SizedBox.shrink()
                         : Text(
-                            'Password field is empty',
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.passwordFieldIsEmpty,
+                            ),
                             style: CustomizedTheme.b_W400_12.copyWith(
                               fontWeight: FontWeight.w400,
                               color: CustomizedTheme.voucherUnpaid,
@@ -254,7 +268,9 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pushNamed(context, RouteConstant.forgetPhone);
                       },
                       child: Text(
-                        'Forgot password?',
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.forgotPassword,
+                        ),
                         style: CustomizedTheme.sf_b_W400_1137.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -309,7 +325,9 @@ class _LoginPageState extends State<LoginPage> {
                                     SizedBox(
                                       width: 150.w,
                                       child: Text(
-                                        'Login with Touch ID',
+                                        AppLocalizations.of(context)!.translate(
+                                          TranslationKeys.loginWithTouchID,
+                                        ),
                                         style: CustomizedTheme.roboto_w_W500_17,
                                       ),
                                     ),
@@ -416,7 +434,9 @@ class _LoginPageState extends State<LoginPage> {
                                       color: Colors.white,
                                     )
                                   : Text(
-                                      "Sign in",
+                                      AppLocalizations.of(context)!.translate(
+                                        TranslationKeys.signIn,
+                                      ),
                                       style: CustomizedTheme.w_W500_19,
                                     ),
                             ),
@@ -469,7 +489,12 @@ class _LoginPageState extends State<LoginPage> {
         isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Login Failed"),
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.loginFailed,
+          ),
+          textAlign: TextAlign.center,
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),

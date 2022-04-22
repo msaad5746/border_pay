@@ -14,6 +14,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 
+import '../../localization/app_localization.dart';
+import '../../localization/translation_keys.dart';
+
 class VoucherSuccessPage extends StatefulWidget {
   final Vouchers data;
 
@@ -136,7 +139,9 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                         ),
                         child: Center(
                           child: Text(
-                            'Voucher Successful',
+                            AppLocalizations.of(context)!.translate(
+                              TranslationKeys.voucherSuccessful,
+                            ),
                             style: CustomizedTheme.sf_b_W600_2487,
                           ),
                         ),
@@ -163,7 +168,9 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Voucher Number : ',
+                        AppLocalizations.of(context)!.translate(
+                          TranslationKeys.voucher_Number,
+                        ),
                         style: CustomizedTheme.roboto_w_W400_14,
                       ),
                       SizedBox(
@@ -198,7 +205,10 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText('Traveller Name',
+                            buildText(
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.travellerName,
+                                ),
                                 CustomizedTheme.sf_bo_W300_1503),
                             buildText(
                                 widget.data.user.firstName +
@@ -215,7 +225,10 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText(
-                                'Email ID', CustomizedTheme.sf_bo_W300_1503),
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.emailID,
+                                ),
+                                CustomizedTheme.sf_bo_W300_1503),
                             buildText(widget.data.user.email,
                                 CustomizedTheme.sf_bo_W500_1503),
                           ],
@@ -227,10 +240,16 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText('Phone Number',
+                            buildText(
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.phoneNumber,
+                                ),
                                 CustomizedTheme.sf_bo_W300_1503),
-                            buildText(widget.data.user.mobileNumber,
-                                CustomizedTheme.sf_bo_W500_1503),
+                            Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: buildText(widget.data.user.mobileNumber,
+                                  CustomizedTheme.sf_bo_W500_1503),
+                            ),
                           ],
                         ),
                       ),
@@ -241,7 +260,10 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText(
-                                'Nationality', CustomizedTheme.sf_bo_W300_1503),
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.nationality,
+                                ),
+                                CustomizedTheme.sf_bo_W300_1503),
                             buildText(
                                 getNationality(widget.data.user.nationalityId),
                                 CustomizedTheme.sf_bo_W500_1503),
@@ -255,7 +277,10 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText(
-                                'Emirates ID', CustomizedTheme.sf_bo_W300_1503),
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.emiratesID,
+                                ),
+                                CustomizedTheme.sf_bo_W300_1503),
                             buildText(widget.data.user.emirateId,
                                 CustomizedTheme.sf_bo_W500_1503),
                           ],
@@ -267,7 +292,10 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText('Total Amount',
+                            buildText(
+                                AppLocalizations.of(context)!.translate(
+                                  TranslationKeys.totalAmount,
+                                ),
                                 CustomizedTheme.sf_bo_W300_1503),
                             buildText(widget.data.amount.toString(),
                                 CustomizedTheme.sf_bo_W500_1503),
@@ -281,7 +309,9 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText(
-                              'Payment Date',
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.paymentDate,
+                              ),
                               CustomizedTheme.sf_bo_W300_1503,
                             ),
                             buildText(
@@ -303,7 +333,9 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText(
-                              'Payment Time',
+                              AppLocalizations.of(context)!.translate(
+                                TranslationKeys.paymentTime,
+                              ),
                               CustomizedTheme.sf_bo_W300_1503,
                             ),
                             buildText(
@@ -365,7 +397,9 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
                                   color: Colors.white,
                                 )
                               : Text(
-                                  "Download / Print Summary",
+                                  AppLocalizations.of(context)!.translate(
+                                    TranslationKeys.downloadPrintSummary,
+                                  ),
                                   style: CustomizedTheme.sf_w_W500_19,
                                 ),
                         ),
@@ -382,39 +416,13 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
   }
 
   Future generateScreenshotImages(String fileName) async {
-    // screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
-    //   if (image != null) {
-    //     final directory = await getApplicationDocumentsDirectory();
-    //     final imagePath = await File('${directory.path}/image.png').create();
-    //     await imagePath.writeAsBytes(image);
-    //     if (await Permission.manageExternalStorage.request().isGranted) {
-    //       await ImageGallerySaver.saveImage(image,
-    //           quality: 100, name: fileName);
-    //     }
-    //   }
-    //
-    //   // Navigator.pushNamedAndRemoveUntil(
-    //   //   context,
-    //   //   RouteConstant.hostPage,
-    //   //   ModalRoute.withName(
-    //   //     RouteConstant.hostPage,
-    //   //   ),
-    //   // );
-    // }).catchError(
-    //   (error, stackTrace) {
-    //     if (kDebugMode) {
-    //       print(
-    //       error,
-    //     );
-    //     }
-    //   },
-    // );
     setState(() {
       isLoading = true;
     });
     final pdfFile = await PdfApi.generatePdfFile(
       widget.data,
       image!,
+      context,
     );
 
     PdfApi.openFile(file: File(pdfFile.path));
@@ -422,14 +430,21 @@ class _VoucherSuccessPageState extends State<VoucherSuccessPage> {
     setState(() {
       isLoading = false;
     });
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: const Text("Successfully Saved in Download!"),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.successfullySavedInDownload,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        backgroundColor: CustomizedTheme.voucherPaid,
       ),
-      backgroundColor: CustomizedTheme.voucherPaid,
-    ));
+    );
 
     // Navigator.pushNamedAndRemoveUntil(
     //   context,

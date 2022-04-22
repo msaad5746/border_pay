@@ -5,9 +5,12 @@ import 'package:borderpay/Utils/sharedPrefKeys.dart';
 import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/controllers/countries_controller.dart';
+import 'package:borderpay/localization/app_localization.dart';
+import 'package:borderpay/localization/translation_keys.dart';
 import 'package:borderpay/res/res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -71,23 +74,13 @@ class _WelcomePageState extends State<WelcomePage> {
                       Container(
                         height: 80.27.h,
                         width: 1.w,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/welcome/ic_Line.png"),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+                        color: colors.white,
                       ),
                       SizedBox(width: 20.08.w),
                       Container(
                         height: 59.57.h,
                         width: 59.57.w,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/welcome/ic_Icon.png"),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+                        child: SvgPicture.asset('assets/welcome/ic_tomb.svg'),
                       ),
                     ],
                   ),
@@ -96,11 +89,22 @@ class _WelcomePageState extends State<WelcomePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 8.53.h),
-                      Text("BorderPay", style: CustomizedTheme.w_W500_2622),
+                      Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.borderPay,
+                          ),
+                          style: CustomizedTheme.w_W500_2622),
                       SizedBox(height: 3.19.h),
-                      Text("Powered by CBD", style: CustomizedTheme.w_W300_12),
+                      Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.poweredByCBD,
+                          ),
+                          style: CustomizedTheme.w_W300_12),
                       SizedBox(height: 64.55.h),
-                      Text("Payments Anywhere, Anytime",
+                      Text(
+                          AppLocalizations.of(context)!.translate(
+                            TranslationKeys.paymentsAnywhereAnytime,
+                          ),
                           style: CustomizedTheme.w_W500_15),
                     ],
                   ),
@@ -127,7 +131,10 @@ class _WelcomePageState extends State<WelcomePage> {
                                     onPressed: () {
                                       Navigator.pushNamed(context, '/login');
                                     },
-                                    child: Text("Existing User",
+                                    child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          TranslationKeys.existingUser,
+                                        ),
                                         style: CustomizedTheme.p_W500_19)),
                               ),
                             ),
@@ -154,7 +161,10 @@ class _WelcomePageState extends State<WelcomePage> {
                                       Navigator.pushNamed(
                                           context, '/RegisterPage');
                                     },
-                                    child: Text("New User",
+                                    child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          TranslationKeys.newUser,
+                                        ),
                                         style: CustomizedTheme.w_W500_19)),
                               ),
                             ),

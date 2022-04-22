@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:borderpay/Utils/utils.dart';
-import 'package:borderpay/l10n/l10n.dart';
+import 'package:borderpay/localization/locale_constants.dart';
 import 'package:borderpay/model/arguments/payment_arguments.dart';
 import 'package:borderpay/model/arguments/register_datatoserver.dart';
 import 'package:borderpay/model/arguments/register_first.dart';
@@ -46,17 +46,17 @@ import 'package:borderpay/screens/vouchers/single_voucher.dart';
 import 'package:borderpay/screens/vouchers/voucher_successful.dart';
 import 'package:borderpay/screens/vouchers/voucher_type.dart';
 import 'package:borderpay/screens/vouchers/vouchers_list.dart';
-
+import 'di/di.dart';
 import 'model/datamodels/user_model.dart';
 import 'screens/forget_password/mobile_number.dart';
 import 'screens/welcome_screen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+Future<void> main()async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  await initializeDependencies();
   runApp(const MyApp());
 }
 
@@ -99,19 +99,14 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initConnectivity() async {
     late ConnectivityResult result;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       result = await _connectivity.checkConnectivity();
     } on PlatformException catch (e) {
       print(e.toString());
       return;
     }
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) {
       return Future.value(null);
     }
@@ -127,37 +122,19 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    return
-        // _connectionStatus == ConnectivityResult.mobile ||
-        //       _connectionStatus == ConnectivityResult.wifi
-        //   ?
-        ScreenUtilInit(
+    return ScreenUtilInit(
       builder: () => MaterialApp(
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: L10n.all,
-
+        key: key,
+        localizationsDelegates: localizationDelegates,
+        localeResolutionCallback: getSelectedLang,
+        supportedLocales: supportedLocale,
         debugShowCheckedModeBanner: false,
         navigatorKey: Utils.mainKey,
-        // builder: (context,widget)=>ResponsiveWrapper.builder(
-        //     BouncingScrollWrapper.builder(context, widget!),
-        //     maxWidth: 1200,
-        //     minWidth: 480,
-        //     defaultScale: true,
-        //     breakpoints: [
-        //       ResponsiveBreakpoint.resize(480, name: MOBILE),
-        //       ResponsiveBreakpoint.autoScale(800, name: TABLET),
-        //       ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-        //       ResponsiveBreakpoint.autoScale(2460, name: '4K'),
-        //     ],
-        //     background: Container(color: Color(0xFFF5F5F5))),
         title: 'BorderPay',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+
         // home: const ,
         onGenerateRoute: (settings) {
           Widget page = WelcomePage();
