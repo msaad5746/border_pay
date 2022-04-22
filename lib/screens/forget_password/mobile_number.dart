@@ -1,11 +1,13 @@
 import 'package:borderpay/Route_Constants/route_constants.dart';
+import 'package:borderpay/Utils/sharedPrefKeys.dart';
+import 'package:borderpay/Utils/sharedpref.dart';
 import 'package:borderpay/Utils/utils.dart';
 import 'package:borderpay/app_theme/theme.dart';
 import 'package:borderpay/localization/app_localization.dart';
 import 'package:borderpay/localization/translation_keys.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo.dart';
 import 'package:borderpay/repo/auth_repo/auth_repo_impl.dart';
-import 'package:borderpay/screens/custom_intl_phone_field.dart';
+import 'package:borderpay/screens/intl_phone_number_dropdown/custom_intl_phone_field.dart';
 import 'package:borderpay/widget/spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,8 +27,13 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
   bool isLoading = false;
   String cuntryCode = '+1';
 
+  int selectedLang = 0;
+
   @override
   void initState() {
+    selectedLang = MySharedPreferences.instance
+        .getIntValue(SharedPrefKeys.selectedLanguage);
+
     super.initState();
   }
 
@@ -82,6 +89,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                 Form(
                   key: Utils.forgotPassword,
                   child: CustomIntlPhoneField(
+                    locale: selectedLang,
                     flagDecoration: BoxDecoration(
                       color: CustomizedTheme.primaryBold,
                       borderRadius: BorderRadius.circular(10),

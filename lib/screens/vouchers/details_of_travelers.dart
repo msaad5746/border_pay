@@ -19,7 +19,7 @@ import 'package:get/get.dart';
 
 import '../../localization/app_localization.dart';
 import '../../localization/translation_keys.dart';
-import '../custom_intl_phone_field.dart';
+import '../intl_phone_number_dropdown/custom_intl_phone_field.dart';
 
 class DetailsTravelersPage extends StatefulWidget {
   final int travelerCount;
@@ -58,8 +58,13 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
   bool isLoading = false;
   bool useMyDetail = false;
 
+  int selectedLang = 0;
+
   @override
   void initState() {
+    selectedLang = MySharedPreferences.instance
+        .getIntValue(SharedPrefKeys.selectedLanguage);
+
     keys = [];
     currentAreaCode = '+1';
     for (int i = 0; i <= widget.travelerCount; i++) {
@@ -337,6 +342,7 @@ class _DetailsTravelersPageState extends State<DetailsTravelersPage> {
                         ),
                         verticalSpacer(16),
                         CustomIntlPhoneField(
+                          locale: selectedLang,
                           flagDecoration: BoxDecoration(
                             color: CustomizedTheme.primaryBold,
                             borderRadius: BorderRadius.circular(10),

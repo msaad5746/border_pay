@@ -13,7 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../localization/app_localization.dart';
 import '../localization/translation_keys.dart';
-import 'custom_intl_phone_field.dart';
+import 'intl_phone_number_dropdown/custom_intl_phone_field.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -42,8 +42,13 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  int selectedLang = 0;
+
   @override
   void initState() {
+    selectedLang = MySharedPreferences.instance
+        .getIntValue(SharedPrefKeys.selectedLanguage);
+
     isPasswordFilled = true;
     isPhoneNumberFilled = true;
     isBioMatricEnable();
@@ -103,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 68.54.h,
                     ),
                     CustomIntlPhoneField(
+                      locale: selectedLang,
                       flagDecoration: BoxDecoration(
                         color: CustomizedTheme.primaryBold,
                         borderRadius: BorderRadius.circular(10),
