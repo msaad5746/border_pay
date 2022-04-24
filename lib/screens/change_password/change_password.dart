@@ -194,7 +194,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         child: TextButton(
                             onPressed: () async {
                               if (oldPasswordController.text.isNotEmpty &&
-                                  newPasswordController.text.isNotEmpty) {
+                                  newPasswordController.text.isNotEmpty &&
+                                  oldPasswordController.text !=
+                                      newPasswordController.text) {
                                 setState(() {
                                   isLoading = true;
                                 });
@@ -208,11 +210,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                   widget.userData.userId,
                                 );
                                 if (res != null) {
-                                  oldPasswordController.clear();
-                                  newPasswordController.clear();
-                                  setState(() {
-                                    isLoading = false;
-                                  });
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
                                     content: Text(
@@ -229,6 +226,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                     backgroundColor:
                                         CustomizedTheme.voucherPaid,
                                   ));
+                                  isLoading = false;
                                   Navigator.pop(context);
                                 } else {
                                   setState(() {

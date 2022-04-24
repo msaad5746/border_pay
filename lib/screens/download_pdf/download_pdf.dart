@@ -44,8 +44,8 @@ class PdfApi {
       ),
     );
 
-    selectedLang == 0
-        ? pdf.addPage(
+    // selectedLang == 0 ?
+    pdf.addPage(
             MultiPage(
               theme: myTheme,
               build: (context) => [
@@ -64,27 +64,27 @@ class PdfApi {
                 ),
               ],
             ),
-          )
-        : pdf.addPage(
-            MultiPage(
-              theme: myTheme,
-              build: (context) => [
-                buildArabicHeader(
-                  data: vouchers,
-                  font: myFont,
-                ),
-                spacing(),
-                buildArabicBody(
-                  data: vouchers,
-                  font: myFont,
-                ),
-                spacing(),
-                buildQrImage(
-                  image: image,
-                ),
-              ],
-            ),
           );
+        // : pdf.addPage(
+        //     MultiPage(
+        //       theme: myTheme,
+        //       build: (context) => [
+        //         buildArabicHeader(
+        //           data: vouchers,
+        //           font: myFont,
+        //         ),
+        //         spacing(),
+        //         buildArabicBody(
+        //           data: vouchers,
+        //           font: myFont,
+        //         ),
+        //         spacing(),
+        //         buildQrImage(
+        //           image: image,
+        //         ),
+        //       ],
+        //     ),
+        //   );
 
     return PDFDocument.saveDocument(name: 'L${vouchers.id}', pdf: pdf);
   }

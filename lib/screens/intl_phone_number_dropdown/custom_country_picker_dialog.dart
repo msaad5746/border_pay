@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:translator/translator.dart';
 
 import 'country.dart';
 import 'custom_halper.dart';
@@ -155,13 +154,4 @@ class _CustomCountryPickerDialogState extends State<CustomCountryPickerDialog> {
     );
   }
 
-  String _getText({required String input }){
-    String output = '';
-    final translator = GoogleTranslator();
-    translator.translate(input, from: 'en',to: 'ar').then((Translation translation){
-      output = translation.text;
-    });
-
-    return output;
-  }
 }

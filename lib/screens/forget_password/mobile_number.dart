@@ -208,7 +208,9 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
-          "OTP sent!",
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.otpSent,
+          ),
           textAlign: TextAlign.center,
         ),
         behavior: SnackBarBehavior.floating,
@@ -227,8 +229,10 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
         isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text(
-          "Invalid Phone Number!",
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+            TranslationKeys.invalidMobileNumber,
+          ),
           textAlign: TextAlign.center,
         ),
         behavior: SnackBarBehavior.floating,
